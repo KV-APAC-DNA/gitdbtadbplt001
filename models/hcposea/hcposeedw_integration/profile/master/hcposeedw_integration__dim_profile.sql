@@ -56,8 +56,8 @@ AS (
     NVL(USERLICENSE_SOURCE_ID, 'Not Applicable') as userlicense_source_id,
     USERTYPE as usertype,
     DESCRIPTION as description,
-    SYSDATE() AS inserted_date,
-    SYSDATE() AS updated_date
+    current_timestamp() AS inserted_date,
+    current_timestamp() AS updated_date
   FROM itg_PROFILE ITG_PROF
   LEFT OUTER JOIN PROF_FUNC_NAME ON ITG_PROF.PROFILE_NAME = PROF_FUNC_NAME.KEY_VALUE
     AND ITG_PROF.COUNTRY_CODE = PROF_FUNC_NAME.COUNTRY_CODE
@@ -67,18 +67,18 @@ AS (
   SELECT 'Not Applicable' AS profile_key,
     'ZZ' AS country_code,
     'Not Applicable' AS profile_source_id,
-    SYSDATE() AS modified_dt,
+    current_timestamp() AS modified_dt,
     'Not Applicable' AS modified_id,
     'Not Applicable' AS profile_name,
     'Not Applicable' AS function_name,
-    SYSDATE() AS created_date,
+    current_timestamp() AS created_date,
     'Not Applicable' AS created_by_id,
     'Not Applicable' AS type,
     'Not Applicable' AS userlicense_source_id,
     'Not Applicable' AS usertype,
     'Not Applicable' AS description,
-    SYSDATE() AS inserted_date,
-    SYSDATE() AS updated_date
+    current_timestamp() AS inserted_date,
+    current_timestamp() AS updated_date
   ),
 trns
 AS (

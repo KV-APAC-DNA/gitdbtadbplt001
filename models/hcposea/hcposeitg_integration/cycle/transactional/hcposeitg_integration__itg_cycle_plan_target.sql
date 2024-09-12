@@ -90,7 +90,7 @@ AS (
       ELSE 0
       END AS IS_LOCKED,
     TARGET_REACHED_FLAG,
-    SYSDATE() AS inserted_date,
+    current_timestamp() AS inserted_date,
     NULL AS updated_date
   FROM sdl_hcp_osea_cycle_plan_target STG
   JOIN itg_cycle_plan ITG ON ITG.CYCLE_PLAN_SOURCE_ID = STG.CYCLE_PLAN_VOD_SOURCE_ID

@@ -34,3 +34,8 @@ sources:
       - name: v_rpt_jdes_cube
       - name: v_rpt_pos_sales_new
       - name: edw_cube_jdesii_jnj_cal_weekly_dim
+      - name: v_rpt_inventory_cube_new_inventory_analysis
+      - name: v_rpt_pos_sales
+      - name: edw_sales_mlm_fact
+      - name: edw_customer_dim
+      - name: t_rpt_inventory_cube_sunny_wholesale_ygpf   

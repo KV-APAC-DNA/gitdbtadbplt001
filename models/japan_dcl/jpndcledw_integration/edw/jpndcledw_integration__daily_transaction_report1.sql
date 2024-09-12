@@ -1,3 +1,9 @@
+{{
+    config(
+        pre_hook = "{{update_nayose_mart()}}"
+    )
+}}
+
 WITH wqwt03
 AS (
   SELECT *

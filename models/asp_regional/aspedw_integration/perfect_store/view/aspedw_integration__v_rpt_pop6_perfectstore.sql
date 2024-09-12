@@ -170,15 +170,15 @@ msl_compliance as
                         upper((pop.country)::text) = upper((kpi_wt.ctry)::text)
                     )
                     AND (
-                        upper((pop.channel)::text) = upper((kpi_wt.channel)::text)
+                        upper(rtrim(pop.channel)::text) = upper(rtrim(kpi_wt.channel)::text)
                     )
                     AND (
-                        upper((pop.retail_environment_ps)::text) = upper((kpi_wt.store_type)::text)
+                        upper(rtrim(pop.retail_environment_ps)::text) = upper(rtrim(kpi_wt.store_type)::text)
                     )
                 )
             )
-        ) ON ((((vst.popdb_id)::text = (pop.popdb_id)::text)))
-        LEFT JOIN edw_vw_pop6_salesperson usr ON ((((vst.username)::text = (usr.username)::text)))
+        ) ON (((rtrim(vst.popdb_id)::text = rtrim(pop.popdb_id)::text)))
+        LEFT JOIN edw_vw_pop6_salesperson usr ON (((rtrim(vst.username)::text = rtrim(usr.username)::text)))
         LEFT JOIN 
         (
             SELECT p.cntry_cd,
@@ -212,15 +212,15 @@ msl_compliance as
                     edw_vw_pop6_products p
                     LEFT JOIN edw_product_attr_dim pa ON (
                         (
-                            ((p.barcode)::text = (pa.ean)::text)
-                            AND ((p.cntry_cd)::text = (pa.cntry)::text)
+                            (rtrim(p.barcode)::text = rtrim(pa.ean)::text)
+                            AND (rtrim(p.cntry_cd)::text = rtrim(pa.cntry)::text)
                         )
                     )
                 )
         ) prd ON (
-            (((vst.sku_id)::text = (prd.productdb_id)::text))
+            ((rtrim(vst.sku_id)::text = rtrim(prd.productdb_id)::text))
         )
-    WHERE ((vst.field_code)::text = 'PS_MSL'::text)
+    WHERE (rtrim(vst.field_code)::text = 'PS_MSL'::text)
 ),
 oos_compliance as
 (
@@ -348,15 +348,15 @@ oos_compliance as
                         upper((pop.country)::text) = upper((kpi_wt.ctry)::text)
                     )
                     AND (
-                        upper((pop.channel)::text) = upper((kpi_wt.channel)::text)
+                        upper(rtrim(pop.channel)::text) = upper(rtrim(kpi_wt.channel)::text)
                     )
                     AND (
-                        upper((pop.retail_environment_ps)::text) = upper((kpi_wt.store_type)::text)
+                        upper(rtrim(pop.retail_environment_ps)::text) = upper(rtrim(kpi_wt.store_type)::text)
                     )
                 )
             )
-        ) ON ((((vst.popdb_id)::text = (pop.popdb_id)::text)))
-        LEFT JOIN edw_vw_pop6_salesperson usr ON ((((vst.username)::text = (usr.username)::text)))
+        ) ON (((rtrim(vst.popdb_id)::text = rtrim(pop.popdb_id)::text)))
+        LEFT JOIN edw_vw_pop6_salesperson usr ON (((rtrim(vst.username)::text = rtrim(usr.username)::text)))
         LEFT JOIN 
         (
             SELECT 
@@ -397,7 +397,7 @@ oos_compliance as
                     )
                 )
         ) prd ON (
-            (((vst.sku_id)::text = (prd.productdb_id)::text))
+            ((rtrim(vst.sku_id)::text = rtrim(prd.productdb_id)::text))
         )
         LEFT JOIN 
         (
@@ -443,14 +443,14 @@ oos_compliance as
         ) vst_oos ON 
         (
             (
-                ((vst.visit_id)::text = (vst_oos.visit_id)::text)
-                AND ((vst.sku_id)::text = (vst_oos.sku_id)::text)
+                (rtrim(vst.visit_id)::text = rtrim(vst_oos.visit_id)::text)
+                AND (rtrim(vst.sku_id)::text = rtrim(vst_oos.sku_id)::text)
                 AND (
-                    (vst.field_id)::text = (vst_oos.dependent_on_field_id)::text
+                    rtrim(vst.field_id)::text = rtrim(vst_oos.dependent_on_field_id)::text
                 )
             )
         )
-    WHERE ((vst.field_code)::text = 'PS_MSL_OOS'::text)
+    WHERE (rtrim(vst.field_code)::text = 'PS_MSL_OOS'::text)
 ),
 srv_1 as 
 (
@@ -540,9 +540,9 @@ srv_1 as
             (
                 (
                     edw_vw_pop6_visits_prod_attribute_audits vst
-                    LEFT JOIN edw_vw_pop6_store pop ON ((((vst.popdb_id)::text = (pop.popdb_id)::text)))
+                    LEFT JOIN edw_vw_pop6_store pop ON (((rtrim(vst.popdb_id)::text = rtrim(pop.popdb_id)::text)))
                 )
-                LEFT JOIN edw_vw_pop6_salesperson usr ON ((((vst.username)::text = (usr.username)::text)))
+                LEFT JOIN edw_vw_pop6_salesperson usr ON (((rtrim(vst.username)::text = rtrim(usr.username)::text)))
             )
             LEFT JOIN (
                 SELECT DISTINCT NULL::text AS brand_l4,
@@ -566,12 +566,12 @@ srv_1 as
                 (
                     CASE
                         WHEN (
-                            (vst.product_attribute)::text = 'PS Category Segment'::text
+                            rtrim(vst.product_attribute)::text = 'PS Category Segment'::text
                         ) THEN (
-                            (vst.product_attribute_value)::text = (prd.ps_categorysegement)::text
+                            rtrim(vst.product_attribute_value)::text = rtrim(prd.ps_categorysegement)::text
                         )
                         ELSE (
-                            (vst.product_attribute_value)::text = prd.brand_l4
+                            rtrim(vst.product_attribute_value)::text = rtrim(prd.brand_l4)
                         )
                     END
                 )
@@ -703,11 +703,11 @@ survey_response_1 as
                     )
                 )
                 AND (
-                    upper((kpi_wt.channel)::text) = upper((srv.channel)::text)
+                    upper(rtrim(kpi_wt.channel)::text) = upper(rtrim(srv.channel)::text)
                 )
             )
             AND (
-                upper((kpi_wt.store_type)::text) = upper((srv.storetype)::text)
+                upper(rtrim(kpi_wt.store_type)::text) = upper(rtrim(srv.storetype)::text)
             )
         )
     )
@@ -722,7 +722,7 @@ survey_response_1 as
             pop6_kpi2data_mapping.end_date
         FROM pop6_kpi2data_mapping
         WHERE (
-                (pop6_kpi2data_mapping.data_type)::text = 'Question'::text
+                rtrim(pop6_kpi2data_mapping.data_type)::text = 'Question'::text
             )
     ) ques ON 
     (
@@ -817,15 +817,15 @@ survey_response_1 as
                         )
                     )
                     AND (
-                        upper((mkt_shr.store_type)::text) = upper((srv.storetype)::text)
+                        upper(rtrim(mkt_shr.store_type)::text) = upper(rtrim(srv.storetype)::text)
                     )
                 )
                 AND (
-                    upper((mkt_shr.category)::text) = upper((srv.category)::text)
+                    upper(rtrim(mkt_shr.category)::text) = upper(rtrim(srv.category)::text)
                 )
             )
             AND (
-                upper((mkt_shr.segment)::text) = upper((srv.segment)::text)
+                upper(rtrim(mkt_shr.segment)::text) = upper(rtrim(srv.segment)::text)
             )
         )
     )
@@ -995,9 +995,9 @@ srv_2 as
                 (
                     (
                         edw_vw_pop6_visits_display vst
-                        LEFT JOIN edw_vw_pop6_store pop ON ((((vst.popdb_id)::text = (pop.popdb_id)::text)))
+                        LEFT JOIN edw_vw_pop6_store pop ON (((rtrim(vst.popdb_id)::text = rtrim(pop.popdb_id)::text)))
                     )
-                    LEFT JOIN edw_vw_pop6_salesperson usr ON ((((vst.username)::text = (usr.username)::text)))
+                    LEFT JOIN edw_vw_pop6_salesperson usr ON (((rtrim(vst.username)::text = rtrim(usr.username)::text)))
                 )
                 LEFT JOIN (
                     SELECT DISTINCT NULL::text AS brand_l4,
@@ -1021,12 +1021,12 @@ srv_2 as
                     (
                         CASE
                             WHEN (
-                                (vst.product_attribute)::text = 'PS Category Segment'::text
+                                rtrim(vst.product_attribute)::text = 'PS Category Segment'::text
                             ) THEN (
-                                (vst.product_attribute_value)::text = (prd.ps_categorysegement)::text
+                                rtrim(vst.product_attribute_value)::text = rtrim(prd.ps_categorysegement)::text
                             )
                             ELSE (
-                                (vst.product_attribute_value)::text = prd.brand_l4
+                                rtrim(vst.product_attribute_value)::text = rtrim(prd.brand_l4)
                             )
                         END
                     )
@@ -1077,7 +1077,7 @@ srv_2 as
                     edw_vw_pop6_visits_display.cancellation_note
                 FROM edw_vw_pop6_visits_display
                 WHERE (
-                        upper((edw_vw_pop6_visits_display.field_type)::text) <> 'PHOTO'::text
+                        upper(rtrim(edw_vw_pop6_visits_display.field_type)::text) <> 'PHOTO'::text
                     )
             ) rej ON (
                 (
@@ -1104,17 +1104,17 @@ srv_2 as
                 (
                     (
                         (
-                            ((vst.field_code)::text <> 'DIS_NC_REASON'::text)
-                            AND ((vst.field_code)::text <> 'Photo_Display'::text)
+                            (rtrim(vst.field_code)::text <> 'DIS_NC_REASON'::text)
+                            AND (rtrim(vst.field_code)::text <> 'Photo_Display'::text)
                         )
-                        AND ((vst.field_code)::text <> 'Photo_Promo'::text)
+                        AND (rtrim(vst.field_code)::text <> 'Photo_Promo'::text)
                     )
                     AND ((vst.cntry_cd)::text = 'KR'::text)
                 )
                 OR (
                     (
-                        ((vst.field_type)::text = 'Yes/No'::text)
-                        OR ((vst.field_type)::text = 'Yes_No'::text)
+                        (rtrim(vst.field_type)::text = 'Yes/No'::text)
+                        OR (rtrim(vst.field_type)::text = 'Yes_No'::text)
                     )
                     AND ((vst.cntry_cd)::text <> 'KR'::text)
                 )
@@ -1224,11 +1224,11 @@ survey_response_2 as
                         )
                     )
                     AND (
-                        upper((kpi_wt.channel)::text) = upper((srv.channel)::text)
+                        upper(rtrim(kpi_wt.channel)::text) = upper(rtrim(srv.channel)::text)
                     )
                 )
                 AND (
-                    upper((kpi_wt.store_type)::text) = upper((srv.storetype)::text)
+                    upper(rtrim(kpi_wt.store_type)::text) = upper(rtrim(srv.storetype)::text)
                 )
             )
         )
@@ -1243,7 +1243,7 @@ survey_response_2 as
                 pop6_kpi2data_mapping.end_date
             FROM pop6_kpi2data_mapping
             WHERE (
-                    (pop6_kpi2data_mapping.data_type)::text = 'Question'::text
+                    rtrim(pop6_kpi2data_mapping.data_type)::text = 'Question'::text
                 )
         ) ques ON 
         (
@@ -1276,7 +1276,7 @@ survey_response_2 as
                 pop6_kpi2data_mapping.end_date
             FROM pop6_kpi2data_mapping
             WHERE (
-                    (pop6_kpi2data_mapping.data_type)::text = 'Yes/No Flag'::text
+                    rtrim(pop6_kpi2data_mapping.data_type)::text = 'Yes/No Flag'::text
                 )
         ) flag ON 
         (
@@ -1331,18 +1331,18 @@ survey_response_2 as
                                 ((mkt_shr.kpi_name)::text = (srv.kpi_name)::text)
                                 AND ((mkt_shr.ctry)::text = (srv.country)::text)
                             )
-                            AND ((mkt_shr.channel)::text = (srv.channel)::text)
+                            AND (rtrim(mkt_shr.channel)::text = rtrim(srv.channel)::text)
                         )
                         AND (
-                            upper((mkt_shr.store_type)::text) = upper((srv.storetype)::text)
+                            upper(rtrim(mkt_shr.store_type)::text) = upper(rtrim(srv.storetype)::text)
                         )
                     )
                     AND (
-                        upper((mkt_shr.category)::text) = upper((srv.category)::text)
+                        upper(rtrim(mkt_shr.category)::text) = upper(rtrim(srv.category)::text)
                     )
                 )
                 AND (
-                    upper((mkt_shr.segment)::text) = upper((srv.segment)::text)
+                    upper(rtrim(mkt_shr.segment)::text) = upper(rtrim(srv.segment)::text)
                 )
             )
         )

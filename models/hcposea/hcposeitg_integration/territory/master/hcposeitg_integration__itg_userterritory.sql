@@ -37,8 +37,8 @@ select user_territory_source_id,
        last_modified_date,
        last_modified_by_id,
        '' as country_code,
-       sysdate() as inserted_date,
-       sysdate() as updated_date
+       current_timestamp() as inserted_date,
+       current_timestamp() as updated_date
 from sdl_hcp_osea_userterritory
 ),
 

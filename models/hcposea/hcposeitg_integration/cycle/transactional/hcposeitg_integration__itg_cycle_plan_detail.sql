@@ -80,7 +80,7 @@ AS (
         THEN 0
       ELSE 0
       END AS IS_LOCKED,
-    SYSDATE() AS inserted_date,
+    current_timestamp() AS inserted_date,
     NULL AS updated_date,
     STG.Adoption_Style
   FROM sdl_hcp_OSEA_CYCLE_PLAN_DETAIL STG

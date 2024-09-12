@@ -37,8 +37,8 @@ AS (
         ORG_HIER.LEVEL_8_TERRITORY_NAME AS ORGANIZATION_L8_NAME,
         ORG_HIER.LEVEL_9_TERRITORY_CODE AS ORGANIZATION_L9_CODE,
         ORG_HIER.LEVEL_9_TERRITORY_NAME AS ORGANIZATION_L9_NAME,
-        sysdate() AS INSERTED_DATE,
-        sysdate() AS UPDATED_DATE
+        current_timestamp() AS INSERTED_DATE,
+        current_timestamp() AS UPDATED_DATE
     FROM
         ---- ORG HIERARCHY FOR TH
         (
@@ -307,8 +307,8 @@ AS (
         ORG_HIER.LEVEL_8_TERRITORY_NAME AS ORGANIZATION_L8_NAME,
         ORG_HIER.LEVEL_9_TERRITORY_CODE AS ORGANIZATION_L9_CODE,
         ORG_HIER.LEVEL_9_TERRITORY_NAME AS ORGANIZATION_L9_NAME,
-        sysdate(),
-        sysdate()
+        current_timestamp(),
+        current_timestamp()
     FROM
         ---- ORG HIERARCHY FOR VN
         (
@@ -678,8 +678,8 @@ AS (
         ORG_HIER.LEVEL_8_TERRITORY_NAME AS ORGANIZATION_L8_NAME,
         ORG_HIER.LEVEL_9_TERRITORY_CODE AS ORGANIZATION_L9_CODE,
         ORG_HIER.LEVEL_9_TERRITORY_NAME AS ORGANIZATION_L9_NAME,
-        sysdate(),
-        sysdate()
+        current_timestamp(),
+        current_timestamp()
     FROM
         ---- ORG HIERARCHY FOR PH 
         (
@@ -948,8 +948,8 @@ AS (
         ORG_HIER.LEVEL_8_TERRITORY_NAME AS ORGANIZATION_L8_NAME,
         ORG_HIER.LEVEL_9_TERRITORY_CODE AS ORGANIZATION_L9_CODE,
         ORG_HIER.LEVEL_9_TERRITORY_NAME AS ORGANIZATION_L9_NAME,
-        sysdate(),
-        sysdate()
+        current_timestamp(),
+        current_timestamp()
     FROM
         ---- ORG HIERARCHY FOR SG
         (
@@ -1218,8 +1218,8 @@ AS (
         ORG_HIER.LEVEL_8_TERRITORY_NAME AS ORGANIZATION_L8_NAME,
         ORG_HIER.LEVEL_9_TERRITORY_CODE AS ORGANIZATION_L9_CODE,
         ORG_HIER.LEVEL_9_TERRITORY_NAME AS ORGANIZATION_L9_NAME,
-        sysdate(),
-        sysdate()
+        current_timestamp(),
+        current_timestamp()
     FROM
         ---- ORG HIERARCHY FOR ID
         (
@@ -1589,8 +1589,8 @@ AS (
         ORG_HIER.LEVEL_8_TERRITORY_NAME AS ORGANIZATION_L8_NAME,
         ORG_HIER.LEVEL_9_TERRITORY_CODE AS ORGANIZATION_L9_CODE,
         ORG_HIER.LEVEL_9_TERRITORY_NAME AS ORGANIZATION_L9_NAME,
-        sysdate(),
-        sysdate()
+        current_timestamp(),
+        current_timestamp()
     FROM
         ---- ORG HIERARCHY FOR MY
         (

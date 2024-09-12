@@ -344,8 +344,8 @@ AS (
                     THEN 'Not Available'
                 ELSE IQ.COMMON_ORGANIZATION_L3_NAME
                 END, 'Not Available') AS COMMON_ORGANIZATION_L3_NAME,
-        SYSDATE(),
-        SYSDATE(),
+        current_timestamp(),
+        current_timestamp(),
         IQ.MSL_PRIMARY_RESPONSIBLE_TA,
         IQ.MSL_SECONDARY_RESPONSIBLE_TA,
         IQ.city,
@@ -544,7 +544,9 @@ AS (
                 ROW_NUMBER() OVER (
                     PARTITION BY EQ.EMPLOYEE_SOURCE_ID ORDER BY EQ.EMPLOYEE_SOURCE_ID,
                         EQ.RNK,
-                        EQ.WWID
+                        EQ.WWID,
+                        EQ.MY_ORGANIZATION_CODE,
+                        EQ.MY_ORGANIZATION_NAME
                     ) AS ROW_NUM
             FROM wrk_dim_employee_temp EQ
             WHERE LOWER(EQ.USER_LICENSE) != 'not applicable for regional service cloud'
@@ -557,7 +559,7 @@ AS (
     SELECT 'Not Applicable',
         'ZZ',
         'Not Applicable',
-        SYSDATE(),
+        current_timestamp(),
         'Not Applicable',
         'Not Applicable',
         'Not Applicable',
@@ -580,11 +582,11 @@ AS (
         'Not Applicable',
         0,
         'Not Applicable',
-        SYSDATE(),
+        current_timestamp(),
         'Not Applicable',
         'Not Applicable',
         'Not Applicable',
-        SYSDATE(),
+        current_timestamp(),
         'Not Applicable',
         'Not Applicable',
         'Not Applicable',
@@ -616,8 +618,8 @@ AS (
         'Not Applicable',
         'Not Applicable',
         'Not Applicable',
-        SYSDATE(),
-        SYSDATE(),
+        current_timestamp(),
+        current_timestamp(),
         'Not Applicable',
         'Not Applicable',
         'Not Applicable',

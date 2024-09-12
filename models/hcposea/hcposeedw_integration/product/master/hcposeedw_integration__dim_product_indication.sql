@@ -57,8 +57,8 @@ T1 AS
         ITG_PROD.SHC_Strategic_Group,
         ITG_PROD.SHC_Franchise,
         ITG_PROD.SHC_Brand,
-        SYSDATE() AS INSERTED_DATE,
-        SYSDATE() AS UPDATED_DATE
+        current_timestamp() AS INSERTED_DATE,
+        current_timestamp() AS UPDATED_DATE
     FROM itg_product ITG_PROD
     LEFT OUTER JOIN itg_recordtype ITG_REC ON ITG_PROD.RECORD_TYPE_SOURCE_ID = ITG_REC.RECORD_TYPE_SOURCE_ID
         AND ITG_PROD.COUNTRY_CODE = ITG_REC.COUNTRY_CODE
@@ -70,7 +70,7 @@ T2 AS
     SELECT 'Not Applicable',
         'ZZ',
         'Not Applicable',
-        SYSDATE(),
+        current_timestamp(),
         'Not Applicable',
         'Not Applicable',
         'Not Applicable',
@@ -109,8 +109,8 @@ T2 AS
         'Not Applicable',
         'Not Applicable',
         'Not Applicable',
-        SYSDATE(),
-        SYSDATE()
+        current_timestamp(),
+        current_timestamp()
     ),
 JOINED AS
 (

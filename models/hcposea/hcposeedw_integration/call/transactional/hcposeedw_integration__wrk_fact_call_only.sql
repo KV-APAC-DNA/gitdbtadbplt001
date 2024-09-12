@@ -158,7 +158,7 @@ AS (
             AND ci.is_deleted = '0'
             AND (ci.msl_interaction_type IS NULL)
             AND ci.call_date > (
-                SELECT DATE_TRUNC(year, dateadd(day,- retention_years * 365,sysdate()))
+                SELECT DATE_TRUNC(year, dateadd(day,- retention_years * 365,current_timestamp()))
                 FROM itg_lookup_retention_period
                 WHERE upper(table_name) = 'FACT_CALL_DETAIL'
                 )
@@ -366,8 +366,8 @@ AS (
         nvl(remote_meeting_key, 'Not Applicable') AS remote_meeting_key,
         C1.veeva_remote_meeting_id,
         ------ new columns ends
-        sysdate() inserted_date,
-        sysdate() updated_date
+        current_timestamp() inserted_date,
+        current_timestamp() updated_date
     FROM (
         SELECT c1.call_source_id,
             c1.call_source_id AS parent_call_source_id,
@@ -646,8 +646,8 @@ AS (
         nvl(remote_meeting_key, 'Not Applicable') AS remote_meeting_key,
         C1.veeva_remote_meeting_id,
         ------ new columns ends
-        sysdate(),
-        sysdate()
+        current_timestamp(),
+        current_timestamp()
     FROM (
         SELECT c1.call_source_id,
             c1.call_source_id AS parent_call_source_id,

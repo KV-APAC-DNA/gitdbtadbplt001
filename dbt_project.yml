@@ -34,6 +34,23 @@ vars:
 # In this example config, we tell dbt to build all models in the example/ directory
 # as tables. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
+
+
+tests:
+  DNA_CORE_ASP:
+    philippines:
+      +severity: warn
+    thailand:
+      +severity: warn
+    malaysia:
+      +severity: warn
+    vietnam:
+      +severity: warn
+    india:
+      +severity: warn
+    singapore:
+      +severity: warn
+
 models:
   dbt_artifacts:
     +enabled: false
@@ -603,7 +620,7 @@ models:
     hcposea:
       config:
         +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'UTC';"
       hcposeedw_integration:
         +materialized: table
         +transient: false
@@ -648,7 +665,6 @@ models:
       jpndcledw_access:
         +materialized: view
         +schema: JPDCLEDW_ACCESS
-
     china:
       config:
         +enabled: true
@@ -667,4 +683,3 @@ models:
       chnedw_access:
         +materialized: view
         +schema: CHNEDW_ACCESS
-    

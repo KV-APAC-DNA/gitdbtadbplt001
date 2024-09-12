@@ -67,8 +67,8 @@ AS (
     T.TOTAL_TIME_OFF,
     T.SM_REASON,
     nvl(U.COUNTRY_CODE, 'ZZ') COUNTRY_CODE,
-    SYSDATE() AS inserted_date,
-    SYSDATE() AS updated_date,
+    current_timestamp() AS inserted_date,
+    current_timestamp() AS updated_date,
     T.Approval_Status,
     T.Owners_Manager_Email_id
   FROM sdl_hcp_osea_time_off_territory T,

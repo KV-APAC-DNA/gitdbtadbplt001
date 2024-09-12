@@ -187,7 +187,7 @@ as (
         REMARKS,
         ACCOUNT_CLASSIFICATION,
         CUSTOMER_CODE_2,
-        SYSDATE() as inserted_date,
+        current_timestamp() as inserted_date,
         NULL as updated_date,
         PRIMARY_TA,
         SECONDARY_TA,
