@@ -646,7 +646,20 @@ final as (
                       (
                         (itg_mds_ph_gt_customer.active):: text = ('Y' :: character varying):: text
                       )
-                  ) store ON (
+                  ) store ON 
+                --   (
+                --                 (
+                --                     upper(
+                --                        replace(trim(
+                --                             (store_trans.store_code))::text,'	',''
+                --                         )
+                --                     ) = upper(
+                --                         replace(rtrim(store.code),'	','')::text
+                --                     )
+                --                 )
+                --             )
+
+                            (
                                 (
                                     upper(
                                        regexp_replace(trim(
@@ -656,7 +669,9 @@ final as (
                                         regexp_replace(rtrim(store.code),'\t','')::text
                                     )
                                 )
-                            
+                            )
+
+
                 ) 
                 LEFT JOIN (
                   SELECT 
