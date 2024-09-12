@@ -423,6 +423,7 @@ sources:
               store_failures: true
               schema: thawks_integration
     - name: sdl_th_gt_route
+      tags: ["th_gt_files","ingestion"]
       tests:
         - test_null:
               not_null_columns: ["filename","saleunit","routeid","routesale","last_updated_date"]
@@ -459,6 +460,7 @@ sources:
                 store_failures: true
                 schema: thawks_integration
     - name: sdl_th_gt_route_detail
+      tags: ["th_gt_files","ingestion"]
       tests:
         - test_null:
               not_null_columns: ["filename","routeid","routeno","saleunit","customerid","created_date"]
@@ -495,6 +497,7 @@ sources:
                 store_failures: true
                 schema: thawks_integration
     - name: sdl_th_gt_sales_order
+      tags: ["th_gt_files","ingestion"]
       tests:
         - test_null:
               not_null_columns: ["filename","saleunit","orderid","customer_id","productid","sales_order_line_no"]
