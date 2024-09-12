@@ -11,7 +11,6 @@ sources:
       identifier: false
     tables:
     - name: TRATBL_sdl_in_retailer__null_test
-      # tags: ["in_sdlitg_gtsales","ingestion"]
     - name: TRATBL_sdl_in_retailer__duplicate_test
     - name: TRATBL_sdl_sss_scorecard_data__null_test
     - name: TRATBL_sdl_in_perfectstore_promo__null_test
@@ -27,34 +26,28 @@ sources:
     - name: TRATBL_sdl_in_perfectstore_paid_display__duplicate_test
     - name: TRATBL_sdl_in_perfectstore_paid_display__date_format_test
     - name: TRATBL_sdl_rrl_townmaster__null_test
-        # tags: ["in_rt_sales","ingestion"]
     - name: TRATBL_sdl_rrl_usermaster__null_test
     - name: TRATBL_sdl_rrl_retailervalueclass__null_test
     - name: TRATBL_sdl_rrl_retailercategory__null_test
     - name: TRATBL_sdl_in_retailer_route__null_test
     - name: TRATBL_sdl_in_retailer_route__duplicate_test
-
     - name: TRATBL_sdl_in_rrsrdistributor__null_test
     - name: TRATBL_sdl_in_rrsrdistributor__duplicate_test
     - name: TRATBL_sdl_in_rrsrheader__null_test
     - name: TRATBL_sdl_in_rrsrheader__duplicate_test
     - name: TRATBL_sdl_in_rtlsalesman__null_test
-        # tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
     - name: TRATBL_sdl_in_rtlsalesman__duplicate_test  
     - name: TRATBL_sdl_in_rtldistributor__null_test
     - name: TRATBL_sdl_in_rtldistributor__duplicate_test
     - name: TRATBL_sdl_in_rtlheader__null_test
     - name: TRATBL_sdl_in_rtlheader__duplicate_test
-
     - name: TRATBL_sdl_in_route__null_test
     - name: TRATBL_sdl_in_route__duplicate_test
     - name: TRATBL_sdl_in_salesman__null_test
     - name: TRATBL_sdl_in_salesman__duplicate_test
     - name: TRATBL_sdl_in_salesman_route__null_test
     - name: TRATBL_sdl_in_salesman_route__duplicate_test
-
     - name: TRATBL_sdl_in_rretailergeoextension__null_test
-        # tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
     - name: TRATBL_sdl_in_rretailergeoextension__duplicate_test
 
       
