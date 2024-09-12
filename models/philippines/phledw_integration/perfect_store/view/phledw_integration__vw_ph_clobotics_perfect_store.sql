@@ -298,11 +298,11 @@ final as (
                   ) store ON (
                     (
                       upper(
-                        rtrim(
-                          (task.store_code):: text
+                        trim(
+                          rtrim(task.store_code):: text,'	'
                         )
                       ) = upper(
-                        rtrim(store.code):: text
+                        trim(rtrim(store.code),'	'):: text
                       )
                     )
                   )
@@ -649,11 +649,11 @@ final as (
                   ) store ON (
                     (
                       upper(
-                        rtrim(
-                          (store_trans.store_code):: text
+                        trim(
+                          rtrim(store_trans.store_code):: text,'	'
                         )
-                      ) = upper(
-                        rtrim(store.code):: text
+                      ) = upper(trim(
+                        rtrim(store.code):: text,'	')
                       )
                     )
                   )
@@ -992,11 +992,11 @@ final as (
               ) store ON (
                 (
                   upper(
-                    rtrim(
+                    trim(rtrim(
                       (survey.store_code):: text
-                    )
+                    ),'	')
                   ) = upper(
-                    rtrim(store.code):: text
+                    trim(rtrim(store.code):: text,'	')
                   )
                 )
               )
