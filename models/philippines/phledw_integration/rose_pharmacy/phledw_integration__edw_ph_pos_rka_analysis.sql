@@ -92,10 +92,10 @@ select distinct
     null as pos_item_prc,
     null as pos_tax,
     null as pos_nts,
-    ((cast(pos.qty as numeric(20,4))*cast(prod.jnj_pc_per_cust_unit as numeric(20,4)))*cast(price.lst_price_unit as numeric(20,4)))*(12.0 / 112.0) as jj_vat_amt, as jj_vat_amt,
+    ((cast(pos.qty as numeric(20,4))*cast(prod.jnj_pc_per_cust_unit as numeric(20,4)))*cast(price.lst_price_unit as numeric(20,4)))*(12.0 / 112.0) as jj_vat_amt, 
 (cast(pos.qty as numeric(20,4))*cast(prod.jnj_pc_per_cust_unit as numeric(20,4)))*cast(price.lst_price_unit as numeric(20,4)) as jj_gts,
-((cast(pos.qty as numeric(20,4))*cast(prod.jnj_pc_per_cust_unit as numeric(20,4)))*cast(price.lst_price_unit as numeric(20,4)))*(100.0 / 112.0) as jj_nts,
-((cast(pos.qty as numeric(20,4))*cast(prod.jnj_pc_per_cust_unit as numeric(20,4)))*cast(price.lst_price_unit as numeric(20,4)))*(12.0 / 112.0) as jj_vat_amt
+((cast(pos.qty as numeric(20,4))*cast(prod.jnj_pc_per_cust_unit as numeric(20,4)))*cast(price.lst_price_unit as numeric(20,4)))*(100.0 / 112.0) as jj_nts
+
 
 ,veomd.sap_prod_sgmt_cd as sap_prod_sgmt_cd
 ,veomd.sap_base_uom_cd as sap_base_uom_cd
