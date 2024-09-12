@@ -647,16 +647,16 @@ final as (
                         (itg_mds_ph_gt_customer.active):: text = ('Y' :: character varying):: text
                       )
                   ) store ON (
-                    (
-                      upper(
-                        trim(
-                          rtrim(store_trans.store_code):: text,'	'
-                        )
-                      ) = upper(trim(
-                        rtrim(store.code):: text,'	')
-                      )
-                    )
-                  )
+                                (
+                                    upper(
+                                       trim(rtrim(
+                                            (store_trans.store_code))::text,'	'
+                                        )
+                                    ) = upper(
+                                        trim(rtrim(store.code),'	')::text
+                                    )
+                                )
+                            )
                 ) 
                 LEFT JOIN (
                   SELECT 
