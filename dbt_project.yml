@@ -46,6 +46,10 @@ tests:
       +severity: warn
     vietnam:
       +severity: warn
+    india:
+      +severity: warn
+    singapore:
+      +severity: warn
 
 models:
   dbt_artifacts:
@@ -679,4 +683,3 @@ models:
       chnedw_access:
         +materialized: view
         +schema: CHNEDW_ACCESS
-

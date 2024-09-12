@@ -21,7 +21,8 @@ final as
         createddate::timestamp_ntz(9) as createddate,
         syncid::number(38,0) as syncid,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        file_name::varchar(255) as file_name
     from source
     {% if is_incremental() %}
     --this filter will only be applied on an incremental run
