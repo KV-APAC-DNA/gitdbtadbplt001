@@ -43,7 +43,7 @@ final as
     rowid,
     filename,
     crt_dttm,
-    updt_dttm,
+    updt_dttm
     
 from trans
 )

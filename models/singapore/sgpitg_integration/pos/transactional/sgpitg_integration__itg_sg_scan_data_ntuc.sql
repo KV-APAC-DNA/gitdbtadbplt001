@@ -14,7 +14,7 @@ with source as (
     (
         select distinct file_name from 
         {{ source('sgpwks_integration', 'TRATBL_sdl_sg_scan_data_ntuc__null_test') }}
-    )
+    ) qualify rnk = 1
 ),
 
 edw_calendar_dim as (
