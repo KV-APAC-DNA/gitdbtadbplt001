@@ -193,7 +193,7 @@ select distinct
 ,null as ash_nm
 ,null as pms_nm
     from ph_pos_rka_rose_pharma as pos
-     left  join edw_vw_os_time_dim time_dim on (pos.jj_month_id=time_dim.mnth_id)
+     left  join (select distinct mnth_id,qrtr_no from EDW_VW_OS_TIME_DIM group by 1,2) time_dim on (pos.jj_month_id=time_dim.mnth_id)
      left   join ph_rosepharma_products prod on (pos.sku=prod.item_cd and pos.jj_month_id=prod.mnth_id)
      left  join ph_rosepharma_customers cust on (pos.branch_code=cust.brnch_cd)
      left   join price_list price on (prod.sap_item_cd=price.item_cd and prod.mnth_id=price.jj_mnth_id and price.active='Y') 
