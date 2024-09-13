@@ -5,11 +5,11 @@
                     UPDATE {{ ref('jpndcledw_integration__item_jizen_bunkai_w06') }}
                     SET KOSERITSU = {{ ref('jpndcledw_integration__item_jizen_bunkai_w06') }}.KOSERITSU + (
                             SELECT ROUND(S2.SA * (S2.SURYO / S2.KOSECODE_CNT), 8)
-                            -- FROM {{ ref('jpndcledw_integration__item_jizen_bunkai_w15') }} S1
+                            -- FROM {{ ref('jpndcledw_integration__item_jizen_bunkai_w9') }} S1
                             -- WHERE S1.ITEMCODE = {{ ref('jpndcledw_integration__item_jizen_bunkai_w06') }}.ITEMCODE
                             --     AND S1.KOSECODE = {{ ref('jpndcledw_integration__item_jizen_bunkai_w06') }}.KOSECODE
                             )
-                    FROM {{ ref('jpndcledw_integration__item_jizen_bunkai_w15') }} S2
+                    FROM {{ ref('jpndcledw_integration__item_jizen_bunkai_w9') }} S2
                     WHERE S2.ITEMCODE = {{ ref('jpndcledw_integration__item_jizen_bunkai_w06') }}.ITEMCODE
                         AND S2.KOSECODE = {{ ref('jpndcledw_integration__item_jizen_bunkai_w06') }}.KOSECODE;
                     "
