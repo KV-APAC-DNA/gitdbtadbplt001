@@ -4,7 +4,7 @@
         incremental_strategy= "append",
         unique_key=  ['ise_id', 'ise_desc'],
         pre_hook= "{% if is_incremental()%} 
-        delete from {{this}} where (ise_id, ise_desc) in ( select ise_id, ise_desc from {{ source('vnmsdl_raw', 'sdl_vn_interface_ise_header') }} where file_name not in (
+        delete from {{this}} where (ise_id, ise_desc) in ( select ise_id, ise_desc from {{ source('vnmsdl_raw', 'sdl_vn_interface_ise_header') }} where filename not in (
         select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_interface_ise_header__null_test')}}
         union all
         select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_interface_ise_header__duplicate_test')}}
