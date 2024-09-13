@@ -52,7 +52,8 @@ final as
 	NULL::number(18,0) as nwczone,
 	NULL::number(18,0) as nwcterritory, 
 	current_timestamp()::timestamp_ntz(9) AS crt_dttm,
-	current_timestamp()::timestamp_ntz(9) AS updt_dttm
+	current_timestamp()::timestamp_ntz(9) AS updt_dttm,
+    null as file_name
 	FROM
 	(Select distinct * from source) src
 )

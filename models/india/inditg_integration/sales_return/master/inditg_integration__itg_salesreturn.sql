@@ -70,7 +70,8 @@ final as
     prdselrateaftertax::number(18,6) as prdselrateaftertax,
     crt_dttm::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm,
-    modifieddate::timestamp_ntz(9) as modifieddate
+    modifieddate::timestamp_ntz(9) as modifieddate,
+    file_name::varchar(50) as file_name
     from source
     {% if is_incremental() %}
     --this filter will only be applied on an incremental run
