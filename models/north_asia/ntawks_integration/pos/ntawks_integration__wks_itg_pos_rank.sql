@@ -5,6 +5,9 @@ with sdl_kr_pos_eland as
 sdl_kr_pos_lotte_mart as 
 (
     select * from {{ source('ntasdl_raw','sdl_kr_pos_lotte_mart') }}
+    where filename not in (
+    select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_pos_lotte_mart__null_test') }}
+    )
 ),
 sdl_kr_pos_homeplus_online as 
 (
@@ -29,10 +32,16 @@ sdl_kr_pos_lotte_super as
 sdl_kr_pos_olive_young as 
 (
     select * from {{ source('ntasdl_raw','sdl_kr_pos_olive_young') }}
+    where filename not in (
+            select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_pos_olive_young__null_test') }}
+    )
 ),
 sdl_kr_pos_lalavla as 
 (
     select * from {{ source('ntasdl_raw','sdl_kr_pos_lalavla') }}
+    where filename not in (
+            select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_pos_lalavla__null_test') }}
+    )
 ),
 eland as 
 (

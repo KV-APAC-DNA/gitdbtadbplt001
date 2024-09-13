@@ -7,7 +7,7 @@
 					where trim(product_ranking_date)||trim(category_depth1)||trim(category_depth2)||trim(category_depth3)||trim(coupang_sku_id)||trim(coupang_sku_name)||trim(ranking)||trim(data_granularity)
 					in
 					(select distinct trim(product_ranking_date)||trim(category_depth1)||trim(category_depth2)||trim(category_depth3)||trim(coupang_sku_id)||trim(coupang_sku_name)||trim(ranking)||trim(data_granularity)
-					from  where filename  not in (
+					from {{ source('ntasdl_raw', 'sdl_kr_coupang_product_ranking_weekly') }} where file_name  not in (
                     select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_product_ranking_weekly__null_test') }}
                     union all
                     select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_product_ranking_weekly__test_date_format_odd_eve_leap') }}
@@ -21,7 +21,7 @@ with source as (
     trim(category_depth2),trim(category_depth3),trim(coupang_sku_id),trim(coupang_sku_name),
     trim(ranking),trim(data_granularity) order by file_name desc) from 
     {{ source('ntasdl_raw', 'sdl_kr_coupang_product_ranking_weekly') }} 
-    where filename  not in (
+    where file_name not in (
         select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_product_ranking_weekly__null_test') }}
         union all
         select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_product_ranking_weekly__test_date_format_odd_eve_leap') }}

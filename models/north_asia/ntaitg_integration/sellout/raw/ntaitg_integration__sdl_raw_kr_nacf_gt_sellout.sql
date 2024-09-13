@@ -7,6 +7,11 @@
 
 with sdl_kr_nacf_gt_sellout as (
     select * from {{ source('ntasdl_raw', 'sdl_kr_nacf_gt_sellout') }}
+    where file_name not in (
+        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_nacf_gt_sellout__null_test') }}
+        union all
+        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_nacf_gt_sellout__lookup_test') }}
+    )
 ),
 final as (
 SELECT dstr_nm,

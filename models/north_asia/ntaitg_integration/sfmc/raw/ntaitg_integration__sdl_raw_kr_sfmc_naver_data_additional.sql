@@ -6,6 +6,13 @@
 
 with source as (
      select * from {{ source('ntasdl_raw','sdl_kr_sfmc_naver_data_additional') }} 
+     where file_name not in
+     (select distinct file_name from 
+     {{ source('ntawks_integration', 'TRATBL_sdl_kr_sfmc_naver_data_additional__duplicate_test') }}
+     union all
+     select distinct file_name from 
+     {{ source('ntawks_integration', 'TRATBL_sdl_kr_sfmc_naver_data_additional__null_test') }}
+     )
 ),
 final as (
     select * from source
