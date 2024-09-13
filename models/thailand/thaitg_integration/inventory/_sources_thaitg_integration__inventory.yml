@@ -49,7 +49,7 @@ sources:
                 store_failures: true
                 schema: thawks_integration
     - name: sdl_cbd_gt_inventory_report_fact
-      tags: ["cambodia_file_ingestion"]
+      tags: ["cambodia_file_ingestion","ingestion"]
       tests:
                 - test_null:
                       not_null_columns: ["date","product_code","product_name","filename"]
