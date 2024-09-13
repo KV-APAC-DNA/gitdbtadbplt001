@@ -533,6 +533,7 @@ sources:
                 store_failures: true
                 schema: thawks_integration
     - name: sdl_cbd_gt_sales_report_fact
+      tags: ["cambodia_file_ingestion","ingestion"]
       tests:
         - test_null:
               not_null_columns: ["filename","billing_date","order_no","sales_rep_no","customer_code","product_code","batch_no"]
@@ -566,6 +567,7 @@ sources:
               store_failures: true
               schema: thawks_integration
     - name: sdl_la_gt_sales_order_fact
+      tags: ["laos_file_ingestion","ingestion"]
       tests:
         - test_null:
               not_null_columns: ["filename","orderid","orderdate","saleunit","customer_id","productid","no"]
@@ -631,6 +633,7 @@ sources:
               store_failures: true
               schema: thawks_integration
     - name: sdl_la_gt_route_header
+      tags: ["laos_file_ingestion","ingestion"]
       tests:
         - test_null:
               not_null_columns: ["filename","route_id","routesale","saleunit","last_updated_date"]
