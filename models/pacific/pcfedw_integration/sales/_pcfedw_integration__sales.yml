@@ -123,4 +123,4 @@ models:
   - name: pcfedw_integration__edw_demand_forecast_snapshot_history
     config:
       alias: edw_demand_forecast_snapshot_history
-      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","transformation"]
+      tags: ["j_pac_sap_bw_weekly_forecast_file_history","transformation"]
