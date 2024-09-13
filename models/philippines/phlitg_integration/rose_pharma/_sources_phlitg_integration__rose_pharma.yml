@@ -9,6 +9,7 @@ sources:
     tables:
       - name: sdl_pos_rks_rose_pharma
         tags: ["ph_rks_rose_pharma","ingestion"]
+      - name : sdl_pos_rks_rose_pharma_consumer  
 
       - name : sdl_rosepharmacy_customer_mapping 
       - name : sdl_rosepharmacy_product_mapping

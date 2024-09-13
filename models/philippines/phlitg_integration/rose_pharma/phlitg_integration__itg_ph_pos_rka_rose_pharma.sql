@@ -1,7 +1,17 @@
 
-with source as
+with source1 as
 (
     select * from {{ source('phlsdl_raw', 'sdl_pos_rks_rose_pharma') }}
+),
+source2 as
+(
+    select * from {{ source('phlsdl_raw', 'sdl_pos_rks_rose_pharma_consumer') }}
+),
+source3 as 
+(
+    select * from source1 
+    union 
+    select * from  source2
 ),
 final as
 (
@@ -22,6 +32,6 @@ final as
     crtd_dttm :: TIMESTAMP_NTZ(9) as crtd_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm
     
-from source 
+from source3 
 )
 select * from final

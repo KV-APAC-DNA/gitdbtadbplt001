@@ -2,6 +2,7 @@ with source as
 (
     select * from {{ source('phlsdl_raw', 'sdl_rosepharmacy_customer_mapping') }}
 ),
+
 transformed as (
 select 
 AcctCode||'-'||brcode as code,
