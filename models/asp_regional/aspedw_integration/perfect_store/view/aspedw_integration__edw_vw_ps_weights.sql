@@ -29,10 +29,13 @@ itg_mds_in_ps_weights  as(
 	select * from {{ ref('inditg_integration__itg_mds_in_ps_weights') }}
 ),
 itg_mds_jp_ps_weights  as(
-	select * from jpnitg_integration.itg_mds_jp_ps_weights
+	select * from {{ ref('jpnitg_integration__itg_mds_jp_ps_weights') }}
 ),
 itg_mds_my_ps_weights as(
 	select * from {{ ref('mysitg_integration__itg_mds_my_ps_weights') }} 
+),
+itg_cn_ps_weights as(
+    select * from {{ ref('chnitg_integration__itg_cn_ps_weights') }}
 ),
 indonesia as 
 (
@@ -382,6 +385,41 @@ pacific as
         itg_mds_pacific_ps_weights.weight
     FROM itg_mds_pacific_ps_weights
 ),
+china as
+(
+    SELECT 
+    'China' AS market, 
+    (
+      CASE WHEN (
+        upper(
+          (itg_cn_ps_weights.kpi):: text
+        ) = 'OOS Compliance' :: text
+      ) THEN 'OSA COMPLIANCE' :: text WHEN (
+        upper(
+          (itg_cn_ps_weights.kpi):: text
+        ) = 'Planogram' :: text
+      ) THEN 'Planogram compliance' :: text WHEN (
+        upper(
+          (itg_cn_ps_weights.kpi):: text
+        ) = 'promo' :: text
+      ) THEN 'Promo Compliance' :: text WHEN (
+        upper(
+          (itg_cn_ps_weights.kpi):: text
+        ) = 'Share of Assortment' :: text
+      ) THEN 'soa compliance' :: text WHEN (
+        upper(
+          (itg_cn_ps_weights.kpi):: text
+        ) = 'Share of Shelf' :: text
+      ) THEN 'sos compliance' :: text ELSE upper(
+        (itg_cn_ps_weights.kpi):: text
+      ) END
+    ):: character varying AS kpi, 
+    itg_cn_ps_weights.channel, 
+    itg_cn_ps_weights.re AS retail_environment, 
+    itg_cn_ps_weights.weight 
+  FROM 
+    itg_cn_ps_weights
+),
 final as 
 (
         select * from indonesia
@@ -407,5 +445,7 @@ final as
         select * from india
         union all
         select * from pacific
+        union all
+        select * from china
 )
 select * from final
