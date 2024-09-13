@@ -89,7 +89,7 @@ final as
     cast(a.plan_finish_time as timestamp_ntz(9)) as plan_finish_time,
     a.username::varchar(200) as username,
 	a.display_username::varchar(200) as display_username,
-    trim(a.store_code)::varchar(255) as store_code,
+    rtrim(a.store_code)::varchar(255) as store_code,
     a.store_name::varchar(255) as store_name,
 	a.city::varchar(255) as city,
 	a.shop_front_images::varchar(255) as shop_front_images,
