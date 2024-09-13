@@ -1021,7 +1021,7 @@ FROM (
               LEFT JOIN edw_company_reporting_dim AS cmp
                 ON ((cast((copa.co_cd) AS TEXT) = cast((cmp.co_cd) AS TEXT))
                 ) and (case when trim(mat.mega_brnd_desc)='Dr Ci Labo' then 'Dr Ci Labo' 
-   when trim(mat.mega_brnd_desc) <> 'Dr Ci Labo' then 'NA' end )=cmp.mega_brnd_desc
+   when nvl(trim(mat.mega_brnd_desc),'NA') <> 'Dr Ci Labo' then 'NA' end )=cmp.mega_brnd_desc
             )
             
           LEFT JOIN v_intrm_reg_crncy_exch_fiscper AS exch_rate
@@ -1351,7 +1351,7 @@ FROM (
                 LEFT JOIN edw_company_reporting_dim AS cmp
                   ON ( ( cast((invc.co_cd ) AS TEXT) = cast((cmp.co_cd) AS TEXT) )
                   ) and (case when trim(mat.mega_brnd_desc)='Dr Ci Labo' then 'Dr Ci Labo' 
-   when trim(mat.mega_brnd_desc) <> 'Dr Ci Labo' then 'NA' else 'NA' end )=cmp.mega_brnd_desc 
+   when nvl(trim(mat.mega_brnd_desc),'NA') <> 'Dr Ci Labo' then 'NA' else 'NA' end )=cmp.mega_brnd_desc 
             )
             LEFT JOIN edw_calendar_dim AS cal
               ON (
@@ -1436,7 +1436,7 @@ FROM (
     JOIN edw_company_reporting_dim AS company
       ON ((cast((main.co_cd ) AS TEXT) = cast((company.co_cd) AS TEXT))
       ) and  (case when trim(mat.mega_brnd_desc)='Dr Ci Labo' then 'Dr Ci Labo' 
-   when trim(mat.mega_brnd_desc) <> 'Dr Ci Labo' then 'NA' end )=company.mega_brnd_desc
+   when nvl(trim(mat.mega_brnd_desc),'NA') <> 'Dr Ci Labo' then 'NA' end )=company.mega_brnd_desc
   )
   LEFT JOIN v_edw_customer_sales_dim AS cus_sales_extn
     ON (
