@@ -42,6 +42,9 @@ tests:
       +severity: warn
     thailand:
       +severity: warn
+      thaitg_integration:
+        pop6: 
+        +severity: error
     malaysia:
       +severity: warn
     vietnam:
@@ -50,6 +53,9 @@ tests:
       +severity: warn
     singapore:
       +severity: warn
+      sgpitg_integration:
+        pop6: 
+        +severity: error
 
 models:
   dbt_artifacts:
