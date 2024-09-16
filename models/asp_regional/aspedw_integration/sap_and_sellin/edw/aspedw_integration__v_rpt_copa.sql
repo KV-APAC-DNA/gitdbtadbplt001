@@ -82,7 +82,7 @@ transformed as(
   nvl(gmc.C4_CATEGORY,'Not Available') as CATEGORY,
   nvl(gmc.C5_SUBCATEGORY,'Not Available') as SUBCATEGORY,
 
-  IFF(mat.brnd_desc='',null,mat.brnd_desc) as "b2 brand",
+  /*IFF(mat.brnd_desc='',null,mat.brnd_desc) as "b2 brand",
   IFF(mat.base_prod_desc='',null,mat.base_prod_desc) as "b3 base product",
   IFF(mat.varnt_desc='',null,mat.varnt_desc) as "b4 variant",
   IFF(mat.put_up_desc='',null,mat.put_up_desc) as "b5 put-up",
@@ -91,7 +91,7 @@ transformed as(
   IFF(mat.prodh3_txtmd='',null,mat.prodh3_txtmd) as "prod h3 franchise",
   IFF(mat.prodh4_txtmd='',null,mat.prodh4_txtmd) as "prod h4 product franchise",
   IFF(mat.prodh5_txtmd='',null,mat.prodh5_txtmd) as "prod h5 product major",
-  IFF(mat.prodh6_txtmd='',null,mat.prodh6_txtmd) as "prod h6 product minor",
+  IFF(mat.prodh6_txtmd='',null,mat.prodh6_txtmd) as "prod h6 product minor",*/
   IFF(cus_sales_extn."parent customer"='',null,cus_sales_extn."parent customer") as "parent customer",
   IFF(cus_sales_extn.banner='',null,cus_sales_extn.banner) as banner,
   IFF(cus_sales_extn."banner format"='',null,cus_sales_extn."banner format") as "banner format",
@@ -1214,7 +1214,7 @@ FROM (
           cmp.reporting_market,
           cmp.reporting_cluster,cmp."cluster",
           mat.mega_brnd_desc
-        UNION ALL
+        /*UNION ALL
         SELECT
           cast((((
                 cast((
@@ -1420,7 +1420,7 @@ FROM (
           invc.sls_org,
           invc.dstr_chnl,
           invc.div,
-          invc.cust_num
+          invc.cust_num */
       ) AS main
       LEFT JOIN edw_material_dim AS mat
         ON (
@@ -1478,7 +1478,7 @@ FROM (
 )
 left join (
 Select distinct B1_BRAND,B2_SUBBRAND,C1_BUSINESS_SEGMENT,C2_BUSINESS_SUBSEGMENT,C3_NEED_STATE,C4_CATEGORY,C5_SUBCATEGORY,GMC_SKU_CODE  
-FROM GMC_hierarchy_attributes)gmc on right(gmc.GMC_SKU_CODE,18)= main.matl_num	
+FROM GMC_hierarchy_attributes  where GMC_REGION='APAC')gmc on right(gmc.GMC_SKU_CODE,18)= main.matl_num	
 left join vw_itg_custgp_customer_hierarchy cust on trim(upper(main.ctry_nm))=trim(upper(cust.ctry_nm)) and ltrim(cust.cust_num,0)=ltrim(main.cust_num,0)
 
 GROUP BY
@@ -1511,7 +1511,7 @@ GROUP BY
   nvl(gmc.C4_CATEGORY,'Not Available'),
   nvl(gmc.C5_SUBCATEGORY,'Not Available'), 
 
-  IFF(mat.brnd_desc='',null,mat.brnd_desc),
+  /*IFF(mat.brnd_desc='',null,mat.brnd_desc),
   IFF(mat.base_prod_desc='',null,mat.base_prod_desc),
   IFF(mat.varnt_desc='',null,mat.varnt_desc),
   IFF(mat.put_up_desc='',null,mat.put_up_desc),
@@ -1520,7 +1520,7 @@ GROUP BY
   IFF(mat.prodh3_txtmd='',null,mat.prodh3_txtmd),
   IFF(mat.prodh4_txtmd='',null,mat.prodh4_txtmd),
   IFF(mat.prodh5_txtmd='',null,mat.prodh5_txtmd),
-  IFF(mat.prodh6_txtmd='',null,mat.prodh6_txtmd),
+  IFF(mat.prodh6_txtmd='',null,mat.prodh6_txtmd), */
   IFF(cus_sales_extn."parent customer"='',null,cus_sales_extn."parent customer"),
   IFF(cus_sales_extn.banner='',null,cus_sales_extn.banner),
   IFF(cus_sales_extn."banner format"='',null,cus_sales_extn."banner format"),
