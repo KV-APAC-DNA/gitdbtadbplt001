@@ -60,7 +60,7 @@ tests:
       +severity: warn
       sgpitg_integration:
         pop6: 
-        +severity: error
+          +severity: error
 
 models:
   dbt_artifacts:
