@@ -10,8 +10,7 @@ with source as(
      where filename not in (
         select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_pos_lalavla__null_test') }}
     )
-    
-),
+    ),
 final as(
     select * from source
  {% if is_incremental() %}

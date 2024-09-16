@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: ntawks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: nnaras01_workspace
+    schema: ppahil0101_workspace
     quoting:
       database: false
       schema: false
@@ -391,6 +391,8 @@ sources:
       - name : TRATBL_sdl_tw_ims_dstr_std_stock_107507_stock__test_date_format_odd_eve_leap
       - name : TRATBL_sdl_kr_coupang_search_keyword_by_category__null_test
       - name : TRATBL_sdl_tw_strategic_cust_hier__null_test
+      - name: TRATBL_sdl_th_mt_tops__null_test
+      - name: TRATBL_sdl_th_mt_tops__duplicate_test
  
 
 

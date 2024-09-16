@@ -13,8 +13,8 @@
 with sdl_kr_dads_coupang_price as (
     select *, dense_rank() over(partition by report_date order by file_name desc) as rnk from {{ source('ntasdl_raw', 'sdl_kr_dads_coupang_price') }} where file_name in (
         select distinct file_name  from {{ source('ntawks_integration', 'TRATBL_sdl_kr_dads_coupang_price__format_test') }}
-    )
-) qualify rnk = 1,
+    ) qualify rnk = 1
+) ,
 final as (
     SELECT 
         report_date::varchar(100) as report_date,
