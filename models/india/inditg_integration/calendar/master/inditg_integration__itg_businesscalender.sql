@@ -20,6 +20,7 @@ final as
       monthkey::number(18, 0) AS monthkey,
       current_timestamp()::timestamp_ntz(9) AS crt_dttm,
       current_timestamp()::timestamp_ntz(9) AS updt_dttm
+      
     FROM wks_lks_businesscalender
 )
 select * from final

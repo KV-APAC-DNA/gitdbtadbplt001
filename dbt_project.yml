@@ -64,6 +64,7 @@ tests:
     japan:
       +severity: warn
 
+
 models:
   dbt_artifacts:
     +enabled: false

@@ -3,13 +3,16 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['dstrbtr_id','outlet_id','order_no','line_number'],
-        pre_hook= " delete from {{this}} where (dstrbtr_id, outlet_id, order_no, line_number) in ( select dstrbtr_id, outlet_id, order_no, line_number from {{ ref('vnmwks_integration__wks_itg_vn_dms_d_sellout_sales_fact') }});"
+        pre_hook= " {% if is_incremental()%}
+        delete from {{this}} where (dstrbtr_id, outlet_id, order_no, line_number) in ( select dstrbtr_id, outlet_id, order_no, line_number from {{ ref('vnmwks_integration__wks_itg_vn_dms_d_sellout_sales_fact') }}); {%endif%}"
     )
 }}
 
 
 with wks_itg_vn_dms_d_sellout_sales_fact as(
-    select * from {{ ref('vnmwks_integration__wks_itg_vn_dms_d_sellout_sales_fact') }}
+    select *
+    from {{ ref('vnmwks_integration__wks_itg_vn_dms_d_sellout_sales_fact') }}
+
 ),
 transformed as(
     SELECT

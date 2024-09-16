@@ -2,6 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy = "append",
+        sql_header = "alter session set week_start= 7;",
         pre_hook="{% if is_incremental() %}
         delete from {{this}} where kpi='PRICE TRACKER SKU DATA';
         {% endif %}"
