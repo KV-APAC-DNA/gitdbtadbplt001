@@ -1,3 +1,9 @@
+{{
+    config(
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )
+}}
+
 with itg_orderbooking as 
 (
     select * from {{ ref('inditg_integration__itg_orderbooking') }}

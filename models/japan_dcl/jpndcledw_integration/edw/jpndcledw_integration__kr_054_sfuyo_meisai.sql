@@ -1,4 +1,4 @@
-
+{% if build_month_end_job_models()  %}
 with tbusrpram as (
 select * from {{ ref('jpndclitg_integration__tbusrpram') }}
 ),
@@ -67,3 +67,6 @@ dsren::timestamp_ntz(9) as dsren
 from transformed
 )
 select * from final
+{% else %}
+    select * from {{this}}
+{% endif %}

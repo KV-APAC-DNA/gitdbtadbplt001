@@ -46,6 +46,7 @@ final as
         wdsbillscount,
         wdscapamount,
         wdsminpurqty,
+        file_name
     from sdl_csl_scheme_header
 )
 select * from final

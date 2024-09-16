@@ -101,7 +101,7 @@ final as
 	filename::varchar(100) as filename,
 	crt_dttm::timestamp_ntz(9) as crt_dttm,
 	current_timestamp()::timestamp_ntz(9) as updt_dttm
-
+    
     from transformed
 )
 
