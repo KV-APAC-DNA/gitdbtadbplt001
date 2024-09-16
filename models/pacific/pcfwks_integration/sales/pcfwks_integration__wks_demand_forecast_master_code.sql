@@ -42,3 +42,5 @@ transformed as
 (
     select * from mstrcd
 )
+
+select * from transformed
