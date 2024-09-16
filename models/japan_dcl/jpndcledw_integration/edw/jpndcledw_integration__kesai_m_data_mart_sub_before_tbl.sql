@@ -1,268 +1,764 @@
-with item_hanbai_v as(
-    select * from  {{ ref('jpndcledw_integration__item_hanbai_v') }}
+WITH kesai_h_data_mart_sub_n
+AS (
+    SELECT *
+    FROM {{ref('jpndcledw_integration__kesai_h_data_mart_sub_n') }}
+    ),
+kesai_h_data_mart_sub_p
+AS (
+    SELECT *
+    FROM {{source('jpdcledw_integration', 'kesai_h_data_mart_sub_p') }}
+    ),
+kesai_m_data_mart_sub_n
+AS (
+    SELECT *
+    FROM {{ref('jpndcledw_integration__kesai_m_data_mart_sub_n') }}
+    ),
+kesai_m_data_mart_sub_p
+AS (
+    SELECT *
+    FROM {{source('jpdcledw_integration', 'kesai_m_data_mart_sub_p') }}
+    ),
+kesai_h_data_mart_sub_n_h_mngy
+AS (
+    SELECT *
+    FROM {{source('jpdcledw_integration', 'kesai_h_data_mart_sub_n_h_mngy') }}
+    ),
+item_data_mart_mv as
+(
+    SELECT *
+    FROM {{ source('jpdcledw_integration', 'item_data_mart_mv') }}
 ),
-kesai_h_data_mart_sub_n as(
-    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_n') }}
+hanbai as
+(
+    SELECT h_item_cd AS itemcd,
+        h_item_nm AS itemnm,
+        CAST(h_diid AS VARCHAR) AS diid,
+        h_syutoku_kbn AS h_syutoku_kbn
+    FROM item_data_mart_mv
+    WHERE h_syutoku_kbn IN ('NEXT', 'NEXT_DEL', 'MANUAL')
+    GROUP BY h_item_cd,
+        h_item_nm,
+        h_diid,
+        h_syutoku_kbn
 ),
-kesai_m_data_mart_sub_n as(
-    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_n') }}
-),
-hanbai as(
-    SELECT h_itemcode AS itemcd,
-		h_itemname AS itemnm,
-		diid::VARCHAR(500) AS diid,
-		syutoku_kbn AS h_syutoku_kbn
-	FROM item_hanbai_v
-	WHERE h_syutoku_kbn IN ('NEXT', 'NEXT_DEL', 'MANUAL')
-	GROUP BY h_itemcode,
-		h_itemname,
-		diid,
-		syutoku_kbn
-),
-union1 as(
-SELECT 
-    NVL(cn_m.saleno, '0') AS saleno,
-	/* 売上No（KEY） */
-	cn_m.gyono as gyono,
-	/* 行No */
-	cn_m.meisaikbn as meisaikbn,
-	/* 明細区分 */
-	cn_m.itemcode as itemcode,
-	/* アイテムコード */
-	cn_m.itemname as itemname,
-	/* 商品名 */
-	cn_m.diid as diid,
-	/* 商品内部ID */
-	cn_m.disetid as disetid,
-	/* セット商品内部ID */
-	coalesce(item.itemcd, cn_m.itemcode::VARCHAR(500)) as setitemcd,
-	/* セット商品コード */
-	coalesce(item.itemnm, cn_m.itemname::VARCHAR(500)) as setitemnm,
-	/* セット商品名 */
-	cn_m.suryo as suryo,
-	/* 数量 */
-	cn_m.tanka as tanka,
-	/* 単価 */
-	cn_m.kingaku as kingaku,
-	/* 金額 */
-	cn_m.meisainukikingaku as meisainukikingaku,
-	/* 明細税抜金額 */
-	cn_m.wariritu as wariritu,
-	/* 適用割引率 */
-	cn_m.warimaekomitanka as warimaekomitanka,
-	/* 割引前税込単価 */
-	cn_m.warimaenukikingaku as warimaenukikingaku,
-	/* 割引前明細金額 */
-	cn_m.warimaekomikingaku as warimaekomikingaku,
-	/* 割引前明細税込金額 */
-	cn_m.bun_tanka as bun_tanka,
-	/* 分解後単価 */
-	cn_m.bun_kingaku as bun_kingaku,
-	/* 分解後金額 */
-	cn_m.bun_meisainukikingaku as bun_meisainukikingaku,
-	/* 分解後明細税抜金額 */
-	cn_m.bun_wariritu as bun_wariritu,
-	/* 分解後適用割引率 */
-	cn_m.bun_warimaekomitanka as bun_warimaekomitanka,
-	/* 分解後割引前税込単価 */
-	cn_m.bun_warimaenukikingaku as bun_warimaenukikingaku,
-	/* 分解後割引前明細金額 */
-	cn_m.bun_warimaekomikingaku as bun_warimaekomikingaku,
-	/* 分解後割引前明細税込金額 */
-	cn_m.dispsaleno as dispsaleno,
-	/* 売上No */
-	cn_m.kesaiid as kesaiid,
-	/* 決済ID */
-	cn_m.diorderid as diorderid,
-	/* 受注内部ID */
-	cn_m.henpinsts as henpinsts,
-	/* 返品ステータス */
-	cn_m.c_dspointitemflg as c_dspointitemflg,
 
-	cn_m.c_diitemtype as c_diitemtype,
+min_cn as
+(
+    SELECT NVL(saleno, '0') AS saleno,
+        disetid,
+        diid,
+        MIN(gyono) AS gyono,
+        tanka
+    FROM kesai_m_data_mart_sub_n
+    GROUP BY saleno,
+        disetid,
+        diid,
+        tanka
+    ),
 
-	cn_m.c_diadjustprc as c_diadjustprc,
-	/* 調整金額 */
-	cn_m.ditotalprc as ditotalprc,
-	/* 税込み額 */
-	cn_m.diitemtax as diitemtax,
-	/* 消費税額 */
-	cn_m.c_diitemtotalprc as c_diitemtotalprc,
-	/* 販売小計(税込) */
-	cn_m.c_didiscountmeisai as c_didiscountmeisai,
-	/* 割引金額 */
-	cn_m.disetmeisaiid as disetmeisaiid,
-	/* 親行取得用 */
-	cn_m.c_dssetitemkbn as c_dssetitemkbn,
-	/* セット品区分 */
-	cn_m.maker as maker
-FROM kesai_h_data_mart_sub_n AS cn
-INNER JOIN
-	/* 明細の取得(CI-NEXT) */
-	kesai_m_data_mart_sub_n AS cn_m ON cn.saleno = cn_m.saleno
-LEFT OUTER JOIN
-	/* セット品の商品コードの取得 */
-	hanbai AS item ON cn_m.disetid = item.diid
-	AND DECODE(cn_m.meisaikbn, '特典', 'MANUAL', 'NEXT') = DECODE(item.h_syutoku_kbn, 'MANUAL', 'MANUAL', 'NEXT')
-WHERE cn.maker = 1
-),
-union2 as( 
-
-SELECT NVL(cn_m.saleno, '0') AS saleno,
-	/* 売上No（KEY） */
-	cn_m.gyono as gyono,
-	/* 行No */
-	cn_m.meisaikbn as meisaikbn,
-	/* 明細区分 */
-	cn_m.itemcode as itemcode,
-	/* アイテムコード */
-	cn_m.itemname as itemname,
-	/* 商品名 */
-	cn_m.diid as diid,
-	/* 商品内部ID */
-	cn_m.disetid as disetid,
-	/* セット商品内部ID */
-	coalesce(item.itemcd, cn_m.itemcode::VARCHAR(500))  as setitemcd,
-	/* セット商品コード */
-	coalesce(item.itemnm, cn_m.itemname::VARCHAR(500)) as setitemnm,
-	/* セット商品名 */
-	--    NVL2(cp.saleno, NVL2(min.saleno, cn_m.suryo, 0), cn_m.suryo) AS suryo,
-	cn_m.suryo as suryo,
-	/* 数量 */
-	--    NVL2(cp.saleno, NVL2(min.saleno, cn_m.tanka, 0), cn_m.tanka) AS tanka,
-	cn_m.tanka  as tanka,
-	/* 単価 */
-	--    NVL2(cp.saleno, NVL2(min.saleno, cn_m.kingaku, 0), cn_m.kingaku) AS kingaku,
-	cn_m.kingaku  as kingaku,
-	/* 金額 */
-	--    NVL2(cp.saleno, NVL2(min.saleno, cn_m.meisainukikingaku, 0), cn_m.meisainukikingaku) AS meisainukikingaku,
-	cn_m.meisainukikingaku as meisainukikingaku,
-	/* 明細税抜金額 */
-	--    NVL2(cp.saleno, NVL2(min.saleno, cn_m.wariritu, 0), cn_m.wariritu) AS wariritu,
-	cn_m.wariritu  as wariritu,
-	/* 適用割引率 */
-	--    NVL2(cp.saleno, NVL2(min.saleno, cn_m.warimaekomitanka, 0), cn_m.warimaekomitanka) AS warimaekomitanka,
-	cn_m.warimaekomitanka  as warimaekomitanka,
-	/* 割引前税込単価 */
-	--    NVL2(cp.saleno, NVL2(min.saleno, cn_m.warimaenukikingaku, 0), cn_m.warimaenukikingaku) AS warimaenukikingaku,
-	cn_m.warimaenukikingaku as warimaenukikingaku,
-	/* 割引前明細金額 */
-	--    NVL2(cp.saleno, NVL2(min.saleno, cn_m.warimaekomikingaku, 0), cn_m.warimaekomikingaku) AS warimaekomikingaku,
-	cn_m.warimaekomikingaku as warimaekomikingaku,
-	/* 割引前明細税込金額 */
-	--    NVL2(cp.saleno, NVL2(min.saleno, cn_m.bun_tanka, 0), cn_m.bun_tanka) AS bun_tanka,
-	cn_m.bun_tanka  as bun_tanka,
-	/* 分解後単価 */
-	--    NVL2(cp.saleno, NVL2(min.saleno, cn_m.bun_kingaku, 0), cn_m.bun_kingaku) AS bun_kingaku,
-	cn_m.bun_kingaku as bun_kingaku,
-	/* 分解後金額 */
-	--    NVL2(cp.saleno, NVL2(min.saleno, cn_m.bun_meisainukikingaku, 0), cn_m.bun_meisainukikingaku) AS bun_meisainukikingaku,
-	cn_m.bun_meisainukikingaku  as bun_meisainukikingaku,
-	/* 分解後明細税抜金額 */
-	--    NVL2(cp.saleno, NVL2(min.saleno, cn_m.bun_wariritu, 0), cn_m.bun_wariritu) AS bun_wariritu,
-	cn_m.bun_wariritu  as bun_wariritu,
-	/* 分解後適用割引率 */
-	--    NVL2(cp.saleno, NVL2(min.saleno, cn_m.bun_warimaekomitanka, 0), cn_m.bun_warimaekomitanka) AS bun_warimaekomitanka,
-	cn_m.bun_warimaekomitanka  as bun_warimaekomitanka,
-	/* 分解後割引前税込単価 */
-	--    NVL2(cp.saleno, NVL2(min.saleno, cn_m.bun_warimaenukikingaku, 0), cn_m.bun_warimaenukikingaku) AS bun_warimaenukikingaku,
-	cn_m.bun_warimaenukikingaku  as bun_warimaenukikingaku,
-	/* 分解後割引前明細金額 */
-	--    NVL2(cp.saleno, NVL2(min.saleno, cn_m.bun_warimaekomikingaku, 0), cn_m.bun_warimaekomikingaku) AS bun_warimaekomikingaku,
-	cn_m.bun_warimaekomikingaku  as bun_warimaekomikingaku,
-	/* 分解後割引前明細税込金額 */
-	cn_m.dispsaleno as dispsaleno,
-	/* 売上No */
-	cn_m.kesaiid as kesaiid,
-	/* 決済ID */
-	cn_m.diorderid as diorderid,
-	/* 受注内部ID */
-	cn_m.henpinsts as henpinsts,
-	/* 返品ステータス */
-	cn_m.c_dspointitemflg as c_dspointitemflg,
+final
+AS (
+    SELECT NVL(cn_m.saleno, '0') AS saleno,
+        cn_m.gyono,
+        cn_m.meisaikbn,
+        cn_m.itemcode,
+        cn_m.itemname,
+        cn_m.diid,
+        cn_m.disetid,
+        NVL(item.itemcd, cn_m.itemcode::VARCHAR) AS setitemcd,
+        NVL(item.itemnm, cn_m.itemname::VARCHAR) AS setitemnm,
+        cn_m.suryo,
+        cn_m.tanka,
+        cn_m.kingaku,
+        cn_m.meisainukikingaku,
+        cn_m.wariritu,
+        cn_m.warimaekomitanka,
+        cn_m.warimaenukikingaku,
+        cn_m.warimaekomikingaku,
+        cn_m.bun_tanka,
+        cn_m.bun_kingaku,
+        cn_m.bun_meisainukikingaku,
+        cn_m.bun_wariritu,
+        cn_m.bun_warimaekomitanka,
+        cn_m.bun_warimaenukikingaku,
+        cn_m.bun_warimaekomikingaku,
+        cn_m.dispsaleno,
+        cn_m.kesaiid,
+        cn_m.diorderid,
+        cn_m.henpinsts,
+        cn_m.c_dspointitemflg,
+        cn_m.c_diitemtype,
+        cn_m.c_diadjustprc,
+        cn_m.ditotalprc,
+        cn_m.diitemtax,
+        cn_m.c_diitemtotalprc,
+        cn_m.c_didiscountmeisai,
+        cn_m.disetmeisaiid,
+        cn_m.c_dssetitemkbn,
+        cn_m.maker,
+        DECODE(cn_m.itemname, '調整行(ヘッダーと明細の差分)', '調整行DUMMY', NVL(cp_m.saleno, cp.saleno::VARCHAR)) AS saleno_p,
+        NVL2(min_cn.saleno, cp_m.gyono, 0) AS gyono_p,
+        NVL2(min_cn.saleno, cp_m.itemcode, 'DUMMY') AS itemcode_p,
+        NVL2(min_cn.saleno, cp_m.itemcode_hanbai, 'DUMMY') AS itemcode_hanbai_p,
+        NVL2(min_cn.saleno, cp_m.suryo, 0) AS suryo_p,
+        NVL2(min_cn.saleno, cp_m.jyu_suryo, 0) AS jyu_suryo_p,
+        NVL2(min_cn.saleno, cp_m.oyaflg, 'DUMMY') AS oyaflg_p,
+        NVL2(min_cn.saleno, cp_m.tanka, 0) AS tanka_p,
+        NVL2(min_cn.saleno, cp_m.hensu, 0) AS hensu_p,
+        NVL2(min_cn.saleno, cp_m.kingaku, 0) AS kingaku_p,
+        NVL2(min_cn.saleno, cp_m.meisainukikingaku, 0) AS meisainukikingaku_p,
+        NVL2(min_cn.saleno, cp_m.meisaitax, 0) AS meisaitax_p,
+        NVL2(min_cn.saleno, cp_m.juchgyono, 0) AS juchgyono_p,
+        NVL2(min_cn.saleno, cp_m.dispsaleno, 'DUMMY') AS dispsaleno_p,
+        NVL2(min_cn.saleno, cp_m.juch_shur, 'DUMMY') AS juch_shur_p,
+        NVL2(min_cn.saleno, cp_m.tyoseikikingaku, 0) AS tyoseikikingaku_p,
+        NVL2(min_cn.saleno, cp_m.anbunmeisainukikingaku, 0) AS anbunmeisainukikingaku_p,
+        NVL2(min_cn.saleno, cp_m.den_nebiki_abn_kin, 0) AS den_nebiki_abn_kin_p,
+        NVL2(min_cn.saleno, cp_m.den_nb_ab_sz_kin, 0) AS den_nb_ab_sz_kin_p,
+        NVL2(min_cn.saleno, cp_m.dclsm_hin_hin_nibu_id, 'DUMMY') AS dclsm_hin_hin_nibu_id_p,
+        NVL2(min_cn.saleno, cp_m.kkng_kbn, 'DUMMY') AS kkng_kbn_p,
+        NVL2(min_cn.saleno, cp_m.shimebi, 0) AS shimebi_p,
+        NVL2(min_cn.saleno, cp_m.tanka_tuka, 0) AS tanka_tuka_p,
+        NVL2(min_cn.saleno, cp_m.kingaku_tuka, 0) AS kingaku_tuka_p,
+        NVL2(min_cn.saleno, cp_m.meisainukikingaku_tuka, 0) AS meisainukikingaku_tuka_p,
+        NVL2(min_cn.saleno, cp_m.meisaitax_tuka, 0) AS meisaitax_tuka_p,
+        NVL2(min_cn.saleno, cp_m.marker, 0) AS marker_p,
+        NVL2(min_cn.saleno, cp_m.uri_hen_kbn, 'DUMMY') AS uri_hen_kbn_p,
+        NVL2(min_cn.saleno, cp_m.sal_jisk_imp_snsh_no, 'DUMMY') AS sal_jisk_imp_snsh_no_p,
+        NVL2(min_cn.saleno, cp_m.dcljuch_id, 'DUMMY') AS dcljuch_id_p,
+        1 AS marker_np
+    FROM kesai_h_data_mart_sub_n AS cn
+    LEFT OUTER JOIN kesai_h_data_mart_sub_p AS cp ON cn.dispsaleno = cp.sal_jisk_imp_snsh_no
+        AND cp.uri_hen_kbn = 'U'
+    INNER JOIN kesai_m_data_mart_sub_n AS cn_m ON cn.saleno = cn_m.saleno
+    LEFT OUTER JOIN hanbai AS item ON cn_m.disetid = item.diid
+        AND DECODE(cn_m.meisaikbn, '特典', 'MANUAL', 'NEXT') = DECODE(item.h_syutoku_kbn, 'MANUAL', 'MANUAL', 'NEXT')
+    LEFT OUTER JOIN kesai_m_data_mart_sub_p AS cp_m ON cp.saleno = cp_m.saleno
+        AND item.itemcd = cp_m.itemcode_hanbai
+        AND cn_m.diid = cp_m.dclsm_hin_hin_nibu_id
+        AND cn_m.tanka = cp_m.tanka
+    LEFT OUTER JOIN min_cn AS min_cn ON cn.saleno = min_cn.saleno
+        AND cn_m.gyono = min_cn.gyono
+    WHERE cn.maker = 1
     
-	cn_m.c_diitemtype as c_diitemtype,
-	--	NVL2(cp.saleno, NVL2(min.saleno, cn_m.c_diadjustprc, 0), cn_m.c_diadjustprc) AS c_diadjustprc,
-	cn_m.c_diadjustprc  as c_diadjustprc,
-	/* 調整金額 */
-	--    NVL2(cp.saleno, NVL2(min.saleno, cn_m.ditotalprc, 0), cn_m.ditotalprc) AS ditotalprc,
-	cn_m.ditotalprc as ditotalprc,
-	/* 税込み額 */
-	--    NVL2(cp.saleno, NVL2(min.saleno, cn_m.diitemtax, 0), cn_m.diitemtax) AS diitemtax,
-	cn_m.diitemtax as diitemtax,
-	/* 消費税額 */
-	--    NVL2(cp.saleno, NVL2(min.saleno, cn_m.c_diitemtotalprc, 0), cn_m.c_diitemtotalprc) AS c_diitemtotalprc,
-	cn_m.c_diitemtotalprc  as c_diitemtotalprc,
-	/* 販売小計(税込) */
-	--    NVL2(cp.saleno, NVL2(min.saleno, cn_m.c_didiscountmeisai, 0), cn_m.c_didiscountmeisai) AS c_didiscountmeisai,
-	cn_m.c_didiscountmeisai as c_didiscountmeisai,
-	/* 割引金額 */
-	cn_m.disetmeisaiid as disetmeisaiid,
-	/* 親行取得用 */
-	cn_m.c_dssetitemkbn as c_dssetitemkbn,
-	/* セット品区分 */
-	cn_m.maker as maker
-FROM kesai_h_data_mart_sub_n AS cn
---    LEFT OUTER JOIN kesai_h_data_mart_sub_p AS cp
---        ON cn.dispsaleno = cp.sal_jisk_imp_snsh_no AND cp.uri_hen_kbn = 'H'
-INNER JOIN
-	/* 明細の取得(CI-NEXT) */
-	kesai_m_data_mart_sub_n AS cn_m ON cn.saleno = cn_m.saleno
-LEFT OUTER JOIN
-	/* セット品の商品コードの取得 */
-	hanbai AS item ON cn_m.disetid = item.diid
-	AND DECODE(cn_m.meisaikbn, '特典', 'MANUAL', 'NEXT') = DECODE(item.h_syutoku_kbn, 'MANUAL', 'MANUAL', 'NEXT')
-WHERE cn.maker = 2
-),
-transformed as(
-    select * from union1
-    union all
-    select * from union2
-),
-final as(
-    select
-        saleno::varchar(64) as saleno,
-        gyono::number(18,0) as gyono,
-        meisaikbn::varchar(36) as meisaikbn,
-        itemcode::varchar(60) as itemcode,
-        itemname::varchar(190) as itemname,
-        diid::varchar(60) as diid,
-        disetid::varchar(60) as disetid,
-        setitemcd::varchar(60) as setitemcd,
-        setitemnm::varchar(190) as setitemnm,
-        suryo::number(18,0) as suryo,
-        tanka::number(18,0) as tanka,
-        kingaku::number(18,0) as kingaku,
-        meisainukikingaku::number(18,0) as meisainukikingaku,
-        wariritu::number(18,0) as wariritu,
-        warimaekomitanka::number(18,0) as warimaekomitanka,
-        warimaenukikingaku::number(18,0) as warimaenukikingaku,
-        warimaekomikingaku::number(18,0) as warimaekomikingaku,
-        bun_tanka::number(18,0) as bun_tanka,
-        bun_kingaku::number(18,0) as bun_kingaku,
-        bun_meisainukikingaku::number(18,0) as bun_meisainukikingaku,
-        bun_wariritu::number(18,0) as bun_wariritu,
-        bun_warimaekomitanka::number(18,0) as bun_warimaekomitanka,
-        bun_warimaenukikingaku::number(18,0) as bun_warimaenukikingaku,
-        bun_warimaekomikingaku::number(18,0) as bun_warimaekomikingaku,
-        dispsaleno::varchar(64) as dispsaleno,
-        kesaiid::varchar(64) as kesaiid,
-        diorderid::number(18,0) as diorderid,
-        henpinsts::varchar(8) as henpinsts,
-        c_dspointitemflg::varchar(8) as c_dspointitemflg,
-        c_diitemtype::varchar(8) as c_diitemtype,
-        c_diadjustprc::number(18,0) as c_diadjustprc,
-        ditotalprc::number(18,0) as ditotalprc,
-        diitemtax::number(18,0) as diitemtax,
-        c_diitemtotalprc::number(18,0) as c_diitemtotalprc,
-        c_didiscountmeisai::number(18,0) as c_didiscountmeisai,
-        disetmeisaiid::number(18,0) as disetmeisaiid,
-        c_dssetitemkbn::varchar(8) as c_dssetitemkbn,
-        maker::number(18,0) as maker,
-        current_timestamp()::timestamp_ntz(9) as inserted_date,
-        null::varchar(100) as inserted_by ,
-        current_timestamp()::timestamp_ntz(9) as updated_date,
-        null::varchar(100) as updated_by
-    from transformed
-)
-select * from final
+    UNION ALL
+    
+    SELECT NVL(cn_m.saleno, '0') AS saleno,
+        cn_m.gyono,
+        cn_m.meisaikbn,
+        cn_m.itemcode,
+        cn_m.itemname,
+        cn_m.diid,
+        cn_m.disetid,
+        NVL(item.itemcd, cn_m.itemcode::VARCHAR) AS setitemcd,
+        NVL(item.itemnm, cn_m.itemname::VARCHAR) AS setitemnm,
+        NVL2(cp.saleno, NVL2(min.saleno, cn_m.suryo, 0), cn_m.suryo) AS suryo,
+        NVL2(cp.saleno, NVL2(min.saleno, cn_m.tanka, 0), cn_m.tanka) AS tanka,
+        NVL2(cp.saleno, NVL2(min.saleno, cn_m.kingaku, 0), cn_m.kingaku) AS kingaku,
+        NVL2(cp.saleno, NVL2(min.saleno, cn_m.meisainukikingaku, 0), cn_m.meisainukikingaku) AS meisainukikingaku,
+        NVL2(cp.saleno, NVL2(min.saleno, cn_m.wariritu, 0), cn_m.wariritu) AS wariritu,
+        NVL2(cp.saleno, NVL2(min.saleno, cn_m.warimaekomitanka, 0), cn_m.warimaekomitanka) AS warimaekomitanka,
+        NVL2(cp.saleno, NVL2(min.saleno, cn_m.warimaenukikingaku, 0), cn_m.warimaenukikingaku) AS warimaenukikingaku,
+        NVL2(cp.saleno, NVL2(min.saleno, cn_m.warimaekomikingaku, 0), cn_m.warimaekomikingaku) AS warimaekomikingaku,
+        NVL2(cp.saleno, NVL2(min.saleno, cn_m.bun_tanka, 0), cn_m.bun_tanka) AS bun_tanka,
+        NVL2(cp.saleno, NVL2(min.saleno, cn_m.bun_kingaku, 0), cn_m.bun_kingaku) AS bun_kingaku,
+        NVL2(cp.saleno, NVL2(min.saleno, cn_m.bun_meisainukikingaku, 0), cn_m.bun_meisainukikingaku) AS bun_meisainukikingaku,
+        NVL2(cp.saleno, NVL2(min.saleno, cn_m.bun_wariritu, 0), cn_m.bun_wariritu) AS bun_wariritu,
+        NVL2(cp.saleno, NVL2(min.saleno, cn_m.bun_warimaekomitanka, 0), cn_m.bun_warimaekomitanka) AS bun_warimaekomitanka,
+        NVL2(cp.saleno, NVL2(min.saleno, cn_m.bun_warimaenukikingaku, 0), cn_m.bun_warimaenukikingaku) AS bun_warimaenukikingaku,
+        NVL2(cp.saleno, NVL2(min.saleno, cn_m.bun_warimaekomikingaku, 0), cn_m.bun_warimaekomikingaku) AS bun_warimaekomikingaku,
+        cn_m.dispsaleno,
+        cn_m.kesaiid,
+        cn_m.diorderid,
+        cn_m.henpinsts,
+        cn_m.c_dspointitemflg,
+        cn_m.c_diitemtype,
+        NVL2(cp.saleno, NVL2(min.saleno, cn_m.c_diadjustprc, 0), cn_m.c_diadjustprc) AS c_diadjustprc,
+        NVL2(cp.saleno, NVL2(min.saleno, cn_m.ditotalprc, 0), cn_m.ditotalprc) AS ditotalprc,
+        NVL2(cp.saleno, NVL2(min.saleno, cn_m.diitemtax, 0), cn_m.diitemtax) AS diitemtax,
+        NVL2(cp.saleno, NVL2(min.saleno, cn_m.c_diitemtotalprc, 0), cn_m.c_diitemtotalprc) AS c_diitemtotalprc,
+        NVL2(cp.saleno, NVL2(min.saleno, cn_m.c_didiscountmeisai, 0), cn_m.c_didiscountmeisai) AS c_didiscountmeisai,
+        cn_m.disetmeisaiid,
+        cn_m.c_dssetitemkbn,
+        cn_m.maker,
+        DECODE(cn_m.itemname, '調整行(ヘッダーと明細の差分)', '調整行DUMMY', NVL(cp_m.saleno, cp.saleno::VARCHAR)) AS saleno_p,
+        cp_m.gyono AS gyono_p,
+        cp_m.itemcode AS itemcode_p,
+        cp_m.itemcode_hanbai AS itemcode_hanbai_p,
+        cp_m.suryo AS suryo_p,
+        cp_m.jyu_suryo AS jyu_suryo_p,
+        cp_m.oyaflg AS oyaflg_p,
+        cp_m.tanka AS tanka_p,
+        cp_m.hensu AS hensu_p,
+        cp_m.kingaku AS kingaku_p,
+        cp_m.meisainukikingaku AS meisainukikingaku_p,
+        cp_m.meisaitax AS meisaitax_p,
+        cp_m.juchgyono AS juchgyono_p,
+        cp_m.dispsaleno AS dispsaleno_p,
+        cp_m.juch_shur AS juch_shur_p,
+        cp_m.tyoseikikingaku AS tyoseikikingaku_p,
+        cp_m.anbunmeisainukikingaku AS anbunmeisainukikingaku_p,
+        cp_m.den_nebiki_abn_kin AS den_nebiki_abn_kin_p,
+        cp_m.den_nb_ab_sz_kin AS den_nb_ab_sz_kin_p,
+        cp_m.dclsm_hin_hin_nibu_id AS dclsm_hin_hin_nibu_id_p,
+        cp_m.kkng_kbn AS kkng_kbn_p,
+        cp_m.shimebi AS shimebi_p,
+        cp_m.tanka_tuka AS tanka_tuka_p,
+        cp_m.kingaku_tuka AS kingaku_tuka_p,
+        cp_m.meisainukikingaku_tuka AS meisainukikingaku_tuka_p,
+        cp_m.meisaitax_tuka AS meisaitax_tuka_p,
+        cp_m.marker AS marker_p,
+        cp_m.uri_hen_kbn AS uri_hen_kbn_p,
+        cp_m.sal_jisk_imp_snsh_no AS sal_jisk_imp_snsh_no_p,
+        cp_m.dcljuch_id AS dcljuch_id_p,
+        2 AS marker_np
+    FROM kesai_h_data_mart_sub_n AS cn
+    LEFT OUTER JOIN kesai_h_data_mart_sub_p AS cp ON cn.dispsaleno = cp.sal_jisk_imp_snsh_no
+        AND cp.uri_hen_kbn = 'H'
+    INNER JOIN kesai_m_data_mart_sub_n AS cn_m ON cn.saleno = cn_m.saleno
+    LEFT OUTER JOIN hanbai AS item ON cn_m.disetid = item.diid
+        AND DECODE(cn_m.meisaikbn, '特典', 'MANUAL', 'NEXT') = DECODE(item.h_syutoku_kbn, 'MANUAL', 'MANUAL', 'NEXT')
+    LEFT OUTER JOIN kesai_h_data_mart_sub_n_h_mngy AS min ON cp.saleno = min.saleno
+    LEFT OUTER JOIN kesai_m_data_mart_sub_p AS cp_m ON cp.saleno = cp_m.saleno
+        AND cn_m.gyono = cp_m.dcljuch_mei_id
+    WHERE cn.maker = 2
+    
+    UNION ALL
+    
+    SELECT NVL(cp_m.saleno, '0') AS saleno,
+        0 AS gyono,
+        'DUMMY' AS meisaikbn,
+        'DUMMY' AS itemcode,
+        'DUMMY' AS itemname,
+        'DUMMY' AS diid,
+        'DUMMY' AS disetid,
+        'DUMMY' AS setitemcd,
+        'DUMMY' AS setitemnm,
+        0 AS suryo,
+        0 AS tanka,
+        0 AS kingaku,
+        0 AS meisainukikingaku,
+        0 AS wariritu,
+        0 AS warimaekomitanka,
+        0 AS warimaenukikingaku,
+        0 AS warimaekomikingaku,
+        0 AS bun_tanka,
+        0 AS bun_kingaku,
+        0 AS bun_meisainukikingaku,
+        0 AS bun_wariritu,
+        0 AS bun_warimaekomitanka,
+        0 AS bun_warimaenukikingaku,
+        0 AS bun_warimaekomikingaku,
+        'DUMMY' AS dispsaleno,
+        'DUMMY' AS kesaiid,
+        0 AS diorderid,
+        'DUMMY' AS henpinsts,
+        'DUMMY' AS c_dspointitemflg,
+        'DUMMY' AS c_diitemtype,
+        0 AS c_diadjustprc,
+        0 AS ditotalprc,
+        0 AS diitemtax,
+        0 AS c_diitemtotalprc,
+        0 AS c_didiscountmeisai,
+        0 AS disetmeisaiid,
+        'DUMMY' AS c_dssetitemkbn,
+        0 AS maker,
+        cp_m.saleno AS saleno_p,
+        cp_m.gyono AS gyono_p,
+        cp_m.itemcode AS itemcode_p,
+        cp_m.itemcode_hanbai AS itemcode_hanbai_p,
+        cp_m.suryo AS suryo_p,
+        cp_m.jyu_suryo AS jyu_suryo_p,
+        cp_m.oyaflg AS oyaflg_p,
+        cp_m.tanka AS tanka_p,
+        cp_m.hensu AS hensu_p,
+        cp_m.kingaku AS kingaku_p,
+        cp_m.meisainukikingaku AS meisainukikingaku_p,
+        cp_m.meisaitax AS meisaitax_p,
+        cp_m.juchgyono AS juchgyono_p,
+        cp_m.dispsaleno AS dispsaleno_p,
+        cp_m.juch_shur AS juch_shur_p,
+        cp_m.tyoseikikingaku AS tyoseikikingaku_p,
+        cp_m.anbunmeisainukikingaku AS anbunmeisainukikingaku_p,
+        cp_m.den_nebiki_abn_kin AS den_nebiki_abn_kin_p,
+        cp_m.den_nb_ab_sz_kin AS den_nb_ab_sz_kin_p,
+        cp_m.dclsm_hin_hin_nibu_id AS dclsm_hin_hin_nibu_id_p,
+        cp_m.kkng_kbn AS kkng_kbn_p,
+        cp_m.shimebi AS shimebi_p,
+        cp_m.tanka_tuka AS tanka_tuka_p,
+        cp_m.kingaku_tuka AS kingaku_tuka_p,
+        cp_m.meisainukikingaku_tuka AS meisainukikingaku_tuka_p,
+        cp_m.meisaitax_tuka AS meisaitax_tuka_p,
+        cp_m.marker AS marker_p,
+        cp_m.uri_hen_kbn AS uri_hen_kbn_p,
+        cp_m.sal_jisk_imp_snsh_no AS sal_jisk_imp_snsh_no_p,
+        cp_m.dcljuch_id AS dcljuch_id_p,
+        3 AS marker_np
+    FROM kesai_h_data_mart_sub_p AS cp
+    LEFT OUTER JOIN kesai_h_data_mart_sub_n AS cn ON cp.sal_jisk_imp_snsh_no = cn.dispsaleno
+    LEFT OUTER JOIN kesai_m_data_mart_sub_p AS cp_m ON cp.saleno = cp_m.saleno
+    WHERE (
+            cn.dispsaleno IS NULL
+            OR cn.dispsaleno = ''
+            )
+    
+    UNION ALL
+    
+    SELECT NVL(cn.saleno, '0') AS saleno,
+        0 AS gyono,
+        'DUMMY' AS meisaikbn,
+        'DUMMY' AS itemcode,
+        'DUMMY' AS itemname,
+        'DUMMY' AS diid,
+        'DUMMY' AS disetid,
+        'DUMMY' AS setitemcd,
+        'DUMMY' AS setitemnm,
+        0 AS suryo,
+        0 AS tanka,
+        0 AS kingaku,
+        0 AS meisainukikingaku,
+        0 AS wariritu,
+        0 AS warimaekomitanka,
+        0 AS warimaenukikingaku,
+        0 AS warimaekomikingaku,
+        0 AS bun_tanka,
+        0 AS bun_kingaku,
+        0 AS bun_meisainukikingaku,
+        0 AS bun_wariritu,
+        0 AS bun_warimaekomitanka,
+        0 AS bun_warimaenukikingaku,
+        0 AS bun_warimaekomikingaku,
+        'DUMMY' AS dispsaleno,
+        'DUMMY' AS kesaiid,
+        0 AS diorderid,
+        'DUMMY' AS henpinsts,
+        'DUMMY' AS c_dspointitemflg,
+        'DUMMY' AS c_diitemtype,
+        0 AS c_diadjustprc,
+        0 AS ditotalprc,
+        0 AS diitemtax,
+        0 AS c_diitemtotalprc,
+        0 AS c_didiscountmeisai,
+        0 AS disetmeisaiid,
+        'DUMMY' AS c_dssetitemkbn,
+        0 AS maker,
+        cp.saleno AS saleno_p,
+        9000000003 AS gyono_p,
+        'X000000003' AS itemcode_p,
+        'X000000003' AS itemcode_hanbai_p,
+        0 AS suryo_p,
+        0 AS jyu_suryo_p,
+        'DUMMY' AS oyaflg_p,
+        (cn.soryo + cn.dicollectprc + cn.ditoujitsuhaisoprc) AS tanka_p,
+        0 AS hensu_p,
+        (cn.soryo + cn.dicollectprc + cn.ditoujitsuhaisoprc) AS kingaku_p,
+        (ROUND((cn.soryo + cn.dicollectprc + cn.ditoujitsuhaisoprc)::FLOAT / ((100 + ditaxrate)::FLOAT / 100::FLOAT)::FLOAT)) AS meisainukikingaku_p,
+        ((cn.soryo + cn.dicollectprc + cn.ditoujitsuhaisoprc) - ROUND((cn.soryo + cn.dicollectprc + cn.ditoujitsuhaisoprc)::FLOAT / ((100 + ditaxrate)::FLOAT / 100::FLOAT)::FLOAT)) AS meisaitax_p,
+        0 AS juchgyono_p,
+        'DUMMY' AS dispsaleno_p,
+        'DUMMY' AS juch_shur_p,
+        0 AS tyoseikikingaku_p,
+        0 AS anbunmeisainukikingaku_p,
+        0 AS den_nebiki_abn_kin_p,
+        0 AS den_nb_ab_sz_kin_p,
+        'DUMMY' AS dclsm_hin_hin_nibu_id_p,
+        cp.kkng_kbn AS kkng_kbn_p,
+        0 AS shimebi_p,
+        (cn.soryo + cn.dicollectprc + cn.ditoujitsuhaisoprc) AS tanka_tuka_p,
+        (cn.soryo + cn.dicollectprc + cn.ditoujitsuhaisoprc) AS kingaku_tuka_p,
+        (ROUND((cn.soryo + cn.dicollectprc + cn.ditoujitsuhaisoprc)::FLOAT / ((100 + ditaxrate)::FLOAT / 100::FLOAT)::FLOAT)) AS meisainukikingaku_tuka_p,
+        (cn.soryo + cn.dicollectprc + cn.ditoujitsuhaisoprc) - ROUND((cn.soryo + cn.dicollectprc + cn.ditoujitsuhaisoprc)::FLOAT / ((100 + ditaxrate)::FLOAT / 100::FLOAT)::FLOAT) AS meisaitax_tuka_p,
+        cp.marker AS marker_p,
+        cp.uri_hen_kbn AS uri_hen_kbn_p,
+        cp.sal_jisk_imp_snsh_no AS sal_jisk_imp_snsh_no_p,
+        NULL AS dcljuch_id_p,
+        4 AS marker_np
+    FROM kesai_h_data_mart_sub_n AS cn
+    INNER JOIN kesai_h_data_mart_sub_p AS cp ON cn.dispsaleno = cp.sal_jisk_imp_snsh_no
+        AND cp.uri_hen_kbn = 'U'
+    WHERE cn.maker = 1
+    
+    UNION ALL
+    
+    SELECT NVL(cn.saleno, '0') AS saleno,
+        0 AS gyono,
+        'DUMMY' AS meisaikbn,
+        'DUMMY' AS itemcode,
+        'DUMMY' AS itemname,
+        'DUMMY' AS diid,
+        'DUMMY' AS disetid,
+        'DUMMY' AS setitemcd,
+        'DUMMY' AS setitemnm,
+        0 AS suryo,
+        0 AS tanka,
+        0 AS kingaku,
+        0 AS meisainukikingaku,
+        0 AS wariritu,
+        0 AS warimaekomitanka,
+        0 AS warimaenukikingaku,
+        0 AS warimaekomikingaku,
+        0 AS bun_tanka,
+        0 AS bun_kingaku,
+        0 AS bun_meisainukikingaku,
+        0 AS bun_wariritu,
+        0 AS bun_warimaekomitanka,
+        0 AS bun_warimaenukikingaku,
+        0 AS bun_warimaekomikingaku,
+        'DUMMY' AS dispsaleno,
+        'DUMMY' AS kesaiid,
+        0 AS diorderid,
+        'DUMMY' AS henpinsts,
+        'DUMMY' AS c_dspointitemflg,
+        'DUMMY' AS c_diitemtype,
+        0 AS c_diadjustprc,
+        0 AS ditotalprc,
+        0 AS diitemtax,
+        0 AS c_diitemtotalprc,
+        0 AS c_didiscountmeisai,
+        0 AS disetmeisaiid,
+        'DUMMY' AS c_dssetitemkbn,
+        0 AS maker,
+        cp.saleno AS saleno_p,
+        9000000002 AS gyono_p,
+        'X000000002' AS itemcode_p,
+        'X000000002' AS itemcode_hanbai_p,
+        0 AS suryo_p,
+        0 AS jyu_suryo_p,
+        'DUMMY' AS oyaflg_p,
+        cn.riyopoint AS tanka_p,
+        0 AS hensu_p,
+        cn.riyopoint AS kingaku_p,
+        cn.riyopoint AS meisainukikingaku_p,
+        cn.riyopoint AS meisaitax_p,
+        0 AS juchgyono_p,
+        'DUMMY' AS dispsaleno_p,
+        'DUMMY' AS juch_shur_p,
+        0 AS tyoseikikingaku_p,
+        0 AS anbunmeisainukikingaku_p,
+        0 AS den_nebiki_abn_kin_p,
+        0 AS den_nb_ab_sz_kin_p,
+        'DUMMY' AS dclsm_hin_hin_nibu_id_p,
+        cp.kkng_kbn AS kkng_kbn_p,
+        0 AS shimebi_p,
+        cn.riyopoint AS tanka_tuka_p,
+        cn.riyopoint AS kingaku_tuka_p,
+        cn.riyopoint AS meisainukikingaku_tuka_p,
+        cn.riyopoint AS meisaitax_tuka_p,
+        cp.marker AS marker_p,
+        cp.uri_hen_kbn AS uri_hen_kbn_p,
+        cp.sal_jisk_imp_snsh_no AS sal_jisk_imp_snsh_no_p,
+        NULL AS dcljuch_id_p,
+        5 AS marker_np
+    FROM kesai_h_data_mart_sub_n AS cn
+    INNER JOIN kesai_h_data_mart_sub_p AS cp ON cn.dispsaleno = cp.sal_jisk_imp_snsh_no
+        AND cp.uri_hen_kbn = 'U'
+    WHERE cn.maker = 1
+    
+    UNION ALL
+    
+    SELECT NVL(cn.saleno, '0') AS saleno,
+        0 AS gyono,
+        'DUMMY' AS meisaikbn,
+        'DUMMY' AS itemcode,
+        'DUMMY' AS itemname,
+        'DUMMY' AS diid,
+        'DUMMY' AS disetid,
+        'DUMMY' AS setitemcd,
+        'DUMMY' AS setitemnm,
+        0 AS suryo,
+        0 AS tanka,
+        0 AS kingaku,
+        0 AS meisainukikingaku,
+        0 AS wariritu,
+        0 AS warimaekomitanka,
+        0 AS warimaenukikingaku,
+        0 AS warimaekomikingaku,
+        0 AS bun_tanka,
+        0 AS bun_kingaku,
+        0 AS bun_meisainukikingaku,
+        0 AS bun_wariritu,
+        0 AS bun_warimaekomitanka,
+        0 AS bun_warimaenukikingaku,
+        0 AS bun_warimaekomikingaku,
+        'DUMMY' AS dispsaleno,
+        'DUMMY' AS kesaiid,
+        0 AS diorderid,
+        'DUMMY' AS henpinsts,
+        'DUMMY' AS c_dspointitemflg,
+        'DUMMY' AS c_diitemtype,
+        0 AS c_diadjustprc,
+        0 AS ditotalprc,
+        0 AS diitemtax,
+        0 AS c_diitemtotalprc,
+        0 AS c_didiscountmeisai,
+        0 AS disetmeisaiid,
+        'DUMMY' AS c_dssetitemkbn,
+        0 AS maker,
+        cp.saleno AS saleno_p,
+        9000000002 AS gyono_p,
+        'X000000002' AS itemcode_p,
+        'X000000002' AS itemcode_hanbai_p,
+        0 AS suryo_p,
+        0 AS jyu_suryo_p,
+        'DUMMY' AS oyaflg_p,
+        cn.riyopoint AS tanka_p,
+        0 AS hensu_p,
+        cn.riyopoint AS kingaku_p,
+        cn.riyopoint AS meisainukikingaku_p,
+        cn.riyopoint AS meisaitax_p,
+        0 AS juchgyono_p,
+        'DUMMY' AS dispsaleno_p,
+        'DUMMY' AS juch_shur_p,
+        0 AS tyoseikikingaku_p,
+        0 AS anbunmeisainukikingaku_p,
+        0 AS den_nebiki_abn_kin_p,
+        0 AS den_nb_ab_sz_kin_p,
+        'DUMMY' AS dclsm_hin_hin_nibu_id_p,
+        cp.kkng_kbn AS kkng_kbn_p,
+        0 AS shimebi_p,
+        cn.riyopoint AS tanka_tuka_p,
+        cn.riyopoint AS kingaku_tuka_p,
+        cn.riyopoint AS meisainukikingaku_tuka_p,
+        cn.riyopoint AS meisaitax_tuka_p,
+        cp.marker AS marker_p,
+        cp.uri_hen_kbn AS uri_hen_kbn_p,
+        cp.sal_jisk_imp_snsh_no AS sal_jisk_imp_snsh_no_p,
+        NULL AS dcljuch_id_p,
+        6 AS marker_np
+    FROM kesai_h_data_mart_sub_n AS cn
+    INNER JOIN kesai_h_data_mart_sub_p AS cp ON cn.dispsaleno = cp.sal_jisk_imp_snsh_no
+        AND cp.uri_hen_kbn = 'H'
+    INNER JOIN kesai_h_data_mart_sub_n_h_mngy AS min ON cp.saleno = min.saleno
+    WHERE cn.maker = 2
+    
+    UNION ALL
+    
+    SELECT NVL(cn.saleno, '0') AS saleno,
+        0 AS gyono,
+        'DUMMY' AS meisaikbn,
+        'DUMMY' AS itemcode,
+        'DUMMY' AS itemname,
+        'DUMMY' AS diid,
+        'DUMMY' AS disetid,
+        'DUMMY' AS setitemcd,
+        'DUMMY' AS setitemnm,
+        0 AS suryo,
+        0 AS tanka,
+        0 AS kingaku,
+        0 AS meisainukikingaku,
+        0 AS wariritu,
+        0 AS warimaekomitanka,
+        0 AS warimaenukikingaku,
+        0 AS warimaekomikingaku,
+        0 AS bun_tanka,
+        0 AS bun_kingaku,
+        0 AS bun_meisainukikingaku,
+        0 AS bun_wariritu,
+        0 AS bun_warimaekomitanka,
+        0 AS bun_warimaenukikingaku,
+        0 AS bun_warimaekomikingaku,
+        'DUMMY' AS dispsaleno,
+        'DUMMY' AS kesaiid,
+        0 AS diorderid,
+        'DUMMY' AS henpinsts,
+        'DUMMY' AS c_dspointitemflg,
+        'DUMMY' AS c_diitemtype,
+        0 AS c_diadjustprc,
+        0 AS ditotalprc,
+        0 AS diitemtax,
+        0 AS c_diitemtotalprc,
+        0 AS c_didiscountmeisai,
+        0 AS disetmeisaiid,
+        'DUMMY' AS c_dssetitemkbn,
+        0 AS maker,
+        cp_m.saleno AS saleno_p,
+        cp_m.gyono AS gyono_p,
+        cp_m.itemcode AS itemcode_p,
+        cp_m.itemcode_hanbai AS itemcode_hanbai_p,
+        cp_m.suryo AS suryo_p,
+        cp_m.jyu_suryo AS jyu_suryo_p,
+        cp_m.oyaflg AS oyaflg_p,
+        cp_m.tanka AS tanka_p,
+        cp_m.hensu AS hensu_p,
+        cp_m.kingaku AS kingaku_p,
+        cp_m.meisainukikingaku AS meisainukikingaku_p,
+        cp_m.meisaitax AS meisaitax_p,
+        cp_m.juchgyono AS juchgyono_p,
+        cp_m.dispsaleno AS dispsaleno_p,
+        cp_m.juch_shur AS juch_shur_p,
+        cp_m.tyoseikikingaku AS tyoseikikingaku_p,
+        cp_m.anbunmeisainukikingaku AS anbunmeisainukikingaku_p,
+        cp_m.den_nebiki_abn_kin AS den_nebiki_abn_kin_p,
+        cp_m.den_nb_ab_sz_kin AS den_nb_ab_sz_kin_p,
+        cp_m.dclsm_hin_hin_nibu_id AS dclsm_hin_hin_nibu_id_p,
+        cp_m.kkng_kbn AS kkng_kbn_p,
+        cp_m.shimebi AS shimebi_p,
+        cp_m.tanka_tuka AS tanka_tuka_p,
+        cp_m.kingaku_tuka AS kingaku_tuka_p,
+        cp_m.meisainukikingaku_tuka AS meisainukikingaku_tuka_p,
+        cp_m.meisaitax_tuka AS meisaitax_tuka_p,
+        cp_m.marker AS marker_p,
+        cp_m.uri_hen_kbn AS uri_hen_kbn_p,
+        cp_m.sal_jisk_imp_snsh_no AS sal_jisk_imp_snsh_no_p,
+        cp_m.dcljuch_id AS dcljuch_id_p,
+        7 AS marker_np
+    FROM kesai_h_data_mart_sub_p AS cp
+    INNER JOIN kesai_h_data_mart_sub_n AS cn ON cp.sal_jisk_imp_snsh_no = cn.dispsaleno
+        AND cp.marker = 5
+        AND cn.maker = 1
+    INNER JOIN kesai_m_data_mart_sub_p AS cp_m ON cp.saleno = cp_m.saleno
+    
+    UNION ALL
+    
+    SELECT NVL(cn.saleno, '0') AS saleno,
+        0 AS gyono,
+        'DUMMY' AS meisaikbn,
+        'DUMMY' AS itemcode,
+        'DUMMY' AS itemname,
+        'DUMMY' AS diid,
+        'DUMMY' AS disetid,
+        'DUMMY' AS setitemcd,
+        'DUMMY' AS setitemnm,
+        0 AS suryo,
+        0 AS tanka,
+        0 AS kingaku,
+        0 AS meisainukikingaku,
+        0 AS wariritu,
+        0 AS warimaekomitanka,
+        0 AS warimaenukikingaku,
+        0 AS warimaekomikingaku,
+        0 AS bun_tanka,
+        0 AS bun_kingaku,
+        0 AS bun_meisainukikingaku,
+        0 AS bun_wariritu,
+        0 AS bun_warimaekomitanka,
+        0 AS bun_warimaenukikingaku,
+        0 AS bun_warimaekomikingaku,
+        'DUMMY' AS dispsaleno,
+        'DUMMY' AS kesaiid,
+        0 AS diorderid,
+        'DUMMY' AS henpinsts,
+        'DUMMY' AS c_dspointitemflg,
+        'DUMMY' AS c_diitemtype,
+        0 AS c_diadjustprc,
+        0 AS ditotalprc,
+        0 AS diitemtax,
+        0 AS c_diitemtotalprc,
+        0 AS c_didiscountmeisai,
+        0 AS disetmeisaiid,
+        'DUMMY' AS c_dssetitemkbn,
+        0 AS maker,
+        cp.saleno AS saleno_p,
+        9000000004 AS gyono_p,
+        'X000000004' AS itemcode_p,
+        'X000000004' AS itemcode_hanbai_p,
+        0 AS suryo_p,
+        0 AS jyu_suryo_p,
+        'DUMMY' AS oyaflg_p,
+        - 1 * cn.didiscountall AS tanka_p,
+        0 AS hensu_p,
+        - 1 * cn.didiscountall AS kingaku_p,
+        - 1 * (ROUND(cn.didiscountall::FLOAT / ((100 + ditaxrate)::FLOAT / 100::FLOAT)::FLOAT)) AS meisainukikingaku_p,
+        - 1 * (cn.didiscountall - ROUND(cn.didiscountall::FLOAT / ((100 + ditaxrate)::FLOAT / 100::FLOAT)::FLOAT)) AS meisaitax_p,
+        0 AS juchgyono_p,
+        'DUMMY' AS dispsaleno_p,
+        'DUMMY' AS juch_shur_p,
+        0 AS tyoseikikingaku_p,
+        0 AS anbunmeisainukikingaku_p,
+        0 AS den_nebiki_abn_kin_p,
+        0 AS den_nb_ab_sz_kin_p,
+        'DUMMY' AS dclsm_hin_hin_nibu_id_p,
+        cp.kkng_kbn AS kkng_kbn_p,
+        0 AS shimebi_p,
+        - 1 * cn.didiscountall AS tanka_tuka_p,
+        - 1 * cn.didiscountall AS kingaku_tuka_p,
+        - 1 * (ROUND(cn.didiscountall::FLOAT / ((100 + ditaxrate)::FLOAT / 100::FLOAT)::FLOAT)) AS meisainukikingaku_tuka_p,
+        - 1 * (cn.didiscountall - ROUND(cn.didiscountall::FLOAT / ((100 + ditaxrate)::FLOAT / 100::FLOAT)::FLOAT)) AS meisaitax_tuka_p,
+        cp.marker AS marker_p,
+        cp.uri_hen_kbn AS uri_hen_kbn_p,
+        cp.sal_jisk_imp_snsh_no AS sal_jisk_imp_snsh_no_p,
+        NULL AS dcljuch_id_p,
+        6 AS marker_np
+    FROM kesai_h_data_mart_sub_n AS cn
+    INNER JOIN kesai_h_data_mart_sub_p AS cp ON cn.dispsaleno = cp.sal_jisk_imp_snsh_no
+        AND cp.uri_hen_kbn = 'U'
+    WHERE cn.maker = 1
+    
+    UNION ALL
+    
+    SELECT NVL(cn.saleno, '0') AS saleno,
+        0 AS gyono,
+        'DUMMY' AS meisaikbn,
+        'DUMMY' AS itemcode,
+        'DUMMY' AS itemname,
+        'DUMMY' AS diid,
+        'DUMMY' AS disetid,
+        'DUMMY' AS setitemcd,
+        'DUMMY' AS setitemnm,
+        0 AS suryo,
+        0 AS tanka,
+        0 AS kingaku,
+        0 AS meisainukikingaku,
+        0 AS wariritu,
+        0 AS warimaekomitanka,
+        0 AS warimaenukikingaku,
+        0 AS warimaekomikingaku,
+        0 AS bun_tanka,
+        0 AS bun_kingaku,
+        0 AS bun_meisainukikingaku,
+        0 AS bun_wariritu,
+        0 AS bun_warimaekomitanka,
+        0 AS bun_warimaenukikingaku,
+        0 AS bun_warimaekomikingaku,
+        'DUMMY' AS dispsaleno,
+        'DUMMY' AS kesaiid,
+        0 AS diorderid,
+        'DUMMY' AS henpinsts,
+        'DUMMY' AS c_dspointitemflg,
+        'DUMMY' AS c_diitemtype,
+        0 AS c_diadjustprc,
+        0 AS ditotalprc,
+        0 AS diitemtax,
+        0 AS c_diitemtotalprc,
+        0 AS c_didiscountmeisai,
+        0 AS disetmeisaiid,
+        'DUMMY' AS c_dssetitemkbn,
+        0 AS maker,
+        cp.saleno AS saleno_p,
+        9000000005 AS gyono_p,
+        'X000000005' AS itemcode_p,
+        'X000000005' AS itemcode_hanbai_p,
+        0 AS suryo_p,
+        0 AS jyu_suryo_p,
+        'DUMMY' AS oyaflg_p,
+        - 1 * cn.c_didiscountprc AS tanka_p,
+        0 AS hensu_p,
+        - 1 * cn.c_didiscountprc AS kingaku_p,
+        - 1 * (ROUND(cn.c_didiscountprc::FLOAT / ((100 + ditaxrate)::FLOAT / 100::FLOAT)::FLOAT)) AS meisainukikingaku_p,
+        - 1 * (cn.c_didiscountprc - ROUND(cn.c_didiscountprc::FLOAT / ((100 + ditaxrate)::FLOAT / 100::FLOAT)::FLOAT)) AS meisaitax_p,
+        0 AS juchgyono_p,
+        'DUMMY' AS dispsaleno_p,
+        'DUMMY' AS juch_shur_p,
+        0 AS tyoseikikingaku_p,
+        0 AS anbunmeisainukikingaku_p,
+        0 AS den_nebiki_abn_kin_p,
+        0 AS den_nb_ab_sz_kin_p,
+        'DUMMY' AS dclsm_hin_hin_nibu_id_p,
+        cp.kkng_kbn AS kkng_kbn_p,
+        0 AS shimebi_p,
+        - 1 * cn.c_didiscountprc AS tanka_tuka_p,
+        - 1 * cn.c_didiscountprc AS kingaku_tuka_p,
+        - 1 * (ROUND(cn.c_didiscountprc::FLOAT / ((100 + ditaxrate)::FLOAT / 100::FLOAT)::FLOAT)) AS meisainukikingaku_tuka_p,
+        - 1 * (cn.c_didiscountprc - ROUND(cn.c_didiscountprc::FLOAT / ((100 + ditaxrate)::FLOAT / 100::FLOAT)::FLOAT)) AS meisaitax_tuka_p,
+        cp.marker AS marker_p,
+        cp.uri_hen_kbn AS uri_hen_kbn_p,
+        cp.sal_jisk_imp_snsh_no AS sal_jisk_imp_snsh_no_p,
+        NULL AS dcljuch_id_p,
+        7 AS marker_np
+    FROM kesai_h_data_mart_sub_n AS cn
+    INNER JOIN kesai_h_data_mart_sub_p AS cp ON cn.dispsaleno = cp.sal_jisk_imp_snsh_no
+        AND cp.uri_hen_kbn = 'U'
+    WHERE cn.maker = 1
+    )
+SELECT *
+FROM final

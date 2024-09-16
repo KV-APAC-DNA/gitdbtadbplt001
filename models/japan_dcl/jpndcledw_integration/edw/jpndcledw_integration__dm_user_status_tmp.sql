@@ -7,7 +7,7 @@ with temp_kesai_016 as(
     select * from {{ ref('jpndcledw_integration__temp_kesai_016') }}
 ),
 cld_m as(
-    select * from {{ source('jpdcledw_integration','cld_m') }} 
+    select * from {{ ref('jpndcledw_integration__cld_m') }} 
 ),
 temp_u_new_016 as(
     select * from {{ ref('jpndcledw_integration__temp_u_new_016') }}
@@ -139,7 +139,7 @@ u_all_month_end_order AS (
             cld_m y
        WHERE x.ymd_dt = DATEADD(day, 1, y.ymd_dt)
             AND x.month <> y.month
-            AND y.ymd_dt <= CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp())
+            AND y.ymd_dt <= CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp())
         ) cld
     CROSS JOIN temp_u_new_016 u_new
     ),
@@ -170,10 +170,13 @@ u_month_end_new_order AS (
                 AND u_new.first_order_year = x.year
                 AND u_all_month_end_order.ymd > u_new.first_order_dt
                 AND datediff(day, u_new.first_order_dt, u_all_month_end_order.ymd) < 365)
-    join temp_kesai_016 kesai  --Added 07252022 for leap year
-     on (kesai.kokyano = u_all_month_end_order.kokyano
-                AND u_all_month_end_order.ymd = kesai.order_dt
-            )
+    --Added 07252022 for leap year
+    and not exists (
+            select 1
+            from temp_kesai_016 kesai
+            where kesai.kokyano = u_all_month_end_order.kokyano
+                and u_all_month_end_order.ymd = kesai.order_dt
+        )
 ),
 u_month_end_lapsed_order AS (
     SELECT 'order' AS base,
@@ -248,7 +251,7 @@ u_last_order_per_year AS (
         to_number(substring(kesai.order_dt, 1, 4), '9999') AS order_yr
     FROM temp_kesai_016 kesai
     INNER JOIN cld_m a ON kesai.order_dt = a.ymd_dt
-    WHERE to_number(substring(kesai.order_dt, 1, 4), '9999') < extract(year FROM CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()))
+    WHERE to_number(substring(kesai.order_dt, 1, 4), '9999') < extract(year FROM CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp()))
     GROUP BY kokyano,
         to_number(substring(kesai.order_dt, 1, 4), '9999')
     ),
@@ -271,7 +274,7 @@ u_lapsed_order_after_1yr AS (
             WHERE u_month_end_lapsed_order.kokyano = u_last_order_per_year.kokyano
                 AND u_month_end_lapsed_order.dt = to_date(u_last_order_per_year.last_order_dt + interval '365 days')
             )
-        AND to_date(last_order_dt + interval '365 days') <= CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp())
+        AND to_date(last_order_dt + interval '365 days') <= CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp())
         AND NOT EXISTS (
             SELECT 1
             FROM temp_u_new_016 u_new
@@ -413,7 +416,7 @@ u_all_month_end_ship AS (
             cld_m y
         WHERE x.ymd_dt = DATEADD(day, 1, y.ymd_dt)
             AND x.month_445 <> y.month_445
-            AND y.ymd_dt <= CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp())
+            AND y.ymd_dt <= CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp())
         ) cld
     CROSS JOIN temp_u_new_016 u_new
     ),
@@ -528,7 +531,7 @@ u_last_ship_per_year AS (
     WHERE to_number(kesai.year_445, '9999') < (
             SELECT to_number(year_445, '9999')
             FROM cld_m
-            WHERE ymd_dt = to_date(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()))
+            WHERE ymd_dt = to_date(CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp()))
             )
     GROUP BY kokyano,
         to_number(kesai.year_445, '9999')
@@ -552,7 +555,7 @@ u_lapsed_ship_after_1yr AS (
             WHERE u_month_end_lapsed_ship.kokyano = u_last_ship_per_year.kokyano
                 AND u_month_end_lapsed_ship.dt = to_date(u_last_ship_per_year.last_ship_dt + interval '365 days')
             )
-        AND to_date(last_ship_dt + interval '365 days') <= CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp())
+        AND to_date(last_ship_dt + interval '365 days') <= CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp())
         AND NOT EXISTS (
             SELECT 1
             FROM temp_u_new_016 u_new
@@ -629,7 +632,7 @@ u_lapsed_order_365_after_1yr AS (
             )
         AND /* not exists (select 1 from u_month_end_lapsed_order where u_month_end_lapsed_order.kokyano = u_last_order_per_year.kokyano and 
 u_month_end_lapsed_order.dt = to_date(u_last_order_per_year.last_order_dt + interval '365 days'))
-and */ to_date(kesai.order_dt + interval '365 days') <= CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp())
+and */ to_date(kesai.order_dt + interval '365 days') <= CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp())
         AND datediff(day, kesai.prev_order_dt, kesai.order_dt) < 365
     ),
 u_existing_order_365_after_1yr AS (
@@ -643,7 +646,7 @@ u_existing_order_365_after_1yr AS (
         AND u_new_order_365.dt < to_date(u_new.first_order_dt + interval '365 days')
         AND /* not exists (select 1 from u_month_end_lapsed_order where u_month_end_lapsed_order.kokyano = u_last_order_per_year.kokyano and 
 u_month_end_lapsed_order.dt = to_date(u_last_order_per_year.last_order_dt + interval '365 days'))
-and */ to_date(u_new.first_order_dt + interval '365 days') <= CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp())
+and */ to_date(u_new.first_order_dt + interval '365 days') <= CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp())
         AND NOT EXISTS (
             SELECT 1
             FROM temp_kesai_016 kesai
@@ -663,7 +666,7 @@ and */ to_date(u_new.first_order_dt + interval '365 days') <= CONVERT_TIMEZONE('
         AND u_lapsed_F2_order_365.dt < to_date(u_lapsed_F1_order_365.dt + interval '365 days')
         AND /* not exists (select 1 from u_month_end_lapsed_order where u_month_end_lapsed_order.kokyano = u_last_order_per_year.kokyano and 
 u_month_end_lapsed_order.dt = to_date(u_last_order_per_year.last_order_dt + interval '365 days'))
-and */ to_date(u_lapsed_F1_order_365.dt + interval '365 days') <= CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp())
+and */ to_date(u_lapsed_F1_order_365.dt + interval '365 days') <= CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp())
         AND NOT EXISTS (
             SELECT 1
             FROM temp_kesai_016 kesai
@@ -675,8 +678,8 @@ u_all_month_end_order_365 AS (
     SELECT kokyano,
         ymd
     FROM u_all_month_end_order
-    WHERE ymd <= CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp())
-        AND DATE_PART('year', ymd) >= DATE_PART('year', TO_DATE(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', CURRENT_TIMESTAMP()))) - 2
+    WHERE ymd <= CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp())
+        AND DATE_PART('year', ymd) >= DATE_PART('year', TO_DATE(CONVERT_TIMEZONE('Asia/Tokyo', CURRENT_TIMESTAMP()))) - 2
     ),
 u_month_end_new_order_365 AS (
     SELECT 'order_365' AS base,
@@ -832,7 +835,7 @@ u_lapsed_ship445_365_after_1yr AS (
             )
         AND /* not exists (select 1 from u_month_end_lapsed_ship where u_month_end_lapsed_ship.kokyano = u_last_ship_per_year.kokyano and 
 u_month_end_lapsed_ship.dt = to_date(u_last_ship_per_year.last_ship_dt + interval '365 days'))
-and */ to_date(kesai.ship_dt + interval '365 days') <= CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp())
+and */ to_date(kesai.ship_dt + interval '365 days') <= CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp())
         AND datediff(day, kesai.prev_ship_dt, kesai.ship_dt) < 365
     ),
 u_existing_ship445_365_after_1yr AS (
@@ -846,7 +849,7 @@ u_existing_ship445_365_after_1yr AS (
         AND u_new_ship445_365.dt < to_date(u_new.first_ship_dt + interval '365 days')
         AND /* not exists (select 1 from u_month_end_lapsed_ship where u_month_end_lapsed_ship.kokyano = u_last_ship_per_year.kokyano and 
 u_month_end_lapsed_ship.dt = to_date(u_last_ship_per_year.last_ship_dt + interval '365 days'))
-and */ to_date(u_new.first_ship_dt + interval '365 days') <= CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp())
+and */ to_date(u_new.first_ship_dt + interval '365 days') <= CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp())
         AND NOT EXISTS (
             SELECT 1
             FROM temp_kesai_016 kesai
@@ -866,7 +869,7 @@ and */ to_date(u_new.first_ship_dt + interval '365 days') <= CONVERT_TIMEZONE('U
         AND u_lapsed_F2_ship445_365.dt < to_date(u_lapsed_F1_ship445_365.dt + interval '365 days')
         AND /* not exists (select 1 from u_month_end_lapsed_ship where u_month_end_lapsed_ship.kokyano = u_last_ship_per_year.kokyano and 
 u_month_end_lapsed_ship.dt = to_date(u_last_ship_per_year.last_ship_dt + interval '365 days'))
-and */ to_date(u_lapsed_F1_ship445_365.dt + interval '365 days') <= CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp())
+and */ to_date(u_lapsed_F1_ship445_365.dt + interval '365 days') <= CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp())
         AND NOT EXISTS (
             SELECT 1
             FROM temp_kesai_016 kesai
@@ -878,8 +881,8 @@ u_all_month_end_ship445_365 AS (
     SELECT kokyano,
         ymd
     FROM u_all_month_end_ship
-    WHERE ymd <= CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp())
-        AND DATE_PART('year', ymd) >= DATE_PART('year', TO_DATE(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', CURRENT_TIMESTAMP()))) - 2
+    WHERE ymd <= CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp())
+        AND DATE_PART('year', ymd) >= DATE_PART('year', TO_DATE(CONVERT_TIMEZONE('Asia/Tokyo', CURRENT_TIMESTAMP()))) - 2
     ),
 u_month_end_new_ship445_365 AS (
     SELECT 'ship445_365' AS base,
