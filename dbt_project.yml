@@ -40,11 +40,16 @@ tests:
   DNA_CORE_ASP:
     philippines:
       +severity: warn
+      phlitg_integration:
+        sfmc:
+          +severity: error
     thailand:
       +severity: warn
       thaitg_integration:
         pop6: 
-        +severity: error
+          +severity: error
+        sfmc:
+          +severity: error
     malaysia:
       +severity: warn
     vietnam:
