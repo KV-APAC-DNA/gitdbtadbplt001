@@ -1,0 +1,42 @@
+version: 2
+
+sources:
+  - name: hcpwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: hcpwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+
+    - name: TRATBL_sdl_hcp360_in_iqvia_brand__test_format
+    - name: TRATBL_sdl_hcp360_in_ventasys_hcp_master__null_test
+    - name: TRATBL_sdl_hcp360_in_ventasys_hcp_master__duplicate_test
+    - name: TRATBL_sdl_hcp360_in_ventasys_hcp_master__null_test
+    - name: TRATBL_sdl_hcp360_in_ventasys_hcp_master__duplicate_test
+    - name: TRATBL_sdl_hcp360_in_ventasys_pob_data__null_test
+    - name: TRATBL_sdl_hcp360_in_ventasys_pob_data__duplicate_test
+    - name: TRATBL_sdl_hcp360_in_ventasys_hcprtl__null_test
+    - name: TRATBL_sdl_hcp360_in_ventasys_hcprtl__duplicate_test
+    - name: TRATBL_sdl_hcp360_in_ventasys_rtlmaster__null_test
+    - name: TRATBL_sdl_hcp360_in_ventasys_rtlmaster__duplicate_test
+    - name: TRATBL_sdl_hcp360_in_ventasys_rxrtl__null_test
+    - name: TRATBL_sdl_hcp360_in_ventasys_rxrtl__duplicate_test
+    - name: TRATBL_sdl_hcp360_in_ventasys_rxdata__null_test
+    - name: TRATBL_sdl_hcp360_in_ventasys_rxdata__duplicate_test
+    - name: TRATBL_sdl_hcp360_in_iqvia_aveeno_zone__test_format
+    - name: TRATBL_sdl_hcp360_in_iqvia_sales__test_format
+    - name: TRATBL_sdl_hcp360_in_iqvia_speciality__test_format
+    - name: TRATBL_sdl_hcp360_in_ventasys_sampledata__null_test
+    - name: TRATBL_sdl_hcp360_in_ventasys_sampledata__duplicate_test
+    - name: TRATBL_sdl_hcp360_in_sfmc_click_data__null_test
+    - name: TRATBL_sdl_hcp360_in_sfmc_click_data__duplicate_test
+    - name: TRATBL_sdl_hcp360_in_sfmc_open_data__null_test
+    - name: TRATBL_sdl_hcp360_in_sfmc_open_data__duplicate_test
+    - name: TRATBL_sdl_hcp360_in_sfmc_unsubscribe_data__null_test
+    - name: TRATBL_sdl_hcp360_in_sfmc_unsubscribe_data__duplicate_test
+    - name: TRATBL_sdl_hcp360_in_sfmc_bounce_data__null_test
+    - name: TRATBL_sdl_hcp360_in_sfmc_bounce_data__duplicate_test
+    - name: TRATBL_sdl_hcp360_in_ventasys_territory_master__null_test
+    - name: TRATBL_sdl_hcp360_in_ventasys_territory_master__duplicate_test
