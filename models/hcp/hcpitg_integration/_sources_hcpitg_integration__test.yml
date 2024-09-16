@@ -13,8 +13,6 @@ sources:
     - name: TRATBL_sdl_hcp360_in_iqvia_brand__test_format
     - name: TRATBL_sdl_hcp360_in_ventasys_hcp_master__null_test
     - name: TRATBL_sdl_hcp360_in_ventasys_hcp_master__duplicate_test
-    - name: TRATBL_sdl_hcp360_in_ventasys_hcp_master__null_test
-    - name: TRATBL_sdl_hcp360_in_ventasys_hcp_master__duplicate_test
     - name: TRATBL_sdl_hcp360_in_ventasys_pob_data__null_test
     - name: TRATBL_sdl_hcp360_in_ventasys_pob_data__duplicate_test
     - name: TRATBL_sdl_hcp360_in_ventasys_hcprtl__null_test
@@ -40,3 +38,4 @@ sources:
     - name: TRATBL_sdl_hcp360_in_sfmc_bounce_data__duplicate_test
     - name: TRATBL_sdl_hcp360_in_ventasys_territory_master__null_test
     - name: TRATBL_sdl_hcp360_in_ventasys_territory_master__duplicate_test
+    - name: TRATBL_sdl_hcp360_in_iqvia_indication__test_format
