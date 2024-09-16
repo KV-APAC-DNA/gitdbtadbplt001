@@ -12,7 +12,7 @@ jp_pos_daily_csms as(
     select * from {{ source('jpnsdl_raw', 'jp_pos_daily_csms') }}
 ),
 jp_pos_daily_dnki as(
-    select * from {{ source('jpnsdl_raw', 'jp_pos_daily_csms') }}
+    select * from {{ source('jpnsdl_raw', 'jp_pos_daily_dnki') }}
 ),
 jp_pos_daily_others as(
     select * from {{ source('jpnsdl_raw', 'jp_pos_daily_others') }}
