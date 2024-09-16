@@ -25,7 +25,8 @@ updated_customers AS (
                     customerid='0' || '0' || '0' || '0' || '0' || '0' || '0' || '0' || '0' || SUBSTR(customerid, 1, 1)
                 ELSE
                     ''
-            END as customerid
+            END as customerid,
+            file_name::varchar(255) as file_name
     from source
 )
 select * from updated_customers
