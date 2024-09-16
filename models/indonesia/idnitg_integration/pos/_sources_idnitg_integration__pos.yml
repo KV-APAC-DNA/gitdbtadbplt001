@@ -505,8 +505,8 @@ sources:
         #       store_failures: true
         #       schema: idnwks_integration 
         - test_duplicate:
-            select_columns: ["filename", "pos_cust", "description", "branch", "type", "values", "yearmonth"] 
-            group_by_columns: ["filename", "pos_cust", "description", "branch", "type", "values", "yearmonth"] 
+            select_columns: ["filename", "pos_cust", "description", "branch", "type", "\"values\"", "yearmonth"] 
+            group_by_columns: ["filename", "pos_cust", "description", "branch", "type", "\"values\"", "yearmonth"] 
             name: TRATBL_sdl_id_pos_igr_sellout__duplicate_test
             config:
               store_failures: true
