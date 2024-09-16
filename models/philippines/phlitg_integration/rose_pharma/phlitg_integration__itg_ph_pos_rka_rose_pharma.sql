@@ -1,4 +1,13 @@
-
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy="append",
+        pre_hook = "delete from {{this}} where file_nm in (
+        select distinct file_name from {{ source('phlsdl_raw', 'sdl_pos_rks_rose_pharma_consumer') }}
+        union 
+        select distinct file_name from {{ source('phlsdl_raw', 'sdl_pos_rks_rose_pharma') }} );"
+    )
+}}    
 with source1 as
 (
     select * from {{ source('phlsdl_raw', 'sdl_pos_rks_rose_pharma') }}
