@@ -351,7 +351,7 @@ SELECT
   rm.dstodokemei AS otodokemei, 
   (
     to_char(
-      sysdate(), 
+      current_timestamp(), 
       ('YYYY/MM/DD' :: character varying):: text
     )
   ):: character varying AS exec_time 
@@ -374,7 +374,7 @@ FROM
                         (
                           convert_timezone(
                             'Asia/Tokyo', 
-                            (sysdate() :: character varying):: timestamp without time zone
+                            (current_timestamp() :: character varying):: timestamp without time zone
                           ) )))
                     )
                   ) 
@@ -383,7 +383,7 @@ FROM
                         (
                           convert_timezone(
                             'Asia/Tokyo', 
-                            (sysdate() :: character varying):: timestamp without time zone
+                            (current_timestamp() :: character varying):: timestamp without time zone
                           ) )))
                   )
                 ) 
@@ -463,7 +463,7 @@ WHERE
                         (
                           convert_timezone(
                             'Asia/Tokyo', 
-                            (sysdate() :: character varying):: timestamp without time zone
+                            (current_timestamp() :: character varying):: timestamp without time zone
                           ) )))
       ) 
       AND (

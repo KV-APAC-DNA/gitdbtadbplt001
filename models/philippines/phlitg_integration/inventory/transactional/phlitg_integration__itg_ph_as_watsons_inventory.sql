@@ -22,7 +22,7 @@
     )
 }}
 with source as (
-    select *, dense_rank() over(partition by null order by filename desc) as rnk from  {{ source('phlsdl_raw', 'sdl_ph_as_watsons_inventory') }}
+    select *, dense_rank() over(partition by year,mnth_no,inv_week,item_cd order by filename desc) as rnk from  {{ source('phlsdl_raw', 'sdl_ph_as_watsons_inventory') }}
     where filename not in (
         select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_as_watsons_inventory__test_null__ff')}}
         union all

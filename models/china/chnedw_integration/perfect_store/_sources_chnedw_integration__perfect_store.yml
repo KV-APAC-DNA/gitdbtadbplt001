@@ -1,0 +1,31 @@
+version: 2
+
+sources:
+  - name: chnedw_integration
+    database: "{{ env_var('DBT_ENV_CHN_DB') }}"
+    schema: chnedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: edw_perfect_store_source_msl
+      tags: ["ch_pms_edw","transformation"]
+    - name: edw_perfect_store_must_stock_sku_list
+      tags: ["ch_pms_edw","transformation"]
+    - name: edw_perfect_store_store_hierarchy
+      tags: ["ch_pms_edw","transformation"]
+    - name: edw_perfect_store_source_sos_display
+      tags: ["ch_pms_edw","transformation"]
+    - name: edw_perfect_store_source_osa
+      tags: ["ch_pms_edw","transformation"]
+    - name: edw_perfect_store_source_sos
+      tags: ["ch_pms_edw","transformation"]
+    - name: edw_perfect_store_source_planogram
+      tags: ["ch_pms_edw","transformation"]
+    - name: edw_perfect_store_source_sos_shelf
+      tags: ["ch_pms_edw","transformation"]
+    - name: edw_perfect_store_product_master
+      tags: ["ch_pms_edw","transformation"]
+    - name: edw_perfect_store_source_prom
+      tags: ["ch_pms_edw","transformation"]

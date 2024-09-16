@@ -34,7 +34,7 @@ sources:
                   name: TRATBL_sdl_vn_mt_sellin_coop__lookup_test
                   config:
                     store_failures: true
-                    schema: thawks_integration
+                    schema: vnmwks_integration
           - test_lookup:
                   select_columns: ["sku", "store"]
                   lookup_table: "{{ ref('vnmitg_integration__itg_vn_mt_dksh_product_master') }}"
@@ -44,7 +44,7 @@ sources:
                   name: TRATBL_sdl_vn_mt_sellin_coop__lookup_test2
                   config:
                     store_failures: true
-                    schema: thawks_integration
+                    schema: vnmwks_integration
            
       - name: sdl_vn_mt_sellin_dksh
         tags: ["vn_dms_forecast","ingestion"]

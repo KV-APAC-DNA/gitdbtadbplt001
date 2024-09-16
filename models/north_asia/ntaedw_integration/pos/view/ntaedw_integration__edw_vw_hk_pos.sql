@@ -410,10 +410,10 @@ sellin_qty as
         LEFT JOIN itg_mds_hk_pos_product_mapping b ON 
         (
             (
-                ltrim(
+                coalesce(ltrim(
                     (a.matl_num)::text,
                     ('0'::character varying)::text
-                ) = (b.jnj_sku_code)::text
+                ),'') = (b.jnj_sku_code)::text
             )
         )
         LEFT JOIN 
@@ -429,10 +429,10 @@ sellin_qty as
         ) gcph ON 
         (
             (
-                ltrim(
+                coalesce(ltrim(
                     (a.matl_num)::text,
                     ('0'::character varying)::text
-                ) = gcph.mat_num
+                ),'') = gcph.mat_num
             )
         )
         LEFT JOIN 
@@ -452,10 +452,10 @@ sellin_qty as
         ) gls ON 
         (
             (
-                ltrim(
+                coalesce(ltrim(
                     (a.matl_num)::text,
                     ('0'::character varying)::text
-                ) = gls.matl_num
+                ),'') = gls.matl_num
             )
         )
         LEFT JOIN edw_vw_promo_calendar cal ON 
@@ -817,10 +817,10 @@ preww_nts as
                 ) gcph ON 
                 (
                     (
-                        ltrim(
+                        coalesce(ltrim(
                             (copa.matl_num)::text,
                             ((0)::character varying)::text
-                        ) = ((gcph.mat_num)::character varying)::text
+                        ),'') = ((gcph.mat_num)::character varying)::text
                     )
                 )
                 LEFT JOIN 
@@ -840,10 +840,10 @@ preww_nts as
                 ) gls ON 
                 (
                     (
-                        ltrim(
+                        coalesce(ltrim(
                             (copa.matl_num)::text,
                             ((0)::character varying)::text
-                        ) = ltrim(
+                        ),'') = ltrim(
                             ((gls.matl_num)::character varying)::text,
                             ((0)::character varying)::text
                         )
@@ -852,10 +852,10 @@ preww_nts as
                 LEFT JOIN itg_mds_hk_pos_product_mapping pos_prod_master ON 
                 (
                     (
-                        ltrim(
+                        coalesce(ltrim(
                             (copa.matl_num)::text,
                             ((0)::character varying)::text
-                        ) = (pos_prod_master.jnj_sku_code)::text
+                        ),'') = (pos_prod_master.jnj_sku_code)::text
                     )
                 )
             GROUP BY 

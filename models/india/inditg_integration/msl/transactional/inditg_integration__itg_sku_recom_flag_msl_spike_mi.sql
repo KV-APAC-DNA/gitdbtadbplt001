@@ -29,6 +29,7 @@ final as (
 	null::varchar(50) as route_code,
 	null::varchar(50) as salesman_code,
 	convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as crtd_dttm
+    
     from wks_skurecom_mi_target_tmp3
 )
 select * from final

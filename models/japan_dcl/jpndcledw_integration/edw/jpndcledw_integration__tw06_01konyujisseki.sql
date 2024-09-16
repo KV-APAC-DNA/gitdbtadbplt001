@@ -5,7 +5,7 @@ tt01kokyastsh_mv as (
     select * from  {{ ref('jpndcledw_integration__tt01kokyastsh_mv') }}
 ),
 tw05kokyarecalc as (
-    select * from {{ source('jpdcledw_integration', 'tw05kokyarecalc') }} 
+    select * from {{ ref('jpndcledw_integration__tw05kokyarecalc') }} 
 ),
 ttxx as (
     select

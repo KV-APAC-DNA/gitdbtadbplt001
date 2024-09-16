@@ -147,9 +147,9 @@ FROM (SELECT DISTINCT k.productid,
                          GROUP BY a.ean_num,
                                   a.cntry,
                                   a.crt_dttm) m
-                     ON k.eannumber = m.ean_num
+                     ON rtrim(k.eannumber) = rtrim(m.ean_num)
                     AND k.cntry = m.cntry) SRC
   LEFT OUTER JOIN (SELECT DISTINCT * FROM edw_product_attr_dim) TGT
-               ON SRC.eannumber = TGT.ean
+               ON rtrim(SRC.eannumber) = rtrim(TGT.ean)
               AND SRC.cntry = TGT.cntry)
 select * from final
