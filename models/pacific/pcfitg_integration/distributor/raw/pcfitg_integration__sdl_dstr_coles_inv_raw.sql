@@ -27,7 +27,8 @@ final as(
         closing_soh_qty_octns,
         closing_soh_qty_unit,
         dc_days_on_hand,
-        current_timestamp()::timestamp_ntz(9) as crtd_dt
+        current_timestamp()::timestamp_ntz(9) as crtd_dt,
+        file_name::varchar(255) as file_name
     from source
 )
 select * from final
