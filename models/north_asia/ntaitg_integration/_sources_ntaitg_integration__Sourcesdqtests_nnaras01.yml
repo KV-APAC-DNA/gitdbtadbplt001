@@ -390,6 +390,7 @@ sources:
       - name : TRATBL_sdl_tw_sfmc_unsubscribe_data__null_test
       - name : TRATBL_sdl_tw_ims_dstr_std_stock_107507_stock__test_date_format_odd_eve_leap
       - name : TRATBL_sdl_kr_coupang_search_keyword_by_category__null_test
+      - name : TRATBL_sdl_tw_strategic_cust_hier__null_test
  
 
 

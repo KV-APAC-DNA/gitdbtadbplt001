@@ -7,6 +7,7 @@
 
 with source as(
     select * from {{ source('ntasdl_raw','sdl_tw_pos_7eleven') }}
+
 ),
 final as(
     select *, null as filename,null as run_id from source

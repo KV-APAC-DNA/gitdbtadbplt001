@@ -64,6 +64,7 @@ other_support::float as other_support,
 sr::float as sr,
 pre_sales_before_returns::float as pre_sales_before_returns,
 pre_sales::float as pre_sales,
+filename::varchar(255) as file_name,
 load_date::timestamp_ntz(9) as load_date
 from 
 wks_itg_tw_bu_forecast_prod_hier
