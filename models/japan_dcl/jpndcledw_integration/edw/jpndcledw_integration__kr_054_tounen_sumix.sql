@@ -1,3 +1,4 @@
+{% if build_month_end_job_models()  %}
 with KR_054_ALLADM as  (
     select * from {{ ref('jpndcledw_integration__kr_054_alladm') }}
 ),
@@ -15,3 +16,6 @@ SELECT DIECUSRID      AS KOKYANO
 )
 
 SELECT * from final
+{% else %}
+    select * from {{this}}
+{% endif %}

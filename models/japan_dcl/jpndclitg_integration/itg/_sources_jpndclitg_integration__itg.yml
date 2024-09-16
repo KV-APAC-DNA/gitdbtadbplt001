@@ -107,6 +107,8 @@ sources:
       - name: '"wqtm07属性未設定名称マスタ"'
       - name: tm72del_nm
       - name: aspac_common_mv
+      - name: kesai_m_data_mart_mv
+      - name: kesai_h_data_mart_mv
       - name: tbecorder_log_tmp
       - name: keirokbn
       - name: tm25shihyokubunshikii
@@ -146,6 +148,7 @@ sources:
       - name: cit80saleh_ikou
       - name: ciy80saleh_ikou
       - name: work_bioptron
+      - name: kesai_m_data_mart_sub_n_wari
       - name: conv_mst_smkeiroid
       - name: cit81salem_ikou
       - name: old_tokutencd_master
@@ -164,6 +167,9 @@ sources:
       - name: tt02salem_mv_mt_tbl
       - name: tt02salem_sum_mv_mt_tbl
       - name: tm40shihanki
+      - name: kesai_h_data_mart_sub_n_h_mngy
+      - name: kesai_h_data_mart_sub_p
+      - name: kesai_m_data_mart_sub_p
       - name: tm14shkos
       - name: kesai_m_data_mart_sub_old_chsi
       - name: kr_comm_point_para

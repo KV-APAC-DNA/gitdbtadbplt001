@@ -7,10 +7,10 @@ CMNKOKYA_TM01_CALENDAR_JJ as
 (
     select * from {{ source('jpdcledw_integration', 'cmnkokya_tm01_calendar_jj') }}
 ),
-cte1 as 
+cte1 as
 (
       SELECT "大区分",
-      CASE 
+      CASE
             WHEN "小区分" = 'スポット'
                   THEN '新規'
             ELSE "小区分"
@@ -33,14 +33,14 @@ cte1 as
       WHERE "年月" >= (
             SELECT to_char(add_months(to_date(ym, 'yyyymm'), - 2), 'yyyymm')
             FROM CMNKOKYA_TM01_CALENDAR_JJ
-            WHERE to_char(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()), 'yyyymmdd') BETWEEN YM_START_DATE
+            WHERE to_char(convert_timezone('Asia/Tokyo', current_timestamp()), 'yyyymmdd') BETWEEN YM_START_DATE
                         AND YM_END_DATE
             )
 ),
-cte2 as 
+cte2 as
 (
       SELECT "大区分",
-      CASE 
+      CASE
             WHEN "小区分" = 'スポット'
                   THEN '解約'
             ELSE 'その他'
@@ -63,14 +63,14 @@ cte2 as
       AND "年月" >= (
             SELECT to_char(add_months(to_date(ym, 'yyyymm'), - 2), 'yyyymm')
             FROM CMNKOKYA_TM01_CALENDAR_JJ
-            WHERE to_char(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()), 'yyyymmdd') BETWEEN YM_START_DATE
+            WHERE to_char(convert_timezone('Asia/Tokyo', current_timestamp()), 'yyyymmdd') BETWEEN YM_START_DATE
                         AND YM_END_DATE
             )
 ),
-cte3 as 
-( 
+cte3 as
+(
       SELECT "大区分",
-      CASE 
+      CASE
             WHEN "小区分" = 'スポット'
                   THEN '新規'
             ELSE "小区分"
@@ -91,14 +91,14 @@ cte3 as
       WHERE "年月" >= (
             SELECT to_char(add_months(to_date(ym, 'yyyymm'), - 2), 'yyyymm')
             FROM CMNKOKYA_TM01_CALENDAR_JJ
-            WHERE to_char(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()), 'yyyymmdd') BETWEEN YM_START_DATE
+            WHERE to_char(convert_timezone('Asia/Tokyo', current_timestamp()), 'yyyymmdd') BETWEEN YM_START_DATE
                         AND YM_END_DATE
             )
 ),
-cte4 as 
+cte4 as
 (
       SELECT "大区分",
-      CASE 
+      CASE
             WHEN "小区分" = 'スポット'
                   THEN '解約'
             ELSE 'その他'
@@ -120,11 +120,11 @@ cte4 as
       AND "年月" >= (
             SELECT to_char(add_months(to_date(ym, 'yyyymm'), - 2), 'yyyymm')
             FROM CMNKOKYA_TM01_CALENDAR_JJ
-            WHERE to_char(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()), 'yyyymmdd') BETWEEN YM_START_DATE
+            WHERE to_char(convert_timezone('Asia/Tokyo', current_timestamp()), 'yyyymmdd') BETWEEN YM_START_DATE
                         AND YM_END_DATE
             )
 ),
-transformed as 
+transformed as
 (
     select * from cte1
     union all
@@ -136,7 +136,7 @@ transformed as
 ),
 final as
 (
-    select 
+    select
         "大区分"::VARCHAR(200) AS "大区分",
         "小区分"::VARCHAR(200) AS "小区分",
         "年月"::VARCHAR(100) AS yymm,

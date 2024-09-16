@@ -43,7 +43,8 @@ final as
         modusercode::varchar(50) as modusercode,
         createddt::timestamp_ntz(9) as createddt,
         current_timestamp()::timestamp_ntz(9) AS crt_dttm,
-        current_timestamp()::timestamp_ntz(9) AS updt_dttm
+        current_timestamp()::timestamp_ntz(9) AS updt_dttm,
+        file_name:: varchar(225) as file_name
 	FROM
 	(Select distinct * from source) src
 )

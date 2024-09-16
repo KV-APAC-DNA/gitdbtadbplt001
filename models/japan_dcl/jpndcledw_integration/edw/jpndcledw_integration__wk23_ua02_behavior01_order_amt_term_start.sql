@@ -10,7 +10,7 @@ SELECT
   dm_kesai_mart_dly_general
 WHERE
              -- (first day of last year, will change once in a year) and order dt <=yyyy1231 (last day of last year)
-    order_dt BETWEEN DATE_TRUNC('YEAR',sysdate()) - INTERVAL '1 YEAR' AND DATE_TRUNC('YEAR',sysdate()) - INTERVAL '1 DAY'
+    order_dt BETWEEN DATE_TRUNC('YEAR',current_timestamp()) - INTERVAL '1 YEAR' AND DATE_TRUNC('YEAR',current_timestamp()) - INTERVAL '1 DAY'
 AND
   channel IN ('通販')
   AND (juchkbn::text = 0::CHARACTER VARYING::text OR juchkbn::text = 1::CHARACTER VARYING::text OR juchkbn::text = 2::CHARACTER VARYING::text) AND meisainukikingaku <> 0::numeric::numeric(18,0)
@@ -24,7 +24,7 @@ SELECT
   dm_kesai_mart_dly_general
 WHERE
              -- (first day of last year, will change once in a year) and order dt <=yyyy1231 (last day of last year)
-    order_dt BETWEEN DATE_TRUNC('YEAR',sysdate()) - INTERVAL '1 YEAR' AND DATE_TRUNC('YEAR',sysdate()) - INTERVAL '1 DAY'
+    order_dt BETWEEN DATE_TRUNC('YEAR',current_timestamp()) - INTERVAL '1 YEAR' AND DATE_TRUNC('YEAR',current_timestamp()) - INTERVAL '1 DAY'
 AND
   channel IN ('Web')
   AND (juchkbn::text = 0::CHARACTER VARYING::text OR juchkbn::text = 1::CHARACTER VARYING::text OR juchkbn::text = 2::CHARACTER VARYING::text) AND meisainukikingaku <> 0::numeric::numeric(18,0)
@@ -38,7 +38,7 @@ SELECT
   dm_kesai_mart_dly_general
 WHERE
              -- (first day of last year, will change once in a year) and order dt <=yyyy1231 (last day of last year)
-    order_dt BETWEEN DATE_TRUNC('YEAR',sysdate()) - INTERVAL '1 YEAR' AND DATE_TRUNC('YEAR',sysdate()) - INTERVAL '1 DAY'
+    order_dt BETWEEN DATE_TRUNC('YEAR',current_timestamp()) - INTERVAL '1 YEAR' AND DATE_TRUNC('YEAR',current_timestamp()) - INTERVAL '1 DAY'
 AND
   channel IN ('直営・百貨店')
   AND (juchkbn::text = 0::CHARACTER VARYING::text OR juchkbn::text = 1::CHARACTER VARYING::text OR juchkbn::text = 2::CHARACTER VARYING::text) AND meisainukikingaku <> 0::numeric::numeric(18,0)

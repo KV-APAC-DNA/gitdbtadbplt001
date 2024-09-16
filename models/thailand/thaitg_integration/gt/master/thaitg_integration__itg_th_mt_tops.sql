@@ -8,7 +8,13 @@
 
 
 with source as(
-    select * from {{ source('thasdl_raw','sdl_th_mt_tops') }}
+    select *, dense_rank() over(partition by partner_gln, supplier_gln, inventory_report_date, ean_item_code , inventory_location order by filename desc) as rnk 
+            from {{ source('thasdl_raw','sdl_th_mt_tops') }} 
+            where filename not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_mt_tops__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_mt_tops__duplicate_test') }}
+            ) qualify rnk =1
 ),
 final as(
     select

@@ -8,7 +8,13 @@
 
 --import CTE
 with source as (
-    select * from {{ source('sgpsdl_raw','sdl_sg_scan_data_watsons') }}
+    select *, dense_rank() over(partition by week order by file_name) rnk 
+     from 
+     {{ source('sgpsdl_raw','sdl_sg_scan_data_watsons') }}
+     where file_name not in 
+     (
+        select distinct file_name from {{ source('sgpwks_integration', 'TRATBL_sdl_sg_scan_data_watsons__null_test') }}
+     ) qualify rnk = 1
 ),
 
 edw_vw_os_time_dim as (

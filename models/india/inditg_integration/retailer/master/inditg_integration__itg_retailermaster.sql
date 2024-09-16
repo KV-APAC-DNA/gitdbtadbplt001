@@ -86,6 +86,7 @@ u1 as
         RtrLongitude,
         RtrUniquecode,
         to_date(convert_timezone('UTC', current_timestamp()))
+        
     FROM wks_csl_retailermaster
 ),
 u2 as
@@ -153,6 +154,7 @@ u2 as
         RtrLongitude,
         RtrUniquecode,
         to_date(convert_timezone('UTC', current_timestamp()))
+        
     FROM wks_csl_retailermaster
     WHERE CHNG_FLG = 'U2'
 ),
@@ -228,6 +230,7 @@ final as
         rtrlongitude::varchar(40) as rtrlongitude,
         rtruniquecode::varchar(100) as rtruniquecode,
         to_date(convert_timezone('UTC', current_timestamp())) as file_rec_dt
+        
     from transformed
 )
 select * from final

@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcposeedw_integration__vw_user_dashboard
+    config:
+      alias: vw_user_dashboard
+      tags: ["hcp_common_views","transformation"]
