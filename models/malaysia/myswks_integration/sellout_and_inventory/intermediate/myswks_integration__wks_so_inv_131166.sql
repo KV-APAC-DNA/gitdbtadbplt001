@@ -1,6 +1,9 @@
 with source as
 (
-    select  * from {{ source('myssdl_raw','sdl_so_inv_131166') }}
+    select  * from {{ source('myssdl_raw','sdl_so_inv_131166') }} where file_name not in
+            ( 
+            select distinct file_name from {{ source('myswks_integration', 'TRATBL_sdl_so_inv_131166__lookup_test') }}
+            ) 
 ),
 
 final as (

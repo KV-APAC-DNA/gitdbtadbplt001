@@ -3,12 +3,25 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['product_code'],
-        pre_hook= "delete from {{this}} where product_code in ( select product_code from {{ source('vnmsdl_raw', 'sdl_vn_dms_product_dim') }} )"
+        pre_hook= [ 
+        "{% if is_incremental() %}
+            delete from {{this}} where product_code in ( select product_code from {{ source('vnmsdl_raw', 'sdl_vn_dms_product_dim') }} 
+            where file_name not in (
+            select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_product_dim__null_test')}}
+            union all
+            select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_product_dim__duplicate_test')}}));
+        {% endif %}"]
     )
 }}
 
 with source as(
-    select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_product_dim') }}
+    select *, dense_rank() over (partition by product_code order by file_name desc) rnk 
+     from {{ source('vnmsdl_raw', 'sdl_vn_dms_product_dim') }}
+     where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_product_dim__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_product_dim__duplicate_test')}}
+     ) qualify rnk = 1
 ),
 final as(
     select
@@ -28,7 +41,8 @@ final as(
         TRIM(active, ',')::varchar(1) as active,
         curr_date::timestamp_ntz(9) as crtd_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm,
-        run_id::number(14,0) as run_id
+        run_id::number(14,0) as run_id,
+        file_name::varchar(255) as file_name
     from source
 )
 select * from final

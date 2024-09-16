@@ -11,13 +11,13 @@ AS (
     SELECT *,
         dense_rank() OVER (
             PARTITION BY distributorid,
-            arcode ORDER BY file_name DESC
+            arcode ORDER BY SOURCE_FILE_NAME DESC
             ) AS rnk
     FROM {{ source('thasdl_raw', 'sdl_th_dms_customer_dim') }} source
-    WHERE file_name NOT IN (
+    WHERE SOURCE_FILE_NAME NOT IN (
             SELECT DISTINCT file_name
             FROM {{ source('thawks_integration', 'TRATBL_sdl_th_dms_customer_dim__duplicate_test') }}
-            )
+            ) qualify rnk=1
     ),
 final
 AS (
@@ -59,7 +59,8 @@ AS (
         old_custid::VARCHAR(500) AS old_custid,
         try_to_timestamp(modifydate) AS modifydate,
         current_timestamp()::timestamp_ntz(9) AS curr_date,
-        run_id::number(18, 0) AS run_id
+        run_id::number(18, 0) AS run_id,
+        SOURCE_FILE_NAME::varchar(255) as file_name
     FROM source
     )
 SELECT *
