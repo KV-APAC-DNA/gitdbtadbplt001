@@ -34,6 +34,34 @@ vars:
 # In this example config, we tell dbt to build all models in the example/ directory
 # as tables. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
+
+
+tests:
+  DNA_CORE_ASP:
+    philippines:
+      +severity: warn
+      phlitg_integration:
+        sfmc:
+          +severity: error
+    thailand:
+      +severity: warn
+      thaitg_integration:
+        pop6: 
+          +severity: error
+        sfmc:
+          +severity: error
+    malaysia:
+      +severity: warn
+    vietnam:
+      +severity: warn
+    india:
+      +severity: warn
+    singapore:
+      +severity: warn
+      sgpitg_integration:
+        pop6: 
+          +severity: error
+
 models:
   dbt_artifacts:
     +enabled: false
@@ -648,7 +676,6 @@ models:
       jpndcledw_access:
         +materialized: view
         +schema: JPDCLEDW_ACCESS
-
     china:
       config:
         +enabled: true
@@ -667,4 +694,3 @@ models:
       chnedw_access:
         +materialized: view
         +schema: CHNEDW_ACCESS
-    
