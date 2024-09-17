@@ -91,7 +91,7 @@ union1 as(
         edfs.px_tot_frcst,
         edfs.px_base_frcst,
         edfs.px_promo_frcst
-    from edw_demand_forecast_snapshot as edfs, vw_dmnd_frcst_customer_dim as vcd, vw_material_dim as vmd, vw_apo_parent_child_dim as vapcd, mstrcd
+    from (select * from edw_demand_forecast_snapshot where snap_shot_dt >='2024-07-14 00:00:00.000') as edfs, vw_dmnd_frcst_customer_dim as vcd, vw_material_dim as vmd, vw_apo_parent_child_dim as vapcd, mstrcd
     where
     edfs.pac_subsource_type = 'SAPBW_ACTUAL'
     and edfs.cust_no = ltrim(vcd.cust_no(+), '0')
