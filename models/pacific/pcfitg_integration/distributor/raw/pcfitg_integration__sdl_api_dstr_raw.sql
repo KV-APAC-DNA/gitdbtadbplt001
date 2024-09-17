@@ -7,6 +7,9 @@
 
 with source as(
     select * from {{ source('pcfsdl_raw', 'sdl_api_dstr') }}
+    where file_name not in (
+        select distinct file_name from {{source('pcfwks_integration','TRATBL_sdl_api_dstr__null_test')}}
+    )
 ),
 final as
 (
@@ -40,7 +43,8 @@ final as
         soh_qty,
         dc_soo_qty,
         so_backorder_qty,
-        current_timestamp()::timestamp_ntz(9) as crtd_dttm
+        current_timestamp()::timestamp_ntz(9) as crtd_dttm,
+        file_name::varchar(255) as file_name
     from source
     -- {% if is_incremental() %}
     -- -- this filter will only be applied on an incremental run

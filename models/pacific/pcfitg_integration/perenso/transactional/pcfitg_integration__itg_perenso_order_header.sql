@@ -3,7 +3,8 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['order_key'],
-        pre_hook= "delete from {{this}} where (order_key) in (select distinct order_key from  {{ source('pcfsdl_raw', 'sdl_perenso_order_header') }});"
+        pre_hook= "{%if is_incremental()%}
+        delete from {{this}} where (order_key) in (select distinct order_key from  {{ source('pcfsdl_raw', 'sdl_perenso_order_header') }});{%endif%}"
     )
 }}
 with source as 
@@ -26,7 +27,8 @@ final as
 	delvry_instns::varchar(256) as delvry_instns,
 	run_id::number(14,0) as run_id,
 	current_timestamp()::timestamp_ntz(9) as create_dt,
-	current_timestamp()::timestamp_ntz(9) as update_dt 
+	current_timestamp()::timestamp_ntz(9) as update_dt ,
+    file_name::varchar(255) as file_name
     from source
 )
 select * from final
