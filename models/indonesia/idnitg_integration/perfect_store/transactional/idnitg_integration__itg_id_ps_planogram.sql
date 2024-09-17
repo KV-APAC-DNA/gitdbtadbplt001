@@ -6,13 +6,24 @@
         pre_hook="{% if is_incremental() %}
                     delete from {{this}} itg
                     where (itg.outlet_id, itg.merchandiser_id, itg.input_date, upper(itg.franchise), coalesce(itg.photo_link, 'NA')) 
-                    in (select distinct trim(sdl.outlet_id), trim(sdl.merchandiser_id), to_date(trim(sdl.input_date)), upper(trim(sdl.franchise)), coalesce(trim(sdl.photo_link), 'NA') from {{ source('idnsdl_raw', 'sdl_id_ps_planogram') }} sdl);
+                    in (select distinct trim(sdl.outlet_id), trim(sdl.merchandiser_id), to_date(trim(sdl.input_date)), upper(trim(sdl.franchise)), coalesce(trim(sdl.photo_link), 'NA') 
+                    from {{ source('idnsdl_raw', 'sdl_id_ps_planogram') }} sdl
+                    where sdl.file_name not in (
+                    select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_ps_planogram__null_test') }}
+                    union all
+                    select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_ps_planogram__duplicate_test') }}
+                    ));
                 {% endif %}"
     )
 }}
 
 with source as (
     select * from {{ source('idnsdl_raw', 'sdl_id_ps_planogram') }}
+    where file_name not in (
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_ps_planogram__null_test') }}
+            union all
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_ps_planogram__duplicate_test') }}
+    )
 ),
 final as
 (

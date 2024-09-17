@@ -63,6 +63,8 @@ tests:
           +severity: error
     hcp:
       +severity: warn
+    indonesia:
+      +severity: warn
     japan:
       +severity: warn
       jpnitg_integration:

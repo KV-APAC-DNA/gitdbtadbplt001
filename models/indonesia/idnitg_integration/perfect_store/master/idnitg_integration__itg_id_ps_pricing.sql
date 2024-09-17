@@ -8,7 +8,13 @@
         upper(competitor),upper(price_type)) in (select distinct trim(outlet_id),
         trim(merchandiser_id),cast(trim(input_date) as date),upper(trim(put_up)),
         upper(trim(competitor)),upper(trim(price_type)) 
-        from {{ source('idnsdl_raw', 'sdl_id_ps_pricing') }});
+        from {{ source('idnsdl_raw', 'sdl_id_ps_pricing') }}
+        where file_name not in (
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_ps_pricing__null_test') }}
+            union all
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_ps_pricing__duplicate_test') }}
+        )
+        );
         {% endif %}"
     )
 }}
@@ -16,6 +22,11 @@
 with source as
 (
     select * from {{ source('idnsdl_raw', 'sdl_id_ps_pricing') }}
+    where file_name not in (
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_ps_pricing__null_test') }}
+            union all
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_ps_pricing__duplicate_test') }}
+    )
 ),
 final as
 (

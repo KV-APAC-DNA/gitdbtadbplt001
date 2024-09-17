@@ -32,7 +32,7 @@ final as(
        CAST(updt_dttm AS TIMESTAMP) AS updt_dttm,
 	   '200001' as effective_from,
        '999912' as effective_to, 
-        NULL as filename
+        FILE_NAME::varchar(255) as file_name
     from source
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
