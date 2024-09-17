@@ -8,6 +8,13 @@ with
 source as
 (
     select * from {{ source('thasdl_raw', 'sdl_th_sfmc_consumer_master_additional') }}
+    where file_name not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_consumer_master_additional__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_consumer_master_additional__duplicate_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_consumer_master_additional__lookup_test') }}
+            )
 ),
 
 final as

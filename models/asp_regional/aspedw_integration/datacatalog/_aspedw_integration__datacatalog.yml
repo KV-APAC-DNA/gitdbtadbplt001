@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: aspedw_integration__v_rpt_datacatalog_dataloadmonitoring
+    config: 
+        alias: v_rpt_datacatalog_dataloadmonitoring
+        tags: ["dataloadmonitoring","transformation"]

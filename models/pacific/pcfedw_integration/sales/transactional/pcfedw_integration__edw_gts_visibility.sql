@@ -129,7 +129,12 @@ select case
 
        currency.exch_rate as exch_rate,
 
-       (eifs.gros_trd_sls*currency.exch_rate) as open_orders_val,
+       CASE 
+       WHEN eifs.ord_qty_pc IS NULL AND eifs.cnfrm_qty_pc IS NULL
+       THEN eifs.gros_trd_sls * currency.exch_rate
+       ELSE
+       ((zeroifnull((eifs.gros_trd_sls/nullif(eifs.ord_qty_pc,0))*eifs.cnfrm_qty_pc))*currency.exch_rate) 
+       END as open_orders_val,
 
        (ebf.subtotal_1*currency.exch_rate) as gts_landing_val
 
@@ -296,7 +301,11 @@ non_open_orders as (select convert_timezone ('Australia/Sydney',doc_crt_dt)::dat
 
        rdt.jj_mnth_id as rqst_delv_dt_jnj_month,
 
-       orders.gros_trd_sls
+       orders.gros_trd_sls,
+       --new
+       orders.ord_qty_pc,
+       orders.cnfrm_qty_pc
+
 
 from (select eif.co_cd,
 
@@ -314,7 +323,9 @@ from (select eif.co_cd,
 
              rqst_delv_dt,
 
-             sum(eif.gros_trd_sls) as gros_trd_sls
+             sum(eif.gros_trd_sls) as gros_trd_sls,
+             sum(eif.ord_qty_pc) as ord_qty_pc,
+             sum(eif.cnfrm_qty_pc) as cnfrm_qty_pc
 
       from (select a.co_cd,
 
@@ -336,7 +347,11 @@ from (select eif.co_cd,
 
                    a.nts_bill,
 
-                   a.fut_sls_qty
+                   a.fut_sls_qty,
+--new
+                   a.cnfrm_qty_pc,
+
+                   a.ord_qty_pc
 
             from edw_invoice_fact a
 
@@ -467,8 +482,8 @@ SELECT 'Non Open Orders' as subsource_type,
        CURRENCY.TO_CCY AS TO_CCY,
 
        CURRENCY.EXCH_RATE AS EXCH_RATE,
-
-       (EIFS.GROS_TRD_SLS*CURRENCY.EXCH_RATE) AS OPEN_ORDERS_VAL,
+--new
+       (zeroifnull((eifs.gros_trd_sls/nullif(eifs.ord_qty_pc,0))*eifs.cnfrm_qty_pc)*CURRENCY.EXCH_RATE) AS OPEN_ORDERS_VAL,
 
        (EBF.SUBTOTAL_1*CURRENCY.EXCH_RATE) AS GTS_LANDING_VAL
 

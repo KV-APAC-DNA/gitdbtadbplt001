@@ -1,0 +1,8 @@
+version: 2
+
+models:
+
+  - name: hcposeitg_integration__itg_account_hco
+    config: 
+      alias: itg_account_hco
+      tags: ["master_file_data_ingestion","ingestion"]

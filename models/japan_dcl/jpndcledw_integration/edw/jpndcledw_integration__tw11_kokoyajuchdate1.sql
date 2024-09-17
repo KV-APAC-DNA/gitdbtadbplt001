@@ -5,7 +5,7 @@ tw09kokyakonyu as (
     select * from {{ ref('jpndcledw_integration__tw09kokyakonyu') }}
 ),
 tw05kokyarecalc as(
-    select * from {{ source('jpdcledw_integration', 'tw05kokyarecalc') }} 
+    select * from {{ ref('jpndcledw_integration__tw05kokyarecalc') }} 
 ),
 tt01kokyastsh_mv_filtered as (
     select

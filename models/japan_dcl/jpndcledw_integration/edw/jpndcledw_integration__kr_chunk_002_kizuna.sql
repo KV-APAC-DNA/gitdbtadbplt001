@@ -1,7 +1,7 @@
 WITH kesai_h_data_mart_mv_kizuna
 AS (
   SELECT *
-  FROM  {{ ref('jpndcledw_integration__kesai_h_data_mart_mv') }}
+  FROM  {{ ref('jpndcledw_integration__kesai_h_data_mart_mv_kizuna') }}
   ),
 transformed
 AS (

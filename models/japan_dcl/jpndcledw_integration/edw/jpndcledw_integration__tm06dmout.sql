@@ -24,15 +24,15 @@ a.DMPRNNO,
       '不明' as DMCHUBUNNAME,
       '0000' as DMSYOBUNCODE,
       '不明' as DMSYOBUNNAME,
-      CAST(TO_CHAR(SYSDATE(), 'yyyymmdd') AS INTEGER) as INSERTDATE,
-      CAST(TO_CHAR(SYSDATE(), 'hh24miss') AS INTEGER) as INSERTTIME,
+      CAST(TO_CHAR(current_timestamp(), 'yyyymmdd') AS INTEGER) as INSERTDATE,
+      CAST(TO_CHAR(current_timestamp(), 'hh24miss') AS INTEGER) as INSERTTIME,
       '004001' as INSERTID,
-      CAST(TO_CHAR(SYSDATE(), 'yyyymmdd') AS INTEGER) as UPDATEDATE,
-      CAST(TO_CHAR(SYSDATE(), 'hh24miss') AS INTEGER) as UPDATETIME,
+      CAST(TO_CHAR(current_timestamp(), 'yyyymmdd') AS INTEGER) as UPDATEDATE,
+      CAST(TO_CHAR(current_timestamp(), 'hh24miss') AS INTEGER) as UPDATETIME,
       '004001' as UPDATEID,
-      sysdate() as INSERTED_DATE,
+      current_timestamp() as INSERTED_DATE,
       null as INSERTED_BY,
-      sysdate() as UPDATED_DATE,
+      current_timestamp() as UPDATED_DATE,
       null as UPDATED_BY
 FROM CIR07DMPRN a
 WHERE NOT EXISTS (
@@ -61,9 +61,9 @@ insertid::varchar(18) as insertid,
 updatedate::number(8,0) as updatedate,
 updatetime::number(6,0) as updatetime,
 updateid::varchar(18) as updateid,
-sysdate()::timestamp_ntz(9) as inserted_date,
+current_timestamp()::timestamp_ntz(9) as inserted_date,
 null::varchar(100) as inserted_by,
-sysdate()::timestamp_ntz(9) as updated_date,
+current_timestamp()::timestamp_ntz(9) as updated_date,
 updated_by::varchar(100) as updated_by
 from
 transformed)

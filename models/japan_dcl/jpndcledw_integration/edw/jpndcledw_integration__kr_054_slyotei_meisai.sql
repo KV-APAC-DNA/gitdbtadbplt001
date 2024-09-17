@@ -1,3 +1,4 @@
+{% if build_month_end_job_models()  %}
 WITH KR_054_ALLADM
 AS (
     SELECT *
@@ -44,3 +45,6 @@ AS (
     )
 SELECT *
 FROM FINAL
+{% else %}
+    select * from {{this}}
+{% endif %}
