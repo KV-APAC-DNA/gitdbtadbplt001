@@ -63,6 +63,9 @@ tests:
           +severity: error
     japan:
       +severity: warn
+      jpnitg_integration:
+        pop6: 
+          +severity: error
     japan_dcl:
       +severity: warn    
     pacific:
