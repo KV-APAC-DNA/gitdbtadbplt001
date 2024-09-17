@@ -21,8 +21,9 @@ with sdl_kr_coupang_search_keyword_by_category as (
 select *, dense_rank()over(partition by trim(category_depth1),trim(category_depth2),trim(category_depth3),trim(all_brand),
         ,trim(coupang_sku_id),trim(coupang_sku_name)
         ,trim(ranking),trim(jnj_product_flag),trim(yearmo),trim(category_depth2),trim(category_depth3)
-        ,trim(ranking),trim(search_keyword),trim(product_ranking),trim(product_name),trim(jnj_product_flag),trim(yearmo),trim(data_granularity) ) 
-from {{ source('ntasdl_raw', 'sdl_kr_coupang_search_keyword_by_category') }} 
+        ,trim(ranking),trim(search_keyword),trim(product_ranking),trim(product_name),trim(jnj_product_flag),trim(yearmo),trim(data_granularity)order by file_name desc) 
+from {{ source('ntasdl_raw', 'sdl_kr_coupang_search_keyword_by_category') }}
+qualify rnk =1 
 ),
 final as (
 SELECT 

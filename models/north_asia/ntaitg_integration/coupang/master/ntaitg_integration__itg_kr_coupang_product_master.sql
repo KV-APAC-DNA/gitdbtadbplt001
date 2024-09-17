@@ -18,7 +18,7 @@ with source as (
     trim(yearmo) order by filename desc ) from {{ source('ntasdl_raw', 'sdl_kr_coupang_product_master') }} 
     where file_name not in (
         select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_product_master__null_test') }}
-    )
+    ) qualify rnk = 1
 ),
 final as
 (
