@@ -8,10 +8,10 @@ with edw_demand_forecast_snapshot as(
     select * from {{ ref('pcfedw_integration__edw_demand_forecast_snapshot_temp') }}
 ),
 vw_dmnd_frcst_customer_dim as(
-    select * from {{ ref('pcfedw_integration__vw_dmnd_frcst_customer_dim') }}
+    select * from {{ ref('pcfedw_integration__edw_demand_frcst_customer_dim') }}
 ),
 vw_material_dim as(
-    select * from {{ ref('pcfedw_integration__vw_material_dim') }}
+    select * from {{ ref('pcfedw_integration__material_dim_tbl') }}
 ),
 vw_apo_parent_child_dim as(
     select * from {{ ref('pcfwks_integration__wks_demand_forecast_master_code') }}
