@@ -1,9 +1,9 @@
 with sdl_pop6_jp_products as (
     select * from {{ source('jpnsdl_raw', 'sdl_pop6_jp_products') }}
-     where filename not in (
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_pop6_jp_products__null_test') }}
+     where file_name not in (
+        select distinct file_name from {{ source('jpnwks_integration', 'TRATBL_sdl_pop6_jp_products__null_test') }}
         union all
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_pop6_jp_products__duplicate_test') }}
+        select distinct file_name from {{ source('jpnwks_integration', 'TRATBL_sdl_pop6_jp_products__duplicate_test') }}
     )
 ),
 final as (
