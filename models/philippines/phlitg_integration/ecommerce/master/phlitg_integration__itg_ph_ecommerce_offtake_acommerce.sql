@@ -13,7 +13,7 @@
 }}
 
 with source as(
-    select *,dense_rank() over (partition by null order by filename desc) rnk
+    select *,dense_rank() over (partition by substring(filename, 15, 6) order by filename desc) rnk
      from {{ source('phlsdl_raw', 'sdl_ph_ecommerce_offtake_acommerce') }}
     where filename not in (
         select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_ecommerce_offtake_acommerce__null_test')}}

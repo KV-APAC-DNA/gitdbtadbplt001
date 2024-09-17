@@ -10,7 +10,8 @@ dsp_order::number(10,0) as dsp_order,
 parent_key::number(10,0) as parent_key,
 run_id::number(14,0) as run_id,
 create_dt::timestamp_ntz(9) as create_dt,
-current_timestamp()::timestamp_ntz(9) as update_dt
+current_timestamp()::timestamp_ntz(9) as update_dt,
+file_name::varchar(255) as file_name
 from sdl_perenso_account_group
 )
 select * from final

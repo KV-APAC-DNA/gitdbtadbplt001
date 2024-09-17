@@ -3,12 +3,20 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['file_name'],
-        pre_hook= "delete from {{this}} where split_part(file_name, '.', 1) in (select split_part(file_name, '.', 1) from {{ source('pcfsdl_raw', 'sdl_perenso_fsni_sales') }});"
+        pre_hook= "{%if is_incremental()%}
+        delete from {{this}} where split_part(file_name, '.', 1) in (select split_part(file_name, '.', 1) from {{ source('pcfsdl_raw', 'sdl_perenso_fsni_sales') }} 
+        where file_name not in (
+        select distinct file_name from {{source('pcfwks_integration','TRATBL_sdl_perenso_fsni_sales__null_test')}}
+        ));{%endif%}"
     )
 }}
 
 with source as(
-    select * from {{ source('pcfsdl_raw', 'sdl_perenso_fsni_sales') }}
+    select *, dense_rank() over (partition by null order by file_name desc) rnk
+     from {{ source('pcfsdl_raw', 'sdl_perenso_fsni_sales') }}
+    where file_name not in (
+        select distinct file_name from {{source('pcfwks_integration','TRATBL_sdl_perenso_fsni_sales__null_test')}}
+        ) qualify rnk = 1
 ),
 final as(
     select

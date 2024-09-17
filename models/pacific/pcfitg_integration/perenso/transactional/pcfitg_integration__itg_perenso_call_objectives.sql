@@ -3,12 +3,20 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['objective_key'],
-        pre_hook= "delete from {{this}} where nvl(objective_key, '#') in (select distinct nvl(objective_key, '#') from {{ source('pcfsdl_raw', 'sdl_perenso_call_objectives') }});"
+        pre_hook= "{%if is_incremental()%}
+        delete from {{this}} where nvl(objective_key, '#') in (select distinct nvl(objective_key, '#') from {{ source('pcfsdl_raw', 'sdl_perenso_call_objectives') }} 
+        where file_name not in (
+        select distinct file_name from {{source('pcfwks_integration','TRATBL_sdl_perenso_call_objectives__null_test')}}
+        ));{%endif%}"
     )
 }}
 with source as 
 (
-    select * from {{ source('pcfsdl_raw', 'sdl_perenso_call_objectives') }}
+    select *, dense_rank() over (partition by objective_key order by file_name desc) rnk
+    from {{ source('pcfsdl_raw', 'sdl_perenso_call_objectives') }}
+    where file_name not in (
+        select distinct file_name from {{source('pcfwks_integration','TRATBL_sdl_perenso_call_objectives__null_test')}}
+        ) qualify rnk = 1
 ),
 final as 
 (
@@ -24,7 +32,8 @@ final as
 	status::varchar(50) as status,
 	run_id::number(14,0) as run_id,
 	current_timestamp()::timestamp_ntz(9) as create_dt,
-	current_timestamp()::timestamp_ntz(9) as update_dt 
+	current_timestamp()::timestamp_ntz(9) as update_dt,
+    file_name::varchar(255) as file_name
     from source
 )
 select * from final
