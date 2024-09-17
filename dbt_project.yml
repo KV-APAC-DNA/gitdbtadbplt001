@@ -63,7 +63,10 @@ tests:
           +severity: error
     japan:
       +severity: warn
-
+    japan_dcl:
+      +severity: warn    
+    pacific:
+      +severity: warn
 
 models:
   dbt_artifacts:
