@@ -11,7 +11,7 @@ with source as(
         select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_pos_gs_super__null_test') }}
     )
 ),
-final as(
+final as (
     select * from source
  {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
