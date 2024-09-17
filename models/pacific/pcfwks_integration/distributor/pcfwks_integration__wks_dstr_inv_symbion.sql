@@ -5,6 +5,9 @@ with sdl_au_dstr_symbion_header as
 sdl_symbion_dstr as 
 (
     select * from {{ source('pcfsdl_raw', 'sdl_symbion_dstr') }}
+    where file_name not in (
+        select distinct file_name from {{source('pcfwks_integration','TRATBL_sdl_symbion_dstr__null_test')}}
+    )
 ),
 edw_customer_sales_dim as
 (
