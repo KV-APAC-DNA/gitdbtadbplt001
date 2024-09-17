@@ -1,4 +1,4 @@
-with apo_parent_child_dim 
+with apo_parent_child_dim as 
 (
     select * from {{ ref('pcfedw_integration__vw_apo_parent_child_dim') }}
 )
