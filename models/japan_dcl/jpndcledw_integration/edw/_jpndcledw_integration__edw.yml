@@ -808,7 +808,7 @@ models:
   - name: jpndcledw_integration__tbecorder_rireki_log
     config:
       alias: tbecorder_rireki_log
-      tags: ["m_dcl_edw_job1","inactive"]
+      tags: ["m_dcl_edw_job1","transformation"]
   - name: jpndcledw_integration__cim01kokya
     config:
       alias: cim01kokya
@@ -816,15 +816,15 @@ models:
   - name: jpndcledw_integration__cit85osalh_hen_mv_tbl
     config:
       alias: cit85osalh_hen_mv_tbl
-      tags: ["m_dcl_edw_job1","inactive"]
+      tags: ["m_dcl_edw_job1","transformation"]
   - name: jpndcledw_integration__cit85osalh_uri_mv_tbl
     config:
       alias: cit85osalh_uri_mv_tbl
-      tags: ["m_dcl_edw_job1","inactive"]
+      tags: ["m_dcl_edw_job1","transformation"]
   - name: jpndcledw_integration__cit86osalm_uri_mv_tbl 
     config:
       alias: cit86osalm_uri_mv_tbl
-      tags: ["m_dcl_edw_job1","inactive"] 
+      tags: ["m_dcl_edw_job1","transformation"] 
   - name: jpndcledw_integration__tbecordermeisai_mv_tbl
     config:
       alias: tbecordermeisai_mv_tbl

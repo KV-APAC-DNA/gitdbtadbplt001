@@ -33,7 +33,7 @@ AS (
         ,tbEcOrderMeisai.diItemNum						AS	SURYO
         ,decode(tbEcOrderMeisai.diItemNum,0,0,(nvl(tbEcOrderMeisai.c_diitemtotalprc,0) - nvl(tbEcOrderMeisai.c_didiscountmeisai,0)) / nvl(tbEcOrderMeisai.diItemNum,1))	AS	TANKA				--割引後税込単価：(小計(税込）- 割引額) / 数量
         ,decode(tbEcOrderMeisai.c_dinoshinshoitemprc,0,0,NVL(tbEcOrderMeisai.c_diitemtotalprc,0) - NVL(tbEcOrderMeisai.c_didiscountmeisai,0))			AS	KINGAKU
-        ,decode(tbEcOrderMeisai.c_dinoshinshoitemprc,0,0,ceil(((nvl(tbEcOrderMeisai.c_diitemtotalprc,0) - nvl(tbEcOrderMeisai.c_didiscountmeisai,0)) / ((100+tbecorder.DITAXRATE)/100))) )				AS	MEISAINUKIKINGAKU
+        ,decode(tbEcOrderMeisai.c_dinoshinshoitemprc,0,0,ceil(((nvl(tbEcOrderMeisai.c_diitemtotalprc,0) - nvl(tbEcOrderMeisai.c_didiscountmeisai,0)) / round((100+tbecorder.DITAXRATE)/100))) )				AS	MEISAINUKIKINGAKU
         ,decode(tbEcOrderMeisai.c_dinoshinshoitemprc,0,0,NVL(tbEcOrderMeisai.c_didiscountrate,0))			AS	WARIRITU
         ,NVL(tbEcOrderMeisai.diTotalPrc,0)									AS	WARIMAEKOMITANKA		--割引前税込単価：単価(税込)
         ,decode(tbEcOrderMeisai.c_dinoshinshoitemprc,0,0,NVL((tbEcOrderMeisai.c_diitemtotalprc - (tbEcOrderMeisai.diItemTax * nvl(tbEcOrderMeisai.diItemNum,1))),0))					AS	WARIMAENUKIKINGAKU
