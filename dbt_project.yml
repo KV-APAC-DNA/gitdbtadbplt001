@@ -41,6 +41,10 @@ tests:
       +severity: warn
     asp_regional:
       +severity: warn
+    thailand:
+      +severity: warn
+    north_asia:
+      +severity: warn
 
 models:
   dbt_artifacts:

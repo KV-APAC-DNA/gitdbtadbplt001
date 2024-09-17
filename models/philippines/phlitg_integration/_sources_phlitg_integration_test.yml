@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: phlwks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: phlwks_integration
+    schema: sshukl02_workspace
     quoting:
       database: false
       schema: false
