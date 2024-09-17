@@ -7,7 +7,7 @@
         (select distinct file_name from {{ source('ntasdl_raw','sdl_kr_dads_linkprice') }} 
         where file_name not in
      (select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_dads_linkprice_format_test') }})
-));
+);
         {% endif %}"
 )}}
 
