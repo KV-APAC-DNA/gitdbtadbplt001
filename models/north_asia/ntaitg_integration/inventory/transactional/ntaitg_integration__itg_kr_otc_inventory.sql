@@ -6,7 +6,7 @@
                     delete from {{this}} where nvl(mnth_id, '#') || nvl(matl_num, '#') || nvl(distributor_cd, '#') in 
                     (
                     select distinct nvl(mnth_id, '#') || nvl(matl_num, '#') || nvl(distributor_cd, '#')
-                    from {{ source('ntasdl_raw', 'sdl_kr_otc_inventory') }} where file_name not in
+                    from {{ source('ntasdl_raw', 'sdl_kr_otc_inventory') }} where filename not in
                     (select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_otc_inventory__null_test') }}
                     union all
                     select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_otc_inventory__duplicate_test') }}
@@ -18,8 +18,8 @@
 }}
 with source as (
     select *,dense_rank() over(partition by nvl(mnth_id, '#'),nvl(matl_num, '#'),nvl(distributor_cd, '#') 
-    order by file_name desc
-    ) rnk from {{ source('ntasdl_raw', 'sdl_kr_otc_inventory') }} where file_name not in
+    order by filename desc
+    ) rnk from {{ source('ntasdl_raw', 'sdl_kr_otc_inventory') }} where filename not in
      (select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_otc_inventory__null_test') }}
       union all
       select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_otc_inventory__duplicate_test') }}
