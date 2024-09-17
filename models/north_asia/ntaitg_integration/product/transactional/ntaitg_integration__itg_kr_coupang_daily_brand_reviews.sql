@@ -16,7 +16,7 @@
 )
 }}
 with sdl_kr_coupang_daily_brand_reviews as (
-    select *,dense_rank(partition by trim(review_date),trim(brand),trim(coupang_sku_id),trim(coupang_sku_name),trim(review_score_star) order by file_name desc) rnk
+    select *,dense_rank()over(partition by trim(review_date),trim(brand),trim(coupang_sku_id),trim(coupang_sku_name),trim(review_score_star) order by file_name desc) rnk
     from {{ source('ntasdl_raw', 'sdl_kr_coupang_daily_brand_reviews') }} where file_name not in
      (select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_daily_brand_reviews__null_test') }}
       union all

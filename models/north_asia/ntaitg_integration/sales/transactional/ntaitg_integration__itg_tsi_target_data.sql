@@ -14,7 +14,7 @@
         )
 }}
 with source as (
-    select *, dense_rank() over(partition by date order by file_name desc) from 
+    select *, dense_rank() over(partition by date order by filename desc) rnk from 
     {{ source('ntasdl_raw', 'sdl_tsi_target_data') }} where filename not in
      (select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tsi_target_data__null_test') }}
       union all
