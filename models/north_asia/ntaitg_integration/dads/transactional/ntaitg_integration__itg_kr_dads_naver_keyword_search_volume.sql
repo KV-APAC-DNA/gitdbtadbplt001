@@ -7,8 +7,7 @@
         from 
         {{ source('ntasdl_raw','sdl_kr_dads_naver_keyword_search_volume') }} where file_name not in
      (select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_dads_naver_keyword_search_volume__format_test') }})
-)
-        );
+);
         {% endif %}"
 )}}
 

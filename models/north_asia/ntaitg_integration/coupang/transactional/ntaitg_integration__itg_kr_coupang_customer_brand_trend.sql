@@ -4,7 +4,7 @@
         incremental_strategy = "append",
         pre_hook="{% if is_incremental() %}
         delete from {{this}} where trim(date_yyyymm)||trim(coupang_id)||trim(category_depth1)||trim(brand) in (select distinct trim(date_yyyymm)||trim(coupang_id)||trim(category_depth1) || trim(brand) 
-        from {{ source('ntasdl_raw', 'sdl_kr_coupang_customer_brand_trend') }} where filename  not in (
+        from {{ source('ntasdl_raw', 'sdl_kr_coupang_customer_brand_trend') }} where file_name  not in (
         select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_customer_brand_trend__null_test') }}
         union all
         select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_customer_brand_trend__test_date_format_odd_eve_leap') }}
@@ -14,7 +14,7 @@
 }}
 with source as (
     select *,dense_rank()over(partition by trim(date_yyyymm),trim(coupang_id),trim(category_depth1),trim(brand) order by file_name desc) rnk
-     from {{ source('ntasdl_raw', 'sdl_kr_coupang_customer_brand_trend') }} where filename  not in (
+     from {{ source('ntasdl_raw', 'sdl_kr_coupang_customer_brand_trend') }} where file_name  not in (
         select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_customer_brand_trend__null_test') }}
         union all
         select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_customer_brand_trend__test_date_format_odd_eve_leap') }}
