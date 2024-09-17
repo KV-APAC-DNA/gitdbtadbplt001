@@ -14,7 +14,8 @@ final as
 	current_timestamp()::timestamp_ntz(9) as create_dt,
 	current_timestamp()::timestamp_ntz(9) as update_dt,
     cascade_next_todo_key::number(10,0) as cascade_next_todo_key,
-	cascadeon_answermode::number(10,0) as cascadeon_answermode 
+	cascadeon_answermode::number(10,0) as cascadeon_answermode ,
+    file_name::varchar(255) as file_name
     from source
 )
 select * from final

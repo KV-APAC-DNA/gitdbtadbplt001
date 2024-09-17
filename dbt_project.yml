@@ -63,7 +63,15 @@ tests:
           +severity: error
     hcp:
       +severity: warn
-
+    japan:
+      +severity: warn
+      jpnitg_integration:
+        pop6: 
+          +severity: error
+    japan_dcl:
+      +severity: warn    
+    pacific:
+      +severity: warn
 
 models:
   dbt_artifacts:
