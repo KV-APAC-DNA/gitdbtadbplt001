@@ -106,5 +106,6 @@ and vapcd.master_code = mstrcd.master_code(+)
 transformed as(
     select * from union1
    
+   
 )
 select * from transformed
