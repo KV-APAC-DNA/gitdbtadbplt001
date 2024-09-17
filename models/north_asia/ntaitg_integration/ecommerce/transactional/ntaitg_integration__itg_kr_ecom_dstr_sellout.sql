@@ -12,7 +12,7 @@
         select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_ecom_dstr_sellout_stock__lookup_test_sap') }}
         union all
         select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_ecom_dstr_sellout_stock__lookup_test_dstr_cd') }}
-     ) where upper(data_src) = 'SELL_OUT');
+     ) and upper(data_src) = 'SELL_OUT');
         {% endif %}"
     )
 }}
@@ -27,7 +27,7 @@ with source as (
         union all
         select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_ecom_dstr_sellout_stock__lookup_test_dstr_cd') }}
      ) 
-    where upper(data_src) = 'SELL_OUT'
+    and upper(data_src) = 'SELL_OUT'
     qualify rnk =1
 ),
 final as (

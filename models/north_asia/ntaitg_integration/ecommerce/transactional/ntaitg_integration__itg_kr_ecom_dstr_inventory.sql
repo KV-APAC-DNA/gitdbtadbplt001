@@ -18,7 +18,7 @@
 }}
 
 with source as (
-    select *,dense_rank()over(partition by coalesce(transaction_date, '9999-12-31') order by file_name desc) 
+    select *,dense_rank()over(partition by coalesce(transaction_date, '9999-12-31') order by file_name desc) rnk 
     from {{ source('ntasdl_raw', 'sdl_kr_ecom_dstr_sellout_stock') }}
    where file_name not in (
         select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_ecom_dstr_sellout_stock__null_test') }}

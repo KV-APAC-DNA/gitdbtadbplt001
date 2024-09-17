@@ -39,8 +39,7 @@ final as(
         rf_sell_in_qty::float as rf_sellin_qty,
         price_off::float as price_off,
         pre_sales_before_returns::float as pre_sales_before_returns,
-        load_date::timestamp_ntz(9) as load_date,
-        filename::varchar(255) as file_name
+        load_date::timestamp_ntz(9) as load_date
     from source
 )
 select * from final
