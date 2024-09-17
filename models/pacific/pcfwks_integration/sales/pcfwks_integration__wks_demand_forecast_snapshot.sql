@@ -11,7 +11,7 @@ vw_dmnd_frcst_customer_dim as(
     select * from {{ ref('pcfedw_integration__edw_demand_frcst_customer_dim') }}
 ),
 vw_material_dim as(
-    select * from {{ ref('pcfedw_integration__material_dim_tbl') }}
+    select * from {{ ref('pcfedw_integration__edw_material_dim') }}
 ),
 vw_apo_parent_child_dim as(
     select * from {{ ref('pcfedw_integration__edw_apo_parent_child_dim') }}
