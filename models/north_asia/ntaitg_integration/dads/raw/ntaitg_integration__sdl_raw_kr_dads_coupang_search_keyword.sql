@@ -22,7 +22,7 @@ By_search_term_ranking
 ,Product_standings
 ,goods
 ,My_Products,
-null as file_name,
+file_name,
 file_date as file_date,
 crtd_dttm as crtd_dttm
 from source

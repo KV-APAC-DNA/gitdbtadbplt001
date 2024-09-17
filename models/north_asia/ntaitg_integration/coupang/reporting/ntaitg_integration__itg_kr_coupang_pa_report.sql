@@ -10,7 +10,9 @@
 
 
 with sdl_kr_coupang_pa_report as (
-    select *,dense_rank()over(partition by date,order by filename desc) from {{ source('ntasdl_raw', 'sdl_kr_coupang_pa_report') }}
+    select *,dense_rank()over(partition by date order by filename desc) rnk from 
+    {{ source('ntasdl_raw', 'sdl_kr_coupang_pa_report') }}
+    qualify rnk = 1
 ),
 final as (
 SELECT 
