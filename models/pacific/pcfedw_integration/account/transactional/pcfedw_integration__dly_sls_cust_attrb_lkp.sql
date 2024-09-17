@@ -1,6 +1,6 @@
 with source as
 (
-    select * from {{ source('pcfsdl_raw', 'sdl_mds_pacific_cust_attrb_temp') }}
+    select * from {{ source('pcfsdl_raw', 'sdl_mds_pacific_cust_attrb') }}
 ),
 final as
 (
