@@ -309,7 +309,7 @@ lalavla as
         null as store_name,
         unit_price::numeric(16, 5) as unit_price,
         'KRW' as currency,
-        filename
+        filename,
         crt_dttm,
         upd_dttm,
         'Lalavla' as src_sys_cd
