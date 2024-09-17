@@ -2,12 +2,19 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= "delete from {{this}} where week_end_dt in ( select week_end from {{ source('pcfsdl_raw', 'sdl_chw_ecomm_data') }} );"
+        pre_hook= "{%if is_incremental()%}
+        delete from {{this}} where week_end_dt in ( select week_end from {{ source('pcfsdl_raw', 'sdl_chw_ecomm_data') }} 
+        where file_name not in (
+        select distinct file_name from {{source('pcfwks_integration','TRATBL_sdl_chw_ecomm_data__null_test')}}));{%endif%}"
     )
 }}
 
 with source as(
-    select * from {{ source('pcfsdl_raw', 'sdl_chw_ecomm_data') }}
+    select *, dense_rank() over (partition by week_end order by file_name desc ) rnk
+     from {{ source('pcfsdl_raw', 'sdl_chw_ecomm_data') }}
+    where file_name not in (
+        select distinct file_name from {{source('pcfwks_integration','TRATBL_sdl_chw_ecomm_data__null_test')}}
+        ) qualify rnk = 1
 ),
 final as(
     select

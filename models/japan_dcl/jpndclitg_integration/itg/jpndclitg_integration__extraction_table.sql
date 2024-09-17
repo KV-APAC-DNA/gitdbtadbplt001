@@ -25,7 +25,8 @@ with
             current_timestamp()::timestamp_ntz(9) as inserted_date,
             null::varchar(100) as inserted_by,
             current_timestamp()::timestamp_ntz(9) as updated_date,
-            null::varchar(9) as updated_by
+            null::varchar(9) as updated_by,
+            file_name::varchar(255) as file_name
         from sdl_extracted_table
 
     )
