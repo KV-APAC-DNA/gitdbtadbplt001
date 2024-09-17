@@ -120,7 +120,7 @@ union1 as(
 )
 and vapcd.master_code = mstrcd.master_code(+)
 ),
-union2as(
+union2 as (
     select
         edfs.pac_source_type,
         edfs.pac_subsource_type,
@@ -224,7 +224,7 @@ mstrcdd as(
         to_char(cmp_id) = '7470'
     )
 ),
-union3 as(
+union3 as (
     select
         edfs.pac_source_type,
         edfs.pac_subsource_type,
@@ -315,7 +315,7 @@ union3 as(
     )
     and vapcd.master_code =  mstrcdd.master_code(+)
 ),
-union4 as(
+union4 as (
     select
         edfs.pac_source_type,
         edfs.pac_subsource_type,
