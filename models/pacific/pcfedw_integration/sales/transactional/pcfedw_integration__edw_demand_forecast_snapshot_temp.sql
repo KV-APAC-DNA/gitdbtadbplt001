@@ -2,7 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";",
         cluster_by=['pac_subsource_type','snap_shot_dt']
     )
 }}
