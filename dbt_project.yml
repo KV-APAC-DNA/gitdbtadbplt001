@@ -61,6 +61,8 @@ tests:
       sgpitg_integration:
         pop6: 
           +severity: error
+    japan_dcl:
+      +severity: warn    
     pacific:
       +severity: warn
 
