@@ -3,7 +3,8 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['ord_key','batch_key','branch_key'],
-        pre_hook= "delete from {{this}} where (ord_key, batch_key, branch_key) in (select distinct ord_key,batch_key,branch_key from  {{ source('pcfsdl_raw', 'sdl_perenso_order_batch') }});"
+        pre_hook= "{%if is_incremental()%}
+        delete from {{this}} where (ord_key, batch_key, branch_key) in (select distinct ord_key,batch_key,branch_key from  {{ source('pcfsdl_raw', 'sdl_perenso_order_batch') }});{%endif%}"
     )
 }}
 with source as 
@@ -23,7 +24,8 @@ final as
 	to_date(try_to_timestamp_ntz(sent_dt,'dd/mm/yyyy hh12:mi:ss am')) as sent_dt,
 	run_id::number(14,0) as run_id,
 	current_timestamp()::timestamp_ntz(9) as create_dt,
-	current_timestamp()::timestamp_ntz(9) as update_dt 
+	current_timestamp()::timestamp_ntz(9) as update_dt ,
+    file_name::varchar(255) as file_name
     from source
 )
 select * from final

@@ -3,15 +3,20 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['ac_nielsencode','iri_ean','wk_end_dt'],
-        pre_hook= "delete from {{this}} where (nvl(ac_nielsencode, '0') || nvl(iri_ean, '0') || nvl(wk_end_dt, '9999-12-31')) in (
-        select distinct nvl(ac_nielsencode, '0') || nvl(iri_ean, '0') || nvl(to_date(wk_end_dt, 'dd/mm/yy'), '9999-12-31') from {{ source('pcfsdl_raw', 'sdl_iri_scan_sales') }});"
+        pre_hook= "{%if is_incremental()%}
+        delete from {{this}} where (nvl(ac_nielsencode, '0') || nvl(iri_ean, '0') || nvl(wk_end_dt, '9999-12-31')) in (
+        select distinct nvl(ac_nielsencode, '0') || nvl(iri_ean, '0') || nvl(to_date(wk_end_dt, 'dd/mm/yy'), '9999-12-31') from {{ source('pcfsdl_raw', 'sdl_iri_scan_sales') }} where filename not in (
+        select distinct file_name from {{source('pcfwks_integration','TRATBL_sdl_iri_scan_sales__duplicate_test')}}
+    )); {%endif%}"
     )
 }}
 with source as 
 (
     select *,
     dense_rank() over(partition by ac_nielsencode,iri_ean,wk_end_dt order by filename desc) as rnk
-    from {{ source('pcfsdl_raw', 'sdl_iri_scan_sales') }}
+    from {{ source('pcfsdl_raw', 'sdl_iri_scan_sales') }} where filename not in (
+        select distinct file_name from {{source('pcfwks_integration','TRATBL_sdl_iri_scan_sales__duplicate_test')}}
+    ) qualify rnk = 1
 ),
 final as 
 (

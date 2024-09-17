@@ -3,12 +3,19 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['file_name'],
-        pre_hook= "delete from {{this}} where split_part(file_name, '.', 1) in (select split_part(file_name, '.', 1) from {{ source('pcfsdl_raw', 'sdl_perenso_fssi_sales') }});"
+        pre_hook= "{%if is_incremental()%}
+        delete from {{this}} where split_part(file_name, '.', 1) in (select split_part(file_name, '.', 1) from {{ source('pcfsdl_raw', 'sdl_perenso_fssi_sales') }} where file_name not in (
+        select distinct file_name from {{source('pcfwks_integration','TRATBL_sdl_perenso_fssi_sales__null_test')}}
+    ));{%endif%}"
     )
 }}
 
 with source as(
-    select * from {{ source('pcfsdl_raw', 'sdl_perenso_fssi_sales') }}
+    select *, dense_rank() over (partition by null order by file_name desc) rnk 
+     from {{ source('pcfsdl_raw', 'sdl_perenso_fssi_sales') }}
+    where file_name not in (
+        select distinct file_name from {{source('pcfwks_integration','TRATBL_sdl_perenso_fssi_sales__null_test')}}
+    ) qualify rnk = 1
 ),
 edw_time_dim as(
     select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
@@ -26,7 +33,7 @@ fssi as(
         sales_volume::number(18,0) as sls_unit,
         sales_value::number(10,2) as sls_value,
         'NZD'::varchar(3) as crncy,
-        file_name::varchar(100) as file_name,
+        file_name::varchar(100) as file_name
     from source
 ),
 final as(
