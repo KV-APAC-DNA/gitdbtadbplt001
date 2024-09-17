@@ -94,7 +94,7 @@ union1 as(
     from  edw_demand_forecast_snapshot  as edfs, vw_dmnd_frcst_customer_dim as vcd, vw_material_dim as vmd, vw_apo_parent_child_dim as vapcd, mstrcd
     where
     edfs.pac_subsource_type <> 'SAPBW_APO_FORECAST'
-    --and 
+    and 
     edfs.cust_no = ltrim(vcd.cust_no(+), '0')
     and edfs.matl_no = ltrim(vmd.matl_id(+), '0')
     and (
