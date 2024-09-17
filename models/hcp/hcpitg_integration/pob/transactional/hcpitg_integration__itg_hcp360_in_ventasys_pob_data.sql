@@ -4,15 +4,27 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
-        delete from {{this}} WHERE TO_CHAR(dcr_dt,'YYYYMM') IN (SELECT  TO_CHAR(sdl.dcr_dt,'YYYYMM') 
-                                   FROM {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_pob_data')}} sdl)
-        {% endif %}"
+        delete from {{this}} WHERE TO_CHAR(dcr_dt,'YYYYMM') IN (SELECT TO_CHAR(sdl.dcr_dt,'YYYYMM') 
+                                    FROM {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_pob_data')}} sdl
+                                    where sdl.filename not in (
+                                    select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_ventasys_pob_data__null_test') }}
+                                    union all
+                                    select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_ventasys_pob_data__duplicate_test') }}
+                                    )
+                                    )
+                {% endif %}"
     )
 }}
 
 with sdl_hcp360_in_ventasys_pob_data as
 (
-    select *, dense_rank() over (partition by TO_CHAR(dcr_dt,'YYYYMM') order by filename desc ) as rn from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_pob_data') }} qualify rn=1
+    select *, dense_rank() over (partition by TO_CHAR(dcr_dt,'YYYYMM') order by filename desc ) as rn 
+    from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_pob_data') }} 
+    where filename not in (
+            select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_ventasys_pob_data__null_test') }}
+            union all
+            select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_ventasys_pob_data__duplicate_test') }}
+    ) qualify rn=1
 ),
 final as(
 select 
