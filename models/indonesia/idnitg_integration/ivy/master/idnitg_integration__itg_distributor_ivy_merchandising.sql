@@ -37,12 +37,21 @@
 }}
 with source as
 (
-    select * from {{ source('idnsdl_raw', 'sdl_distributor_ivy_merchandising') }}
+    select *, dense_rank() over(partition by distributor_code,
+            upper(sales_repcode),
+            upper(retailer_code),
+                to_date(
+                    trim(split_part(surveydate, ',', 3)) || ' ' || trim (split_part(surveydate, ',', 2)),
+                    'YYYY MON DD'
+                ),
+            upper(aq_name),
+            coalesce(link, 'NA') order by file_name desc) as rnk 
+    from {{ source('idnsdl_raw', 'sdl_distributor_ivy_merchandising') }}
     where file_name not in (
             select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_merchandising__null_test') }}
             union all
             select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_merchandising__duplicate_test') }}
-	)
+	) qualify rnk =1
 ),
 final as
 (

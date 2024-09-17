@@ -26,15 +26,18 @@
 
 with sdl_hcp360_in_iqvia_sales as 
 (
-    select * from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_sales') }}
+    select * 
+    from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_sales') }}
      where filename not in (
             select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_iqvia_sales__test_format') }}
-    )
+    ) 
 ),
 sdl_hcp360_in_iqvia_aveeno_zone as
 (
-    select * from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_aveeno_zone') }}
-    where filename not in (select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_iqvia_aveeno_zone__test_format') }} )
+    select *,dense_rank() over(partition by upper(substring(sheet_name,0,11)) order by filename desc) as rnk  
+    from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_aveeno_zone') }}
+    where filename not in (select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_iqvia_aveeno_zone__test_format') }} 
+    ) qualify rnk =1
 ),
 cte as
 (

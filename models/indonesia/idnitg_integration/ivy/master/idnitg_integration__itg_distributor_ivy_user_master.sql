@@ -8,7 +8,9 @@
 }}
 with source as 
 (
-    select * from {{ source('idnsdl_raw', 'sdl_distributor_ivy_user_master') }}
+    select *, dense_rank() over(partition by dis_code, sr_code order by file_name desc) as rnk 
+    from {{ source('idnsdl_raw', 'sdl_distributor_ivy_user_master') }}
+    qualify rnk =1
 ),
 final as
 ( select * from 

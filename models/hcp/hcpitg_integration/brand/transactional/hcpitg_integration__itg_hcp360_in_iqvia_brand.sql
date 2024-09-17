@@ -11,10 +11,11 @@
     )
 }}
 with sdl_hcp360_in_iqvia_brand as(
-    select * from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_brand') }}
+    select *
+    from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_brand') }}
     where filename not in (
             select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_iqvia_brand__test_format') }}
-    )
+    ) 
 ),
 final as(
     select
