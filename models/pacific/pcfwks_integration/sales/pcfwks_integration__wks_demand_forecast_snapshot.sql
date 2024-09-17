@@ -14,10 +14,7 @@ vw_material_dim as(
     select * from {{ ref('pcfedw_integration__vw_material_dim') }}
 ),
 vw_apo_parent_child_dim as(
-    select * from {{ ref('pcfedw_integration__vw_apo_parent_child_dim') }}
-),
-mstrcd as(
-   select * from {{ ref('pcfwks_integration__wks_demand_forecast_master_code') }} 
+    select * from {{ ref('pcfwks_integration__wks_demand_forecast_master_code') }}
 ),
 union1 as(
     select
