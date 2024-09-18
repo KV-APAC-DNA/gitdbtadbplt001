@@ -19,6 +19,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
       - name: sdl_th_dms_sellout_fact
         tags: ["th_mbox_files","ingestion"]
       - name: sdl_th_tesco_transdata

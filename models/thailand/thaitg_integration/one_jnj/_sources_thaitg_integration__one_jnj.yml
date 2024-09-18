@@ -19,6 +19,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
           - test_duplicate:
               group_by_columns: ["date_level_code","date_value","sector_function_code","functional_area","subject","kpi","level_1_def","level_1","level_2_def","level_2","ref_value","actual_value","add_info"]
               select_columns: ["date_level_code","date_value","sector_function_code","functional_area","subject","kpi","level_1_def","level_1","level_2_def","level_2","ref_value","actual_value","add_info"]
@@ -26,6 +27,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
 
 
 
