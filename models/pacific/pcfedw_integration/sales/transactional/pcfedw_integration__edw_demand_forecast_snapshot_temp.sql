@@ -2,8 +2,8 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
-
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";",
+        cluster_by=[snap_shot_dt,pac_subsource_type,matl_no]
     )
 }}
 
@@ -340,9 +340,9 @@ final as(
     select * from union1
     union all
     select * from union2
-    {% if is_incremental() %}
+    --{% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    where snap_shot_dt > (select max(snap_shot_dt) from {{ this }}) 
-    {% endif %}
+    --where snap_shot_dt > (select max(snap_shot_dt) from {{ this }}) 
+    --{% endif %}
 )
 select * from final
