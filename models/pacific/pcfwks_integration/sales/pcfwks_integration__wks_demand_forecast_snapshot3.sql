@@ -16,11 +16,10 @@ vw_material_dim as(
 vw_apo_parent_child_dim as(
     select * from {{ ref('pcfedw_integration__vw_apo_parent_child_dim') }}
 ),
-union3 as 
+union2 as 
 (
-    select * from {{ ref('pcfwks_integration__wks_demand_forecast_snapshot3') }}
+    select * from {{ ref('pcfwks_integration__wks_demand_forecast_snapshot2') }}
 ),
-
 mstrcdd as(
     select distinct
         master_code,
@@ -42,7 +41,7 @@ mstrcdd as(
         to_char(cmp_id) = '7470'
     )
 ),
-union4 as (
+union3 as (
     select
         edfs.pac_source_type,
         edfs.pac_subsource_type,
@@ -125,7 +124,7 @@ union4 as (
     ) as vcd, vw_material_dim as vmd, vw_apo_parent_child_dim as vapcd,  mstrcdd
     where
     edfs.pac_subsource_type = 'SAPBW_APO_FORECAST'
-    and to_char(snap_shot_dt, 'YYYYMM') in (202407,202408,202409,202410)
+    and to_char(snap_shot_dt, 'YYYYMM') in (202402,202403,202404,202405,202406)
     and edfs.fcst_chnl = vcd.fcst_chnl(+)
     and edfs.matl_no = ltrim(vmd.matl_id(+), '0')
     and (
@@ -133,12 +132,12 @@ union4 as (
     )
     and vapcd.master_code =  mstrcdd.master_code(+)
 ),
+
 transformed as(
     
-    select * from union3
-    
+    select * from union2
     union all 
-
-    select * from union4
+    select * from union3
+   
 )
 select * from transformed

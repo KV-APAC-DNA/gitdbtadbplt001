@@ -16,33 +16,33 @@ vw_material_dim as(
 vw_apo_parent_child_dim as(
     select * from {{ ref('pcfedw_integration__vw_apo_parent_child_dim') }}
 ),
-union3 as 
+union1 as 
 (
-    select * from {{ ref('pcfwks_integration__wks_demand_forecast_snapshot3') }}
+    select * from {{ ref('pcfwks_integration__wks_demand_forecast_snapshot1') }}
 ),
-
-mstrcdd as(
+mstrcd as(
     select distinct
         master_code,
         parent_matl_desc
-        from vw_apo_parent_child_dim
-        where
-        to_char(cmp_id) = '7470'
-        union all
-        select distinct
-        master_code,
+    from vw_apo_parent_child_dim
+    where
+    to_char(cmp_id) = '7470'
+    union all
+    select distinct
+        to_char(master_code),
         parent_matl_desc
     from vw_apo_parent_child_dim
     where
     not master_code in (
         select distinct
-        master_code
+        to_char(master_code)
         from vw_apo_parent_child_dim
         where
         to_char(cmp_id) = '7470'
     )
 ),
-union4 as (
+
+union2 as (
     select
         edfs.pac_source_type,
         edfs.pac_subsource_type,
@@ -63,9 +63,9 @@ union4 as (
         edfs.jj_mnth_tot,
         ltrim(vmd.matl_id, 0) as matl_no,
         vmd.matl_desc,
-        mstrcdd.master_code,
+        mstrcd.master_code,
         ltrim(vapcd.parent_id, 0) as parent_id,
-        mstrcdd.parent_matl_desc,
+        mstrcd.parent_matl_desc,
         vmd.mega_brnd_cd,
         vmd.mega_brnd_desc,
         vmd.brnd_cd,
@@ -92,21 +92,21 @@ union4 as (
         vmd.putup_cd,
         vmd.putup_desc,
         vmd.bar_cd,
-        null as cust_no,
+        ltrim(vcd.cust_no, 0) as cust_no,
         vcd.cmp_id,
-        null as ctry_key,
+        vcd.ctry_key,
         vcd.country,
-        null as state_cd,
-        null as post_cd,
-        null as cust_suburb,
-        null as cust_nm,
+        vcd.state_cd,
+        vcd.post_cd,
+        vcd.cust_suburb,
+        vcd.cust_nm,
         vcd.fcst_chnl,
         vcd.fcst_chnl_desc,
-        null as sales_office_cd,
-        null as sales_office_desc,
-        null as sales_grp_cd,
-        null as sales_grp_desc,
-        null as curr_cd,
+        vcd.sales_office_cd,
+        vcd.sales_office_desc,
+        vcd.sales_grp_cd,
+        vcd.sales_grp_desc,
+        vcd.curr_cd,
         edfs.actual_sales_qty,
         edfs.apo_tot_frcst,
         edfs.apo_base_frcst,
@@ -114,31 +114,22 @@ union4 as (
         edfs.px_tot_frcst,
         edfs.px_base_frcst,
         edfs.px_promo_frcst
-    from edw_demand_forecast_snapshot as edfs, (
-    select distinct
-        cmp_id,
-        country,
-        sls_org,
-        fcst_chnl,
-        fcst_chnl_desc
-    from vw_dmnd_frcst_customer_dim
-    ) as vcd, vw_material_dim as vmd, vw_apo_parent_child_dim as vapcd,  mstrcdd
+    from edw_demand_forecast_snapshot as edfs, vw_dmnd_frcst_customer_dim as vcd, vw_material_dim as vmd, vw_apo_parent_child_dim as vapcd, mstrcd
     where
-    edfs.pac_subsource_type = 'SAPBW_APO_FORECAST'
-    and to_char(snap_shot_dt, 'YYYYMM') in (202407,202408,202409,202410)
-    and edfs.fcst_chnl = vcd.fcst_chnl(+)
+    edfs.pac_subsource_type <> 'SAPBW_APO_FORECAST'
+    and to_char(snap_shot_dt, 'YYYYMM') in (202406,202407,202408,202409,202410)
+    and edfs.cust_no = ltrim(vcd.cust_no(+), '0')
     and edfs.matl_no = ltrim(vmd.matl_id(+), '0')
     and (
     edfs.cmp_id = vapcd.cmp_id(+) and edfs.matl_no = ltrim(vapcd.matl_id(+), '0')
-    )
-    and vapcd.master_code =  mstrcdd.master_code(+)
+)
+and vapcd.master_code = mstrcd.master_code(+)
 ),
-transformed as(
-    
-    select * from union3
-    
-    union all 
 
-    select * from union4
+transformed as(
+    select * from union1
+    union all
+    select * from union2
+    
 )
 select * from transformed
