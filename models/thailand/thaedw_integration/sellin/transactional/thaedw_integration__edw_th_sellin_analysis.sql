@@ -65,7 +65,7 @@ final as(
         npi_end_date::varchar(52) as npi_end_date,
         reg_indicator::varchar(1) as reg_indicator,
         hero_indicator::varchar(10) as hero_indicator,
-        barcode::varchar(52) as barcode,
+        --barcode::varchar(52) as barcode,
         max_pstng_dt::varchar(20) as max_pstng_dt,
         area::varchar(50) as area,
         category::varchar(256) as category,
