@@ -188,7 +188,8 @@ time as(
     DISTINCT edw_vw_os_time_dim."year", 
     edw_vw_os_time_dim.qrtr, 
     edw_vw_os_time_dim.mnth_id, 
-    edw_vw_os_time_dim.mnth_no 
+    edw_vw_os_time_dim.mnth_no,
+    edw_vw_os_time_dim.mnth_wk_no
   FROM 
     edw_vw_os_time_dim 
   WHERE 
@@ -257,7 +258,8 @@ sellin_mat as(
     edw_vw_th_material_dim.gph_prod_sub_brnd AS prod_sub_brand, 
     edw_vw_th_material_dim.gph_prod_subsgmnt AS prod_subsegment, 
     edw_vw_th_material_dim.gph_prod_ctgry AS prod_category, 
-    edw_vw_th_material_dim.gph_prod_subctgry AS prod_subcategory 
+    edw_vw_th_material_dim.gph_prod_subctgry AS prod_subcategory,
+	edw_vw_th_material_dim.ean_num as barcode
   FROM 
     edw_vw_th_material_dim 
 ), 
@@ -291,6 +293,7 @@ mat as(
     sellin_mat.prod_subsegment, 
     sellin_mat.prod_category, 
     sellin_mat.prod_subcategory, 
+	sellin_mat.barcode,
     sellout_mat.is_npi, 
     sellout_mat.npi_str_period, 
     sellout_mat.npi_end_period, 
@@ -314,6 +317,7 @@ transformed as(
     time.qrtr AS year_quarter_jnj, 
     time.mnth_id AS year_month_jnj, 
     time.mnth_no AS month_number_jnj, 
+	time.mnth_wk_no AS week_number,
     sellin_fact.cust_id AS customer_id, 
     cust.sap_cust_nm AS sap_customer_name, 
     sellin_fact.sls_org AS sap_sales_org, 
@@ -371,6 +375,7 @@ transformed as(
     mat.npi_end_period AS npi_end_date, 
     mat.is_reg AS reg_indicator, 
     mat.is_hero AS hero_indicator, 
+	mat.barcode,
     sellin_fact.max_pstng_dt, 
     sellin_fact.area, 
     sellin_fact.category, 
