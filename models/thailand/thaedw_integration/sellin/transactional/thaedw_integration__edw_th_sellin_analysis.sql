@@ -7,7 +7,7 @@ final as(
         year_quarter_jnj::varchar(14) as year_quarter_jnj,
         year_month_jnj::varchar(23) as year_month_jnj,
         month_number_jnj::number(18,0) as month_number_jnj,
-        week_number::number(18,0) as week_number,
+        --week_number::number(18,0) as week_number,
         customer_id::varchar(10) as customer_id,
         sap_customer_name::varchar(100) as sap_customer_name,
         sap_sales_org::varchar(4) as sap_sales_org,
