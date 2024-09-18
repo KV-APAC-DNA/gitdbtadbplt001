@@ -124,7 +124,7 @@ union3 as (
     ) as vcd, vw_material_dim as vmd, vw_apo_parent_child_dim as vapcd,  mstrcdd
     where
     edfs.pac_subsource_type = 'SAPBW_APO_FORECAST'
-    and to_char(snap_shot_dt, 'YYYYMM') in (202402,202403,202404,202405,202406)
+    and to_char(snap_shot_dt, 'YYYYMM') in (202403,202404,202405)
     and edfs.fcst_chnl = vcd.fcst_chnl(+)
     and edfs.matl_no = ltrim(vmd.matl_id(+), '0')
     and (
