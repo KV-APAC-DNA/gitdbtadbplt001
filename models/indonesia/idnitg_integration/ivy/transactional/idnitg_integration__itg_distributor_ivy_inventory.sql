@@ -12,7 +12,9 @@
 }}
 with source as
 (
-    select * from {{source('idnsdl_raw','sdl_distributor_ivy_inventory')}}
+    select *, dense_rank() over(partition by trim((DATEADD(DAY, -1, TO_DATE(SUBSTRING(CDL_DTTM,1,10),'YYYY-MM-DD')))) order by file_name desc) as rnk 
+    from {{source('idnsdl_raw','sdl_distributor_ivy_inventory')}}
+    qualify rnk =1
 ),
 final as 
 (

@@ -20,14 +20,15 @@
 
 with source as
 (
-    select * from {{source('thasdl_raw','sdl_mym_gt_sales_report_fact')}}
+    select *, dense_rank() over(partition by md5(coalesce(upper(item_no),'N/A') || coalesce(upper(customer_code),'N/A') || coalesce(upper(customer_name),'N/A')) order by filename desc) as rnk 
+    from {{source('thasdl_raw','sdl_mym_gt_sales_report_fact')}}
     where filename not in (
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_mym_gt_sales_report_fact__null_test') }}
             union all
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_mym_gt_sales_report_fact__duplicate_test') }}
             union all
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_mym_gt_sales_report_fact__test_format') }}
-    )
+    ) qualify rnk =1
 ),
 final as
 (
