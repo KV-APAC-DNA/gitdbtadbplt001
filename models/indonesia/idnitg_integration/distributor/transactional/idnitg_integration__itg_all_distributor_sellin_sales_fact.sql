@@ -10,7 +10,9 @@
     )
 }}
 with source as (
-    select * from {{ source('idnsdl_raw', 'sdl_all_distributor_sellin_sales_fact') }}
+    select *, dense_rank() over(partition by bill_dt , bill_doc , item , jj_sap_dstrbtr_id ,upper(jj_sap_prod_id) order by filename desc) as rnk 
+    from {{ source('idnsdl_raw', 'sdl_all_distributor_sellin_sales_fact') }}
+    qualify rnk =1
 ),
 final as
 (

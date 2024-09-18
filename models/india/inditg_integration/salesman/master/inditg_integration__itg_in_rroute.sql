@@ -13,9 +13,9 @@ with source as
 (
     select * from {{ source('indsdl_raw', 'sdl_in_route') }}
      where filename not in (
-        select distinct filename from {{source('indwks_integration','TRATBL_sdl_in_route__null_test')}}
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_route__null_test')}}
         union all
-        select distinct filename from {{source('indwks_integration','TRATBL_sdl_in_route__duplicate_test')}}
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_route__duplicate_test')}}
      )
 ),
 final as 

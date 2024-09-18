@@ -61,6 +61,10 @@ tests:
       sgpitg_integration:
         pop6: 
           +severity: error
+    hcp:
+      +severity: warn
+    indonesia:
+      +severity: warn
     japan:
       +severity: warn
       jpnitg_integration:
