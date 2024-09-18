@@ -17,7 +17,6 @@ final as
 (
     select
         *,
-        null as filename,
         null as run_id
     from source
     {% if is_incremental() %}

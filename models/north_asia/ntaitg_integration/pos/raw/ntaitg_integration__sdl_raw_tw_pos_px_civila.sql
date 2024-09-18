@@ -33,7 +33,7 @@ final as
         stock_return_amt_by_store as stock_return_amt_by_store,
         crt_dttm as crt_dttm,
         upd_dttm as upd_dttm,
-        file_name as filename,
+        filename,
         null as run_id
     from source
     {% if is_incremental() %}
