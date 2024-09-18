@@ -19,3 +19,4 @@ sources:
             config:
               store_failures: true
               schema: hcpwks_integration
+              severity: error

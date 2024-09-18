@@ -37,6 +37,7 @@ sources:
             config:
               store_failures: true
               schema: jpnwks_integration
+              severity: error
         - test_duplicate:
                 select_columns: ["code"]
                 group_by_columns: ["code"]
@@ -44,6 +45,7 @@ sources:
                 config:
                   store_failures: true
                   schema: jpnwks_integration
+                  severity: error
 
       - name: sdl_mds_jp_pos_store_mapping
         tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]
