@@ -189,7 +189,8 @@ time as(
     DISTINCT edw_vw_os_time_dim."year", 
     edw_vw_os_time_dim.qrtr, 
     edw_vw_os_time_dim.mnth_id, 
-    edw_vw_os_time_dim.mnth_no 
+    edw_vw_os_time_dim.mnth_no,
+    edw_vw_os_time_dim.mnth_wk_no 
   FROM 
     edw_vw_os_time_dim 
   WHERE 
@@ -315,6 +316,7 @@ transformed as(
     time.qrtr AS year_quarter_jnj, 
     time.mnth_id AS year_month_jnj, 
     time.mnth_no AS month_number_jnj, 
+    time.mnth_wk_no as week_number,
     sellin_fact.cust_id AS customer_id, 
     cust.sap_cust_nm AS sap_customer_name, 
     sellin_fact.sls_org AS sap_sales_org, 
