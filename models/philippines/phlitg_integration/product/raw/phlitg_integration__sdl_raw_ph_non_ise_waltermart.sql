@@ -43,7 +43,8 @@ final as
         retailer_name as retailer_name,
         filename as filename,
         run_id as run_id,
-        crtd_dttm as crtd_dttm
+        crtd_dttm as crtd_dttm,
+        sub_channel as sub_channel
     from source
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run

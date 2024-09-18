@@ -662,7 +662,7 @@ waltermart as (
        run_id,
 
        crtd_dttm,
-       null as sub_channel,
+       sub_channel,
        null as store_location,
        null as diser_name,
        null as msl_reseller,

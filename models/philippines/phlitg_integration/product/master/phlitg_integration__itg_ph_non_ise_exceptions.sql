@@ -401,7 +401,7 @@ waltermart as (
         filename::varchar(100) as filename,
         run_id::number(14,0) as run_id,
         crtd_dttm::timestamp_ntz(9) as crtd_dttm,
-        null::varchar(200) as sub_channel,
+        sub_channel::varchar(200) as sub_channel,
         null::varchar(200) as store_location,
         null::varchar(200) as diser_name,
         null::varchar(10) as msl_reseller,
