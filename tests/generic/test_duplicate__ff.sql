@@ -57,14 +57,17 @@
             {%- for col in reversed_columns %}
                 {% if col in file_name_columns%}
                     {{ col }} as file_name,
+                     '{{failure_reason}}' AS failure_reason,
+                     *exclude({{col}})
                    {% break %}
                 {% endif %}
                 {% if col not in file_name_columns and loop.last %}
                     'Filename N/A' as file_name,
+                    '{{failure_reason}}' AS failure_reason,
+                     *
                    {% break %}
                 {% endif %}   
             {%- endfor %}
-            '{{failure_reason}}' AS failure_reason
         from {{model}}
         where ({%- for col in reversed_columns %}
                 {% if col in file_name_columns%}

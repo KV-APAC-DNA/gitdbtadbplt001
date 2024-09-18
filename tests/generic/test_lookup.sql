@@ -8,8 +8,8 @@
             {% set actual_columns = adapter.get_columns_in_relation(model) | map(attribute='name') | map('lower')|list  %}
             {% set reversed_columns = adapter.get_columns_in_relation(model) | map(attribute='name') | map('lower')|reverse  %}
     select 
-        {{failure_reason}} as failure_reason,
                     file_name,
+                {{failure_reason}} as failure_reason,
         {%- for item in select_columns %}
         {% if item | lower not in  file_name_columns %}
             trim({{item}}) as {{item}}

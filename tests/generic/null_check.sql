@@ -1,7 +1,6 @@
 {% test null_check(model, not_null_columns=None, select_columns=None, filter=None) %}
     {% if not_null_columns is not none %}
         select
-            'KEY COLUMN IS NULL/BLANK' AS failure_reason,
             -- Define the possible file name columns and convert to lowercase
             {% set file_name_columns = [
                 'CDL_SOURCE_FILE', 'FILE_NM', 'SOURCE_FILE_NAME', 'FILENAME', 
@@ -25,6 +24,7 @@
             {%- endfor %}
             -- Include the selected file name column, if foun
             -- Include select_columns if provided, otherwise include not_null_columns
+            'KEY COLUMN IS NULL/BLANK' AS failure_reason,
             {% if select_columns is not none %}
                 {%- for item in select_columns %}
                         {% if item | lower not in  file_name_columns %}

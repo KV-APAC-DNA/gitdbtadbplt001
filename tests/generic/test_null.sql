@@ -1,7 +1,6 @@
 {% test test_null(model,not_null_columns=None,select_columns=None,filter=none,condition="OR")%}
 {% if not_null_columns!=None %}
     select
-        'KEY COLUMN IS NULL/BLANK' AS failure_reason,
                     {% set file_name_columns = [
                 'CDL_SOURCE_FILE', 'FILE_NM', 'SOURCE_FILE_NAME', 'FILENAME', 
                 'file_name', 'filename', 'SRC_FILE', 'LOAD_FILE_NM', 'FILE_NAME', 'src_file'
@@ -23,6 +22,7 @@
                    {% break %}
                 {% endif %}   
             {%- endfor %}
+                    'KEY COLUMN IS NULL/BLANK' AS failure_reason,
     {% if select_columns!=None %}
         {%- for item in select_columns %}
                 {% if item | lower not in  file_name_columns %}
