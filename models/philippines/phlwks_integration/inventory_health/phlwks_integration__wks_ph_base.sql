@@ -70,7 +70,7 @@ set_1 as
         A.dstrbtr_grp_nm,
         nvl(nullif(a.sls_grp_desc, ''), 'NA') as sls_grp_desc,
         nvl(nullif(A.PARENT_CUSTOMER_CD, ''), 'NA') as PARENT_CUSTOMER_CD,
-        nvl(nullif(a.sku, ''), 'NA') as matl_num,
+        nvl(nullif(trim(a.sku), ''), 'NA') as matl_num,
         SUM(A.SI_SLS_QTY) AS SI_SLS_QTY,
         SUM(A.SI_GTS_VAL) AS SI_GTS_VAL,
         SUM(
@@ -165,7 +165,7 @@ set_1 as
                 from itg_mds_ph_pos_pricelist
                 where active = 'Y'
             ) LP ON CAST(LP.JJ_MNTH_ID AS INT) = CAST(A.JJ_MNTH_ID AS INT)
-            AND LTRIM(LP.ITEM_CD, '0') = LTRIM(A.SKU, '0')
+            AND rtrim(LTRIM(LP.ITEM_CD, '0')) = LTRIM(rtrim(a.sku), '0')
         )
     group by 
         A.JJ_YEAR,
@@ -175,7 +175,7 @@ set_1 as
         A.dstrbtr_grp_cd,
         A.dstrbtr_grp_nm,
         A.PARENT_CUSTOMER_CD,
-        A.SKU
+        trim(a.sku)
 )
 ,
 set_2 as
@@ -189,7 +189,7 @@ set_2 as
         null as DSTRBTR_GRP_nm,
         null as sls_grp_desc,
         nvl(nullif(A.parent_cust_cd, ''), 'NA') as PARENT_CUSTOMER_CD,
-        nvl(nullif(a.sku, ''), 'NA') as matl_num,
+        nvl(nullif(trim(a.sku), ''), 'NA') as matl_num,
         SUM(A.SI_SLS_QTY) AS SI_SLS_QTY,
         SUM(A.SI_GTS_VAL) AS SI_GTS_VAL,
         SUM(A.END_STOCK_QTY) AS INVENTORY_QUANTITY,
@@ -271,11 +271,11 @@ set_2 as
             FROM itg_mds_ph_pos_pricelist
             WHERE active = 'Y'
         ) LP ON CAST (LP.JJ_MNTH_ID AS INT) = CAST (A.JJ_MNTH_ID AS INT)
-        AND LTRIM (LP.ITEM_CD, '0') = LTRIM (A.SKU, '0')
+        AND rtrim(LTRIM (LP.ITEM_CD, '0')) = rtrim(LTRIM (A.SKU, '0'))
         LEFT JOIN (
             SELECT *
             FROM PH_LST_LIST_PRICE
-        ) LP_MAX ON LTRIM (LP_MAX.ITEM_CD, '0') = LTRIM (NVL (A.SKU, 'NA'), '0')
+        ) LP_MAX ON rtrim(LTRIM (LP_MAX.ITEM_CD, '0') )= rtrim(LTRIM (NVL (A.SKU, 'NA'), '0'))
         AND LP_MAX.JJ_MNTH_ID = A.JJ_MNTH_ID
     GROUP BY A.JJ_YEAR,
         A.JJ_MNTH_ID,
@@ -284,7 +284,7 @@ set_2 as
         A.parent_cust_nm,
         A.DSTRBTR_GRP_CD,
         a.parent_cust_cd,
-        a.sku
+        trim(a.sku)
 )
 ,
 final as
