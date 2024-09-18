@@ -11,7 +11,7 @@
 }}
 
 with source as(
-    select *, dense_rank() over (partition by null order by file_name desc) rnk 
+    select *, dense_rank() over (partition by file_name order by file_name desc) rnk 
      from {{ source('pcfsdl_raw', 'sdl_perenso_fssi_sales') }}
     where file_name not in (
         select distinct file_name from {{source('pcfwks_integration','TRATBL_sdl_perenso_fssi_sales__null_test')}}
