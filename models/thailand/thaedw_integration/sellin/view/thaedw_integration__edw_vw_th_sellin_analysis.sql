@@ -16,6 +16,7 @@ edw_vw_th_customer_dim as(
 edw_company_dim as(
   select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ), 
+
 edw_vw_th_material_dim as(
   select * from {{ ref('thaedw_integration__edw_vw_th_material_dim') }}
 ), 
