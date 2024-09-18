@@ -21,6 +21,7 @@ sources:
               config:
                 store_failures: true
                 schema: indwks_integration
+                severity: error
           - test_duplicate:
               group_by_columns: ["code"]
               select_columns: ["code"]
@@ -28,5 +29,6 @@ sources:
               config:
                 store_failures: true
                 schema: indwks_integration
+                severity: error
       - name: sdl_product_uom_master
         tags: ["in_sdlitg_daily","transformation"]

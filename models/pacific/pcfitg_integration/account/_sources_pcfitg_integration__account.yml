@@ -21,6 +21,7 @@ sources:
               config:
                 store_failures: true
                 schema: pcfwks_integration
+                severity: error
     - name: sdl_mds_pacific_prod_mapping_cwh
       tags: ["j_ap_china_reg_data_refresh","transformation"]
       
