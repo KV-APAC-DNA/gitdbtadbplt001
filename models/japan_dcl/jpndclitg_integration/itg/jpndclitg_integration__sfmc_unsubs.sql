@@ -10,7 +10,9 @@
 
 with source as
 (
-    select * from {{ source('jpdclsdl_raw', 'sfmc_unsubs') }}
+    select *, dense_rank() over(partition by subscriberkey order by file_name desc) as rnk 
+    from {{ source('jpdclsdl_raw', 'sfmc_unsubs') }}
+    qualify rnk =1
 ),
 
 final as

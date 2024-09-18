@@ -13,7 +13,9 @@
 
 with source as
 (
-    select * from {{ source('hcpsdl_raw', 'sdl_hcp360_in_sfmc_hcp_details') }}
+    select *, dense_rank() over(partition by SUBSCRIBER_KEY order by file_name desc) as rnk 
+    from {{ source('hcpsdl_raw', 'sdl_hcp360_in_sfmc_hcp_details') }}
+    qualify rnk =1
 ),
 final as
 (

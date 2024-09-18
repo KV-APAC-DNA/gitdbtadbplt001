@@ -27,12 +27,13 @@
    )
 }}
 with source as (
-   select * from {{ source('idnsdl_raw', 'sdl_distributor_ivy_order') }}
+   select *, dense_rank() over(partition by trim(distributor_code),trim(order_id),trim(product_code),replace(order_date,'T',' ') order by file_name desc) as rnk 
+   from {{ source('idnsdl_raw', 'sdl_distributor_ivy_order') }}
    where file_name not in (
             select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_order__null_test') }}
             union all
             select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_order__test_lookup__ff') }}
-    )
+    ) qualify rnk =1
 ),
 edw_distributor_dim as (
    select * from {{ ref('idnedw_integration__edw_distributor_dim') }}

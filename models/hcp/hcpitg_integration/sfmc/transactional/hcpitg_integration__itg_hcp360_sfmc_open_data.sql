@@ -23,12 +23,13 @@
 
 with sdl_hcp360_in_sfmc_open_data as 
 (
-    select * from {{ source('hcpsdl_raw', 'sdl_hcp360_in_sfmc_open_data') }}
+    select *, dense_rank() over(partition by JOB_ID, BATCH_ID, SUBSCRIBER_ID, SUBSCRIBER_KEY, EVENT_DATE, EMAIL_ID order by file_name desc) as rnk 
+    from {{ source('hcpsdl_raw', 'sdl_hcp360_in_sfmc_open_data') }}
     where file_name not in (
             select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_sfmc_open_data__null_test') }}
             union all
             select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_sfmc_open_data__duplicate_test') }}
-    )
+    ) qualify rnk =1
 ),
 final as
 (
