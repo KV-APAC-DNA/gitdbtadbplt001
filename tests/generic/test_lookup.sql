@@ -9,12 +9,7 @@
             {% set reversed_columns = adapter.get_columns_in_relation(model) | map(attribute='name') | map('lower')|reverse  %}
     select 
         {{failure_reason}} as failure_reason,
-        {%- for col in reversed_columns %}
-                {% if col in file_name_columns%}
                     file_name,
-                   {% break %}
-                {% endif %}   
-            {%- endfor %}
         {%- for item in select_columns %}
         {% if item | lower not in  file_name_columns %}
             trim({{item}}) as {{item}}
@@ -27,6 +22,10 @@
             {%- for col in reversed_columns %}
                 {% if col in file_name_columns%}
                     {{ col }} as file_name,
+                   {% break %}
+                {% endif %}
+                {% if col not in file_name_columns and loop.last %}
+                    'Filename N/A' as file_name,
                    {% break %}
                 {% endif %}   
             {%- endfor %}

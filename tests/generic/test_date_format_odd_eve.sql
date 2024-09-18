@@ -15,6 +15,11 @@
                     {{ col }} as file_name
                 {% if not loop.last %},{% endif %}
                    {% break %}
+                {% endif %}
+                {% if col not in file_name_columns and loop.last %}
+                    'Filename N/A' as file_name
+                    {% if not loop.last %},{% endif %}
+                   {% break %}
                 {% endif %}   
             {%- endfor %}
     {%- for item in select_columns %}

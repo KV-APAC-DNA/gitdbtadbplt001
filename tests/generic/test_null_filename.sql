@@ -12,16 +12,18 @@
             {% set actual_columns = adapter.get_columns_in_relation(model) | map(attribute='name') | map('lower')|list  %}
             {% set reversed_columns = adapter.get_columns_in_relation(model) | map(attribute='name') | map('lower')|reverse  %}
 
-
-
-            -- Loop through file_name_columns to find the first matching column in actual_columns
-            {%- for col in reversed_columns %}
+           {%- for col in reversed_columns %}
                 {% if col in file_name_columns%}
                     {{ col }} as file_name
                 {% if select_columns or not_null_columns %},{% endif %}
                    {% break %}
+                {% endif %}
+                {% if col not in file_name_columns and loop.last %}
+                    'Filename N/A' as file_name
+                    {% if select_columns or not_null_columns %},{% endif %}
+                   {% break %}
                 {% endif %}   
-            {%- endfor %}
+            {%- endfor %} 
     {% if select_columns!=None %}
         {%- for item in select_columns %}
                 {% if item | lower not in  file_name_columns %}

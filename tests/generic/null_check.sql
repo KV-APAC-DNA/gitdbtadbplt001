@@ -16,6 +16,11 @@
                     {{ col }} as file_name
                 {% if select_columns or not_null_columns %},{% endif %}
                    {% break %}
+                {% endif %}
+                {% if col not in file_name_columns and loop.last %}
+                    'Filename N/A' as file_name
+                    {% if select_columns or not_null_columns %},{% endif %}
+                   {% break %}
                 {% endif %}   
             {%- endfor %}
             -- Include the selected file name column, if foun

@@ -9,13 +9,18 @@
             {% set actual_columns = adapter.get_columns_in_relation(model) | map(attribute='name') | map('lower')|list  %}
             {% set reversed_columns = adapter.get_columns_in_relation(model) | map(attribute='name') | map('lower')|reverse  %}
             -- Loop through file_name_columns to find the first matching column in actual_columns
-            {%- for col in reversed_columns %}
+           {%- for col in reversed_columns %}
                 {% if col in file_name_columns%}
                     {{ col }} as file_name
                 {% if select_columns or compare_columns %},{% endif %}
                    {% break %}
+                {% endif %}
+                {% if col not in file_name_columns and loop.last %}
+                    'Filename N/A' as file_name
+                    {% if select_columns or compare_columns %},{% endif %}
+                   {% break %}
                 {% endif %}   
-            {%- endfor %}
+            {%- endfor %}            
         'DISTRIBUTORID IS NOT MATCHING WITH DISTRIBUTOR AVAILABLE IN FILE NAME' AS failure_reason,
                 {% if select_columns!=None %}
                     {%- for item in select_columns %}

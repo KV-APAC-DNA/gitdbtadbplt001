@@ -18,6 +18,11 @@
                     {{ col }} as file_name,
                    *exclude({{col}})
                    {% break %}
+                {% endif %}
+                {% if col not in file_name_columns and loop.last %}
+                    'Filename N/A' as file_name,
+                    *
+                   {% break %}
                 {% endif %}   
             {%- endfor %}
         {% if extra_col!=None %}
