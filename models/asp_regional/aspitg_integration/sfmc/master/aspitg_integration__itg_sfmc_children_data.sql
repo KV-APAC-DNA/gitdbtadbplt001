@@ -3,12 +3,14 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook="{% if var('crm_job_to_execute') == 'th_crm_files' %}
+        pre_hook="{%if is_incremental()%}
+        {% if var('crm_job_to_execute') == 'th_crm_files' %}
                     delete from {{this}} where cntry_cd = 'TH';
                     {% elif var('crm_job_to_execute') == 'ph_crm_files' %}
                     delete from {{this}} where cntry_cd = 'PH'
                     {% elif var('crm_job_to_execute') == 'tw_crm_files' %}
                     delete from {{this}} where cntry_cd = 'TW';
+                    {% endif %}
                     {% endif %}
                 "
     )
@@ -16,9 +18,14 @@
 
 with sdl_th_sfmc_children_data as
 (
-    select *, dense_rank() over(partition by null order by file_name desc) as rnk 
-    from {{ source('thasdl_raw', 'sdl_th_sfmc_children_data') }}
-   
+    select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('thasdl_raw', 'sdl_th_sfmc_children_data') }}
+    where file_name not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_children_data__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_children_data__duplicate_test') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_children_data__lookup_test') }}
+            )
 ),
 itg_mds_rg_sfmc_gender as
 (
@@ -27,10 +34,24 @@ itg_mds_rg_sfmc_gender as
 sdl_ph_sfmc_children_data as
 (
     select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('phlsdl_raw', 'sdl_ph_sfmc_children_data') }}
+    where file_name not in (
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_sfmc_children_data__test_null__ff')}}
+        union all
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_sfmc_children_data__test_duplicate__ff')}}
+        union all
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_sfmc_children_data__test_lookup__ff')}}
+    )
 ),
 sdl_tw_sfmc_children_data as
 (
     select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('ntasdl_raw', 'sdl_tw_sfmc_children_data') }}
+    where file_name not in (
+            select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_sfmc_children_data__test_null__ff') }}
+            union all
+            select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_sfmc_children_data__test_duplicate__ff') }}
+			union all
+            select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_sfmc_children_data__test_lookup__ff') }}
+            )
 )
 {% if var("crm_job_to_execute") == 'th_crm_files' %}
 ,
