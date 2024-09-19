@@ -4,8 +4,12 @@
     )
 }}
 
-with edw_demand_forecast_snapshot as(
-    select * from {{ ref('pcfedw_integration__edw_demand_forecast_snapshot_temp') }}
+with edw_demand_forecast_snapshot_1 as(
+    select * from {{ select * from  ref('pcfedw_integration__edw_demand_forecast_snapshot_temp')  where }}
+),
+edw_demand_forecast_snapshot as 
+(
+ select * from edw_demand_forecast_snapshot_1 where pac_subsource_type <> 'SAPBW_APO_FORECAST'
 ),
 vw_dmnd_frcst_customer_dim as(
     select * from {{ ref('pcfedw_integration__vw_dmnd_frcst_customer_dim') }}
@@ -112,11 +116,11 @@ union1 as(
     from edw_demand_forecast_snapshot as edfs, vw_dmnd_frcst_customer_dim as vcd, vw_material_dim as vmd, vw_apo_parent_child_dim as vapcd, mstrcd
     where
     edfs.pac_subsource_type <> 'SAPBW_APO_FORECAST'
-    and to_char(snap_shot_dt, 'YYYYMM') in (202404,202405,202406)
+    and to_char(snap_shot_dt, 'YYYYMM') in (202404,202405)
     and edfs.cust_no = ltrim(vcd.cust_no, '0')
     and edfs.matl_no = ltrim(vmd.matl_id, '0')
     and (
-    edfs.cmp_id = vapcd.cmp_id(+) and edfs.matl_no = ltrim(vapcd.matl_id(+), '0')
+    edfs.cmp_id = vapcd.cmp_id and edfs.matl_no = ltrim(vapcd.matl_id, '0')
 )
 and vapcd.master_code = mstrcd.master_code(+)
 ),
