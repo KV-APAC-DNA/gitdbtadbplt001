@@ -7,6 +7,11 @@
 
 with source as(
     select * from {{ source('idnsdl_raw','sdl_id_pos_guardian_stock') }}
+    where filename not in (
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_pos_guardian_stock__null_test') }}
+            union all
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_pos_guardian_stock__date_check') }}
+    ) 
 ),
 final as(
     select 

@@ -7,6 +7,11 @@
 
 with source as (
     select * from {{ source('idnsdl_raw', 'sdl_distributor_ivy_invoice') }}
+    where file_name not in (
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_invoice__null_test') }}
+            union all
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_invoice__test_lookup__ff') }}
+    )
 ),
 final as (
     select 
@@ -41,7 +46,7 @@ final as (
         batch_no,
         cdl_dttm,
         run_id,
-        source_file_name
+        file_name
     from source
     {% if is_incremental() %}
         -- this filter will only be applied on an incremental run

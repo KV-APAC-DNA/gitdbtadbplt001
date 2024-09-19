@@ -15,7 +15,7 @@
 }}
 
 with source as(
-    select *,dense_rank() over (partition by null order by filename desc) rnk
+    select *,dense_rank() over (partition by filename order by filename desc) rnk
      from {{ source('vnmsdl_raw', 'sdl_vn_mt_sellout_coop') }}
     where filename not in (
         select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_mt_sellout_coop__null_test')}}

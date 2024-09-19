@@ -13,7 +13,9 @@
 }}
 
 with source as (
-    select * from {{ source('idnsdl_raw', 'sdl_stock_dist_map') }}
+    select *, dense_rank() over(partition by TRIM(jj_mnth_id),dstrbtr_cd order by filename desc) as rnk 
+    from {{ source('idnsdl_raw', 'sdl_stock_dist_map') }}
+    qualify rnk =1
 ),
 final as (
     select 
