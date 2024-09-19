@@ -65,7 +65,7 @@ final as (
 ,total_ad_return_14d
 ,direct_ad_return_14d
 ,indirect_ad_return_14d,
-null as file_name,
+file_name,
 current_timestamp as crtd_dttm
     from source
     {% if is_incremental() %}
