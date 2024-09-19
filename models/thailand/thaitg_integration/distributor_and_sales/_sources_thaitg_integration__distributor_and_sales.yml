@@ -18,12 +18,14 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
           - test_duplicate__ff:
               group_by_columns: ["distributorid", "saleoffice", "salegroup", "period"]
               name: TRATBL_sdl_mds_lcm_distributor_target_sales__duplicate_test
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
           - test_format:
               where_clause: "not regexp_like (trim(period),'[1-2][0-9][0-9][0-9][0-1][0-9]')"
               failure_reason: "'INVALID PERIOD : Expected format is YYYYMM'"
@@ -31,6 +33,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
           
 
       - name: sdl_th_target_distribution
@@ -46,6 +49,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
           - test_duplicate:
               group_by_columns: ["distributorid", "re", "period"]
               select_columns: ["distributorid", "re", "period"]
@@ -53,6 +57,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
           
       - name: sdl_mds_th_distributor_target_sales
         tags: ["th_non_tesco","ingestion"]
@@ -66,6 +71,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
           - test_duplicate:
               group_by_columns:
                 ["distributorid", "saleoffice", "salegroup", "period"]
@@ -75,3 +81,4 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error

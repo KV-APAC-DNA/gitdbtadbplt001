@@ -14,7 +14,7 @@ final as (
         trim(retailer_name) as retailer_name,
         trim(year) as year,
         trim(month) as month,
-        trim(dcl_code) as dcl_code,
+        REGEXP_REPLACE(dcl_code, '[^A-Za-z0-9-]','') as dcl_code,
         trim(sap_code) as sap_code,
         trim(reference) as reference,
         trim(product_desc) as product_desc,

@@ -544,7 +544,9 @@ AS (
                 ROW_NUMBER() OVER (
                     PARTITION BY EQ.EMPLOYEE_SOURCE_ID ORDER BY EQ.EMPLOYEE_SOURCE_ID,
                         EQ.RNK,
-                        EQ.WWID
+                        EQ.WWID,
+                        EQ.MY_ORGANIZATION_CODE,
+                        EQ.MY_ORGANIZATION_NAME
                     ) AS ROW_NUM
             FROM wrk_dim_employee_temp EQ
             WHERE LOWER(EQ.USER_LICENSE) != 'not applicable for regional service cloud'

@@ -5,7 +5,10 @@
     )}}
 
 with source as (
-     select * from {{ source('myssdl_raw','sdl_my_dstrbtr_doc_type') }} ),
+     select * from {{ source('myssdl_raw','sdl_my_dstrbtr_doc_type') }} where file_name not in
+    ( 
+      select distinct file_name from {{ source('myswks_integration', 'TRATBL_sdl_my_dstrbtr_doc_type__duplicate_test') }}
+    ) ),
      
 final as (
     select * from source

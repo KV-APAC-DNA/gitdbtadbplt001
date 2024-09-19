@@ -13,21 +13,21 @@ select * from {{ ref('pcfedw_integration__dly_sls_cust_attrb_lkp') }}
 final as (
 SELECT 
   cust.cust_no, 
-  pac_lkup.cmp_id, 
-  pac_lkup.chnl_cd AS channel_cd, 
-  pac_lkup.chnl_desc AS channel_desc, 
+  pac_lkup.cmp_id_code as cmp_id, 
+  pac_lkup.dstr_chnl_code AS channel_cd, 
+  pac_lkup.dstr_chnl_name AS channel_desc, 
   cust.ctry_key, 
-  pac_lkup.country, 
+  pac_lkup.cmp_id_name as country, 
   cust.state_cd, 
   cust.post_cd, 
   cust.cust_suburb, 
   cust.cust_nm, 
-  pac_lkup.sls_org, 
+  pac_lkup.sls_org_code as sls_org, 
   cust.cust_del_flag, 
-  pac_lkup.sls_ofc AS sales_office_cd, 
-  pac_lkup.sls_ofc_desc AS sales_office_desc, 
-  pac_lkup.sls_grp AS sales_grp_cd, 
-  pac_lkup.sls_grp_desc AS sales_grp_desc, 
+  pac_lkup.sls_ofc_code AS sales_office_cd, 
+  pac_lkup.sls_ofc_name AS sales_office_desc, 
+  pac_lkup.sls_grp_code AS sales_grp_cd, 
+  pac_lkup.sls_grp_name AS sales_grp_desc, 
   cust.mercia_ref, 
   cust.curr_cd 
 FROM 
@@ -90,19 +90,19 @@ FROM
         (
           SELECT 
             DISTINCT cust.cust_num AS cust_no, 
-            pac_lkup.cmp_id, 
-            pac_lkup.chnl_cd AS channel_cd, 
-            pac_lkup.chnl_desc AS channel_desc, 
+            pac_lkup.cmp_id_code as cmp_id, 
+            pac_lkup.dstr_chnl_code AS channel_cd, 
+            pac_lkup.dstr_chnl_name AS channel_desc, 
             cust.ctry_key, 
-            pac_lkup.country, 
+            pac_lkup.cmp_id_name as country, 
             cust.rgn AS state_cd, 
             cust.pstl_cd AS post_cd, 
             cust.city AS cust_suburb, 
             cust.cust_nm, 
-            pac_lkup.sls_org, 
+            pac_lkup.sls_org_code as sls_org, 
             cust_sales.cust_del_flag, 
-            pac_lkup.sls_ofc AS sales_office_cd, 
-            pac_lkup.sls_ofc_desc AS sales_office_desc, 
+            pac_lkup.sls_ofc_code AS sales_office_cd, 
+            pac_lkup.sls_ofc_name AS sales_office_desc, 
             CASE WHEN (
               ltrim(
                 (cust.cust_num):: text, 
@@ -111,8 +111,8 @@ FROM
                 (control.cust_no):: text, 
                 ('0' :: character varying):: text
               )
-            ) THEN control.sls_grp ELSE pac_lkup.sls_grp END AS sales_grp_cd, 
-            pac_lkup.sls_grp_desc AS sales_grp_desc, 
+            ) THEN control.sls_grp ELSE pac_lkup.sls_grp_code END AS sales_grp_cd, 
+            pac_lkup.sls_grp_name AS sales_grp_desc, 
             cust.fcst_chnl AS mercia_ref, 
             cust_sales.crncy_key AS curr_cd 
           FROM 
@@ -146,13 +146,13 @@ FROM
                 edw_customer_sales_dim a, 
                 (
                   SELECT 
-                    DISTINCT dly_sls_cust_attrb_lkp.sls_org 
+                    DISTINCT dly_sls_cust_attrb_lkp.sls_org_code
                   FROM 
                     dly_sls_cust_attrb_lkp
                 ) b 
               WHERE 
                 (
-                  (a.sls_org):: text = (b.sls_org):: text
+                  (a.sls_org):: text = (b.sls_org_code):: text
                 ) 
               GROUP BY 
                 a.cust_num
@@ -161,7 +161,7 @@ FROM
               edw_customer_sales_dim cust_sales 
               LEFT JOIN dly_sls_cust_attrb_lkp pac_lkup ON (
                 (
-                  (cust_sales.sls_grp):: text = (pac_lkup.sls_grp):: text
+                  (cust_sales.sls_grp):: text = (pac_lkup.sls_grp_code):: text
                 )
               )
             ) 
@@ -206,7 +206,7 @@ FROM
       (
         (
           (cust.sales_grp_cd):: character varying
-        ):: text = (pac_lkup.sls_grp):: text
+        ):: text = (pac_lkup.sls_grp_code):: text
       )
     )
   ) 

@@ -2,6 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy="append",
+
         pre_hook="{%if is_incremental()%}
                 {% if var('sfmc_job_to_execute') == 'th_sfmc_files' %}
                     delete from {{this}} where event_date >= (select min(event_date) from {{ source('thasdl_raw','sdl_th_sfmc_bounce_data') }}

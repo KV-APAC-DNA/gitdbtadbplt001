@@ -7,18 +7,24 @@
             -- Get the actual columns in the model and convert to lowercase
             {% set actual_columns = adapter.get_columns_in_relation(model) | map(attribute='name') | map('lower')|list  %}
             {% set reversed_columns = adapter.get_columns_in_relation(model) | map(attribute='name') | map('lower')|reverse  %}
-                        -- Log the actual columns and file name columns to debug
-            {{ log('Actual Columns: ' ~ actual_columns, info=True) }}
-            {{ log('File Name Columns: ' ~ file_name_columns, info=True) }}
-            {{ log('File Name Columns_reversed: ' ~ reversed_columns, info=True) }}
+
+
             -- Loop through file_name_columns to find the first matching column in actual_columns
             {%- for col in reversed_columns %}
                 {% if col in file_name_columns%}
                     {{ col }} as file_name
                 {% if not loop.last %},{% endif %}
                    {% break %}
+                {% endif %}
+                {% if col not in file_name_columns and loop.last %}
+                    'Filename N/A' as file_name
+                    {% if not loop.last %},{% endif %}
+                   {% break %}
                 {% endif %}   
             {%- endfor %}
+            {% if failure_reason!=None %}
+                {{failure_reason}} AS Reason,
+            {% endif %}
     {%- for item in select_columns %}
         {% if item | lower not in  file_name_columns %}
             trim({{item}}) as {{item}}
@@ -26,14 +32,11 @@
         {%- endif -%}
     {% endfor %}
 {% endif %}
-{% if failure_reason!=None %}
-      ,{{failure_reason}} AS Reason
-{% endif %}
 {% if date_column!=None %}
 FROM {{model}} AS A
 WHERE
-  (file_name,{{date_column}}) IN (
-    SELECT DISTINCT ODD_MON.file_name,
+  ({{date_column}}) IN (
+    SELECT DISTINCT 
       ODD_MON.{{date_column}}
     FROM (
       SELECT DISTINCT 
@@ -44,10 +47,7 @@ WHERE
             -- Get the actual columns in the model and convert to lowercase
             {% set actual_columns = adapter.get_columns_in_relation(model) | map(attribute='name') | map('lower')|list  %}
             {% set reversed_columns = adapter.get_columns_in_relation(model) | map(attribute='name') | map('lower')|reverse  %}
-            -- Log the actual columns and file name columns to debug
-            {{ log('Actual Columns: ' ~ actual_columns, info=True) }}
-            {{ log('File Name Columns: ' ~ file_name_columns, info=True) }}
-            {{ log('File Name Columns_reversed: ' ~ reversed_columns, info=True) }}
+
             -- Loop through file_name_columns to find the first matching column in actual_columns
             {%- for col in reversed_columns %}
                 {% if col in file_name_columns%}

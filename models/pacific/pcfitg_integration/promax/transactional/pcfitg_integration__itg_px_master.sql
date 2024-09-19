@@ -3,7 +3,8 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=["p_startdate"],
-        pre_hook= "delete from {{this}} where p_startdate >= DATEADD(MONTH, -42, convert_timezone('UTC', current_timestamp())::timestamp_ntz(9))"
+        pre_hook= "{%if is_incremental()%}
+        delete from {{this}} where p_startdate >= DATEADD(MONTH, -42, convert_timezone('UTC', current_timestamp())::timestamp_ntz(9));{%endif%}"
     )
 }}
 with source as

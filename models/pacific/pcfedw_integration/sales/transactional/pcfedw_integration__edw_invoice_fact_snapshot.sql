@@ -29,7 +29,12 @@ select snapshot_date,
 
        curr_key,
 
-       gros_trd_sls
+       gros_trd_sls,
+--NEW
+       cnfrm_qty_pc,
+                   
+
+       ord_qty_pc
 
 from {{this}} eifs,
 
@@ -66,7 +71,11 @@ select snapshot_date,
 
        curr_key,
 
-       gros_trd_sls
+       gros_trd_sls,
+--NEW
+       cnfrm_qty_pc,
+                   
+       ord_qty_pc
 
 from wks_invoice_fact_snapshot
 ),
@@ -88,7 +97,13 @@ select convert_timezone ('Australia/Sydney',current_timestamp())::date as snapsh
 
        orders.curr_key,
 
-       orders.gros_trd_sls
+       orders.gros_trd_sls,
+    
+    --NEW COLUMNS
+       orders.cnfrm_qty_pc,
+                   
+       orders.ord_qty_pc
+
 
 from (select eif.co_cd,
 
@@ -102,7 +117,12 @@ from (select eif.co_cd,
 
              eif.curr_key,
 
-             sum(eif.gros_trd_sls) as gros_trd_sls
+             sum(eif.gros_trd_sls) as gros_trd_sls,
+
+            --NEW SUM CALCULATION
+             sum(eif.cnfrm_qty_pc) as cnfrm_qty_pc,
+                   
+             sum(eif.ord_qty_pc) as ord_qty_pc
 
       from (select a.co_cd,
 
@@ -111,6 +131,11 @@ from (select eif.co_cd,
                    ltrim(a.matl_num,'0') as matl_num,
 
                    a.gros_trd_sls,
+
+                   -- NEW COLUMNS FOR CALCULATION
+                   a.cnfrm_qty_pc,
+                   a.ord_qty_pc, 
+
 
                    ltrim(a.sls_doc,'0') as sls_doc,
 
@@ -130,11 +155,11 @@ from (select eif.co_cd,
             
             ) eif,
 
-           (select distinct dly_sls_cust_attrb_lkp.cmp_id
+           (select distinct dly_sls_cust_attrb_lkp.cmp_id_code
 
             from dly_sls_cust_attrb_lkp) lkp
 
-      where eif.co_cd = lkp.cmp_id
+      where eif.co_cd = lkp.cmp_id_code
 
       group by eif.co_cd,
 
@@ -175,6 +200,8 @@ matl_num::varchar(40) as matl_num,
 sls_doc::varchar(50) as sls_doc,
 curr_key::varchar(10) as curr_key,
 gros_trd_sls::number(38,7) as gros_trd_sls,
+cnfrm_qty_pc::number(38,7) as cnfrm_qty_pc,
+ord_qty_pc::number(38,7) as ord_qty_pc
 from transformed
 )
 select * from final

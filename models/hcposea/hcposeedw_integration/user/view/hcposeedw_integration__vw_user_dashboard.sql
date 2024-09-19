@@ -212,7 +212,7 @@ AS (
                                                     CASE 
                                                         WHEN (
                                                                 
-                                                                    datediff(day,current_timestamp(),xref.last_login_date)
+                                                                    abs(datediff(day,current_timestamp(),xref.last_login_date))
                                                                         <= (30)::DOUBLE PRECISION
                                                                 )
                                                             THEN 1
@@ -221,7 +221,7 @@ AS (
                                                 FROM edw_isight_dim_employee_snapshot_xref xref
                                                 WHERE (
                                                         (xref.active_flag = ((1)::NUMERIC)::NUMERIC(18, 0))
-                                                        AND ((xref.profile_name)::TEXT ! LIKE ('%Chatter%'::CHARACTER VARYING)::TEXT)
+                                                        AND ((xref.profile_name)::TEXT not like ('%Chatter%'::CHARACTER VARYING)::TEXT)
                                                         )
                                                 ) xref LEFT JOIN edw_isight_sector_mapping sect ON (
                                                     (
@@ -259,7 +259,7 @@ AS (
                                             )
                                         WHERE (
                                                 (
-                                                    ((xref.profile_name)::TEXT ! LIKE ('%Chatter%'::CHARACTER VARYING)::TEXT)
+                                                    ((xref.profile_name)::TEXT not like ('%Chatter%'::CHARACTER VARYING)::TEXT)
                                                     AND (xref.active_flag = ((1)::NUMERIC)::NUMERIC(18, 0))
                                                     )
                                                 AND (
@@ -299,7 +299,7 @@ AS (
                                         )
                                     WHERE (
                                             (
-                                                ((xref.profile_name)::TEXT ! LIKE ('%Chatter%'::CHARACTER VARYING)::TEXT)
+                                                ((xref.profile_name)::TEXT not like ('%Chatter%'::CHARACTER VARYING)::TEXT)
                                                 AND (xref.active_flag = ((1)::NUMERIC)::NUMERIC(18, 0))
                                                 )
                                             AND (
@@ -339,7 +339,7 @@ AS (
                                     )
                                 WHERE (
                                         (
-                                            ((xref.profile_name)::TEXT ! LIKE ('%Chatter%'::CHARACTER VARYING)::TEXT)
+                                            ((xref.profile_name)::TEXT not like ('%Chatter%'::CHARACTER VARYING)::TEXT)
                                             AND (xref.active_flag = ((1)::NUMERIC)::NUMERIC(18, 0))
                                             )
                                         AND (
@@ -379,7 +379,7 @@ AS (
                                 )
                             WHERE (
                                     (
-                                        ((xref.profile_name)::TEXT ! LIKE ('%Chatter%'::CHARACTER VARYING)::TEXT)
+                                        ((xref.profile_name)::TEXT not like ('%Chatter%'::CHARACTER VARYING)::TEXT)
                                         AND (xref.active_flag = ((1)::NUMERIC)::NUMERIC(18, 0))
                                         )
                                     AND (
@@ -426,7 +426,7 @@ AS (
                                                     (
                                                         (
                                                             (
-                                                                ((xref.profile_name)::TEXT ! LIKE ('%Chatter%'::CHARACTER VARYING)::TEXT)
+                                                                ((xref.profile_name)::TEXT not like ('%Chatter%'::CHARACTER VARYING)::TEXT)
                                                                 AND (xref.active_flag = ((1)::NUMERIC)::NUMERIC(18, 0))
                                                                 )
                                                             AND ((xref.profile_name)::TEXT <> ('AP_Core_ProductManager'::CHARACTER VARYING)::TEXT)
@@ -524,7 +524,7 @@ AS (
                         )
                 )
             WHERE (
-                    ((xref.profile_name)::TEXT ! LIKE ('%Chatter%'::CHARACTER VARYING)::TEXT)
+                    ((xref.profile_name)::TEXT not like ('%Chatter%'::CHARACTER VARYING)::TEXT)
                     AND (xref.active_flag = ((1)::NUMERIC)::NUMERIC(18, 0))
                     )
             GROUP BY xref1.year,
@@ -741,7 +741,7 @@ AS (
                                                     CASE 
                                                         WHEN (
                                                                 
-                                                                    datediff(day,current_timestamp(),xref.last_login_date)
+                                                                    abs(datediff(day,current_timestamp(),xref.last_login_date))
                                                                      <= (30)::DOUBLE PRECISION
                                                                 )
                                                             THEN 1
@@ -750,7 +750,7 @@ AS (
                                                 FROM dim_employee_iconnect xref
                                                 WHERE (
                                                         (
-                                                            ((xref.profile_name)::TEXT ! LIKE ('%Chatter%'::CHARACTER VARYING)::TEXT)
+                                                            ((xref.profile_name)::TEXT not like ('%Chatter%'::CHARACTER VARYING)::TEXT)
                                                             AND (xref.active_flag = ((1)::NUMERIC)::NUMERIC(18, 0))
                                                             )
                                                         AND (
@@ -786,7 +786,7 @@ AS (
                                             sum(CASE 
                                                     WHEN (
                                                             
-                                                                datediff(day,current_timestamp(),xref.last_login_date)
+                                                                abs(datediff(day,current_timestamp(),xref.last_login_date))
                                                                  <= (30)::DOUBLE PRECISION
                                                             )
                                                         THEN 1
@@ -802,7 +802,7 @@ AS (
                                             )
                                         WHERE (
                                                 (
-                                                    ((xref.profile_name)::TEXT ! LIKE ('%Chatter%'::CHARACTER VARYING)::TEXT)
+                                                    ((xref.profile_name)::TEXT not like ('%Chatter%'::CHARACTER VARYING)::TEXT)
                                                     AND (xref.active_flag = ((1)::NUMERIC)::NUMERIC(18, 0))
                                                     )
                                                 AND (
@@ -825,7 +825,7 @@ AS (
                                         sum(CASE 
                                                 WHEN (
                                                         
-                                                            datediff(day,current_timestamp(),xref.last_login_date)
+                                                            abs(datediff(day,current_timestamp(),xref.last_login_date))
                                                              <= (30)::DOUBLE PRECISION
                                                         )
                                                     THEN 1
@@ -841,7 +841,7 @@ AS (
                                         )
                                     WHERE (
                                             (
-                                                ((xref.profile_name)::TEXT ! LIKE ('%Chatter%'::CHARACTER VARYING)::TEXT)
+                                                ((xref.profile_name)::TEXT not like ('%Chatter%'::CHARACTER VARYING)::TEXT)
                                                 AND (xref.active_flag = ((1)::NUMERIC)::NUMERIC(18, 0))
                                                 )
                                             AND (
@@ -864,7 +864,7 @@ AS (
                                     sum(CASE 
                                             WHEN (
                                                     
-                                                        datediff(day,current_timestamp(),xref.last_login_date)
+                                                        abs(datediff(day,current_timestamp(),xref.last_login_date))
                                                          <= (30)::DOUBLE PRECISION
                                                     )
                                                 THEN 1
@@ -880,7 +880,7 @@ AS (
                                     )
                                 WHERE (
                                         (
-                                            ((xref.profile_name)::TEXT ! LIKE ('%Chatter%'::CHARACTER VARYING)::TEXT)
+                                            ((xref.profile_name)::TEXT not like ('%Chatter%'::CHARACTER VARYING)::TEXT)
                                             AND (xref.active_flag = ((1)::NUMERIC)::NUMERIC(18, 0))
                                             )
                                         AND (
@@ -903,7 +903,7 @@ AS (
                                 sum(CASE 
                                         WHEN (
                                                 
-                                                    datediff(day,current_timestamp(),xref.last_login_date)
+                                                    abs(datediff(day,current_timestamp(),xref.last_login_date))
                                                      <= (30)::DOUBLE PRECISION
                                                 )
                                             THEN 1
@@ -919,7 +919,7 @@ AS (
                                 )
                             WHERE (
                                     (
-                                        ((xref.profile_name)::TEXT ! LIKE ('%Chatter%'::CHARACTER VARYING)::TEXT)
+                                        ((xref.profile_name)::TEXT not like ('%Chatter%'::CHARACTER VARYING)::TEXT)
                                         AND (xref.active_flag = ((1)::NUMERIC)::NUMERIC(18, 0))
                                         )
                                     AND (
@@ -942,7 +942,7 @@ AS (
                             sum(CASE 
                                     WHEN (
                                             
-                                                datediff(day,current_timestamp(),xref.last_login_date)
+                                                abs(datediff(day,current_timestamp(),xref.last_login_date))
                                                  <= (30)::DOUBLE PRECISION
                                             )
                                         THEN 1
@@ -965,7 +965,7 @@ AS (
                                                     (
                                                         (
                                                             (
-                                                                ((xref.profile_name)::TEXT ! LIKE ('%Chatter%'::CHARACTER VARYING)::TEXT)
+                                                                ((xref.profile_name)::TEXT not like ('%Chatter%'::CHARACTER VARYING)::TEXT)
                                                                 AND (xref.active_flag = ((1)::NUMERIC)::NUMERIC(18, 0))
                                                                 )
                                                             AND ((xref.profile_name)::TEXT <> ('AP_Core_ProductManager'::CHARACTER VARYING)::TEXT)
@@ -1053,7 +1053,7 @@ AS (
                                     )
                                 )
                             )
-                        AND ((dim_employee_iconnect.profile_name)::TEXT ! LIKE ('%Chatter%'::CHARACTER VARYING)::TEXT)
+                        AND ((dim_employee_iconnect.profile_name)::TEXT not like ('%Chatter%'::CHARACTER VARYING)::TEXT)
                         )
                     AND (dim_employee_iconnect.active_flag = ((1)::NUMERIC)::NUMERIC(18, 0))
                     )

@@ -34,6 +34,7 @@ sdl_pop6_sg_tasks as
 sdl_pop6_th_tasks as
 (
 	select * from {{ source('thasdl_raw', 'sdl_pop6_th_tasks') }}
+   
 ),
 
 

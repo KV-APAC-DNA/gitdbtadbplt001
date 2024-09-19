@@ -41,6 +41,7 @@
 }}
 
 with source as (
+
     select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('thasdl_raw','sdl_th_sfmc_open_data') }}
     where file_name not in (
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_open_data__null_test') }}

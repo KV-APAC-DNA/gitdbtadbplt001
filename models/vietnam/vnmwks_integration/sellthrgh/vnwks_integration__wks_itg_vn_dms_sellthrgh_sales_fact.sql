@@ -1,5 +1,10 @@
 with sdl_vn_dms_sellthrgh_sales_fact as (
   select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_sellthrgh_sales_fact') }}
+  where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_sellthrgh_sales_fact__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_sellthrgh_sales_fact__duplicate_test')}}
+  )
 ), 
 wks_vn_dms_sellthrgh_sales_fact as (
   select 

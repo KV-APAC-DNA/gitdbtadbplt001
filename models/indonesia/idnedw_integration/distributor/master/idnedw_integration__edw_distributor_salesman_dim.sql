@@ -22,7 +22,7 @@ final3 as
 	   '999912'::varchar(10) as effective_to 
     from edw_distributor_ivy_user_master um
     WHERE NOT EXISTS (SELECT 1
-                  FROM {{this}} sd
+                  FROM itg_distributor_salesman_dim sd
                   WHERE (UPPER(TRIM(um.dis_code)) ||UPPER(TRIM(um.sr_code))) = UPPER(TRIM(rec_key)))
 AND   (UPPER(TRIM(um.dis_code)) <> '' AND UPPER(TRIM(um.sr_code)) <> '')
 AND   (UPPER(TRIM(um.dis_code)) IS NOT NULL AND UPPER(TRIM(um.sr_code)) IS NOT NULL)

@@ -6,7 +6,13 @@
         pre_hook = "{% if is_incremental() %}
         DELETE FROM {{this}}
         WHERE TO_CHAR(dcr_dt,'YYYYMM') IN (SELECT  TO_CHAR(sdl.dcr_dt,'YYYYMM') 
-        FROM {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_sampledata') }} sdl);
+        FROM {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_sampledata') }} sdl
+        where sdl.filename not in (
+            select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_ventasys_sampledata__null_test') }}
+            union all
+            select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_ventasys_sampledata__duplicate_test') }}
+        )
+        );
         {% endif %}"
     )
 }}
@@ -15,7 +21,11 @@ with source as
 (
     select *, dense_rank() over (partition by TO_CHAR(dcr_dt,'YYYYMM') order by filename desc) rn 
     from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_sampledata') }}
-    qualify rn=1
+    where filename not in (
+            select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_ventasys_sampledata__null_test') }}
+            union all
+            select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_ventasys_sampledata__duplicate_test') }}
+    ) qualify rn=1
 ),
 final as
 (
