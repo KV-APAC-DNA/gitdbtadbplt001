@@ -1,6 +1,5 @@
 {% test test_lookup__ff(model,failure_reason="Missing records from master table",column=none,lookup_table=None,lookup_column=None,lookup_filter=None,filters=None,additional_filter=None,extra_col=None)%}
     select 
-        '{{failure_reason}}' AS failure_reason,
         *
     from (
         select 
@@ -16,7 +15,14 @@
             {%- for col in reversed_columns %}
                 {% if col in file_name_columns%}
                     {{ col }} as file_name,
+                    '{{failure_reason}}' AS failure_reason,
                    *exclude({{col}})
+                   {% break %}
+                {% endif %}
+                {% if col not in file_name_columns and loop.last %}
+                    'Filename N/A' as file_name,
+                    '{{failure_reason}}' AS failure_reason,
+                    *
                    {% break %}
                 {% endif %}   
             {%- endfor %}

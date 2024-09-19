@@ -923,8 +923,8 @@ FROM
                     (
                       (
                         SELECT 
-                          DISTINCT dly_sls_cust_attrb_lkp.sls_org, 
-                          dly_sls_cust_attrb_lkp.cmp_id 
+                          DISTINCT dly_sls_cust_attrb_lkp.sls_org_code as sls_org, 
+                          dly_sls_cust_attrb_lkp.cmp_id_code as cmp_id
                         FROM 
                           dly_sls_cust_attrb_lkp 
                         UNION ALL 

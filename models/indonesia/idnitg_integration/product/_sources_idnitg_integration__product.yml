@@ -18,12 +18,14 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
           - test_duplicate__ff:
               group_by_columns: ["sap_code","effective_from"]
               name: TRATBL_sdl_mds_id_lav_product_hierarchy__duplicate_test
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
 
     - name: sdl_mds_id_lav_bp_sop_target
       tags: ["id_mds_itg_load","ingestion"]
@@ -35,6 +37,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
           - test_format:
               select_columns: ["year","franchise","brand_code","variant"]
               where_clause: "Franchise IN ( SELECT DISTINCT Franchise FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_bp_sop_target') }} x MINUS SELECT DISTINCT b.Franchise FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_bp_sop_target') }} a, {{ ref('idnedw_integration__edw_product_dim') }} b WHERE a.Franchise = b.Franchise )"
@@ -42,6 +45,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
           - test_format:
               select_columns: ["year","franchise","brand_code","variant"]
               where_clause: "Variant IN ( SELECT DISTINCT Variant FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_bp_sop_target') }} x MINUS SELECT DISTINCT b.Variant3 FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_bp_sop_target') }} a, {{ ref('idnedw_integration__edw_product_dim') }} b WHERE a.Variant = b.Variant3 )"
@@ -49,6 +53,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
     - name: sdl_mds_id_lav_sales_target
       tags: ["id_mds_itg_load","ingestion"]
       tests:
@@ -59,6 +64,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
           - test_format:
               select_columns: ["year","sales_type","customer_code","customer","channel","brand","franchise"]
               where_clause: "UPPER(REPLACE(Customer_Code, '.0', '')) IN ( SELECT DISTINCT UPPER(REPLACE(Customer_Code, '.0', '')) AS customer_code FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_sales_target') }} x MINUS SELECT DISTINCT UPPER(b.jj_sap_dstrbtr_id) FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_sales_target') }} a, {{ ref('idnedw_integration__edw_distributor_dim') }} b WHERE TRIM(UPPER(a.Customer_Code)) = TRIM(UPPER(b.jj_sap_dstrbtr_id)) )"
@@ -66,6 +72,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
           - test_format:
               select_columns: ["year","sales_type","customer_code","customer","channel","brand","franchise"]
               where_clause: "UPPER(channel) IN ( SELECT DISTINCT UPPER(channel) FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_sales_target') }} x MINUS SELECT DISTINCT UPPER(b.chnl) FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_sales_target') }} a, {{ ref('idnedw_integration__edw_distributor_customer_dim') }} b WHERE TRIM(UPPER(a.channel)) = TRIM(UPPER(b.chnl)) )"
@@ -73,6 +80,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
           - test_format:
               select_columns: ["year","sales_type","customer_code","customer","channel","brand","franchise"]
               where_clause: "UPPER(brand) IN ( SELECT DISTINCT UPPER(brand) FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_sales_target') }} x MINUS SELECT DISTINCT UPPER(b.brand) FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_sales_target') }} a, {{ ref('idnedw_integration__edw_product_dim') }} b WHERE TRIM(UPPER(a.brand)) = TRIM(UPPER(b.brand)) )"
@@ -80,6 +88,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
           - test_format:
               select_columns: ["year","sales_type","customer_code","customer","channel","brand","franchise"]
               where_clause: "UPPER(franchise) IN ( SELECT DISTINCT UPPER(franchise) FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_sales_target') }} x MINUS SELECT DISTINCT UPPER(b.franchise) FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_sales_target') }} a, {{ ref('idnedw_integration__edw_product_dim') }} b WHERE TRIM(UPPER(a.franchise)) = TRIM(UPPER(b.franchise)) )"
@@ -87,6 +96,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
       
           
 

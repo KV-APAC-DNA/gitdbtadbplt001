@@ -19,6 +19,7 @@ sources:
             config:
               store_failures: true
               schema: jpnwks_integration
+              severity: error
         - test_duplicate:
                 select_columns: ["name","kpi","weight","channel"]
                 group_by_columns: ["name","kpi","channel"] 
@@ -26,6 +27,7 @@ sources:
                 config:
                   store_failures: true
                   schema: jpnwks_integration
+                  severity: error
 
       - name: sdl_mds_jp_ps_targets
         tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]
@@ -37,6 +39,7 @@ sources:
             config:
               store_failures: true
               schema: jpnwks_integration
+              severity: error
         - test_duplicate:
                 select_columns: ["name","channel","re","attribute_1","attribute_2","value"]
                 group_by_columns: ["name","channel","re","attribute_1","attribute_2","value"]
@@ -44,3 +47,4 @@ sources:
                 config:
                   store_failures: true
                   schema: jpnwks_integration
+                  severity: error

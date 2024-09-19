@@ -79,6 +79,7 @@ sources:
               config:
                 store_failures: true
                 schema: myswks_integration
+                severity: error
           - test_duplicate:
               select_columns: ["name","ean","product_name","valid_from","valid_to"]
               group_by_columns: ["name","ean","product_name","valid_from","valid_to"]
@@ -86,6 +87,7 @@ sources:
               config:
                 store_failures: true
                 schema: myswks_integration
+                severity: error
       - name: sdl_mds_my_ps_targets
         tags: ["my_perfect_store","ingestion"]
         tests:
@@ -96,6 +98,7 @@ sources:
               config:
                 store_failures: true
                 schema: myswks_integration
+                severity: error
           - test_duplicate:
                 select_columns: ["kpi","channel","re","attribute_1","attribute_2","value"]
                 group_by_columns: ["kpi","channel","re","attribute_1","attribute_2","value"]
@@ -103,6 +106,7 @@ sources:
                 config:
                   store_failures: true
                   schema: myswks_integration
+                  severity: error
       - name: sdl_mds_my_ps_weights
         tags: ["my_perfect_store","ingestion"]
         tests:
@@ -113,6 +117,7 @@ sources:
               config:
                 store_failures: true
                 schema: myswks_integration
+                severity: error
           - test_duplicate:
               select_columns: ["name","kpi","channel"]
               group_by_columns: ["name","kpi","channel"]
@@ -120,6 +125,7 @@ sources:
               config:
                 store_failures: true
                 schema: myswks_integration
+                severity: error
   - name: mysedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: mysedw_integration

@@ -128,6 +128,7 @@ sources:
               config:
                 store_failures: true
                 schema: indwks_integration
+                severity: error
           - test_duplicate:
               group_by_columns: ["code"]
               select_columns: ["code"]
@@ -135,6 +136,7 @@ sources:
               config:
                 store_failures: true
                 schema: indwks_integration
+                severity: error
       - name: sdl_mds_in_gl_account_master
         tags: ["in_mds_refresh","ingestion"]
         tests:
@@ -145,6 +147,7 @@ sources:
               config:
                 store_failures: true
                 schema: indwks_integration
+                severity: error
           - test_duplicate:
               group_by_columns: ["code"]
               select_columns: ["code"]
@@ -152,6 +155,7 @@ sources:
               config:
                 store_failures: true
                 schema: indwks_integration
+                severity: error
 
       - name: sdl_mds_in_sv_kapf_month_end_dates
         tags: ["in_sdlitg_salescube_master","ingestion"]
@@ -165,6 +169,7 @@ sources:
                 config:
                   store_failures: true
                   schema: indwks_integration
+                  severity: error
             - test_duplicate:
                 group_by_columns: ["name"]
                 select_columns: ["name", "channel", "kpi"] 
@@ -172,6 +177,7 @@ sources:
                 config:
                   store_failures: true
                   schema: indwks_integration
+                  severity: error
       - name: sdl_mds_in_product_category_mapping
         tags: ["in_mds_refresh","ingestion"]
 
@@ -194,12 +200,14 @@ sources:
               config:
                 store_failures: true
                 schema: indwks_integration
+                severity: error
           - test_duplicate__ff:
               group_by_columns: ["re","kpi","weight","store_class"]
               name: TRATBL_sdl_mds_in_sss_weights__duplicate_test
               config:
                 store_failures: true
                 schema: indwks_integration
+                severity: error
       - name: sdl_mds_in_sss_score
         tags: ["in_sss_scorecard_mds_refresh","ingestion"]
         tests:
@@ -209,12 +217,14 @@ sources:
               config:
                 store_failures: true
                 schema: indwks_integration
+                severity: error
           - test_duplicate__ff:
               group_by_columns: ["kpi","min_value","value","store_class","re","brand","max_value"]
               name: TRATBL_sdl_mds_in_sss_score__duplicate_test
               config:
                 store_failures: true
                 schema: indwks_integration
+                severity: error
       - name: sdl_mds_in_ps_msl
         tags: ["in_sss_scorecard_mds_refresh","ingestion"]
         tests:
@@ -224,12 +234,14 @@ sources:
               config:
                 store_failures: true
                 schema: indwks_integration
+                severity: error
           - test_duplicate__ff:
               group_by_columns: ["sku_code","sku_name","valid_from","valid_to","re"]
               name: TRATBL_sdl_mds_in_ps_msl__duplicate_test
               config:
                 store_failures: true
                 schema: indwks_integration
+                severity: error
       - name: sdl_mds_in_ps_promoter_store_map
         tags: ["in_sss_scorecard_mds_refresh","ingestion"]
         tests:
@@ -239,12 +251,14 @@ sources:
               config:
                 store_failures: true
                 schema: indwks_integration
+                severity: error
           - test_duplicate__ff:
               group_by_columns: ["channel","rtruniquecode"]
               name: TRATBL_sdl_mds_in_ps_promoter_store_map__duplicate_test
               config:
                 store_failures: true
                 schema: indwks_integration
+                severity: error
       - name: sdl_sss_scorecard_data
         tags: ["in_sss_scorecard_ingestion","ingestion"]
         tests:
