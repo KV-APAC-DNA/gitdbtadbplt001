@@ -3,17 +3,12 @@
         materialized="incremental",
         incremental_strategy="append",
         pre_hook="{% if is_incremental() %}
-        delete from {{this}} where file_name in (select distinct file_name 
-        from 
-        {{ source('ntasdl_raw','sdl_kr_dads_naver_keyword_search_volume') }} where file_name not in
-     (select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_dads_naver_keyword_search_volume__format_test') }})
-);
+        delete from {{this}} where file_name in (select distinct file_name from {{ source('ntasdl_raw','sdl_kr_dads_naver_keyword_search_volume') }});
         {% endif %}"
 )}}
 
 with source as (
-     select * from {{ source('ntasdl_raw','sdl_kr_dads_naver_keyword_search_volume') }} where file_name not in
-     (select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_dads_naver_keyword_search_volume__format_test') }})
+     select * from {{ source('ntasdl_raw','sdl_kr_dads_naver_keyword_search_volume') }} 
 ),
 final as (
     select

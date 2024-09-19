@@ -1,67 +1,38 @@
 with sdl_kr_pos_eland as 
 (
     select * from {{ source('ntasdl_raw','sdl_kr_pos_eland') }}
-    where filename not in (
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_pos_eland__null_test') }}
-    )
 ),
 sdl_kr_pos_lotte_mart as 
 (
     select * from {{ source('ntasdl_raw','sdl_kr_pos_lotte_mart') }}
-    where filename not in (
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_pos_lotte_mart__null_test') }}
-    )
 ),
 sdl_kr_pos_homeplus_online as 
 (
     select * from {{ source('ntasdl_raw','sdl_kr_pos_homeplus_online') }}
-    where filename not in (
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_pos_homeplus_online__null_test') }}
-        union all
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_pos_homeplus_online__format_test') }}
-    )
 ),
 sdl_kr_pos_lohbs as 
 (
     select * from {{ source('ntasdl_raw','sdl_kr_pos_lohbs') }}
-     where filename not in (
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_pos_lohbs__null_test') }}
-    )
 ),
 sdl_kr_pos_homeplus as 
 (
     select * from {{ source('ntasdl_raw','sdl_kr_pos_homeplus') }}
-     where filename not in (
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_pos_homeplus__null_test') }}
-    )
 ),
 sdl_kr_pos_gs_super as 
 (
     select * from {{ source('ntasdl_raw','sdl_kr_pos_gs_super') }}
-    where filename not in (
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_pos_gs_super__null_test') }}
-    )
 ),
 sdl_kr_pos_lotte_super as 
 (
     select * from {{ source('ntasdl_raw','sdl_kr_pos_lotte_super') }}
-    where filename not in (
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_pos_lotte_super__null_test') }}
-    )
 ),
 sdl_kr_pos_olive_young as 
 (
     select * from {{ source('ntasdl_raw','sdl_kr_pos_olive_young') }}
-    where filename not in (
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_pos_olive_young__null_test') }}
-    )
 ),
 sdl_kr_pos_lalavla as 
 (
     select * from {{ source('ntasdl_raw','sdl_kr_pos_lalavla') }}
-    where filename not in (
-            select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_pos_lalavla__null_test') }}
-    )
 ),
 eland as 
 (
@@ -85,7 +56,6 @@ eland as
         store_name,
         null as unit_price,
         currency,
-        filename,
         crt_dttm,
         upd_dttm,
         'E-Land Retail' as src_sys_cd
@@ -113,7 +83,6 @@ lotte_mart as
         store_name,
         null as unit_price,
         'KRW' as currency,
-        filename,
         crt_dttm,
         upd_dttm,
         'Lotte mart' as src_sys_cd
@@ -141,7 +110,6 @@ homeplus_online as
         store_name,
         unit_price::numeric(16, 5) as unit_price,
         'KRW' as currency,
-        filename,
         crt_dttm,
         upd_dttm,
         'Homeplus' as src_sys_cd
@@ -169,7 +137,6 @@ lohbs as
         store_name,
         null as unit_price,
         'KRW' as currency,
-        filename,
         crt_dttm,
         upd_dttm,
         'Lotte_LOHB''s' as src_sys_cd
@@ -197,7 +164,6 @@ homeplus as
         null as store_name,
         unit_price::numeric(16, 5) as unit_price,
         'KRW' as currency,
-        filename,
         crt_dttm,
         upd_dttm,
         'Homeplus' as src_sys_cd
@@ -225,7 +191,6 @@ gs_super as
         null as store_name,
         unit_price::numeric(16, 5) as unit_price,
         'KRW' as currency,
-        filename,
         crt_dttm,
         upd_dttm,
         'GS Chain Super' as src_sys_cd
@@ -253,7 +218,6 @@ lotte_super as
         store_name,
         null as unit_price,
         'KRW' as currency,
-        filename,
         crt_dttm,
         upd_dttm,
         'Lotte Chain Super' as src_sys_cd
@@ -281,7 +245,6 @@ olive_young as
         store_name,
         null as unit_price,
         'KRW' as currency,
-        filename,
         crt_dttm,
         upd_dttm,
         'Olive Young' as src_sys_cd
@@ -309,11 +272,10 @@ lalavla as
         null as store_name,
         unit_price::numeric(16, 5) as unit_price,
         'KRW' as currency,
-        filename,
         crt_dttm,
         upd_dttm,
         'Lalavla' as src_sys_cd
-        from sdl_kr_pos_lalavla
+    from sdl_kr_pos_lalavla
 ),
 all_retailer as 
 (
@@ -358,7 +320,6 @@ final as
         store_name,
         unit_price,
         currency,
-        filename,
         crt_dttm,
         upd_dttm,
         src_sys_cd,

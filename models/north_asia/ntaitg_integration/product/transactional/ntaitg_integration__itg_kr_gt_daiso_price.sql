@@ -7,8 +7,7 @@
 }}
 with source_1 as 
 (
-    select *,dense_rank()over(partition by ean order by file_name desc) rnk from {{ source('ntasdl_raw', 'sdl_kr_gt_daiso_price') }}
-    qualify rnk =1
+    select * from {{ source('ntasdl_raw', 'sdl_kr_gt_daiso_price') }}
 ),
 source_2 as (
     select * from {{ source('ntasdl_raw', 'sdl_mds_kr_retailer_price_master') }}    

@@ -1,8 +1,5 @@
 with source as (
     select * from {{ source('ntasdl_raw', 'sdl_tw_pos_ec') }}
-     where file_name not in (
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_pos_ec__null_test') }}
-    )
 ),
 itg_pos as (
     select * from {{ source('ntaitg_integration', 'itg_pos_temp') }}
@@ -63,7 +60,7 @@ final as
             WHEN TGT.CRT_DTTM IS NULL THEN 'I'
             ELSE 'U'
         END AS CHNG_FLG
-        FROM 
+    FROM 
         (
             SELECT MAX(customer_ec_platfom) AS customer_ec_platfom,
                 pos_date,

@@ -30,7 +30,7 @@ final as (
         sales_rep_name,
         crt_dttm,
         current_timestamp as upd_dttm,
-        file_name,
+        null as filename,
         null as run_id
     from source
  {% if is_incremental() %}

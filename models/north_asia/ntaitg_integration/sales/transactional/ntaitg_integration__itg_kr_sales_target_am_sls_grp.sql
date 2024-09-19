@@ -8,7 +8,7 @@
 }}
 with source as
 (
-    select * from {{ source('ntasdl_raw', 'sdl_kr_sales_target_am_sls_grp') }} 
+    select * from {{ source('ntasdl_raw', 'sdl_kr_sales_target_am_sls_grp') }}
 ),
 final as
 (

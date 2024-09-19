@@ -3,32 +3,13 @@
         materialized="incremental",
         incremental_strategy="append",
         pre_hook="{% if is_incremental() %}
-        delete from {{this}} where cntry_cd='KR' and file_name in (select distinct file_name 
-        from {{ source('ntasdl_raw','sdl_kr_sfmc_naver_data_additional') }}
-        where file_name not in
-        (select distinct file_name from 
-        {{ source('ntawks_integration', 'TRATBL_sdl_kr_sfmc_naver_data_additional__duplicate_test') }}
-        union all
-        select distinct file_name from 
-        {{ source('ntawks_integration', 'TRATBL_sdl_kr_sfmc_naver_data_additional__null_test') }}
-        )
-        );
-        delete from {{this}} where naver_id not in (select distinct naver_id from 
-        {% if target.name=='prod' %} ntaitg_integration.itg_kr_sfmc_naver_data {% else %} 
-        {{schema}}.ntaitg_integration__itg_kr_sfmc_naver_data {% endif %} where cntry_cd='KR' ) 
-        and cntry_cd='KR';
+        delete from {{this}} where cntry_cd='KR' and file_name in (select distinct file_name from {{ source('ntasdl_raw','sdl_kr_sfmc_naver_data_additional') }});
+        delete from {{this}} where naver_id not in (select distinct naver_id from {% if target.name=='prod' %} ntaitg_integration.itg_kr_sfmc_naver_data {% else %} {{schema}}.ntaitg_integration__itg_kr_sfmc_naver_data {% endif %} where cntry_cd='KR' ) and cntry_cd='KR';
         {% endif %}"
 )}}
 
 with source as (
     select * from {{ source('ntasdl_raw','sdl_kr_sfmc_naver_data_additional') }} 
-    where file_name not in
-     (select distinct file_name from 
-     {{ source('ntawks_integration', 'TRATBL_sdl_kr_sfmc_naver_data_additional__duplicate_test') }}
-     union all
-     select distinct file_name from 
-     {{ source('ntawks_integration', 'TRATBL_sdl_kr_sfmc_naver_data_additional__null_test') }}
-     ) 
 ),
 final as (
     select

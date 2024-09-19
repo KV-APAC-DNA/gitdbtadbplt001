@@ -3,32 +3,12 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook= "{% if is_incremental() %}
-        delete from {{this}}  where trim(by_search_keyword)||trim(by_product_ranking)||trim(category_depth1)
-        ||trim(category_depth2)||trim(category_depth3)||trim(ranking)||trim(search_keyword)
-        ||trim(product_ranking)||trim(product_name)||trim(jnj_product_flag)||trim(yearmo)
-        ||trim(data_granularity) in (select distinct trim(by_search_keyword)||trim(by_product_ranking)
-        ||trim(category_depth1)||trim(category_depth2)||trim(category_depth3)||trim(ranking)
-        ||trim(search_keyword)||trim(product_ranking)||trim(product_name)||trim(jnj_product_flag)
-        ||trim(yearmo)||trim(data_granularity) from 
-        {{ source('ntasdl_raw', 'sdl_kr_coupang_search_keyword_by_category') }}
-        where file_name not in (
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_search_keyword_by_category__null_test') }}
-            ));
+        delete from {{this}}  where trim(by_search_keyword)||trim(by_product_ranking)||trim(category_depth1)||trim(category_depth2)||trim(category_depth3)||trim(ranking)||trim(search_keyword)||trim(product_ranking)||trim(product_name)||trim(jnj_product_flag)||trim(yearmo)||trim(data_granularity) in (select distinct trim(by_search_keyword)||trim(by_product_ranking)||trim(category_depth1)||trim(category_depth2)||trim(category_depth3)||trim(ranking)||trim(search_keyword)||trim(product_ranking)||trim(product_name)||trim(jnj_product_flag)||trim(yearmo)||trim(data_granularity) from {{ source('ntasdl_raw', 'sdl_kr_coupang_search_keyword_by_category') }});
         {% endif %}"
 )
 }}
 with sdl_kr_coupang_search_keyword_by_category as (
-select *, dense_rank() over(partition by trim(by_search_keyword)
-        ,trim(by_product_ranking),trim(category_depth1)
-        ,trim(category_depth2),trim(category_depth3)
-        ,trim(ranking),trim(search_keyword),trim(product_ranking)
-        ,trim(product_name),trim(jnj_product_flag),trim(yearmo)
-        ,trim(data_granularity) order by file_name desc) rnk
-from {{ source('ntasdl_raw', 'sdl_kr_coupang_search_keyword_by_category') }}
-where file_name not in (
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_search_keyword_by_category__null_test') }}
-    )
-qualify rnk =1 
+select * from {{ source('ntasdl_raw', 'sdl_kr_coupang_search_keyword_by_category') }}
 ),
 final as (
 SELECT 

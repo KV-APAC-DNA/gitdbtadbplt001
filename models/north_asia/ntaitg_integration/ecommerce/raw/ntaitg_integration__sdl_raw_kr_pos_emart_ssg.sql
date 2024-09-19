@@ -6,9 +6,6 @@
 
 with source as (
      select * from {{ source('ntasdl_raw','sdl_kr_pos_emart_ssg') }} 
-     where filename not in (
-            select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_pos_emart_ssg__lookup_test') }}
-     )
 ),
 final as (
     select

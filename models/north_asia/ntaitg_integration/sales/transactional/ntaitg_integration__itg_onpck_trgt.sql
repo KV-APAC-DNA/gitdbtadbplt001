@@ -6,7 +6,7 @@
         merge_exclude_columns=["crt_dttm"]
 )}}
 with source as (
-    select * from {{ source('ntasdl_raw','sdl_na_onpack_target') }} 
+    select * from {{ source('ntasdl_raw','sdl_na_onpack_target') }}
 ),
 final as (
     select
