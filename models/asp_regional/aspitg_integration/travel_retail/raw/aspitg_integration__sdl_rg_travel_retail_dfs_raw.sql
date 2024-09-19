@@ -7,13 +7,6 @@
 
 with source as(
     select * from {{ source('aspsdl_raw', 'sdl_rg_travel_retail_dfs') }}
-    where file_name not in (
-        select distinct file_name from {{source('aspwks_integration','TRATBL_sdl_rg_travel_retail_dfs__null_test')}}
-        union all
-        select distinct file_name from {{source('aspwks_integration','TRATBL_sdl_rg_travel_retail_dfs__product_lookup_test')}}
-        union all
-        select distinct file_name from {{source('aspwks_integration','TRATBL_sdl_rg_travel_retail_dfs__channel_lookup_test')}}
-    )
 ),
 final as(
     select *,

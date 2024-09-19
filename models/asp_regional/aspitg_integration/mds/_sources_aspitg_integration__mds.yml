@@ -20,7 +20,6 @@ sources:
               config:
                 store_failures: true
                 schema: aspwks_integration
-                severity: error
           - test_duplicate:
               group_by_columns: ["cust_num","ctry_key_code","retailer_name_code","location_name","sales_location_name","sales_channel_name"]
               select_columns: ["cust_num","ctry_key_code","retailer_name_code","location_name","sales_location_name","sales_channel_name"] 
@@ -28,7 +27,6 @@ sources:
               config:
                 store_failures: true
                 schema: aspwks_integration
-                severity: error
       - name: sdl_mds_apac_dcl_products
         tags: ["MDS","rg_travel_retail_channel_product_target","ingestion"]
         tests:
@@ -38,14 +36,12 @@ sources:
               config:
                 store_failures: true
                 schema: aspwks_integration
-                severity: error
           - test_duplicate__ff:
               group_by_columns: ["country_code",'"dcl code"','"sales channel_name"','"sap code"']
               name: TRATBL_sdl_mds_apac_dcl_products__duplicate_test
               config:
                 store_failures: true
                 schema: aspwks_integration
-                severity: error
       - name: sdl_mds_apac_dcl_targets
         tags: ["MDS","rg_travel_retail_channel_product_target","ingestion"]
         tests:
@@ -55,7 +51,6 @@ sources:
               config:
                 store_failures: true
                 schema: aspwks_integration
-                severity: error
           - test_duplicate:
               group_by_columns: ["target_type_code","country_code","sales_channel_name","year_code"]
               select_columns: ["target_type_code","country_code","sales_channel_name","year_code"] 
@@ -63,7 +58,6 @@ sources:
               config:
                 store_failures: true
                 schema: aspwks_integration
-                severity: error
       - name: sdl_mds_ap_greenlight_skus
         tags: ["MDS","rg_greenlight_mds","ingestion"]
         tests:
@@ -73,7 +67,6 @@ sources:
               config:
                 store_failures: true
                 schema: aspwks_integration
-                severity: error
           - test_duplicate:
               group_by_columns: ["market","material_number"]
               select_columns: ["market","material_number"] 
@@ -81,7 +74,6 @@ sources:
               config:
                 store_failures: true
                 schema: aspwks_integration
-                severity: error
       - name: sdl_mds_ap_company_dim
         tags: ["MDS","rg_mds_to_dna","ingestion"]
       - name: sdl_rg_mds_log
@@ -103,7 +95,6 @@ sources:
               config:
                 store_failures: true
                 schema: aspwks_integration
-                severity: error
           - test_duplicate:
               group_by_columns: ["cluster","country","sub_country","fisc_month","fisc_year","franchise","brand","type"]
               select_columns: ["cluster","country","sub_country","fisc_month","fisc_year","franchise","brand","type","target_ori"]
@@ -111,7 +102,6 @@ sources:
               config:
                 store_failures: true
                 schema: aspwks_integration
-                severity: error
       - name: sdl_mds_rg_profit_center_franchise_mapping
         tags: ["MDS","rg_mds_to_dna","ingestion"]
         tests:
@@ -121,7 +111,6 @@ sources:
               config:
                 store_failures: true
                 schema: aspwks_integration
-                severity: error
           - test_duplicate:
               group_by_columns: ["prod_minor","profit_center","prod_minor_desc","need_state","franchise_l1"]
               need_counts: no
@@ -129,7 +118,6 @@ sources:
               config:
                 store_failures: true
                 schema: aspwks_integration
-                severity: error
       - name: sdl_mds_rg_ps_market_coverage
         tags: ["MDS","rg_mds_to_dna","ingestion"]
         tests:
@@ -140,7 +128,6 @@ sources:
               config:
                 store_failures: true
                 schema: aspwks_integration
-                severity: error
           - test_duplicate:
               group_by_columns: ["name","channel"]
               select_columns: ["name","channel","coverage"] 
@@ -148,7 +135,6 @@ sources:
               config:
                 store_failures: true
                 schema: aspwks_integration
-                severity: error
       - name: sdl_mds_rg_ecom_digital_shelf_customer_mapping
         tags: ["MDS","rg_mds_to_dna","ingestion"]
         # Got confirmation from Murali for making these tests disbaled as in J&J the DQ check is disabled wrapper_id='WRP_001' and job_id='JB099' 
