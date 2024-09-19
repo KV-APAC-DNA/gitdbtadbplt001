@@ -2,29 +2,13 @@
     config(
         materialized="incremental",
         incremental_strategy = "append",
-        pre_hook=
-        "{% if is_incremental() %}
-        delete from {{this}} where trim(category_depth1)||trim(category_depth2)
-        ||trim(category_depth3)||trim(ranking)||trim(brand)||trim(yearmo)
-        ||trim(data_granularity) in (select distinct trim(category_depth1)
-        ||trim(category_depth2)||trim(category_depth3)||trim(ranking)||trim(brand)
-        ||trim(yearmo)||trim(data_granularity) from 
-        {{ source('ntasdl_raw', 'sdl_kr_coupang_brand_ranking') }}
-        where file_name  not in (
-            select distinct file_name from 
-            {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_brand_ranking__null_test') }}
-        ));
-            {% endif %}"
-        )
+        pre_hook="{% if is_incremental() %}
+        delete from {{this}} where trim(category_depth1)||trim(category_depth2)||trim(category_depth3)||trim(ranking)||trim(brand)||trim(yearmo)||trim(data_granularity) in (select distinct trim(category_depth1)||trim(category_depth2)||trim(category_depth3)||trim(ranking)||trim(brand)||trim(yearmo)||trim(data_granularity) from {{ source('ntasdl_raw', 'sdl_kr_coupang_brand_ranking') }});
+        {% endif %}"
+    )
 }}
 with source as (
-    select *,dense_rank()over(partition by trim(category_depth1),trim(category_depth2),trim(category_depth3),
-    trim(ranking),trim(brand),trim(yearmo),trim(data_granularity) order by file_name desc) rnk from  
-    {{ source('ntasdl_raw', 'sdl_kr_coupang_brand_ranking') }}
-     where file_name  not in (
-        select distinct file_name from 
-        {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_brand_ranking__null_test') }}
-    ) qualify rnk = 1
+    select * from {{ source('ntasdl_raw', 'sdl_kr_coupang_brand_ranking') }}
 ),
 final as (
     SELECT 

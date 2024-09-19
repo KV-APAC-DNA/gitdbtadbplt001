@@ -93,7 +93,6 @@ sources:
           config:
             store_failures: true
             schema: ntawks_integration
-            severity: error
       - test_duplicate:
           select_columns: ["code","brand_code"]
           group_by_columns: ["code","brand_code"]
@@ -101,7 +100,6 @@ sources:
           config:
             store_failures: true
             schema: ntawks_integration
-            severity: error
     - name: sdl_mds_kr_naver_product_master
       tags: ["j_kr_ecomm_offtake_product_master_load","ingestion"]
       tests:
@@ -112,7 +110,6 @@ sources:
           config:
             store_failures: true
             schema: ntawks_integration
-            severity: error
       - test_duplicate:
           select_columns: ["code","category_l_code","category_m_code","category_s_code","brands_name"]
           group_by_columns: ["code","category_l_code","category_m_code","category_s_code","brands_name"]
@@ -120,7 +117,6 @@ sources:
           config:
             store_failures: true
             schema: ntawks_integration
-            severity: error
     - name: sdl_mds_kr_keyword_classifications
       tags: ["j_kr_ecomm_offtake_product_master_load","ingestion"]
       tests:
@@ -131,7 +127,6 @@ sources:
           config:
             store_failures: true
             schema: ntawks_integration
-            severity: error
       - test_duplicate:
           select_columns: ["keyword","keyword_group"]
           group_by_columns: ["keyword","keyword_group"]
@@ -139,7 +134,6 @@ sources:
           config:
             store_failures: true
             schema: ntawks_integration
-            severity: error
     - name: sdl_mds_kr_product_hierarchy
       tags: ["kr_master_mds_sdl_itg_load","transformation"]
     - name: sdl_mds_hk_product_hierarchy
@@ -157,7 +151,6 @@ sources:
             config:
               store_failures: true
               schema: ntawks_integration
-              severity: error
         - test_null:
             select_columns: ["ean"]
             not_null_columns: ["ean"]
@@ -166,7 +159,6 @@ sources:
             config:
               store_failures: true
               schema: ntawks_integration
-              severity: error
     - name: sdl_kr_nh_gt_sellout
       tags: ["gt_sellout_nh", "ingestion"]
       tests:
@@ -207,7 +199,6 @@ sources:
             config:
               store_failures: true
               schema: ntawks_integration
-              severity: error
         - test_null:
             select_columns: ["code", "dstr_code", "ean_code", "dstr_product_code", "promotion_start_date", "promotion_end_date"]
             not_null_columns: ["code", "ean_code", "promotion_start_date", "promotion_end_date"]
@@ -215,7 +206,6 @@ sources:
             config:
               store_failures: true
               schema: ntawks_integration
-              severity: error
     - name: sdl_mds_hk_wingkeung_gt_msl_items
       tags: ["na_ims_inv_mds_sdl_itg_load","ingestion"]
       tests:
@@ -226,15 +216,13 @@ sources:
             config:
               store_failures: true
               schema: ntawks_integration
-              severity: error
         - test_null:
             select_columns: ["wk_code", "sap_code", "strt_yr_mnth", "end_yr_mnth", "code"]
             not_null_columns: ["code"]
             name: TRATBL_sdl_mds_hk_wingkeung_gt_msl_items__null_test
             config:
               store_failures: true
-              schema: ntawks_integration       
-              severity: error 
+              schema: ntawks_integration        
         - test_duplicate:
             select_columns: ["wk_code", "sap_code", "strt_yr_mnth", "end_yr_mnth", "code"]
             group_by_columns: ["code"]
@@ -242,4 +230,3 @@ sources:
             config:
               store_failures: true
               schema: ntawks_integration 
-              severity: error

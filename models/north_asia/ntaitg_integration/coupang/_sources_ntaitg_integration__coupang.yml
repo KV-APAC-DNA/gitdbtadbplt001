@@ -156,7 +156,6 @@ sources:
             config:
               store_failures: true
               schema: ntawks_integration
-              severity: error
         - test_null:
             select_columns: ["code", "sales_grp_cd", "cust_store_cd", "channel", "store_type", "sold_to", "ctry_cd"]
             not_null_columns: ["code", "sales_grp_cd", "cust_store_cd"]
@@ -164,7 +163,6 @@ sources:
             config:
               store_failures: true
               schema: ntawks_integration
-              severity: error
     - name: sdl_kr_coupang_bpa_report
       tags: ["kr_dads", "ingestion"]
       # tests:

@@ -91,7 +91,6 @@ final as
         NULL as unit_of_pkg_comp,
         0 as order_qty,
         NULL as unit_of_pkg_order,
-        src.filename,
         TGT.CRT_DTTM AS TGT_CRT_DTTM,
         upd_dttm as UPDT_DTTM,
         CASE

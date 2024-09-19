@@ -8,10 +8,7 @@
 )
 }}
 with sdl_kr_dads_coupang_search_keyword as (
-    select *,dense_rank()over(partition by substring(file_name,46,11) order by file_name desc ) rnk from {{ source('ntasdl_raw', 'sdl_kr_dads_coupang_search_keyword') }}
-     where file_name not in (
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_dads_coupang_search_keyword__format_test') }}
-     ) qualify rnk =1
+    select * from {{ source('ntasdl_raw', 'sdl_kr_dads_coupang_search_keyword') }}
 ),
 final as (
     SELECT 

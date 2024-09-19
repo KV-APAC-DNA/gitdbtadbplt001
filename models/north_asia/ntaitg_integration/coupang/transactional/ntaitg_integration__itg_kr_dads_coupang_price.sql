@@ -3,18 +3,13 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook= "{% if is_incremental() %}
-        delete from {{this}} where report_date in  (select distinct report_date from {{ source('ntasdl_raw', 'sdl_kr_dads_coupang_price') }}
-        where file_name in (
-        select distinct file_name  from {{ source('ntawks_integration', 'TRATBL_sdl_kr_dads_coupang_price__format_test') }}
-        ));
+        delete from {{this}} where report_date in  (select distinct report_date from {{ source('ntasdl_raw', 'sdl_kr_dads_coupang_price') }});
         {% endif %}"
 )
 }}
 with sdl_kr_dads_coupang_price as (
-    select *, dense_rank() over(partition by report_date order by file_name desc) as rnk from {{ source('ntasdl_raw', 'sdl_kr_dads_coupang_price') }} where file_name not in (
-        select distinct file_name  from {{ source('ntawks_integration', 'TRATBL_sdl_kr_dads_coupang_price__format_test') }}
-    ) qualify rnk = 1
-) ,
+    select * from {{ source('ntasdl_raw', 'sdl_kr_dads_coupang_price') }}
+),
 final as (
     SELECT 
         report_date::varchar(100) as report_date,

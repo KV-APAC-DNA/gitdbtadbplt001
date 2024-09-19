@@ -61,8 +61,6 @@ tests:
       sgpitg_integration:
         pop6: 
           +severity: error
-    north_asia:
-      +severity: warn
     hcp:
       +severity: warn
     indonesia:

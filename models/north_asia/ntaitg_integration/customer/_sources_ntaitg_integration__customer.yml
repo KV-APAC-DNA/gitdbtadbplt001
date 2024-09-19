@@ -19,15 +19,13 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-                severity: error
           - test_duplicate:
               select_columns: ["code", "distributor_code", "distributors_customer_code", "store_type", "hq"]
               group_by_columns: ["distributor_code", "distributors_customer_code", "store_type", "hq"]
               name: TRATBL_sdl_mds_tw_ims_dstr_customer_mapping__duplicate_test_1
               config:
                 store_failures: true
-                schema: ntawks_integration  
-                severity: error        
+                schema: ntawks_integration          
           - test_duplicate:
               select_columns: ["code", "distributor_code", "distributors_customer_code", "store_type", "hq"]
               group_by_columns: ["code"]
@@ -35,7 +33,6 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-                severity: error
       - name: sdl_hk_ims_dstr_cust_attr
       - name: sdl_mds_hk_customer_hierarchy
       - name: sdl_mds_tw_customer_hierarchy

@@ -4,27 +4,14 @@
         incremental_strategy = "append",
         unique_key=["bu_version", "forecast_on_year", "forecast_on_month"],
         pre_hook= "{% if is_incremental() %}
-        delete from {{this}} using {{ source('ntasdl_raw', 'sdl_tw_bp_forecast') }} bp_sdl 
-		where {{this}}.bp_version=bp_sdl.bp_version 
-		and {{this}}.forecast_on_year=bp_sdl.forecast_on_year 
-		and {{this}}.forecast_on_month=bp_sdl.forecast_on_month
-		and  filename not in 
-	(
-		select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_bp_forecast__null_test') }}
-	)
-		;
+        delete from {{this}} using {{ source('ntasdl_raw', 'sdl_tw_bp_forecast') }} bp_sdl where {{this}}.bp_version=bp_sdl.bp_version and {{this}}.forecast_on_year=bp_sdl.forecast_on_year and {{this}}.forecast_on_month=bp_sdl.forecast_on_month;
         {% endif %}"
     )
 }}
 
 with source as(
-    select *,dense_rank()over(partition by bp_version ,forecast_on_year,forecast_on_month order by filename desc ) rnk from 
-    {{ source('ntasdl_raw', 'sdl_tw_bp_forecast') }} 
-    where filename not in 
-	(
-		select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_bp_forecast__null_test') }}
-	) qualify rnk = 1
-) ,
+    select * from {{ source('ntasdl_raw', 'sdl_tw_bp_forecast') }}
+),
 edw_customer_attr_hier_dim as (
     select * from {{ ref('aspedw_integration__edw_customer_attr_hier_dim') }}
 ),
@@ -73,8 +60,7 @@ transformed as(
 	nvl((bp_frcst_prod_hier.pre_sales * 1000), 0)::float as pre_sales,
 	nvl((bp_frcst_prod_hier.tp * 1000), 0)::float as tp,
 	nvl((bp_frcst_prod_hier.nts * 1000), 0)::float as nts,
-	bp_frcst_prod_hier.load_date::timestamp_ntz(9) as load_date,
-	bp_frcst_prod_hier.filename::varchar(255) as file_name
+	bp_frcst_prod_hier.load_date::timestamp_ntz(9) as load_date
     FROM bp_frcst_prod_hier
     LEFT JOIN cust_attr ON bp_frcst_prod_hier.representative_cust_no = cust_attr.sold_to_party
     LEFT JOIN cust_flat ON bp_frcst_prod_hier.representative_cust_no = cust_flat.sold_to_party

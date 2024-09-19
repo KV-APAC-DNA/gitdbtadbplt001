@@ -3,19 +3,13 @@
         materialized="incremental",
         incremental_strategy="append",
         pre_hook = "{% if is_incremental() %}
-        delete from {{this}} where (store_no,product_code,start_date) IN (SELECT DISTINCT store_no,product_code,start_date from {{ source('ntasdl_raw', 'sdl_tw_pos_watson_store') }}
-        where filename not in (
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_pos_watson_store__null_test') }}
-    ));
+        delete from {{this}} where (store_no,product_code,start_date) IN (SELECT DISTINCT store_no,product_code,start_date from {{ source('ntasdl_raw', 'sdl_tw_pos_watson_store') }});
         {% endif %}"
     )
 }}
 with source as
 (
-    select * from {{ source('ntasdl_raw', 'sdl_tw_pos_watson_store') }} 
-    where filename not in (
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_pos_watson_store__null_test') }}
-    )
+    select * from {{ source('ntasdl_raw', 'sdl_tw_pos_watson_store') }}
 ),
 final as 
 (

@@ -7,25 +7,13 @@
 					where trim(product_ranking_date)||trim(category_depth1)||trim(category_depth2)||trim(category_depth3)||trim(coupang_sku_id)||trim(coupang_sku_name)||trim(ranking)||trim(data_granularity)
 					in
 					(select distinct trim(product_ranking_date)||trim(category_depth1)||trim(category_depth2)||trim(category_depth3)||trim(coupang_sku_id)||trim(coupang_sku_name)||trim(ranking)||trim(data_granularity)
-					from {{ source('ntasdl_raw', 'sdl_kr_coupang_product_ranking_monthly') }} where file_name  not in (
-                        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_product_ranking_monthly__null_test') }}
-                        union all
-                        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_product_ranking_monthly__test_date_format_odd_eve_leap') }}
-                    ));
+					from {{ source('ntasdl_raw', 'sdl_kr_coupang_product_ranking_monthly') }});
                     {% endif %}
                     "
     )
 }}
 with source as (
-    select *,dense_rank()over(partition by trim(product_ranking_date),trim(category_depth1),
-    trim(category_depth2),trim(category_depth3),trim(coupang_sku_id),trim(coupang_sku_name),
-    trim(ranking),trim(data_granularity) order by file_name desc  ) rnk
-    from {{ source('ntasdl_raw', 'sdl_kr_coupang_product_ranking_monthly') }} 
-    where file_name not in (
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_product_ranking_monthly__null_test') }}
-        union all
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_product_ranking_monthly__test_date_format_odd_eve_leap') }}
-    ) qualify rnk =1
+    select * from {{ source('ntasdl_raw', 'sdl_kr_coupang_product_ranking_monthly') }}
 ),
 final as
 (	select

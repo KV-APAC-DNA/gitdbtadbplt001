@@ -4,25 +4,12 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook= "{% if is_incremental() %}
-        delete from {{this}} where trim(review_date)||trim(brand)||trim(coupang_id)||trim(coupang_product_name)||trim(review_score_star) in 
-        (select distinct trim(review_date)||trim(brand)||trim(coupang_sku_id)||trim(coupang_sku_name)||trim(review_score_star) 
-        from 
-        {{ source('ntasdl_raw', 'sdl_kr_coupang_daily_brand_reviews') }} where file_name not in
-     (select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_daily_brand_reviews__null_test') }}
-      union all
-      select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_daily_brand_reviews__test_date_format_odd_eve_leap') }}
-     ));
+        delete from {{this}} where trim(review_date)||trim(brand)||trim(coupang_id)||trim(coupang_product_name)||trim(review_score_star) in (select distinct trim(review_date)||trim(brand)||trim(coupang_sku_id)||trim(coupang_sku_name)||trim(review_score_star) from {{ source('ntasdl_raw', 'sdl_kr_coupang_daily_brand_reviews') }});
         {% endif %}"
 )
 }}
 with sdl_kr_coupang_daily_brand_reviews as (
-    select *,dense_rank()over(partition by trim(review_date),trim(brand),trim(coupang_sku_id),trim(coupang_sku_name),trim(review_score_star) order by file_name desc) rnk
-    from {{ source('ntasdl_raw', 'sdl_kr_coupang_daily_brand_reviews') }} where file_name not in
-     (select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_daily_brand_reviews__null_test') }}
-      union all
-      select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_daily_brand_reviews__test_date_format_odd_eve_leap') }}
-     ) qualify rnk = 1
-
+    select * from {{ source('ntasdl_raw', 'sdl_kr_coupang_daily_brand_reviews') }}
 ),
 final as 
 (

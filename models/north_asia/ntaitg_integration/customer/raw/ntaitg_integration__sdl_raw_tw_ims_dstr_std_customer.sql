@@ -22,7 +22,7 @@ final as
         distributor_sales_area,
         crt_dttm,
         updt_dttm as upd_dttm,
-        file_name as filename,
+        null as filename,
         null as run_id
     from source
     {% if is_incremental() %}

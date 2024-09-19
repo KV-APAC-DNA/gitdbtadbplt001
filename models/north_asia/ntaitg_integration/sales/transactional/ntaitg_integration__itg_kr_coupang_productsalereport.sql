@@ -4,23 +4,14 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook= "{% if is_incremental() %}
-        delete from {{this}} where 
-        trim(transaction_date)||trim(sku_id)||trim(barcode)||trim(sku_people) in 
-        (select distinct trim(transaction_date)||trim(sku_id)||trim(barcode)||trim(sku_people) from 
-        {{ source('ntasdl_raw', 'sdl_kr_coupang_productsalereport') }} where file_name not in
-     (select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_productsalereport__null_test') }}
-     ));
+        delete from {{this}} where trim(transaction_date)||trim(sku_id)||trim(barcode)||trim(sku_people) in (select distinct trim(transaction_date)||trim(sku_id)||trim(barcode)||trim(sku_people) from {{ source('ntasdl_raw', 'sdl_kr_coupang_productsalereport') }});
         {% endif %}"         
 )
 }}
 
 
 with sdl_kr_coupang_productsalereport as (
-    select *,dense_rank()over(partition by trim(transaction_date),trim(sku_id),trim(barcode),trim(sku_people) 
-    order by file_name desc) rnk
-    from {{ source('ntasdl_raw', 'sdl_kr_coupang_productsalereport') }} where file_name not in
-     (select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_productsalereport__null_test') }}
-     ) qualify rnk = 1
+    select * from {{ source('ntasdl_raw', 'sdl_kr_coupang_productsalereport') }}
 ),
 final as 
 (
