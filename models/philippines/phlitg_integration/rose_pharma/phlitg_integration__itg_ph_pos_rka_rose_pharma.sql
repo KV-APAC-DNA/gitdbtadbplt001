@@ -2,6 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy="append",
+        unique_keys=['jj_month_id','branch_code','sku'],
         pre_hook = "delete from {{this}} where filename in (
         select distinct filename from {{ source('phlsdl_raw', 'sdl_pos_rks_rose_pharma_consumer') }}
         union 
