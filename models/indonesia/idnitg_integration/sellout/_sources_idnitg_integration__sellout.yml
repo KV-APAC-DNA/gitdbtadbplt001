@@ -19,6 +19,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
           - test_duplicate:
               select_columns: ["distributorcode","sourcesystem","effectivefrom","effectiveto","refreshfrom","sourcetype"]
               group_by_columns: ["distributorcode","sourcesystem","effectivefrom","effectiveto","refreshfrom","sourcetype"]
@@ -26,6 +27,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
           - test_format:
               select_columns: ["distributorcode","sourcesystem","effectivefrom","effectiveto","refreshfrom","sourcetype"]
               failure_reason: "'Period Overlapping - effectivefrom/effectiveto/refreshfrom is Overlapping for Stock Source Type'"
@@ -34,6 +36,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
           - test_format:
               select_columns: ["distributorcode","sourcesystem","effectivefrom","effectiveto","refreshfrom","sourcetype"]
               failure_reason: "'Period Overlapping - effectivefrom/effectiveto/refreshfrom is Overlapping for Sales Source Type'"
@@ -42,3 +45,4 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error

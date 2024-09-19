@@ -20,6 +20,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
           - test_duplicate:
               group_by_columns: ["code","year","month"]
               select_columns: ["code","year","month"]
@@ -27,6 +28,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
 
     - name: sdl_mds_th_market_share_distribution
       tags: ["th_non_tesco","ingestion"]
@@ -38,6 +40,7 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
+              severity: error
         - test_duplicate:
             group_by_columns: ["year_month","measure","category"]
             select_columns: ["year_month","measure","category"]
@@ -45,6 +48,7 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
+              severity: error
 
     - name: sdl_mds_th_rolling_forecast
       tags: ["th_non_tesco","ingestion"]
@@ -56,4 +60,5 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
     
