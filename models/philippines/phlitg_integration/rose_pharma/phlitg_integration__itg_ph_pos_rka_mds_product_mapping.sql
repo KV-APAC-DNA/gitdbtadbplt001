@@ -39,5 +39,6 @@ current_timestamp as last_chg_datetime,
 current_timestamp as crtd_dttm,
 current_timestamp as updt_dttm
 from source 
+where PREFIX='RPI'
 )
 select * from transformed
