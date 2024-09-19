@@ -27,3 +27,15 @@ sources:
       tags: ["one_time_load","ingestion"]
     - name: edw_user_dim
       tags: ["one_time_load","ingestion"]
+
+
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapindsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_sku_recom_flag
+      tags: ["j_in_sku_recom_etl_framework","ingestion"]
