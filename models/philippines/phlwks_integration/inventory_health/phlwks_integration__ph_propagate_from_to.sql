@@ -71,8 +71,8 @@ from (
                             sls_grp_desc,
                             month
                         from wks_ph_base_detail
-                        where (sap_parent_customer_key, month) not in (
-                                select sap_parent_customer_key,
+                        where (nvl(sap_parent_customer_key,'#'), month) not in (
+                                select nvl(sap_parent_customer_key,'#'),
                                     month
                                 from ph_propagate_to
                                 where propagate_flag = 'Y'

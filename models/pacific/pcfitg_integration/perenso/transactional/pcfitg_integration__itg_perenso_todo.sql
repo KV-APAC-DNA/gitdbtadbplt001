@@ -17,7 +17,8 @@ select
         ans_type::number(10,0) as ans_type,
         cascadeon_answermode::number(10,0) as cascadeon_answermode,
         cascade_todo_key::number(10,0) as cascade_todo_key,
-        cascade_next_todo_key::number(10,0) as cascade_next_todo_key
+        cascade_next_todo_key::number(10,0) as cascade_next_todo_key,
+        file_name::varchar(255) as file_name
 from sdl_perenso_todo
 )
 select * from final

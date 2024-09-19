@@ -19,6 +19,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
           - test_duplicate:
               group_by_columns: ["code"]
               select_columns: ["code"]
@@ -26,6 +27,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
 
       - name: sdl_mds_th_distributor_list
         tags: ["th_non_tesco","ingestion"]
@@ -37,6 +39,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
           - test_duplicate:
               group_by_columns: ["code"]
               select_columns: ["code", "name"]
@@ -44,6 +47,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
 
       - name: sdl_mds_th_distributor_cn_reason
         tags: ["th_non_tesco","ingestion"]
@@ -55,6 +59,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
           - test_duplicate:
               group_by_columns: ["code"]
               select_columns: ["code","name","cn_en_desc"]
@@ -62,6 +67,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
       - name: sdl_mds_th_ref_distributor_customer_group
         tags: ["th_non_tesco","ingestion"]
         tests:
@@ -72,6 +78,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
           - test_duplicate:
               group_by_columns: ["code"]
               select_columns: ["code","name"]
@@ -79,3 +86,4 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error

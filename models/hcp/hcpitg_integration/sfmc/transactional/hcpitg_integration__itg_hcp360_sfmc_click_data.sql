@@ -12,14 +12,25 @@
                         AND sdl.SUBSCRIBER_KEY = itg.SUBSCRIBER_KEY
                         AND sdl.EVENT_DATE = itg.EVENT_DATE
                         AND sdl.URL = itg.URL
-                        AND NVL(sdl.LINK_NAME, 'NA') = NVL(itg.LINK_NAME, 'NA');
+                        AND NVL(sdl.LINK_NAME, 'NA') = NVL(itg.LINK_NAME, 'NA')
+                        AND sdl.file_name not in (
+                        select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_sfmc_click_data__null_test') }}
+                        union all
+                        select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_sfmc_click_data__duplicate_test') }}
+                    );
                     {% endif %}"
     )
 }}
 
 with sdl_hcp360_in_sfmc_click_data as 
 (
-        select * from {{ source('hcpsdl_raw', 'sdl_hcp360_in_sfmc_click_data') }}
+        select *, dense_rank() over(partition by JOB_ID, BATCH_ID,SUBSCRIBER_ID,SUBSCRIBER_KEY,EVENT_DATE,URL,NVL(LINK_NAME, 'NA') order by file_name desc) as rnk
+        from {{ source('hcpsdl_raw', 'sdl_hcp360_in_sfmc_click_data') }}
+        where file_name not in (
+            select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_sfmc_click_data__null_test') }}
+            union all
+            select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_sfmc_click_data__duplicate_test') }}
+        ) qualify rnk =1
 ),
 final as
 (
@@ -45,5 +56,6 @@ select
 	email_name::varchar(100) as email_name,
 	email_subject::varchar(200) as email_subject,
 	crt_dttm::timestamp_ntz(9) as crt_dttm,
-	updt_dttm::timestamp_ntz(9) as updt_dttm
+	updt_dttm::timestamp_ntz(9) as updt_dttm,
+    file_name::varchar(255) as file_name
 from final

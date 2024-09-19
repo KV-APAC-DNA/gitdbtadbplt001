@@ -7,14 +7,27 @@
         delete from {{this}} where (outlet_id,merchandiser_id,input_date,upper(franchise),
         coalesce(photo_link,'na')) in (select distinct trim(outlet_id),trim(merchandiser_id),
         cast(trim(input_date) as date),upper(trim(franchise)),coalesce(trim(photo_link),'na')
-         from {{ source('idnsdl_raw', 'sdl_id_ps_promotion_competitor') }});
+        from {{ source('idnsdl_raw', 'sdl_id_ps_promotion_competitor') }}
+        where file_name not in (
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_ps_promotion_competitor__null_test') }}
+            union all
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_ps_promotion_competitor__duplicate_test') }}
+        )
+         );
          {% endif %}"
     )
 }}
 
 with source as
 (
-    select * from {{ source('idnsdl_raw', 'sdl_id_ps_promotion_competitor') }}
+    select *, dense_rank() over(partition by trim(outlet_id),trim(merchandiser_id),
+        cast(trim(input_date) as date),upper(trim(franchise)),coalesce(trim(photo_link),'na') order by file_name desc) as rnk 
+    from {{ source('idnsdl_raw', 'sdl_id_ps_promotion_competitor') }}
+    where file_name not in (
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_ps_promotion_competitor__null_test') }}
+            union all
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_ps_promotion_competitor__duplicate_test') }}
+    ) qualify rnk =1
 ),
 final as
 (
