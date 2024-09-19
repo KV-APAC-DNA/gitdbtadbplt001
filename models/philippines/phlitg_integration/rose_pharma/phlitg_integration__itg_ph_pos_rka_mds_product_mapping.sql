@@ -1,7 +1,7 @@
 
 with source as
 (
-    select * from {{ source('phlsdl_raw', 'sdl_rosepharmacy_product_mapping') }}
+    select * from {{ source('phlsdl_raw', 'sdl_mds_ph_pos_product') }}
 ),
 transformed as 
 (
