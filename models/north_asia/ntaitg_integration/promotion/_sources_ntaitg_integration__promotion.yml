@@ -19,6 +19,7 @@ sources:
             config:
               store_failures: true
               schema: ntawks_integration
+              severity: error
     - name: sdl_mds_kr_tp_target
       tags: ["j_kr_tp_tracker_data_ingestion", "ingestion"]
       tests:
@@ -29,6 +30,7 @@ sources:
             config:
               store_failures: true
               schema: ntawks_integration
+              severity: error
         - test_duplicate:
             select_columns: ["year_code", "channel_code", "store_type_code", "sales_group_code", "target_type_code", "brand_name_code", "target_category_name"]
             group_by_columns: ["year_code", "channel_code", "store_type_code", "sales_group_code", "target_type_code", "brand_name_code", "target_category_name"]
@@ -36,6 +38,7 @@ sources:
             config:
               store_failures: true
               schema: ntawks_integration
+              severity: error
         - test_format:
             select_columns: ["year_code", "channel_code", "store_type_code", "sales_group_code", "target_type_code", "brand_name_code", "target_category_name"]
             where_clause: "not regexp_like (trim(year_code),'(20)[0-9]{2}')"
@@ -44,6 +47,7 @@ sources:
             config:
               store_failures: true
               schema: ntawks_integration
+              severity: error
         - test_lookup:
             select_columns: ["year_code", "channel_code", "store_type_code", "sales_group_code", "target_type_code", "brand_name_code", "target_category_name"]
             column: "upper(trim(sales_group_code))"
@@ -56,6 +60,7 @@ sources:
             config:
               store_failures: true
               schema: ntawks_integration
+              severity: error
     - name: sdl_na_trade_promotion_plan
       tags: [""]
     - name: sdl_na_trade_promotion_actual
