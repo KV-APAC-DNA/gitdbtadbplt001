@@ -5,7 +5,7 @@
 }}
 
 with edw_demand_forecast_snapshot_1 as(
-    select * from {{ select * from  ref('pcfedw_integration__edw_demand_forecast_snapshot_temp')  where }}
+    select * from {{   ref('pcfedw_integration__edw_demand_forecast_snapshot_temp')  }}
 ),
 edw_demand_forecast_snapshot as 
 (
