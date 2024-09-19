@@ -117,7 +117,7 @@ union1 as(
     where
     --edfs.pac_subsource_type <> 'SAPBW_APO_FORECAST'
     --and
-     to_char(snap_shot_dt, 'YYYYMM') in (202404,202405)
+     to_char(snap_shot_dt, 'YYYYMM') in (202404)
     and edfs.cust_no = ltrim(vcd.cust_no, '0')
     and edfs.matl_no = ltrim(vmd.matl_id, '0')
     and (
