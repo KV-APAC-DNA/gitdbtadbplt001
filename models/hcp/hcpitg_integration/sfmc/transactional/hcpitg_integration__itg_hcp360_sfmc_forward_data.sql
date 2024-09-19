@@ -14,7 +14,9 @@
     )
 }}
 with sdl_hcp360_in_sfmc_forward_data as (
-    select * from {{ source('hcpsdl_raw','sdl_hcp360_in_sfmc_forward_data') }}
+    select *, dense_rank() over(partition by job_id,batch_id,subscriber_id,subscriber_key,event_date,email_id order by file_name desc) as rnk 
+    from {{ source('hcpsdl_raw','sdl_hcp360_in_sfmc_forward_data') }}
+    qualify rnk =1
 ),
 final as 
 (

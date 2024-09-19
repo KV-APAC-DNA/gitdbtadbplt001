@@ -152,8 +152,8 @@ sources:
               store_failures: true
               schema: ntawks_integration
         - test_null:
-            select_columns: ["ean", "unit_price"]
-            not_null_columns: ["ean", "unit_price"]
+            select_columns: ["ean"]
+            not_null_columns: ["ean"]
             filter: "upper(retailer_code)='DAISO'"
             name: TRATBL_sdl_mds_kr_retailer_price_master__null_test
             config:

@@ -12,7 +12,9 @@
 
 with
     sdl_extracted_table as (
-        select * from {{source('jpdclsdl_raw','extraction_table')}}
+        select *, dense_rank() over(partition by itemid order by file_name desc) as rnk
+        from {{source('jpdclsdl_raw','extraction_table')}}
+        qualify rnk =1
     ),
 
      final as (

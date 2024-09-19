@@ -19,12 +19,13 @@
 }}
 with sdl_distributor_ivy_outlet_master as 
 (
-    select * from {{source ('idnsdl_raw', 'sdl_distributor_ivy_outlet_master')}}
+    select *, dense_rank() over(partition by upper(trim(distributorcode)), upper(trim(outletcode)) order by file_name desc) as rnk 
+    from {{source ('idnsdl_raw', 'sdl_distributor_ivy_outlet_master')}}
     where file_name not in (
             select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_outlet_master__null_test') }}
             union all
             select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_outlet_master__duplicate_test') }}
-    )
+    ) qualify rnk =1
 ),
 edw_distributor_customer_dim as 
 (
