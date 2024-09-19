@@ -2,17 +2,24 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= "
+        pre_hook= "{% if is_incremental()%}
         {% if var('crm_job_to_execute') == 'th_crm_files' %}
-        delete from {{this}} where cntry_cd='TH' 
-        and crtd_dttm < (select min(crtd_dttm) 
-                        from {{ source('thasdl_raw', 'sdl_th_sfmc_consumer_master_additional') }} 
-                        );
+        delete from {{this}} where cntry_cd='TH' and crtd_dttm < (select min(crtd_dttm) from {{ source('thasdl_raw', 'sdl_th_sfmc_consumer_master_additional') }}
+        where file_name not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_consumer_master_additional__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_consumer_master_additional__duplicate_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_consumer_master_additional__lookup_test') }}
+            ));
         {% elif var('crm_job_to_execute') == 'ph_crm_files' %}
-        delete from {{this}} where cntry_cd='PH' 
-        and crtd_dttm < (select min(crtd_dttm) 
-                        from {{ source('phlsdl_raw', 'sdl_ph_sfmc_consumer_master') }}
-                    );
+        delete from {{this}} where cntry_cd='PH' and crtd_dttm < (select min(crtd_dttm) from {{ source('phlsdl_raw', 'sdl_ph_sfmc_consumer_master') }}
+            where file_name not in (
+            select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_sfmc_consumer_master__test_null__ff')}}
+            union all
+            select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_sfmc_consumer_master__test_duplicate__ff')}}
+        ));
+        {% endif %}
         {% endif %}
         "
     )
@@ -20,12 +27,23 @@
 
 with source as
 (
-    select *, dense_rank() over(partition by null order by file_name desc) as rnk 
-    from {{ source('thasdl_raw', 'sdl_th_sfmc_consumer_master_additional') }}
+    select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('thasdl_raw', 'sdl_th_sfmc_consumer_master_additional') }}
+    where file_name not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_consumer_master_additional__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_consumer_master_additional__duplicate_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_consumer_master_additional__lookup_test') }}
+            )
 ),
 source_ph as
 (
     select *,dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('phlsdl_raw', 'sdl_ph_sfmc_consumer_master') }}
+    where file_name not in (
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_sfmc_consumer_master__test_null__ff')}}
+        union all
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_sfmc_consumer_master__test_duplicate__ff')}}
+    )
 )
 {% if var("crm_job_to_execute") == 'th_crm_files' %}
 ,

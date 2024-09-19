@@ -7,6 +7,11 @@
 
 with source as (
     select * from {{ source('ntasdl_raw', 'sdl_hk_ims_wingkeung_sel_out') }}
+    where file_name not in (
+        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_hk_ims_wingkeung_sel_out__null_test') }}
+        union all
+        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_hk_ims_wingkeung_sel_out__test_date_format_odd_eve_leap') }}
+    )
 ),
 final as (
     select calendar_sid,
@@ -39,7 +44,7 @@ final as (
         currency,
         crt_dttm,
         updt_dttm as upd_dttm,
-        null::varchar(100) as filename,
+        file_name::varchar(255) as filename,
         null::varchar(14) as run_id
     from source
 )
