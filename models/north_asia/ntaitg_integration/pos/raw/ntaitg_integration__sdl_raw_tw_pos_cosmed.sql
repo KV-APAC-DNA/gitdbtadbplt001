@@ -7,6 +7,9 @@
 
 with source as(
     select * from {{ source('ntasdl_raw', 'sdl_tw_pos_cosmed') }}
+     where file_name not in (
+        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_pos_cosmed__null_test') }}
+    )
 ),
 final as
 (
@@ -27,7 +30,7 @@ final as
         wk4_qty as wk4_qty,
         crt_dttm as crt_dttm,
         upd_dttm as upd_dttm,
-        null as filename,
+        filename,
         null as run_id
     from source
     {% if is_incremental() %}

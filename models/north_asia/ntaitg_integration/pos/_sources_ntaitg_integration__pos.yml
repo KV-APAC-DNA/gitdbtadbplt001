@@ -82,6 +82,7 @@ sources:
                 config:
                   store_failures: true
                   schema: ntawks_integration
+                  severity: error
             - test_null:
                 not_null_columns: ["code","seqid","src_sys_cd"]
                 select_columns: ["code","seqid","src_sys_cd","cust_str_cd"]
@@ -89,6 +90,7 @@ sources:
                 config:
                   store_failures: true
                   schema: ntawks_integration
+                  severity: error
       - name: sdl_mds_tw_pos_promotional_price_ean_map
         tags: ["na_mds_sdl_itg_load","ingestion"]
         tests:
@@ -99,6 +101,7 @@ sources:
                 config:
                   store_failures: true
                   schema: ntawks_integration
+                  severity: error
             - test_null:
                 not_null_columns: ["code","cust_prod_cd","barcode","customer","promotion_start_date","promotion_end_date"]
                 select_columns: ["code","cust_prod_cd","barcode","customer","promotion_start_date","promotion_end_date"]
@@ -106,6 +109,7 @@ sources:
                 config:
                   store_failures: true
                   schema: ntawks_integration
+                  severity: error
 
       - name: sdl_mds_hk_pos_product_mapping
         tags: ["na_mds_sdl_itg_load","transformation"]
