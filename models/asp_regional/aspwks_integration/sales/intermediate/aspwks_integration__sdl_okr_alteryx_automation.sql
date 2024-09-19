@@ -1,10 +1,5 @@
 with wks_okr_alteryx_automation as(
     select * from {{ source('aspsdl_raw', 'sdl_okr_alteryx_automation') }}
-    where filename not in (
-        select distinct file_name from {{source('aspwks_integration','TRATBL_sdl_okr_alteryx_automation____null_test')}}
-        union all
-        select distinct file_name from {{source('aspwks_integration','TRATBL_sdl_okr_alteryx_automation__duplicate_test')}}
-    )
 ),
 edw_okr_brand_map as(
     select * from {{ source('aspedw_integration', 'edw_okr_brand_map') }}

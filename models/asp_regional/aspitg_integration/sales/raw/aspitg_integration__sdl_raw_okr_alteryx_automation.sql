@@ -6,11 +6,6 @@ with sdl_okr_alteryx_automation as(
     coalesce (quarter , 9999) ,  coalesce (upper(target_type) , 'NA') ) 
      order by filename desc) rn 
     from {{ source('aspsdl_raw', 'sdl_okr_alteryx_automation') }}
-    where filename not in (
-        select distinct file_name from {{source('aspwks_integration','TRATBL_sdl_okr_alteryx_automation____null_test')}}
-        union all
-        select distinct file_name from {{source('aspwks_integration','TRATBL_sdl_okr_alteryx_automation__duplicate_test')}}
-    )
     qualify rn=1
 ),
 final as(

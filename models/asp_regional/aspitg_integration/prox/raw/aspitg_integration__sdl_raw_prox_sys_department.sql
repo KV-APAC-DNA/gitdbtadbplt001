@@ -7,9 +7,6 @@
 with source as
 (
     select * from {{source('aspsdl_raw', 'sdl_prox_sys_department')}}
-    where filename not in (
-        select distinct file_name from {{source('aspwks_integration','TRATBL_sdl_prox_sys_department__null_test')}}
-    )
 ),
 final as
  (
