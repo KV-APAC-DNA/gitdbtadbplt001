@@ -1,12 +1,12 @@
 
 with source as
 (
-    select * from {{ source('phlsdl_raw', 'sdl_mds_ph_pos_product') }}
+    select * from {{ source('phlsdl_raw', 'sdl_mds_ph_pos_product_temp') }}
 ),
 transformed as 
 (
     select 
-effectivesalescycle||'-'||acctcode||'-'||rka_skucode as code,
+code as code,
 salescycle as mnth_id,
 rka_skucode  as item_cd,
 null as bar_cd,
