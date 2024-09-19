@@ -6,13 +6,15 @@
         unique_key= ["create_dt"],
         pre_hook = " {% if is_incremental() %}
         delete from {{this}} where CREATE_DT IN (SELECT DISTINCT(trim((DATEADD(DAY, -1, TO_DATE(SUBSTRING(CDL_DTTM,1,10),'YYYY-MM-DD')))))
- from {{ source('idnsdl_raw', 'sdl_distributor_ivy_inventory') }});
+        from {{ source('idnsdl_raw', 'sdl_distributor_ivy_inventory') }});
         {% endif %}"
     )
 }}
 with source as
 (
-    select * from {{source('idnsdl_raw','sdl_distributor_ivy_inventory')}}
+    select *, dense_rank() over(partition by trim((DATEADD(DAY, -1, TO_DATE(SUBSTRING(CDL_DTTM,1,10),'YYYY-MM-DD')))) order by file_name desc) as rnk 
+    from {{source('idnsdl_raw','sdl_distributor_ivy_inventory')}}
+    qualify rnk =1
 ),
 final as 
 (
@@ -25,7 +27,8 @@ final as
         uom::varchar(15) as uom,
         qty::number(10,0) as qty,
         trim((DATEADD(DAY, -1, TO_DATE(SUBSTRING(CDL_DTTM,1,10),'YYYY-MM-DD'))))::varchar(50) as create_dt,
-        run_id::number(14,0) as run_id  
+        run_id::number(14,0) as run_id,
+        file_name::varchar(255) as file_name
     from source
 )
 

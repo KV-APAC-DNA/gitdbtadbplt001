@@ -15,8 +15,16 @@
                     {{ col }} as file_name
                 {% if not loop.last %},{% endif %}
                    {% break %}
+                {% endif %}
+                {% if col not in file_name_columns and loop.last %}
+                    'Filename N/A' as file_name
+                    {% if not loop.last %},{% endif %}
+                   {% break %}
                 {% endif %}   
             {%- endfor %}
+            {% if failure_reason!=None %}
+                {{failure_reason}} AS Reason,
+            {% endif %}
     {%- for item in select_columns %}
         {% if item | lower not in  file_name_columns %}
                 trim({{item}}) as {{item}}
@@ -24,9 +32,6 @@
             {% break %}
         {%- endif -%}
     {% endfor %}
-{% endif %}
-{% if failure_reason!=None %}
-      {{failure_reason}} AS Reason
 {% endif %}
 {% if date_column!=None %}
 FROM {{model_nm}} AS A

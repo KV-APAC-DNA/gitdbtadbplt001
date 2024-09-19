@@ -22,6 +22,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
           - test_duplicate:
               group_by_columns: ["code"]
               select_columns: ["code","name2"]
@@ -29,6 +30,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
 
     - name: sdl_mds_th_product_master
       tags: ["th_non_tesco","ingestion"]
@@ -40,6 +42,7 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
+              severity: error
         - test_duplicate:
             group_by_columns: ["code"]
             select_columns: ["code", "name2","barcode"]
@@ -48,6 +51,7 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
+              severity: error
         - test_duplicate:
             group_by_columns: ["code","barcode"]
             select_columns: ["code", "name2","barcode"]
@@ -55,6 +59,7 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
+              severity: error
     - name: sdl_mds_th_distributor_msl
       tags: ["th_non_tesco","ingestion"]
       tests:
@@ -65,6 +70,7 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
+              severity: error
 
     - name: sdl_mds_th_npi
       tags: ["th_non_tesco","ingestion"]
@@ -76,6 +82,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
           - test_duplicate:
               group_by_columns: ["code"]
               select_columns: ["code","name"]
@@ -83,6 +90,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
     - name: sdl_mds_th_cbd_item_master
       tags: ["th_non_tesco","ingestion"]
     - name: sdl_mds_th_distributor_product_group
@@ -95,4 +103,5 @@ sources:
           config:
             store_failures: true
             schema: thawks_integration
+            severity: error
     

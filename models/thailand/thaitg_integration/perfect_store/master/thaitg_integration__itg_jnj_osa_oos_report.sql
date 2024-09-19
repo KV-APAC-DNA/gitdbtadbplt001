@@ -14,12 +14,13 @@
 }}
 
 with source as(
-    select * from {{ source('thasdl_raw', 'sdl_jnj_osa_oos_report') }}
+    select *, dense_rank() over(partition by null order by file_name desc) as rnk 
+    from {{ source('thasdl_raw', 'sdl_jnj_osa_oos_report') }}
     where file_name not in (
                     select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_jnj_osa_oos_report__null_test') }}
                     union all
                     select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_jnj_osa_oos_report__test_date_format_odd_eve') }}
-                    )
+                    ) qualify rnk =1
 ),
 final as(
     select

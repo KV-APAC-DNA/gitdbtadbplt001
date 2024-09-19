@@ -3,7 +3,8 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['start_date'],
-        pre_hook= "delete from {{this}} where (start_date) in (select distinct to_date(to_varchar(to_date(start_date,'dd/mm/yyyy'),'yyyy-mm-dd'),'yyyy-mm-dd') as start_date from {{ source('pcfsdl_raw', 'sdl_perenso_prod_chk_distribution') }});"
+        pre_hook= "{%if is_incremental()%}
+        delete from {{this}} where (start_date) in (select distinct to_date(to_varchar(to_date(start_date,'dd/mm/yyyy'),'yyyy-mm-dd'),'yyyy-mm-dd') as start_date from {{ source('pcfsdl_raw', 'sdl_perenso_prod_chk_distribution') }});{%endif%}"
     )
 }}
 with source as 
@@ -20,7 +21,8 @@ final as
 	in_distribution::varchar(5) as in_distribution,
 	run_id::number(14,0) as run_id,
 	current_timestamp()::timestamp_ntz(9) as create_dt,
-	current_timestamp()::timestamp_ntz(9) as update_dt 
+	current_timestamp()::timestamp_ntz(9) as update_dt,
+    file_name::varchar(255) as file_name
     from source
 )
 select * from final
