@@ -40,16 +40,8 @@ tests:
   DNA_CORE_ASP:
     philippines:
       +severity: warn
-      phlitg_integration:
-        sfmc:
-          +severity: error
     thailand:
       +severity: warn
-      thaitg_integration:
-        pop6: 
-          +severity: error
-        sfmc:
-          +severity: error
     malaysia:
       +severity: warn
     vietnam:
@@ -58,21 +50,19 @@ tests:
       +severity: warn
     singapore:
       +severity: warn
-      sgpitg_integration:
-        pop6: 
-          +severity: error
+    north_asia:
+      +severity: warn
     hcp:
       +severity: warn
     indonesia:
       +severity: warn
     japan:
       +severity: warn
-      jpnitg_integration:
-        pop6: 
-          +severity: error
     japan_dcl:
       +severity: warn    
     pacific:
+      +severity: warn
+    asp_regional:
       +severity: warn
 
 models:
