@@ -52,7 +52,7 @@ Direct_ad_return_14d ,
 Indirect_Ad_Return_14d ,
 Campaign_Start_Date ,
 Campaign_end_Date  ,
-null as file_name,
+file_name,
 current_timestamp as crtd_dttm
     from source
     {% if is_incremental() %}
