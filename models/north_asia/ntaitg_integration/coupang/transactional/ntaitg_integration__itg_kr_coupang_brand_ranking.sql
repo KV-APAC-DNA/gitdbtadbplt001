@@ -2,7 +2,8 @@
     config(
         materialized="incremental",
         incremental_strategy = "append",
-        pre_hook="{% if is_incremental() %}
+        pre_hook=
+        "{% if is_incremental() %}
         delete from {{this}} where trim(category_depth1)||trim(category_depth2)
         ||trim(category_depth3)||trim(ranking)||trim(brand)||trim(yearmo)
         ||trim(data_granularity) in (select distinct trim(category_depth1)

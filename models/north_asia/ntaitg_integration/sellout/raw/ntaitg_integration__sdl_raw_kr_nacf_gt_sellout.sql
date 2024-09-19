@@ -42,7 +42,8 @@ SELECT dstr_nm,
   supply_amount,
   purchase_tax,
   purchase_amount,
-  current_timestamp() as crtd_dttm
+  current_timestamp() as crtd_dttm,
+  file_name::varchar(255) as file_name
 FROM sdl_kr_nacf_gt_sellout
 )
 select * from final 

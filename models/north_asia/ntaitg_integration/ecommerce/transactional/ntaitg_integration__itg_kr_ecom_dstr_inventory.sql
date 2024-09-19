@@ -12,7 +12,7 @@
         select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_ecom_dstr_sellout_stock__lookup_test_sap') }}
         union all
         select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_ecom_dstr_sellout_stock__lookup_test_dstr_cd') }}
-     ) where upper(data_src) = 'INVENTORY');
+     ) and upper(data_src) = 'INVENTORY');
         {% endif %}"
     )
 }}

@@ -24,7 +24,8 @@ SELECT dstr_nm,
   unit_price,
   total,
   cust_cd,
-  current_timestamp() as crtd_dttm
+  current_timestamp() as crtd_dttm,
+file_name::varchar(255) as file_name
 FROM sdl_kr_du_bae_ro_yu_tong_gt_sellout
 )
 select * from final 

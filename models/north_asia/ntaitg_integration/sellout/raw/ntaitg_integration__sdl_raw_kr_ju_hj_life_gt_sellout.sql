@@ -22,7 +22,8 @@ SELECT dstr_nm,
   total_sales,
   see,
   cust_cd,
-  current_timestamp() as crtd_dttm
+  current_timestamp() as crtd_dttm,
+  file_name::varchar(255) as file_name
 FROM sdl_kr_ju_hj_life_gt_sellout
 )
 select * from final 

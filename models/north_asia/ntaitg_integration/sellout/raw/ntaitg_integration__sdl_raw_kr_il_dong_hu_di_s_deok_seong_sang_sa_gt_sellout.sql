@@ -41,7 +41,8 @@ SELECT dstr_nm,
   box_danga,
   unit_price,
   cust_cd,
-  current_timestamp() as crtd_dttm
+  current_timestamp() as crtd_dttm,
+  file_name::varchar(255) as file_name
 FROM sdl_kr_il_dong_hu_di_s_deok_seong_sang_sa_gt_sellout
 )
 select * from final 
