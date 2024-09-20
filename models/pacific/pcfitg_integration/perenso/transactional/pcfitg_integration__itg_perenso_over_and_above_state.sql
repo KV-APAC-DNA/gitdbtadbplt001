@@ -3,7 +3,8 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['store_chk_hdr_key','over_and_above_key'],
-        pre_hook= "delete from {{this}} where (store_chk_hdr_key,over_and_above_key) in (select distinct store_chk_hdr_key,over_and_above_key from {{ source('pcfsdl_raw', 'sdl_perenso_over_and_above_state') }});"
+        pre_hook= "{%if is_incremental()%}
+        delete from {{this}} where (store_chk_hdr_key,over_and_above_key) in (select distinct store_chk_hdr_key,over_and_above_key from {{ source('pcfsdl_raw', 'sdl_perenso_over_and_above_state') }});{%endif%}"
     )
 }}
 with source as 
@@ -20,7 +21,8 @@ final as
 	store_chk_hdr_key::number(10,0) as store_chk_hdr_key,
 	run_id::number(14,0) as run_id,
 	current_timestamp()::timestamp_ntz(9) as create_dt,
-	current_timestamp()::timestamp_ntz(9) as update_dt 
+	current_timestamp()::timestamp_ntz(9) as update_dt ,
+    file_name::varchar(255) as file_name
     from source
 )
 select * from final

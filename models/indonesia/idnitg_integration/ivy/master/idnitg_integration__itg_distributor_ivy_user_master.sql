@@ -8,7 +8,9 @@
 }}
 with source as 
 (
-    select * from {{ source('idnsdl_raw', 'sdl_distributor_ivy_user_master') }}
+    select *, dense_rank() over(partition by dis_code, sr_code order by file_name desc) as rnk 
+    from {{ source('idnsdl_raw', 'sdl_distributor_ivy_user_master') }}
+    qualify rnk =1
 ),
 final as
 ( select * from 
@@ -40,7 +42,8 @@ final as
 	sr_name::varchar(150) as sr_name,
 	cdl_dttm::varchar(200) as cdl_dttm,
 	run_id::number(14,0) as run_id,
-    row_number() over (partition by sr_code, dis_code order by null) rn
+    row_number() over (partition by sr_code, dis_code order by null) rn,
+	file_name::varchar(255) as file_name
     from source)
     where rn=1
 )

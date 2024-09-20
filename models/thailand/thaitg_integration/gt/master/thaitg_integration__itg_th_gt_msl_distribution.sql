@@ -26,7 +26,8 @@
 
 
 with source as(
-    select * from {{ source('thasdl_raw','sdl_th_gt_msl_distribution') }}
+    select *, dense_rank() over(partition by substring(filename,6,8) order by filename desc) as rnk 
+    from {{ source('thasdl_raw','sdl_th_gt_msl_distribution') }}
     where filename not in (
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__null_test') }}
             union all
@@ -41,7 +42,7 @@ with source as(
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__test_format_null_flag') }}
 			union all
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__test_multiple_column') }}
-    )
+    ) qualify rnk =1
             
 
 ),
