@@ -5,3 +5,51 @@ models:
     config:
       alias: dm_integration_daily_custom
       tags: ["japan_views","transformation"]
+  - name: jpnedw_access__chn_m
+    config:
+      alias: chn_m
+      tags: ["japan_views","transformation"]
+  - name: jpnedw_access__cstm_m
+    config:
+      alias: cstm_m
+      tags: ["japan_views","transformation"]
+  - name: jpnedw_access__cstm_rlt_m
+    config:
+      alias: cstm_rlt_m
+      tags: ["japan_views","transformation"]
+  - name: jpnedw_access__edw_vw_pop6_analysis_active_data_mod_jp
+    config:
+      alias: edw_vw_pop6_analysis_active_data_mod_jp
+      tags: ["japan_views","transformation"]
+  - name: jpnedw_access__frnch_m
+    config:
+      alias: frnch_m
+      tags: ["japan_views","transformation"]
+  - name: jpnedw_access__item_m
+    config:
+      alias: item_m
+      tags: ["japan_views","transformation"]
+  - name: jpnedw_access__store_m
+    config:
+      alias: store_m
+      tags: ["japan_views","transformation"]
+  - name: jpnedw_access__vw_copa_act_acc
+    config:
+      alias: vw_copa_act_acc
+      tags: ["japan_views","transformation"]
+  - name: jpnedw_access__vw_copa_plan_bp
+    config:
+      alias: vw_copa_plan_bp
+      tags: ["japan_views","transformation"]
+  - name: jpnedw_access__vw_jan_change
+    config:
+      alias: vw_jan_change
+      tags: ["japan_views","transformation"]
+  - name: jpnedw_access__vw_m_item_frnch_cdd
+    config:
+      alias: vw_m_item_frnch_cdd
+      tags: ["japan_views","transformation"]
+  - name: jpnedw_access__vw_pos_dly
+    config:
+      alias: vw_pos_dly
+      tags: ["japan_views","transformation"]

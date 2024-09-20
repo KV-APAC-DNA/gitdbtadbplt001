@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: aspwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: aspwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: wks_trended_sku_fact
+      - name: wks_t_market_mirror_sku_nts_vs_share_l2_value_units

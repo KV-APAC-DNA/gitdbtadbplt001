@@ -1,0 +1,5 @@
+models:
+  - name: indwks_integration__wks_india_ecom
+    config: 
+      alias: wks_india_ecom
+      tags: ["j_rg_ecomm_oneview_etl_framework","transformation"]

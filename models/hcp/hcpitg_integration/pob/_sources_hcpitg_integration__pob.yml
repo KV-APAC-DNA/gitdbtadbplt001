@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_hcp360_in_ventasys_pob_data
-      tags: ["in_ventasys_load","ingestion"]
+      tags: ["in_ventasys_pobdata","ingestion"]
       tests:
         - test_null:
             not_null_columns: ["team_name","v_pobid","v_empid","v_custid_rtl","dcr_dt","pob_product"]

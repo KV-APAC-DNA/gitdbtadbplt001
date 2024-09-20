@@ -1,0 +1,62 @@
+{{
+    config
+    (
+        materialized="incremental",
+        incremental_strategy= "append",
+        pre_hook = "{% if is_incremental() %}
+        delete from {{this}} y  USING aspwks_integration.wks_itg_pca_trans x
+WHERE y.request_number=x.request_number
+AND y.data_packet=x.data_packet
+AND y.data_record=x.data_record
+AND x.CHNG_FLG='U'
+        {% endif %}"
+    )
+}}
+with wks_itg_pca_trans as(
+    select * from aspwks_integration.wks_itg_pca_trans
+),
+final as(
+SELECT 
+request_number::varchar(100) as request_number,
+data_packet::varchar(50) as data_packet,
+data_record::varchar(100) as data_record,
+fiscper::number(38,0) as fisc_yr_per,
+fiscvarnt::varchar(2) as fisc_yr_vrnt,
+fiscyear::number(38,0) as fisc_yr,
+fiscper3::number(38,0) as pstng_per,
+currency::varchar(5) as crncy,
+unit::varchar(4) as uom,
+account::varchar(10) as acct_num,
+chrt_accts::varchar(4) as chrt_of_acct,
+comp_code::varchar(4) as co_cd,
+co_area::varchar(4) as cntl_area,
+curtype::varchar(2) as crncy_type,
+part_prctr::varchar(10) as ptnr_prft_ctr,
+profit_ctr::varchar(10) as prft_ctr,
+version::varchar(3) as vers,
+deprarea::number(38,0) as depr_area,
+orig_pca::number(38,0) as orig_obj_type,
+pcompany::varchar(6) as trad_ptnr,
+pcomp_code::varchar(4) as ptnr_co_cd,
+porig_pca::number(38,0) as partorobtype_pca,
+scope::varchar(2) as obj_cls,
+move_type::varchar(3) as mvmt_type,
+balance::number(20,2) as cum_bal,
+credit::number(20,2) as tot_cr_postgs,
+debit::number(20,2) as tot_dr_postgs,
+quantity::number(20,3) as qty,
+zmovper::number(20,2) as mvmt_for_per,
+valuation::number(38,0) as valut_view,
+version_ra::varchar(3) as ra_vers,
+vtype::number(38,0) as val_type,
+func_area::varchar(16) as func_area,
+pfunc_area::varchar(16) as ptnr_f_area,
+plant::varchar(4) as plnt,
+rep_matl::varchar(18) as rep_matl,
+zpc_activ::varchar(4) as pca_actv,
+CASE WHEN CHNG_FLG = 'I' THEN convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) ELSE TGT_CRT_DTTM END  AS CRT_DTTM ,
+convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as updt_dttm
+FROM wks_itg_pca_trans
+)
+select * from final
+

@@ -1,0 +1,24 @@
+version: 2
+
+sources:
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: aspsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_customerpl_stdcost_2022
+        tags: ["j_ap_dna_datamart_refresh_etl_framework_cogs_automation","ingestion"]
+
+  - name: aspitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: aspitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_custgp_cogs_fg_control
+        tags: ["j_ap_dna_datamart_refresh_etl_framework_cogs_automation","ingestion"]

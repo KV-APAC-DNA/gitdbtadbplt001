@@ -3,7 +3,8 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['transaction_date'],
-        pre_hook= "delete from {{this}} where transaction_date >= (select min(time_period) from {{ source('pcfsdl_raw', 'sdl_competitive_banner_group') }});"
+        pre_hook= "{%if is_incremental()%}
+        delete from {{this}} where transaction_date >= (select min(time_period) from {{ source('pcfsdl_raw', 'sdl_competitive_banner_group') }});{%endif%}"
     )
 }}
 
@@ -25,7 +26,7 @@ final as(
         'Pacific'::varchar(10) AS country,
         'AUD'::varchar(10) AS currency ,
         current_timestamp()::timestamp_ntz(9) AS crt_dttm,
-        NULL::varchar(250) AS source_file_name
+        file_name::varchar(250) AS source_file_name
     from source 
 )
 select * from final

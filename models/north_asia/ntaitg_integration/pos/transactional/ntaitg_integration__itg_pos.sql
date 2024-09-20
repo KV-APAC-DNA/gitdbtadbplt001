@@ -35,7 +35,7 @@
                         select distinct pos_dt,ean_num,src_sys_cd,ctry_cd,str_cd from ( select * from {{ ref('ntawks_integration__wks_itg_pos_emart') }} ) where chng_flg = 'U'
                     );
                     {% elif var('pos_job_to_execute') == 'hk_pos' %}
-                    delete from {{this}} itg using {{ source('ntasdl_raw', 'sdl_hk_pos_scorecard_mannings') }} sdl where to_date (sdl.date::character varying::text,'dd/mm/yyyy'::character varying::text) = itg.pos_dt  AND  itg.src_sys_cd = 'Mannings' AND  itg.ctry_cd = 'HK';
+                    delete from {{this}} itg using {{ ref('ntawks_integration__wks_sdl_hk_pos_scorecard_mannings') }} sdl where to_date (sdl.date::character varying::text,'dd/mm/yyyy'::character varying::text) = itg.pos_dt  AND  itg.src_sys_cd = 'Mannings' AND  itg.ctry_cd = 'HK';
                     {% endif %}
                     {% endif %}   
                     "
@@ -79,7 +79,7 @@ wks_itg_pos_emart_ecvan_ssg as (
       select * from {{ ref('ntawks_integration__wks_itg_pos_emart_ecvan_ssg') }}
 ),
 sdl_hk_pos_scorecard_mannings as (
-    select * from {{ source('ntasdl_raw', 'sdl_hk_pos_scorecard_mannings') }}
+    select * from {{ ref('ntawks_integration__wks_sdl_hk_pos_scorecard_mannings') }}
 ),
 wks_itg_pos_emart_evydy as (
       select * from {{ ref('ntawks_integration__wks_itg_pos_emart_evydy') }}

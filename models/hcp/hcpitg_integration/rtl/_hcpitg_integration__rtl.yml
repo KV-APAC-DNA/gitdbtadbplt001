@@ -4,25 +4,25 @@ models:
   - name: hcpitg_integration__sdl_hcp360_in_ventasys_hcprtl_raw
     config: 
       alias: sdl_hcp360_in_ventasys_hcprtl_raw
-      tags: ["in_ventasys_load","ingestion"]
+      tags: ["in_ventasys_hcprtl","ingestion"]
   - name: hcpitg_integration__itg_hcp360_in_ventasys_hcprtl
     config: 
       alias: itg_hcp360_in_ventasys_hcprtl
-      tags: ["in_ventasys_load","ingestion"]
+      tags: ["in_ventasys_hcprtl","ingestion"]
 
   - name: hcpitg_integration__sdl_hcp360_in_ventasys_rxrtl_raw
     config: 
       alias: sdl_hcp360_in_ventasys_rxrtl_raw
-      tags: ["in_ventasys_load","ingestion"]
+      tags: ["in_ventasys_rxrtl","ingestion"]
   - name: hcpitg_integration__itg_hcp360_in_ventasys_rxrtl
     config: 
       alias: itg_hcp360_in_ventasys_rxrtl
-      tags: ["in_ventasys_load","ingestion"]
+      tags: ["in_ventasys_rxrtl","ingestion"]
   - name: hcpitg_integration__sdl_hcp360_in_ventasys_rtlmaster_raw
     config: 
       alias: sdl_hcp360_in_ventasys_rtlmaster_raw
-      tags: ["in_ventasys_load","ingestion"]
+      tags: ["in_ventasys_rtlmaster","ingestion"]
   - name: hcpitg_integration__itg_hcp360_in_ventasys_rtlmaster
     config: 
       alias: itg_hcp360_in_ventasys_rtlmaster
-      tags: ["in_ventasys_load","ingestion"]
+      tags: ["in_ventasys_rtlmaster","ingestion"]

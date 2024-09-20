@@ -525,52 +525,52 @@ AS (
   SELECT *
   FROM ct01
   
-  UNION
+  UNION ALL
   
   SELECT *
   FROM ct02
   
-  UNION
+  UNION ALL
   
   SELECT *
   FROM ct03
   
-  UNION
+  UNION ALL
   
   SELECT *
   FROM ct04
   
-  UNION
+  UNION ALL
   
   SELECT *
   FROM ct05
   
-  UNION
+  UNION ALL
   
   SELECT *
   FROM ct06
   
-  UNION
+  UNION ALL
   
   SELECT *
   FROM ct07
   
-  UNION
+  UNION ALL
   
   SELECT *
   FROM ct08
   
-  UNION
+  UNION ALL
   
   SELECT *
   FROM ct09
   
-  UNION
+  UNION ALL
   
   SELECT *
   FROM ct10
   
-  UNION
+  UNION ALL
   
   SELECT *
   FROM ct11

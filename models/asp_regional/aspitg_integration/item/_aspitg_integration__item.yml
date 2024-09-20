@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: aspitg_integration__itg_yimian_price_data
+    config:
+      alias: itg_yimian_price_data
+      tags: ["cn_yimian_price_data_load","ingestion"]
+  - name: aspitg_integration__itg_total_investment_brand_map
+    config:
+      alias: itg_total_investment_brand_map
+      tags: ["cd_scorecard_table_refresh","ingestion"]
+  - name: aspitg_integration__itg_mds_rg_total_investment_ppm
+    config:
+      alias: itg_mds_rg_total_investment_ppm
+      tags: ["cd_scorecard_table_refresh","ingestion"]
+  - name: aspitg_integration__itg_total_investment_fdw
+    config:
+      alias: itg_total_investment_fdw
+      tags: ["cd_scorecard_table_refresh","ingestion"]

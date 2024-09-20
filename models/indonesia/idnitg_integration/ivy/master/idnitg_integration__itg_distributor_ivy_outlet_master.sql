@@ -7,13 +7,25 @@
         delete from {{this}}
     where (upper(trim(distributorcode)), upper(trim(outletcode))) 
     in (select distinct upper(trim(distributorcode)) as distributorcode, upper(trim(outletcode)) as outletcode
-    from {{source ('idnsdl_raw', 'sdl_distributor_ivy_outlet_master')}});
+    from {{source ('idnsdl_raw', 'sdl_distributor_ivy_outlet_master')}}
+    where file_name not in (
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_outlet_master__null_test') }}
+            union all
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_outlet_master__duplicate_test') }}
+    )
+    );
         {% endif %}"
     )
 }}
 with sdl_distributor_ivy_outlet_master as 
 (
-    select * from {{source ('idnsdl_raw', 'sdl_distributor_ivy_outlet_master')}}
+    select *, dense_rank() over(partition by upper(trim(distributorcode)), upper(trim(outletcode)) order by file_name desc) as rnk 
+    from {{source ('idnsdl_raw', 'sdl_distributor_ivy_outlet_master')}}
+    where file_name not in (
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_outlet_master__null_test') }}
+            union all
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_outlet_master__duplicate_test') }}
+    ) qualify rnk =1
 ),
 edw_distributor_customer_dim as 
 (
@@ -53,7 +65,8 @@ itg_distributor_ivy_outlet_master as (
         channelname,
         tieringname,
         run_id,
-        row_number() over (partition by distributorcode, outletcode order by run_id) as rn
+        row_number() over (partition by distributorcode, outletcode order by run_id) as rn,
+        file_name
     from sdl_distributor_ivy_outlet_master
 ),
 final as (
@@ -91,7 +104,8 @@ final as (
         null::varchar(100) as chnl_grp2,
         null::timestamp_ntz(9) as cust_crtd_dt,
         tieringname::varchar(100) as cust_grp2,
-        run_id::number(14,0) as run_id
+        run_id::number(14,0) as run_id,
+        file_name::varchar(255) as file_name
     from itg_distributor_ivy_outlet_master
     where rn = 1
 ),
@@ -130,7 +144,8 @@ updt as(
         nvl(edw_distributor_customer_dim.chnl_grp2, final.chnl_grp2) as chnl_grp2,
         nvl(edw_distributor_customer_dim.cust_crtd_dt, final.cust_crtd_dt) as cust_crtd_dt,
         final.cust_grp2 as cust_grp2,
-        final.run_id as run_id 
+        final.run_id as run_id,
+        final.file_name 
     from final
     left join edw_distributor_customer_dim
     on (upper(trim(final.distributorcode)) || upper(trim(final.outletcode))) = upper(trim(edw_distributor_customer_dim.key_outlet))
@@ -170,7 +185,8 @@ updt2 as(
         updt.chnl_grp2 as chnl_grp2,
         updt.cust_crtd_dt as cust_crtd_dt,
         updt.cust_grp2 as cust_grp2,
-        updt.run_id as run_id
+        updt.run_id as run_id,
+        updt.file_name
     from updt 
     left join edw_channelgroup_metadata channelgroup
     on updt.cust_grp2 = channelgroup.cust_grp2

@@ -91,6 +91,7 @@ final as
         NULL as unit_of_pkg_comp,
         0 as order_qty,
         NULL as unit_of_pkg_order,
+        src.filename,
         TGT.CRT_DTTM AS TGT_CRT_DTTM,
         upd_dttm as UPDT_DTTM,
         CASE
@@ -114,7 +115,7 @@ final as
         and rtrim(SRC.barcode) = rtrim(TGT.ean_num)
         and rtrim(SRC.store_code) = rtrim(TGT.str_cd)
         and rtrim(SRC.src_sys_cd) = rtrim(TGT.src_sys_cd)
-        and rtrim(nvl(src.product_code,'#')) = rtrim(nvl(tgt.vend_prod_cd,'#'))
+        and trim(nvl(src.product_code,'#')) = trim(nvl(tgt.vend_prod_cd,'#'))
         and 'KR' = TGT.ctry_cd
     where SRC.rnk = 1
 )

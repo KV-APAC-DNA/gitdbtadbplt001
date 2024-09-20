@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: aspitg_integration__itg_t_market_mirror_sku_nts_vs_share_l2_value_units
+    config:
+      alias: itg_t_market_mirror_sku_nts_vs_share_l2_value_units
+      tags: ["market_mirror","transformation"]
+  - name: aspitg_integration__itg_trended_sku_fact
+    config:
+      alias: itg_trended_sku_fact
+      tags: ["market_mirror","transformation"]

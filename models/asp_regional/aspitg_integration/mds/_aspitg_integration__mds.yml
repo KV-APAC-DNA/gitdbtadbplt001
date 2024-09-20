@@ -93,3 +93,15 @@ models:
     config:
       alias: itg_mds_ap_greenlight_skus
       tags: ["MDS","rg_greenlight_mds","ingestion"]
+  - name: aspitg_integration__itg_mds_rg_prox_channel_mapping
+    config:
+      alias: itg_mds_rg_prox_channel_mapping
+      tags: ["prox","ingestion"]
+  - name: aspitg_integration__itg_mds_rg_prox_customer_mapping
+    config:
+      alias: itg_mds_rg_prox_customer_mapping
+      tags: ["prox","ingestion"]
+  - name: aspitg_integration__itg_mds_rg_prox_product_mapping
+    config:
+      alias: itg_mds_rg_prox_product_mapping
+      tags: ["prox","ingestion"]

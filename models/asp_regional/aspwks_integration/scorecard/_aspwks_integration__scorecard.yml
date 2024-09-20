@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: aspwks_integration__wks_scorecard_ecomm_base
+    config:
+      alias: wks_scorecard_ecomm_base
+      tags: ["cd_scorecard_table_refresh","transformation"] 

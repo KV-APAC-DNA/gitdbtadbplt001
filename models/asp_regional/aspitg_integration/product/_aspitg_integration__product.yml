@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: aspitg_integration__itg_clavis_gb_search_terms_results
+    config:
+      alias: itg_clavis_gb_search_terms_results
+      tags: ["rg_clavis","transformation"]

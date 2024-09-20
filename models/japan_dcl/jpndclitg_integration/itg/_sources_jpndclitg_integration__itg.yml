@@ -1,0 +1,232 @@
+version: 2
+
+sources:
+  - name: jpdclsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: jpdclsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    
+    tables:
+      - name: mykokya
+      - name: ssmthsalhephedda
+      - name: rakutenorderdetail
+      - name: c_tbdmsndhist
+      - name: c_tbecdeptmst
+      - name: c_tbecclient  
+      - name: c_tbecinquirekesai        
+      - name: c_tbecregularcoursemst       
+      - name: c_tbecregnumitemconvhist  
+      - name: c_tbecinquire      
+      - name: c_tbecshippingresults       
+      - name: c_tbecusercard        
+      - name: c_tbeccardcompanymst       
+      - name: c_tbecprivilegekesaihistory        
+      - name: tbecorderhist        
+      - name: c_tbecregularcontract        
+      - name: c_tbecregularmeisai  
+      - name: c_tbecpridiscratecategory
+      - name: c_tbecpridiscrateitem
+      - name: c_tbecregnumitemconvmst     
+      - name: c_tbmembunitrel      
+      - name: c_tbecpripromotion
+      - name: c_tbecprimembtype
+      - name: sdl_mds_jp_dcl_partner_master
+      - name: sdl_mds_jp_dcl_product_master         
+      - name: sdl_mds_jp_dcl_mt_h_product   
+      - name: c_tbecinquiremeisai
+      - name: c_tbeckesai
+      - name: c_tbecpaymentpatternmst
+      - name: c_tbecprivilegekesai
+      - name: c_tbecprivilegemst
+      - name: c_tbecrankaddamountadm
+      - name: c_tbecprivilegeinquirekesai
+      - name: c_tbecpointadm
+      - name: c_tbecranksumamount
+      - name: c_tbecordermeisaihistory
+      - name: c_tbeckesaihistory
+      - name: c_tbecorderhistory
+      - name: c_tbecusrcomment
+      - name: c_tbecusrcommentclassmst
+      - name: c_tbtelcompanymst
+      - name: c_tbecpointregistdivmst
+      - name: c_tbecregularoperatehist
+      - name: c_tbecpribuycategory
+      - name: c_tbecprimembclass
+      - name: c_tbecpripresentitem
+      - name: c_tbecpribuyitem
+      - name: c_tbecpriroute
+      - name: c_tbecpriusrsts
+      - name: contact_hist
+      - name: tbechenpinriyu  
+      - name: tbecsalesroutemst     
+      - name: tbecsoko      
+      - name: tbpromotion     
+      - name: tbpromotioncate
+      - name: tbuser
+      - name: tbperson
+      - name: tbusrpram  
+      - name: tbecpointhistory  
+      - name: tbecitem
+      - name: tbecordermeisai
+      - name: tbecorder  
+      - name: tbecsetitem
+      - name: sfcc_product_category     
+      - name: sfcc_product_mst
+      - name: sfmc_bounces
+      - name: sfmc_clicks
+      - name: sfmc_notsent
+      - name: sfmc_opens
+      - name: sfmc_sendjobs
+      - name: sfmc_kokya_subskey_mapping
+      - name: sfmc_sent  
+      - name: sfmc_unsubs  
+      - name: acgel_predictionresult
+      - name: cluster_predictionresult
+      - name: ec_predictionresult
+      - name: extraction_table
+      - name: kr_special_discount_file
+      - name: mykokya_param
+      - name: vc100_predictionresult
+      - name: ssmthsalhedda
+      - name: affiliate_cancel_receive
+      - name: cc_predictionresult
+
+  - name: jpdcledw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: jpdcledw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    
+    tables:
+      - name: item_data_mart_mv
+      - name: '"wqtm07属性未設定名称マスタ"'
+      - name: tm72del_nm
+      - name: aspac_common_mv
+      - name: kesai_m_data_mart_mv
+      - name: kesai_h_data_mart_mv
+      - name: tbecorder_log_tmp
+      - name: keirokbn
+      - name: tm25shihyokubunshikii
+      - name: tm55_teisuchi
+      - name: tm28rfmsegment
+      - name: tt02kokyastsm_ikou
+      - name: tw05kokyarecalc
+      - name: oroshi_gassan_mv
+      - name: hanbai_shohin_attr
+      - name: tm24_item
+      - name: cim03item_zaiko_ikou_kizuna
+      - name: '"wqwt03通販売上明細"'
+      - name: cim03item_ikou
+      - name: tbecorder_rireki_log_tmp
+      - name: genomer_kokya_kpi_inbound
+      - name: cim02tokui_ikou
+      - name: cim24itbun_ikou
+      - name : cit80saleh_uri_mv
+      - name: cit80saleh_hen_mv
+      - name: cit81salem_uri_mv
+      - name: cit81salem_hen_mv
+      - name: cit85osalh_uri_mv
+      - name: cit85osalh_hen_mv
+      - name: cit86osalm_uri_mv
+      - name: cit86osalm_kkng
+      - name: kr_newkaima_calc_hist
+      - name: wk_rankdt_tmp
+      - name: cit86osalm_hen_mv
+      - name: cit86osalm_aspac_ikou
+      - name: cmnkokya_tm01_calendar_jj
+      - name: cld_m
+      - name: hanyo_attr
+      - name: threshold_amount_master
+      - name: kesai_h_data_mart_sub_old_tbl
+      - name: kesai_h_data_mart_sub_old_chsi_tbl
+      - name: kesai_m_data_mart_sub_old_tbl
+      - name: cit80saleh_ikou
+      - name: ciy80saleh_ikou
+      - name: work_bioptron
+      - name: kesai_m_data_mart_sub_n_wari
+      - name: conv_mst_smkeiroid
+      - name: cit81salem_ikou
+      - name: old_tokutencd_master
+      - name: kesai_m_data_mart_sub_old_dum
+      - name: kesai_m_data_mart_sub_old_n_bn
+      - name: dm_kesai_mart_dly_bkp_20221021_deployment
+      - name: teikikeiyaku_data_mart_cl
+      - name: report_006_a_historical_data
+      - name: wk_kpi_06_04_old
+      - name: report_006_a_historical_data2
+      - name: tm09nendai_ikou
+      - name: hanyo_attr_bkp
+      - name: tt01saleh_hen_mv_mt
+      - name: tt02salem_hen_mv_mt_tbl
+      - name: tt02salem_hen_sub_mv_mt_tbl
+      - name: tt02salem_mv_mt_tbl
+      - name: tt02salem_sum_mv_mt_tbl
+      - name: tm40shihanki
+      - name: kesai_h_data_mart_sub_n_h_mngy
+      - name: kesai_h_data_mart_sub_p
+      - name: kesai_m_data_mart_sub_p
+      - name: tm14shkos
+      - name: kesai_m_data_mart_sub_old_chsi
+      - name: kr_comm_point_para
+      - name: kokyano_list_016_manual
+      - name: stage_mst
+      - name: tt01kokyastsh_ikou
+      - name: idokeido
+      - name: kr_this_stage_point_rescue
+      - name: container_collection_v
+      - name: tm58_koykarank_ym
+      - name: kr_this_stage_point_monthly
+      - name: kr_frequency_1yn_900
+      - name: '"cewq028破損商品"'
+      - name: '"wqwt34明細出力リスト"'
+      - name: '"wqwt74戦略商品別売上ｐ"'
+      - name: ocl_in_userlist_v
+      - name: kr_last_stage_point
+      - name: kesai_m_data_mart_sub_old_chsi_tbl
+      - name: cl_mst
+      - name: cl_meisai
+      - name: cit85osalh_kkng
+      - name: item_bom_ikou_kizuna
+      - name: tm14shkos_mainte_work
+      
+
+  - name: jpdclitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: jpdclitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false  
+    tables:
+      - name: sscmnhin
+      - name: ssmtbsalmei
+      - name: sscmnhingrp
+      - name: sscmnriyuukanri
+      - name: zcmmndcltokuisk
+      - name: aartnar
+      - name: clustermapping
+      - name: aartbkaisytiar
+      - name: sscmhtoriskbetsuhin
+      - name: zcmmnkbn       
+      - name: scmnhin       
+      - name: sscmhsoko       
+      - name: sscmnichinshitukbn       
+      - name: zcmmnsoshitaik       
+      - name: ssctnmjignbtic       
+      - name: zcmmntorisk       
+      - name: ssmthdclthanjuchhedda 
+      - name: ssmtndclsaljisk 
+      - name: ssmthsalhephedda 
+      - name: ssmthshkahedda 
+      - name: ssmtndclshkahedda
+      - name: ssmthjuchhedda 
+      - name: ssmthsalhedda 
+      - name: ssctnkaisytimei 
+      - name: aartnskyden 
+      - name: ssmthdclsalhephedda
+      - name: zcmmnjuusho

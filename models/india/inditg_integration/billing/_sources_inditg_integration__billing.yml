@@ -11,3 +11,17 @@ sources:
     tables:
       - name: sdl_sap_billing_conditions
         tags: ["in_sdlitg_daily","transformation"]
+
+  - name: indedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: indedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: edw_rpt_sku_recom_management
+    - name: edw_sku_recom_spike_msl_analytics
+    - name: gtm_kpi_dasboard
+    - name: edw_rpt_sss_zonal
+

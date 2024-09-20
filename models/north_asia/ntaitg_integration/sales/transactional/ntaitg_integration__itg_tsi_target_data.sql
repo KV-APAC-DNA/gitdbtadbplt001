@@ -4,12 +4,22 @@
         incremental_strategy= "delete+insert",
         unique_key=  ['filename'],
         pre_hook = "{% if is_incremental() %}
-        delete from {{this}} where year_month in ( select distinct date from {{ source('ntasdl_raw', 'sdl_tsi_target_data') }});
-        {% endif %}"
-    )
+        delete from {{this}} where year_month in ( select distinct date from 
+        {{ source('ntasdl_raw', 'sdl_tsi_target_data') }} where filename not in
+        (select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tsi_target_data__null_test') }}
+        union all
+        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tsi_target_data__duplicate_test') }}
+        ));
+            {% endif %}"
+        )
 }}
 with source as (
-    select * from {{ source('ntasdl_raw', 'sdl_tsi_target_data') }}
+    select *, dense_rank() over(partition by date order by filename desc) rnk from 
+    {{ source('ntasdl_raw', 'sdl_tsi_target_data') }} where filename not in
+     (select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tsi_target_data__null_test') }}
+      union all
+      select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tsi_target_data__duplicate_test') }}
+     ) qualify rnk =1
 ),
 final as
 (    

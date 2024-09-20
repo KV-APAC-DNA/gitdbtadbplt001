@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: chnitg_integration__itg_mds_cn_ecom_sapcustomer_map
+    config:
+        alias: itg_mds_cn_ecom_sapcustomer_map
+        tags: ["ch_ecomm_mds", "ingestion"]
+  - name: chnitg_integration__itg_mds_cn_ecom_brand
+    config:
+        alias: itg_mds_cn_ecom_brand
+        tags: ["ch_ecomm_mds", "ingestion"]

@@ -1,0 +1,5 @@
+models:
+  - name: aspedw_integration__edw_trended_sku_fact
+    config: 
+      alias: edw_trended_sku_fact
+      tags: ["market_mirror","transformation"]

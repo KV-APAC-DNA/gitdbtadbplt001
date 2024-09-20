@@ -21,7 +21,8 @@ final as (
         complete::varchar(5) as complete,
         run_id::number(14,0) as run_id,
         current_timestamp()::timestamp_ntz(9) as create_dt,
-        current_timestamp()::timestamp_ntz(9) as update_dt
+        current_timestamp()::timestamp_ntz(9) as update_dt,
+        file_name::varchar(255) as file_name
     FROM sdl_perenso_diary_item
 )
 select * from final

@@ -15,3 +15,11 @@ models:
     config: 
       alias: wks_edw_customer_attr_flat_dim_v_cust
       tags: ["m_edw_mysales_sap_js_ex_customer_attr_flat","transformation"]
+  - name: aspwks_integration__wks_rpt_copa_customergp
+    config: 
+      alias: wks_rpt_copa_customergp
+      tags: ["j_ap_dna_datamart_refresh_etl_framework_customer_pl","transformation"]
+  - name: aspwks_integration__wks_rpt_customergp
+    config: 
+      alias: wks_rpt_customergp
+      tags: ["j_ap_dna_datamart_refresh_etl_framework_customer_pl","transformation"]

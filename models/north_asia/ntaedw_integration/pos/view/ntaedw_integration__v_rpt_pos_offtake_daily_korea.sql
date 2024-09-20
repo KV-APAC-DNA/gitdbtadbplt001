@@ -194,10 +194,12 @@ final as (
         sum(a.prom_sls_amt) AS sls_amt,
         CASE
             WHEN (
-                (a.str_cd IS NULL)
-                OR ((a.str_cd)::text = (''::character varying)::text)
+                (rtrim(a.str_cd) IS NULL)
+                OR (
+                    (rtrim(a.str_cd))::text = (''::character varying)::text
+                )
             ) THEN 'Not Available'::character varying
-            ELSE a.str_cd
+            ELSE rtrim(a.str_cd)
         END AS str_cd,
         CASE
             WHEN (
@@ -278,7 +280,7 @@ final as (
             ) THEN 'Not Available'::character varying
             ELSE a.matl_desc
         END AS matl_desc,
-        a.ean_num,
+        rtrim(a.ean_num) as ean_num,
         g.to_crncy,
         g.ex_rt_typ,
         g.ex_rt,
@@ -468,13 +470,13 @@ final as (
         )::text = (
             COALESCE(a.sold_to_party, '~'::character varying)
         )::text
-        LEFT JOIN prod_attr f ON ltrim(
+        LEFT JOIN prod_attr f ON rtrim(ltrim(
             ((f.ean_num)::character varying)::text,
             ((0)::character varying)::text
-        ) = ltrim(
+        )) = rtrim(ltrim(
             (a.ean_num)::text,
             ((0)::character varying)::text
-        )
+        ))
         AND ((f.cntry)::text = (a.ctry_cd)::text)
         LEFT JOIN v_calendar_dtls b ON ((a.pos_dt = b.cal_day))
         LEFT JOIN v_intrm_crncy_exch g ON (((a.crncy_cd)::text = (g.from_crncy)::text))
@@ -500,12 +502,12 @@ final as (
         g.to_crncy,
         g.ex_rt_typ,
         g.ex_rt,
-        a.str_cd,
+        rtrim(a.str_cd),
         a.str_nm,
         a.mysls_catg,
         a.matl_num,
         a.matl_desc,
-        a.ean_num,
+        rtrim(a.ean_num),
         a.vend_prod_cd,
         i.channel,
         i.store_typ,

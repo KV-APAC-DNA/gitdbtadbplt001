@@ -267,3 +267,7 @@ models:
     config: 
       alias: wks_edw_crncy_exch
       tags: ["sap_ecc_master_etl_framework","transformation"]
+  - name: aspwks_integration__wks_itg_ecc_standard_cost_history
+    config: 
+      alias: wks_itg_ecc_standard_cost_history
+      tags: ["sap_ecc_master_etl_framework","transformation"]

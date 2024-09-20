@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: chnitg_integration__itg_mds_cn_otc_soldto_mapping
+    config:
+        alias: itg_mds_cn_otc_soldto_mapping
+        tags: ["ch_ecomm_mds", "ingestion"]
+  - name: chnitg_integration__itg_mds_cn_otc_product_mapping
+    config:
+        alias: itg_mds_cn_otc_product_mapping
+        tags: ["ch_ecomm_mds", "ingestion"]

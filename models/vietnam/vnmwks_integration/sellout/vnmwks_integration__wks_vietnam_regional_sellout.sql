@@ -106,6 +106,10 @@ transformed as (
 	sellout_sales_quantity,
 	sellout_sales_value,
 	sellout_sales_value_usd,
+    msl_product_code,
+    msl_product_desc,
+    retail_env,
+    channel,
 	crtd_dttm,
 	updt_dttm
 from
@@ -178,6 +182,17 @@ from
 		sum(so_sls_qty) sellout_sales_quantity,
 		sum(so_sls_value) as sellout_sales_value,
 		sum(so_sls_value*((c.exch_rate/(c.from_ratio*c.to_ratio))::numeric(15,5)))::numeric(38,11) sellout_sales_value_usd,
+        CASE WHEN SELLOUT.DATA_SRC='POS' THEN TRIM(NVL (NULLIF(SELLOUT.msl_product_code,''),'NA'))
+         ELSE TRIM(NVL (NULLIF(PRODUCT.SAP_MATL_NUM,''),'NA')) END AS msl_product_code,
+        CASE WHEN (UPPER(PRODUCT.PKA_PACKAGE) IN ('MIX PACK', 'ASSORTED PACK') OR PRODUCT.PKA_PACKAGE IS NULL) THEN UPPER(TRIM(NVL (NULLIF(PRODUCT.SAP_MAT_DESC,''),'NA')))
+        ELSE (CASE WHEN TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA'))
+            WHEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productkey,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productdesc,''),'NA'))
+            WHEN TRIM(NVL (NULLIF(PROD_KEY2.pka_productkey,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PROD_KEY2.pka_productdesc,''),'NA'))
+            ELSE TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA')) END)
+        END AS msl_product_desc,
+        --TRIM(NVL (NULLIF(SELLOUT.store_grade,''),'NA')) AS store_grade,
+        TRIM(NVL (NULLIF(SELLOUT.retail_env,''),'NA')) AS retail_env,
+        TRIM(NVL (NULLIF(SELLOUT.channel,''),'NA')) AS channel,
 	   sellout.crtd_dttm,
 	   SELLOUT.updt_dttm
 from wks_vietnam_regional_sellout_base sellout
@@ -243,6 +258,7 @@ left join (select distinct
           egph.put_up_description as gph_prod_put_up_desc,
           egph.size as gph_prod_size,
           egph.unit_of_measure as gph_prod_size_uom,
+          EMD.PKA_PACKAGE_DESC AS PKA_PACKAGE,
           row_number() over( partition by sap_matl_num order by sap_matl_num) rnk           
           from 
 		   
@@ -432,12 +448,17 @@ group by
 		when trim(nvl (nullif(prod_key1.pka_productkey,''),'NA')) not in ('N/A','NA') then trim(nvl (nullif(prod_key1.pka_productdesc,''),'NA'))
 		when trim(nvl (nullif(prod_key2.pka_productkey,''),'NA')) not in ('N/A','NA') then trim(nvl (nullif(prod_key2.pka_productdesc,''),'NA'))
 		else trim(nvl (nullif(product.pka_product_key_description,''),'NA')) end,
+        PRODUCT.PKA_PACKAGE,
 		  --product.sls_org,
 		  sellout.customer_product_desc,
 		  sellout.region, 
 		  sellout.zone_or_area,
 		  --c.exch_rate  
 		(c.exch_rate/(c.from_ratio*c.to_ratio)),
+          sellout.msl_product_code,
+          --sellout.msl_product_desc,
+          sellout.retail_env,
+          sellout.channel,
 		  sellout.crtd_dttm,
 		  sellout.updt_dttm		  
 having not (sum(sellout.so_sls_value) = 0 and sum(sellout.so_sls_qty) = 0)) 
@@ -449,15 +470,15 @@ qrtr_no::varchar(14) as qrtr_no,
 mnth_id::varchar(21) as mnth_id,
 mnth_no::varchar(10) as mnth_no,
 cal_date::date as cal_date,
-univ_year::number(18,0) as univ_year,
-univ_month::number(18,0) as univ_month,
+univ_year::integer as univ_year,
+univ_month::integer as univ_month,
 country_code::varchar(2) as country_code,
 country_name::varchar(7) as country_name,
 data_source::varchar(8) as data_source,
 soldto_code::varchar(300) as soldto_code,
 distributor_code::varchar(30) as distributor_code,
 distributor_name::varchar(750) as distributor_name,
-store_code::varchar(30) as store_code,
+store_code::varchar(100) as store_code,
 store_name::varchar(100) as store_name,
 store_type::varchar(300) as store_type,
 distributor_additional_attribute1::varchar(2) as distributor_additional_attribute1,
@@ -489,7 +510,7 @@ global_product_subsegment::varchar(100) as global_product_subsegment,
 global_product_category::varchar(50) as global_product_category,
 global_product_subcategory::varchar(50) as global_product_subcategory,
 global_put_up_description::varchar(100) as global_put_up_description,
-ean::varchar(40) as ean,
+ean::varchar(100) as ean,
 sku_code::varchar(40) as sku_code,
 sku_description::varchar(150) as sku_description,
 pka_product_key::varchar(68) as pka_product_key,
@@ -501,6 +522,10 @@ exchange_rate::number(15,5) as exchange_rate,
 sellout_sales_quantity::number(38,4) as sellout_sales_quantity,
 sellout_sales_value::number(38,23) as sellout_sales_value,
 sellout_sales_value_usd::number(38,11) as sellout_sales_value_usd,
+msl_product_code::varchar(100) as msl_product_code,
+msl_product_desc::varchar(255) as msl_product_desc,
+retail_env::varchar(450) as retail_env,
+channel::varchar(300) as channel,
 crtd_dttm::timestamp_ntz(9) as crtd_dttm,
 updt_dttm::timestamp_ntz(9) as updt_dttm,
 from transformed

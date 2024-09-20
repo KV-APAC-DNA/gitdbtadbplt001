@@ -1,0 +1,50 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_india_sellout_for_inv_analysis
+    config:
+      alias: wks_india_sellout_for_inv_analysis
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: indwks_integration__wks_india_base
+    config:
+      alias: wks_india_base
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: indwks_integration__wks_india_allmonths_base
+    config:
+      alias: wks_india_allmonths_base
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: indwks_integration__wks_india_lastnmonths
+    config:
+      alias: wks_india_lastnmonths
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: indwks_integration__wks_india_base_detail
+    config:
+      alias: wks_india_base_detail
+      tags: ["j_ap_china_reg_data_refresh","transformation"] 
+  - name: indwks_integration__india_propagate_to
+    config:
+      alias: india_propagate_to
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: indwks_integration__india_propagate_from_to
+    config:
+      alias: india_propagate_from_to
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: indwks_integration__wks_india_siso_propagate_to_details
+    config:
+      alias: wks_india_siso_propagate_to_details
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: indwks_integration__wks_india_siso_propagate_to_existing_dtls
+    config:
+      alias: wks_india_siso_propagate_to_existing_dtls
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: indwks_integration__wks_india_siso_propagate_final
+    config:
+      alias: wks_india_siso_propagate_final
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: indwks_integration__wks_india_inventory_healthy_unhealthy_analysis
+    config:
+      alias: wks_india_inventory_healthy_unhealthy_analysis
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+
+
+      

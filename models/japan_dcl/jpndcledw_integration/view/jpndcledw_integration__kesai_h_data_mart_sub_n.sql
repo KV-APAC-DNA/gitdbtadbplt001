@@ -1,0 +1,71 @@
+with kesai_h_data_mart_sub_n_tbl as(
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_n_tbl') }}
+),
+final as(
+    SELECT kesai_h_data_mart_sub_n_tbl.saleno
+        ,kesai_h_data_mart_sub_n_tbl.juchkbn
+        ,kesai_h_data_mart_sub_n_tbl.juchym
+        ,kesai_h_data_mart_sub_n_tbl.juchdate
+        ,kesai_h_data_mart_sub_n_tbl.juchquarter
+        ,kesai_h_data_mart_sub_n_tbl.juchjigyoki
+        ,kesai_h_data_mart_sub_n_tbl.kokyano
+        ,kesai_h_data_mart_sub_n_tbl.torikeikbn
+        ,kesai_h_data_mart_sub_n_tbl.cancelflg
+        ,kesai_h_data_mart_sub_n_tbl.hanrocode
+        ,kesai_h_data_mart_sub_n_tbl.syohanrobunname
+        ,kesai_h_data_mart_sub_n_tbl.chuhanrobunname
+        ,kesai_h_data_mart_sub_n_tbl.daihanrobunname
+        ,kesai_h_data_mart_sub_n_tbl.mediacode
+        ,kesai_h_data_mart_sub_n_tbl.soryo
+        ,kesai_h_data_mart_sub_n_tbl.tax
+        ,kesai_h_data_mart_sub_n_tbl.sogokei
+        ,kesai_h_data_mart_sub_n_tbl.tenpocode
+        ,kesai_h_data_mart_sub_n_tbl.shukaym
+        ,kesai_h_data_mart_sub_n_tbl.shukadate
+        ,kesai_h_data_mart_sub_n_tbl.shukaquarter
+        ,kesai_h_data_mart_sub_n_tbl.shukajigyoki
+        ,kesai_h_data_mart_sub_n_tbl.zipcode
+        ,kesai_h_data_mart_sub_n_tbl.todofukencode
+        ,kesai_h_data_mart_sub_n_tbl.riyopoint
+        ,kesai_h_data_mart_sub_n_tbl.happenpoint
+        ,kesai_h_data_mart_sub_n_tbl.kessaikbn
+        ,kesai_h_data_mart_sub_n_tbl.cardcorpcode
+        ,kesai_h_data_mart_sub_n_tbl.henreasoncode
+        ,kesai_h_data_mart_sub_n_tbl.motoinsertid
+        ,kesai_h_data_mart_sub_n_tbl.motoinsertdate
+        ,kesai_h_data_mart_sub_n_tbl.motoupdatedate
+        ,kesai_h_data_mart_sub_n_tbl.insertdate
+        ,kesai_h_data_mart_sub_n_tbl.inserttime
+        ,kesai_h_data_mart_sub_n_tbl.insertid
+        ,kesai_h_data_mart_sub_n_tbl.updatedate
+        ,kesai_h_data_mart_sub_n_tbl.updatetime
+        ,kesai_h_data_mart_sub_n_tbl.updateid
+        ,kesai_h_data_mart_sub_n_tbl.rank
+        ,kesai_h_data_mart_sub_n_tbl.dispsaleno
+        ,kesai_h_data_mart_sub_n_tbl.kesaiid
+        ,kesai_h_data_mart_sub_n_tbl.ordercode
+        ,kesai_h_data_mart_sub_n_tbl.henreasonname
+        ,kesai_h_data_mart_sub_n_tbl.uketsukeusrid
+        ,kesai_h_data_mart_sub_n_tbl.uketsuketelcompanycd
+        ,kesai_h_data_mart_sub_n_tbl.smkeiroid
+        ,kesai_h_data_mart_sub_n_tbl.dipromid
+        ,kesai_h_data_mart_sub_n_tbl.saleno_trm
+        ,kesai_h_data_mart_sub_n_tbl.dicollectprc
+        ,kesai_h_data_mart_sub_n_tbl.ditoujitsuhaisoprc
+        ,kesai_h_data_mart_sub_n_tbl.didiscountall
+        ,kesai_h_data_mart_sub_n_tbl.c_didiscountprc
+        ,kesai_h_data_mart_sub_n_tbl.point_exchange
+        ,kesai_h_data_mart_sub_n_tbl.logincode
+        ,kesai_h_data_mart_sub_n_tbl.maker
+        ,kesai_h_data_mart_sub_n_tbl.todofuken_code
+        ,kesai_h_data_mart_sub_n_tbl.shukkasts
+        ,kesai_h_data_mart_sub_n_tbl.divouchercode
+        ,kesai_h_data_mart_sub_n_tbl.ditaxrate
+        ,kesai_h_data_mart_sub_n_tbl.diseikyuremain
+        ,kesai_h_data_mart_sub_n_tbl.dinyukinsts
+        ,kesai_h_data_mart_sub_n_tbl.dicardnyukinsts
+        ,kesai_h_data_mart_sub_n_tbl.disokoid
+        ,kesai_h_data_mart_sub_n_tbl.dihaisokeitai
+    FROM kesai_h_data_mart_sub_n_tbl
+)
+select * from final

@@ -185,3 +185,67 @@ models:
     config:
       alias: wks_hk_inventory_healthy_unhealthy_analysis
       tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_hk_lastnmonths
+    config:
+      alias: wks_hk_lastnmonths
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_otc_inv_si
+    config:
+      alias: wks_otc_inv_si
+      tags : ["j_ap_th_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_korea_sellout_for_inv_analysis
+    config:
+      alias: wks_korea_sellout_for_inv_analysis
+      tags : ["j_ap_th_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_korea_base
+    config:
+      alias: wks_korea_base
+      tags : ["j_ap_th_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_korea_allmonths_base
+    config:
+      alias: wks_korea_allmonths_base
+      tags : ["j_ap_th_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_korea_lastnmonths
+    config:
+      alias: wks_korea_lastnmonths
+      tags : ["j_ap_th_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_korea_base_detail
+    config:
+      alias: wks_korea_base_detail
+      tags : ["j_ap_th_reg_data_refresh","transformation"]
+  - name: ntawks_integration__korea_propagate_to
+    config:
+      alias: korea_propagate_to
+      tags : ["j_ap_th_reg_data_refresh","transformation"]
+  - name: ntawks_integration__korea_propagate_from_to
+    config:
+      alias: korea_propagate_from_to
+      tags : ["j_ap_th_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_korea_siso_propagate_to_details
+    config:
+      alias: wks_korea_siso_propagate_to_details
+      tags : ["j_ap_th_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_korea_siso_propagate_to_existing_dtls
+    config:
+      alias: wks_korea_siso_propagate_to_existing_dtls
+      tags : ["j_ap_th_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_korea_siso_propagate_final
+    config:
+      alias: wks_korea_siso_propagate_final
+      tags : ["j_ap_th_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_kr_inventory_health_analysis_propagation
+    config:
+      alias: wks_kr_inventory_health_analysis_propagation
+      tags : ["j_ap_th_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_kr_inventory_healthy_unhealthy_analysis
+    config:
+      alias: wks_kr_inventory_healthy_unhealthy_analysis
+      tags : ["j_ap_th_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_kr_inventory_health_analysis_propagation_prestep
+    config:
+      alias: wks_kr_inventory_health_analysis_propagation_prestep
+      tags : ["j_ap_th_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_kr_inventory_health_analysis_propagation_final
+    config:
+      alias: wks_kr_inventory_health_analysis_propagation_final
+      tags : ["j_ap_th_reg_data_refresh","transformation"]

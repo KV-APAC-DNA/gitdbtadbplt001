@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: chnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: chnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_cn_otc_soldto_mapping
+
+    - name: sdl_mds_cn_otc_product_mapping

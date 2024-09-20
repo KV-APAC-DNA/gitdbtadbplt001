@@ -205,3 +205,7 @@ models:
     config:
       alias: wks_sdl_kr_pos_emart_ecvan
       tags: ["kr_pos","ingestion"]
+  - name: ntawks_integration__wks_sdl_hk_pos_scorecard_mannings
+    config:
+      alias: wks_sdl_hk_pos_scorecard_mannings
+      tags: ["hk_pos","ingestion"]

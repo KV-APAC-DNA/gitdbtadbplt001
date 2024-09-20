@@ -282,11 +282,13 @@ FROM (
       )
   LEFT JOIN itg_tw_ims_dstr_prod_price_map lkp3 ON x.dstr_cd = lkp3.dstr_cd
     AND (x.prod_cd = lkp3.dstr_prod_cd)
+    and x.ims_txn_dt >= lkp3.promotion_start_date ---------- New logic added on 20201230
+    and x.ims_txn_dt <= lkp3.promotion_end_date ---------- New logic added on 20201230
   LEFT JOIN (
     SELECT MAX(ean_num) AS ean_cd,
       matl_num
     FROM (
-      SELECT DISTINCT LTRIM(REPLACE(REPLACE(ean_num, ' ', ''), '-', ''), 0) AS ean_num,
+      SELECT DISTINCT REPLACE(REPLACE(ean_num, ' ', ''), '-', '') AS ean_num, --------- LTRIM function is removed from ean number population logic
         LTRIM(matl_num, 0) AS matl_num
       FROM edw_material_sales_dim
       WHERE ean_num IS NOT NULL

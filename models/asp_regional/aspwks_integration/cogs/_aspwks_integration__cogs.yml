@@ -1,0 +1,5 @@
+models:
+  - name: aspwks_integration__wks_rpt_cogs_customergp
+    config: 
+      alias: wks_rpt_cogs_customergp
+      tags: ["j_ap_dna_datamart_refresh_etl_framework_customer_pl","transformation"]

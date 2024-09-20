@@ -1329,6 +1329,11 @@ survey_response_mt_num as
             WHERE (
                     upper((edw_vw_my_ps_sku_mst.manufacture)::text) = ('JOHNSON & JOHNSON'::character varying)::text
                 )
+                UNION ALL 
+        SELECT 
+      'JOHNSON & JOHNSON' :: character varying AS manufacture, 
+      'JOHNSON\'S BABY' :: character varying AS category, 
+      'JOHNSON\'S BABY' :: character varying AS brand
         ) sku,
         edw_vw_my_ps_sos sos
         LEFT JOIN
@@ -1493,6 +1498,11 @@ survey_response_mt_den as
             WHERE (
                     upper((edw_vw_my_ps_sku_mst.manufacture)::text) = ('JOHNSON & JOHNSON'::character varying)::text
                 )
+            UNION ALL 
+        SELECT 
+      'JOHNSON & JOHNSON' :: character varying AS manufacture, 
+      'JOHNSON\'S BABY' :: character varying AS category, 
+      'JOHNSON\'S BABY' :: character varying AS brand
         ) sku,
         (
             SELECT DISTINCT sos.yearmo,

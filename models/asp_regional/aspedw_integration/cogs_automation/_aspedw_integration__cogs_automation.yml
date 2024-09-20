@@ -1,0 +1,5 @@
+models:
+  - name: aspedw_integration__edw_custgp_cogs_automation
+    config: 
+      alias: edw_custgp_cogs_automation
+      tags: ["j_ap_dna_datamart_refresh_etl_framework_cogs_automation","transformation"]

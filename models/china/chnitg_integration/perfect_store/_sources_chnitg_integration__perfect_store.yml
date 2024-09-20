@@ -1,0 +1,38 @@
+version: 2
+
+sources:
+  - name: chnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: chnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_cn_ps_weights
+      tags: ["ch_pms_mds","ingestion"]
+      tests:
+        - test_null:
+            not_null_columns: ["RE","KPI","CHANNEL"]
+            select_columns: ["RE","KPI","WEIGHT","CHANNEL"]
+            name: TRATBL_sdl_mds_cn_ps_weights__null_test
+            config:
+                store_failures: true
+                schema: hcpwks_integration
+        - test_duplicate:
+            group_by_columns: ["RE","KPI","WEIGHT","CHANNEL"]
+            select_columns: ["RE","KPI","WEIGHT","CHANNEL"]
+            name: TRATBL_sdl_mds_cn_ps_weights__duplicate_test
+            config:
+              store_failures: true
+              schema: hcpwks_integration
+    - name: sdl_mds_cn_ps_target
+      tags: ["ch_pms_mds","ingestion"]
+      tests:
+        - test_null:
+            not_null_columns: ["RE","KPI","CHANNEL"]
+            select_columns: ["RE","KPI","VALUE","CHANNEL"]
+            name: TRATBL_sdl_mds_cn_ps_target__null_test
+            config:
+                store_failures: true
+                schema: hcpwks_integration
