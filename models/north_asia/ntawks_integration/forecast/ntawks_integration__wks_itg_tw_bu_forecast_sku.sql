@@ -1,5 +1,12 @@
 with sdl_tw_bu_forecast_sku as (
     select * from {{ source('ntasdl_raw', 'sdl_tw_bu_forecast_sku') }}
+    where filename not in (
+        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_bu_forecast_sku__lookup_test') }}
+        union all
+        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_bu_forecast_sku__null_test') }}
+        union all
+        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_bu_forecast_sku__lookup_test_sapcode') }}
+    )
 ),
 edw_customer_attr_hier_dim as (
 select * from {{ ref('aspedw_integration__edw_customer_attr_hier_dim') }}
@@ -43,6 +50,7 @@ transformed as(
         bu_frcst_sku.rf_sell_in_qty,
         bu_frcst_sku.price_off,
         bu_frcst_sku.pre_sales_before_returns,
+        bu_frcst_sku.filename,
         bu_frcst_sku.load_date
     FROM sdl_tw_bu_forecast_sku bu_frcst_sku
     LEFT JOIN cust_attr ON bu_frcst_sku.representative_cust_no = cust_attr.sold_to_party

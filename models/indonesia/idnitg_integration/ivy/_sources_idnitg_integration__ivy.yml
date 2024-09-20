@@ -29,6 +29,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
           - test_duplicate:
               select_columns: ["distributorcode","franchise","brand","type","margin","effective_from"]
               group_by_columns: ["distributorcode","franchise","brand","type","margin","effective_from"]
@@ -36,6 +37,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
 
     - name: sdl_distributor_ivy_order
       tags: ["id_ivy","ingestion"]

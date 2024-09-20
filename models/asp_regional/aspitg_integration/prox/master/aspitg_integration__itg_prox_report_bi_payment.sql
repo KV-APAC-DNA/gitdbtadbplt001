@@ -1,6 +1,9 @@
 with sdl_prox_report_bi_payment as
 (
     select * from {{source('aspsdl_raw', 'sdl_prox_report_bi_payment')}}
+    where filename not in (
+        select distinct file_name from {{source('aspwks_integration','TRATBL_sdl_prox_report_bi_payment__null_test')}}
+    )
 ),
 final as
 (

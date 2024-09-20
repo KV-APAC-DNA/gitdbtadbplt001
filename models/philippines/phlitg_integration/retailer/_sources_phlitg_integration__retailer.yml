@@ -19,6 +19,7 @@ sources:
               config:
                 store_failures: true
                 schema: phlwks_integration
+                severity: error
           - test_duplicate:
               select_columns: ["retailer_name","sold_to"]
               group_by_columns: ["retailer_name","sold_to"]
@@ -26,6 +27,7 @@ sources:
               config:
                 store_failures: true
                 schema: phlwks_integration
+                severity: error
     - name: sdl_mds_ph_non_ise_weights
       tags: ["ph_mds_itg_refresh","ingestion"] 
       tests:
@@ -36,6 +38,7 @@ sources:
               config:
                 store_failures: true
                 schema: phlwks_integration
+                severity: error
           - test_duplicate:
               select_columns: ["kpi"]
               group_by_columns: ["kpi"]
@@ -43,4 +46,5 @@ sources:
               config:
                 store_failures: true
                 schema: phlwks_integration
+                severity: error
     

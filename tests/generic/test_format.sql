@@ -10,10 +10,13 @@ select distinct
             -- Loop through file_name_columns to find the first matching column in actual_columns
             {%- for col in reversed_columns %}
                 {% if col in file_name_columns%}
-                    {{ col }} as file_name
-                {% if not loop.last  %},{% endif %}
+                    {{ col }} as file_name,
                    {% break %}
-                {% endif %} 
+                {% endif %}
+                {% if col not in file_name_columns and loop.last %}
+                    'Filename N/A' as file_name,
+                   {% break %}
+                {% endif %}   
             {%- endfor %}
                 {{failure_reason}} AS failure_reason,
                 {% if select_columns!=None %}    

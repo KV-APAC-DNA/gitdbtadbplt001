@@ -393,22 +393,22 @@ FROM vw_jjbr_curr_exch_dim d,
                                         derived_table1.lp_price
                                     FROM (
                                             SELECT DISTINCT lp.sku_stockcode,
-                                                lkp.cmp_id,
+                                                lkp.cmp_id_code as cmp_id,
                                                 lp.lp_price,
                                                 rank() OVER(
                                                     PARTITION BY lp.sku_stockcode,
-                                                    lkp.cmp_id
+                                                    lkp.cmp_id_code
                                                     ORDER BY lp.lp_startdate DESC
                                                 ) AS rank_number
                                             FROM edw_px_listprice lp,
                                                 (
-                                                    SELECT DISTINCT dly_sls_cust_attrb_lkp.cmp_id,
-                                                        dly_sls_cust_attrb_lkp.sls_org
+                                                    SELECT DISTINCT dly_sls_cust_attrb_lkp.cmp_id_code,
+                                                        dly_sls_cust_attrb_lkp.sls_org_code
                                                     FROM dly_sls_cust_attrb_lkp
                                                 ) lkp
                                             WHERE (
                                                     (
-                                                        (lp.sales_org = (lkp.sls_org)::character(20))
+                                                        (lp.sales_org = (lkp.sls_org_code)::character(20))
                                                         AND (
                                                             (lp.lp_startdate) <= ((current_timestamp()::text)::timestamp without time zone)
                                                         )
