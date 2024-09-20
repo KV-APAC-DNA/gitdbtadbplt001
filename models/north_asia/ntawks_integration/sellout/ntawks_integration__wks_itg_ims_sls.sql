@@ -5,19 +5,9 @@
 }}
 with sdl_hk_ims_viva_sel_out as (
     select * from {{ source('ntasdl_raw', 'sdl_hk_ims_viva_sel_out') }} 
-     where file_name not in (
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_hk_ims_viva_sel_out__null_test') }}
-        union all
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_hk_ims_viva_sel_out__test_date_format_odd_eve_leap') }}
-    )
 ),
 sdl_hk_ims_wingkeung_sel_out as (
     select * from {{ source('ntasdl_raw', 'sdl_hk_ims_wingkeung_sel_out') }}
-     where file_name not in (
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_hk_ims_wingkeung_sel_out__null_test') }}
-        union all
-        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_hk_ims_wingkeung_sel_out__test_date_format_odd_eve_leap') }}
-    )
 ),
 itg_ims as (
     select * from {{ source('ntaitg_integration','itg_ims_temp') }}
