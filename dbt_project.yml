@@ -63,7 +63,9 @@ tests:
     pacific:
       +severity: warn
     asp_regional:
-      +severity: warn
+      +severity: warn 
+# for hcposea test severity is configured at source yml file level
+
 
 models:
   dbt_artifacts:

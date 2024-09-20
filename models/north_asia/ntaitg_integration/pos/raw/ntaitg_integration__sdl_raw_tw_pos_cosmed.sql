@@ -30,7 +30,7 @@ final as
         wk4_qty as wk4_qty,
         crt_dttm as crt_dttm,
         upd_dttm as upd_dttm,
-        filename,
+        file_name,
         null as run_id
     from source
     {% if is_incremental() %}
