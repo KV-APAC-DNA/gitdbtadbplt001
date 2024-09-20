@@ -1,5 +1,10 @@
 with sdl_tw_bu_forecast_prod_hier as (
 select * from {{ source('ntasdl_raw', 'sdl_tw_bu_forecast_prod_hier') }}
+ where filename not in (
+        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_bu_forecast_prod_hier__null_test') }}
+        union all
+        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_bu_forecast_prod_hier__lookup_test') }}
+    )
 ),
 edw_customer_attr_hier_dim as (
 select * from {{ ref('aspedw_integration__edw_customer_attr_hier_dim') }}
@@ -27,6 +32,7 @@ bu_frcst_prod_hier.lph_level_6,
 (bu_frcst_prod_hier.sr*1000) as sr,
 (bu_frcst_prod_hier.pre_sales_before_returns*1000) as pre_sales_before_returns,
 (bu_frcst_prod_hier.pre_sales*1000) as pre_sales,
+bu_frcst_prod_hier.filename,
 bu_frcst_prod_hier.load_date
 from
 sdl_tw_bu_forecast_prod_hier bu_frcst_prod_hier

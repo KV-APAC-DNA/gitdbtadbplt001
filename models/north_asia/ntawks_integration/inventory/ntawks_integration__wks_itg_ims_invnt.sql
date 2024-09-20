@@ -4,7 +4,13 @@
     )
 }}
 with sdl_hk_ims_wingkeung_inv as (
-    select * from {{ source('ntasdl_raw', 'sdl_hk_ims_wingkeung_inv') }}
+    select * from {{ source('ntasdl_raw', 'sdl_hk_ims_wingkeung_inv') }} where file_name not in (
+        select distinct file_name from 
+        {{ source('ntawks_integration', 'TRATBL_sdl_hk_ims_wingkeung_inv__null_test') }}
+        union all
+        select distinct file_name from 
+        {{ source('ntawks_integration', 'TRATBL_sdl_hk_ims_wingkeung_inv__test_date_format_odd_eve_leap') }}
+    )
 ),
 itg_ims_invnt as (
     select * from {{ source('ntaitg_integration', 'itg_ims_invnt_temp') }}

@@ -8,7 +8,8 @@
 )
 }}
 with sdl_kr_coupang_bpa_report as (
-    select * from {{ source('ntasdl_raw', 'sdl_kr_coupang_bpa_report') }}
+    select *, dense_rank() over(partition by date order by file_name desc) rnk from {{ source('ntasdl_raw', 'sdl_kr_coupang_bpa_report') }}
+    qualify rnk = 1
 ),
 final as (
     SELECT 
