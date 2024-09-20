@@ -4,4 +4,4 @@ models:
   - name: inditg_integration__itg_sku_recom_flag
     config:
       alias: itg_sku_recom_flag
-      tags: ["j_in_sku_recom_etl_framework","transformation"]
+      tags: ["in_skurecom_gt_sss_2024_datamart","transformation"]
