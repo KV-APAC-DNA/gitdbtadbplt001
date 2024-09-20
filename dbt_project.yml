@@ -75,6 +75,8 @@ tests:
     pacific:
       +severity: warn
 
+      # for hcposea it added to source file level
+
 models:
   dbt_artifacts:
     +enabled: false
