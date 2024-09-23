@@ -20,6 +20,7 @@ select
 	goal_cogs::number(18,2) as goal_cogs,
 	goal_gp::number(18,2) as goal_gp,
 	local_ccy::varchar(10) as local_ccy,
+    target_type::varchar(10) as target_type,
 	current_timestamp()::timestamp_ntz(9) as crt_dttm
 from source
 )
