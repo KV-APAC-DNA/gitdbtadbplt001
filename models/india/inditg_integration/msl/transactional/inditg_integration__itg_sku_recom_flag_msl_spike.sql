@@ -11,7 +11,7 @@
 
 with source as
 (
-    select * from {{ source('inditg_integration', 'itg_sku_recom_flag') }}
+    select * from {{ ref('inditg_integration__itg_sku_recom_flag') }}
 ),
 final as
 (
