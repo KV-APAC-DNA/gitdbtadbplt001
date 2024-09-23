@@ -67,4 +67,4 @@ final AS
     GROUP BY 
         time_period, sales_grp_cd, prod_mjr_cd, local_ccy
 )
-SELECT * FROM final;
+SELECT * FROM final
