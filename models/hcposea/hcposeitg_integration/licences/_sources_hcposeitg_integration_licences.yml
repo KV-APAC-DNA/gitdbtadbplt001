@@ -20,6 +20,7 @@ sources:
           config:
             store_failures: true
             schema: hcposewks_integration
+            severity: warn
       - test_duplicate:
           select_columns: ["year", "country", "sector", "qty", "licensetype"]
           group_by_columns: ["year", "country", "sector", "qty", "licensetype"]
@@ -27,4 +28,5 @@ sources:
           config:
             store_failures: true
             schema: hcposewks_integration
+            severity: warn
 

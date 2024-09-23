@@ -13,7 +13,7 @@ models:
     config:
       alias: wks_vietnam_regional_sellout_npd
       tags: ["customer_360_vn","transformation"]
-  - name: vnwks_integration__wks_vietnam_regional_sellout_offtake_npd
+  - name: vnmwks_integration__wks_vietnam_regional_sellout_offtake_npd
     config:
       alias: wks_vietnam_regional_sellout_offtake_npd
       tags: ["customer_360_vn","transformation"]
