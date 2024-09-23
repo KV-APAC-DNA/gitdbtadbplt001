@@ -190,7 +190,8 @@ time as(
     edw_vw_os_time_dim.qrtr, 
     edw_vw_os_time_dim.mnth_id, 
     edw_vw_os_time_dim.mnth_no,
-    edw_vw_os_time_dim.mnth_wk_no 
+    edw_vw_os_time_dim.mnth_wk_no,
+	to_varchar(to_date(edw_vw_os_time_dim.cal_date),'YYYYMMDD') as cal_date
   FROM 
     edw_vw_os_time_dim 
   WHERE 
@@ -259,7 +260,8 @@ sellin_mat as(
     edw_vw_th_material_dim.gph_prod_sub_brnd AS prod_sub_brand, 
     edw_vw_th_material_dim.gph_prod_subsgmnt AS prod_subsegment, 
     edw_vw_th_material_dim.gph_prod_ctgry AS prod_category, 
-    edw_vw_th_material_dim.gph_prod_subctgry AS prod_subcategory 
+    edw_vw_th_material_dim.gph_prod_subctgry AS prod_subcategory,
+	edw_vw_th_material_dim.ean_num as barcode	
   FROM 
     edw_vw_th_material_dim 
 ), 
@@ -293,6 +295,7 @@ mat as(
     sellin_mat.prod_subsegment, 
     sellin_mat.prod_category, 
     sellin_mat.prod_subcategory, 
+	sellin_mat.barcode, 
     sellout_mat.is_npi, 
     sellout_mat.npi_str_period, 
     sellout_mat.npi_end_period, 
@@ -373,7 +376,8 @@ transformed as(
     mat.npi_str_period AS npi_start_date, 
     mat.npi_end_period AS npi_end_date, 
     mat.is_reg AS reg_indicator, 
-    mat.is_hero AS hero_indicator, 
+    mat.is_hero AS hero_indicator,  
+	mat.barcode,
     sellin_fact.max_pstng_dt, 
     sellin_fact.area, 
     sellin_fact.category, 
@@ -397,7 +401,7 @@ transformed as(
             sellin_fact 
             JOIN time ON (
               (
-                (sellin_fact.jj_mnth_id) = time.mnth_id
+                (sellin_fact.max_pstng_dt) = time.cal_date
               )
             )
           ) 
