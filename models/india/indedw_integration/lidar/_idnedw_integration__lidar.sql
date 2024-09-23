@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: indedw_integration__edw_vw_cust360_lidar
+    config:
+      alias: edw_vw_cust360_lidar
+      tags: ["india_views","transformation"]
+
+   - name: indedw_integration__edw_vw_invoicecube_lidar
+    config:
+      alias: edw_vw_invoicecube_lidar
+      tags: ["india_views","transformation"]
+
+   - name: indedw_integration__edw_vw_invoicecube_mt_lidar
+    config:
+      alias: edw_vw_invoicecube_mt_lidar
+      tags: ["india_views","transformation"]
+
+   - name: indedw_integration__edw_vw_nielsen_lidar
+    config:
+      alias: edw_vw_nielsen_lidar
+      tags: ["india_views","transformation"]
+
+   - name: indedw_integration__edw_vw_schemecube_lidar
+    config:
+      alias: edw_vw_schemecube_lidar
+      tags: ["india_views","transformation"]
