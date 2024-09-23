@@ -4,12 +4,12 @@
         incremental_strategy= "append",
         unique_key=  ['time_period'],
         pre_hook= "delete from {{this}} where left(time_period, 4) in (
-        select left(time_period, 4) from {{ source('pcfsdl_raw', 'sdl_mds_pacific_cust_ciw_plan') }});"
+        select left(time_period, 4) from {{ source('pcfsdl_raw', 'sdl_mds_pacific_cust_ciw_plan_temp') }});"
     )
 }}
 with source as 
 (
-    select * from {{ source('pcfsdl_raw', 'sdl_mds_pacific_cust_ciw_plan') }}
+    select * from {{ source('pcfsdl_raw', 'sdl_mds_pacific_cust_ciw_plan_temp') }}
 ),
 final as 
 (
@@ -28,7 +28,8 @@ select
 	goal_ciw_tot::number(18,2) as goal_ciw_tot,
 	goal_cogs::number(18,0) as goal_cogs,
 	goal_gp::number(18,2) as goal_gp,
-	local_ccy::varchar(10) as local_ccy
+	local_ccy::varchar(10) as local_ccy,
+    target_type::varchar(10) as target_type
 from source
 )
 select * from final
