@@ -301,7 +301,6 @@ sources:
       - name: itg_zone_classification
       - name: itg_invoicing_calendar_2022
       - name: itg_program_store_target
-      - name: itg_sku_recom_flag
       - name: itg_salesmanmaster
       - name: itg_brand_focus_target
       - name: itg_business_plan_target
