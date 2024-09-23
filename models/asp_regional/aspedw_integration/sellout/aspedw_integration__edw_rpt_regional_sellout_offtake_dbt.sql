@@ -79,7 +79,7 @@ wks_taiwan_regional_sellout_offtake_npd as
 ),
 wks_vietnam_regional_sellout_offtake_npd as
 (
-    select * from {{ ref('vnwks_integration__wks_vietnam_regional_sellout_offtake_npd') }}
+    select * from {{ ref('vnmwks_integration__wks_vietnam_regional_sellout_offtake_npd') }}
 ),
 cn_wks_rpt_regional_sellout_offtake_npd as
 (
