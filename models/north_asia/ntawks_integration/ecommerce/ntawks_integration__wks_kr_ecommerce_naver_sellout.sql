@@ -1,12 +1,5 @@
 with source as (
     select * from {{ source('ntasdl_raw', 'sdl_kr_ecom_naver_sellout_temp') }}
-        where file_name not in (
-        select distinct file_name from 
-        {{ source('ntawks_integration', 'TRATBL_sdl_kr_ecom_naver_sellout_temp__null_test') }}
-        union all
-        select distinct file_name from 
-        {{ source('ntawks_integration', 'TRATBL_sdl_kr_ecom_naver_sellout_temp__format_test') }}
-    )
 ),
 v_calendar_promo_univ_dtls as (
     select * from {{ ref ('aspedw_integration__v_calendar_promo_univ_dtls') }}
