@@ -3,8 +3,7 @@ version: 2
 sources:
   - name: indwks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: indwks_integration
-
+    schema: "{{ target.schema }}"
     quoting:
       database: false
       schema: false
