@@ -1998,167 +1998,58 @@ FROM
                   0 AS projected_gp_current,
                   0 AS projected_cogs_actual,
                   0 AS projected_gp_actual,
-
------------------------------------------------------------------------------------------                  
                   ecpf.goal_qty,
-                  (
-                    (ecpf.goal_gts):: numeric(38, 2) * currex.exch_rate
-                  ) AS goal_gts,
-                  (
-                    (ecpf.goal_eff_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS goal_eff_val,
-                  (
-                    (ecpf.goal_jgf_si_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS goal_jgf_si_val,
-                  (
-                    (ecpf.goal_pmt_terms_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS goal_pmt_terms_val,
-                  (
-                    (ecpf.goal_datains_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS goal_datains_val,
-                  (
-                    (ecpf.goal_exp_adj_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS goal_exp_adj_val,
-                  (
-                    (ecpf.goal_jgf_sd_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS goal_jgf_sd_val,
-                  (
-                    (ecpf.goal_ciw_tot):: numeric(38, 2) * currex.exch_rate
-                  ) AS goal_ciw_tot,
-                  (
-                    (
-                      (ecpf.goal_gts):: numeric(38, 2) * currex.exch_rate
-                    ) - (
-                      (ecpf.goal_ciw_tot):: numeric(38, 2) * currex.exch_rate
-                    )
-                  ) AS goal_nts,
-                  (
-                    (ecpf.goal_cogs):: numeric(38, 2) * currex.exch_rate
-                  ) AS goal_cogs,
-                  (
-                    (ecpf.goal_gp):: numeric(38, 2) * currex.exch_rate
-                  ) AS goal_gp,
-				  
+((ecpf.goal_gts)::NUMERIC(38,2)*currex.exch_rate) AS goal_gts,
+((ecpf.goal_eff_val)::NUMERIC(38,2)*currex.exch_rate) AS goal_eff_val,
+((ecpf.goal_jgf_si_val)::NUMERIC(38,2)*currex.exch_rate) AS goal_jgf_si_val,
+((ecpf.goal_pmt_terms_val)::NUMERIC(38,2)*currex.exch_rate) AS goal_pmt_terms_val,
+((ecpf.goal_datains_val)::NUMERIC(38,2)*currex.exch_rate) AS goal_datains_val,
+((ecpf.goal_exp_adj_val)::NUMERIC(38,2)*currex.exch_rate) AS goal_exp_adj_val,
+((ecpf.goal_jgf_sd_val)::NUMERIC(38,2)*currex.exch_rate) AS goal_jgf_sd_val,
+((ecpf.goal_ciw_tot)::NUMERIC(38,2)*currex.exch_rate) AS goal_ciw_tot,
+(((ecpf.goal_gts)::NUMERIC(38,2)*currex.exch_rate) -((ecpf.goal_ciw_tot)::NUMERIC(38,2)*currex.exch_rate)) AS goal_nts,
+((ecpf.goal_cogs)::NUMERIC(38,2)*currex.exch_rate) AS goal_cogs,
+((ecpf.goal_gp)::NUMERIC(38,2)*currex.exch_rate) AS goal_gp,
 ----------------------------------------------------------------------------------				  
-			    ecpf.bp_qty,
-                  (
-                    (ecpf.bp_gts):: numeric(38, 2) * currex.exch_rate
-                  ) AS bp_gts,
-                  (
-                    (ecpf.bp_eff_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS bp_eff_val,
-                  (
-                    (ecpf.bp_jgf_si_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS bp_jgf_si_val,
-                  (
-                    (ecpf.bp_pmt_terms_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS bp_pmt_terms_val,
-                  (
-                    (ecpf.bp_datains_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS bp_datains_val,
-                  (
-                    (ecpf.bp_exp_adj_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS bp_exp_adj_val,
-                  (
-                    (ecpf.bp_jgf_sd_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS bp_jgf_sd_val,
-                  (
-                    (ecpf.bp_ciw_tot):: numeric(38, 2) * currex.exch_rate
-                  ) AS bp_ciw_tot,
-                  (
-                    (
-                      (ecpf.bp_gts):: numeric(38, 2) * currex.exch_rate
-                    ) - (
-                      (ecpf.bp_ciw_tot):: numeric(38, 2) * currex.exch_rate
-                    )
-                  ) AS bp_nts,
-                  (
-                    (ecpf.bp_cogs):: numeric(38, 2) * currex.exch_rate
-                  ) AS bp_cogs,
-                  (
-                    (ecpf.bp_gp):: numeric(38, 2) * currex.exch_rate
-                  ) AS bp_gp,
-	------------------------------------------------------------------			  
-				  
-			    ecpf.ju_qty,
-                  (
-                    (ecpf.ju_gts):: numeric(38, 2) * currex.exch_rate
-                  ) AS ju_gts,
-                  (
-                    (ecpf.ju_eff_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS ju_eff_val,
-                  (
-                    (ecpf.ju_jgf_si_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS ju_jgf_si_val,
-                  (
-                    (ecpf.ju_pmt_terms_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS ju_pmt_terms_val,
-                  (
-                    (ecpf.ju_datains_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS ju_datains_val,
-                  (
-                    (ecpf.ju_exp_adj_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS ju_exp_adj_val,
-                  (
-                    (ecpf.ju_jgf_sd_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS ju_jgf_sd_val,
-                  (
-                    (ecpf.ju_ciw_tot):: numeric(38, 2) * currex.exch_rate
-                  ) AS ju_ciw_tot,
-                  (
-                    (
-                      (ecpf.ju_gts):: numeric(38, 2) * currex.exch_rate
-                    ) - (
-                      (ecpf.ju_ciw_tot):: numeric(38, 2) * currex.exch_rate
-                    )
-                  ) AS ju_nts,
-                  (
-                    (ecpf.ju_cogs):: numeric(38, 2) * currex.exch_rate
-                  ) AS ju_cogs,
-                  (
-                    (ecpf.ju_gp):: numeric(38, 2) * currex.exch_rate
-                  ) AS ju_gp,
-				  
-------------------------------------------------------------------------------------				  
-			    ecpf.nu_qty,
-                  (
-                    (ecpf.nu_gts):: numeric(38, 2) * currex.exch_rate
-                  ) AS nu_gts,
-                  (
-                    (ecpf.nu_eff_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS nu_eff_val,
-                  (
-                    (ecpf.nu_jgf_si_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS nu_jgf_si_val,
-                  (
-                    (ecpf.nu_pmt_terms_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS nu_pmt_terms_val,
-                  (
-                    (ecpf.nu_datains_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS nu_datains_val,
-                  (
-                    (ecpf.nu_exp_adj_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS nu_exp_adj_val,
-                  (
-                    (ecpf.nu_jgf_sd_val):: numeric(38, 2) * currex.exch_rate
-                  ) AS nu_jgf_sd_val,
-                  (
-                    (ecpf.nu_ciw_tot):: numeric(38, 2) * currex.exch_rate
-                  ) AS nu_ciw_tot,
-                  (
-                    (
-                      (ecpf.nu_gts):: numeric(38, 2) * currex.exch_rate
-                    ) - (
-                      (ecpf.nu_ciw_tot):: numeric(38, 2) * currex.exch_rate
-                    )
-                  ) AS nu_nts,
-                  (
-                    (ecpf.nu_cogs):: numeric(38, 2) * currex.exch_rate
-                  ) AS nu_cogs,
-                  (
-                    (ecpf.nu_gp):: numeric(38, 2) * currex.exch_rate
-                  ) AS nu_gp,
------------------------------------------------------------------------------------                  
+ecpf.bp_qty,
+((ecpf.bp_gts)::NUMERIC(38,2)*currex.exch_rate) AS bp_gts,
+((ecpf.bp_eff_val)::NUMERIC(38,2)*currex.exch_rate) AS bp_eff_val,
+((ecpf.bp_jgf_si_val)::NUMERIC(38,2)*currex.exch_rate) AS bp_jgf_si_val,
+((ecpf.bp_pmt_terms_val)::NUMERIC(38,2)*currex.exch_rate) AS bp_pmt_terms_val,
+((ecpf.bp_datains_val)::NUMERIC(38,2)*currex.exch_rate) AS bp_datains_val,
+((ecpf.bp_exp_adj_val)::NUMERIC(38,2)*currex.exch_rate) AS bp_exp_adj_val,
+((ecpf.bp_jgf_sd_val)::NUMERIC(38,2)*currex.exch_rate) AS bp_jgf_sd_val,
+((ecpf.bp_ciw_tot)::NUMERIC(38,2)*currex.exch_rate) AS bp_ciw_tot,
+(((ecpf.bp_gts)::NUMERIC(38,2)*currex.exch_rate) -((ecpf.bp_ciw_tot)::NUMERIC(38,2)*currex.exch_rate)) AS bp_nts,
+((ecpf.bp_cogs)::NUMERIC(38,2)*currex.exch_rate) AS bp_cogs,
+((ecpf.bp_gp)::NUMERIC(38,2)*currex.exch_rate) AS bp_gp,
+------------------------------------------------------------------			  
+ecpf.ju_qty,
+((ecpf.ju_gts)::NUMERIC(38,2)*currex.exch_rate) AS ju_gts,
+((ecpf.ju_eff_val)::NUMERIC(38,2)*currex.exch_rate) AS ju_eff_val,
+((ecpf.ju_jgf_si_val)::NUMERIC(38,2)*currex.exch_rate) AS ju_jgf_si_val,
+((ecpf.ju_pmt_terms_val)::NUMERIC(38,2)*currex.exch_rate) AS ju_pmt_terms_val,
+((ecpf.ju_datains_val)::NUMERIC(38,2)*currex.exch_rate) AS ju_datains_val,
+((ecpf.ju_exp_adj_val)::NUMERIC(38,2)*currex.exch_rate) AS ju_exp_adj_val,
+((ecpf.ju_jgf_sd_val)::NUMERIC(38,2)*currex.exch_rate) AS ju_jgf_sd_val,
+((ecpf.ju_ciw_tot)::NUMERIC(38,2)*currex.exch_rate) AS ju_ciw_tot,
+(((ecpf.ju_gts)::NUMERIC(38,2)*currex.exch_rate) -((ecpf.ju_ciw_tot)::NUMERIC(38,2)*currex.exch_rate)) AS ju_nts,
+((ecpf.ju_cogs)::NUMERIC(38,2)*currex.exch_rate) AS ju_cogs,
+((ecpf.ju_gp)::NUMERIC(38,2)*currex.exch_rate) AS ju_gp,
+----------------------------------------------------------------------------------				  
+ecpf.nu_qty,
+((ecpf.nu_gts)::NUMERIC(38,2)*currex.exch_rate) AS nu_gts,
+((ecpf.nu_eff_val)::NUMERIC(38,2)*currex.exch_rate) AS nu_eff_val,
+((ecpf.nu_jgf_si_val)::NUMERIC(38,2)*currex.exch_rate) AS nu_jgf_si_val,
+((ecpf.nu_pmt_terms_val)::NUMERIC(38,2)*currex.exch_rate) AS nu_pmt_terms_val,
+((ecpf.nu_datains_val)::NUMERIC(38,2)*currex.exch_rate) AS nu_datains_val,
+((ecpf.nu_exp_adj_val)::NUMERIC(38,2)*currex.exch_rate) AS nu_exp_adj_val,
+((ecpf.nu_jgf_sd_val)::NUMERIC(38,2)*currex.exch_rate) AS nu_jgf_sd_val,
+((ecpf.nu_ciw_tot)::NUMERIC(38,2)*currex.exch_rate) AS nu_ciw_tot,
+(((ecpf.nu_gts)::NUMERIC(38,2)*currex.exch_rate) -((ecpf.nu_ciw_tot)::NUMERIC(38,2)*currex.exch_rate)) AS nu_nts,
+((ecpf.nu_cogs)::NUMERIC(38,2)*currex.exch_rate) AS nu_cogs,
+((ecpf.nu_gp)::NUMERIC(38,2)*currex.exch_rate) AS nu_gp,
+------------------------------------------------------------------	
                   0 AS bme_trans,
                   0 AS incr_gts,
                   0 AS px_case_qty,
@@ -4181,8 +4072,43 @@ FROM
             )
           )
       )
-
+      -----------------------------
+     
+      
+    ) vsf
+    LEFT JOIN (
+      SELECT
+        EDW_VW_MDS_COGS_RATE_DIM    .jj_year,
+        EDW_VW_MDS_COGS_RATE_DIM    .jj_mnth_id,
+        EDW_VW_MDS_COGS_RATE_DIM    .matl_id,
+        EDW_VW_MDS_COGS_RATE_DIM    .crncy,
+        EDW_VW_MDS_COGS_RATE_DIM    .cogs_per_unit
+      FROM
+        EDW_VW_MDS_COGS_RATE_DIM
+    ) cogs ON (
+      (
+        (
+          (
+            ltrim(
+              (vsf.matl_id):: text,
+              (
+                (0):: character varying
+              ):: text
+            ) = ltrim(
+              (cogs.matl_id):: text,
+              (
+                (0):: character varying
+              ):: text
+            )
+          )
+          AND (vsf.jj_period = cogs.jj_mnth_id)
+        )
+        AND (
+          (vsf.local_curr_cd):: text = (cogs.crncy):: text
+        )
+      )
+    )
   )
 
-))
+)
 select * from final
