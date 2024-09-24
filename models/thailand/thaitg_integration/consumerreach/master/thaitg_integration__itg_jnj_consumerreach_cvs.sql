@@ -15,7 +15,7 @@
 }}
 
 with source as(
-    select *, dense_rank() over(partition by null order by file_name desc) as rnk 
+    select *, dense_rank() over(partition by file_name order by file_name desc) as rnk 
     from {{ source('thasdl_raw', 'sdl_jnj_consumerreach_cvs') }}
     where file_name not in (
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_jnj_consumerreach_cvs__null_test') }}
