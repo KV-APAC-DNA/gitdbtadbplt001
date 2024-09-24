@@ -64,14 +64,14 @@ union1 as
 			 Right(B.cal_mnth_id,2)::INT as univ_month,           
              SUM(SELLOUT.QUANTITY) AS SO_SLS_QTY,
              SUM(SELLOUT.ACHIEVEMENT_NR) AS SO_SLS_VALUE,
-			 SELLOUT.MOTHERSKU_CODE as msl_product_code,
-			SELLOUT.MOTHERSKU_NAME as msl_product_desc,
-			SELLOUT.class_desc as store_grade,
-			retailer_category_name as retail_env,
-			SELLOUT.business_channel as channel,
-			RTRUNIQUECODE AS distributor_additional_attribute1,
-		   RTRLATITUDE AS distributor_additional_attribute2,
-		   RTRLONGITUDE AS distributor_additional_attribute3
+			 rtrim(SELLOUT.MOTHERSKU_CODE) as msl_product_code,
+			 rtrim(SELLOUT.MOTHERSKU_NAME) as msl_product_desc,
+			 rtrim(SELLOUT.class_desc) as store_grade,
+			 rtrim(retailer_category_name) as retail_env,
+			 rtrim(SELLOUT.business_channel) as channel,
+			 rtrim(RTRUNIQUECODE) AS distributor_additional_attribute1,
+		     rtrim(RTRLATITUDE) AS distributor_additional_attribute2,
+		     rtrim(RTRLONGITUDE) AS distributor_additional_attribute3
 		   FROM V_RPT_SALES_DETAILS_WITH_HISTORY SELLOUT
            LEFT JOIN EDW_VW_OS_TIME_DIM B
            ON SELLOUT.DAY=B.CAL_DATE_ID
