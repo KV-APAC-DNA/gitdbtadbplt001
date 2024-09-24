@@ -1,7 +1,7 @@
 sources:
   - name: idnwks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: idnwks_integration
+    schema: "{{ target.schema if target.name in ('default') else 'idnwks_integration' }}"
     quoting:
       database: false
       schema: false

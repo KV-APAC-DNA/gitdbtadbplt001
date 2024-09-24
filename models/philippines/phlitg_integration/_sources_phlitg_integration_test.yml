@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: phlwks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: phlwks_integration
+    schema: "{{ target.schema if target.name in ('default') else 'phlwks_integration' }}"
     quoting:
       database: false
       schema: false
