@@ -1,5 +1,12 @@
 with source as (
     select * from {{ source('aspsdl_raw', 'sdl_rg_travel_retail_sales_stock') }}
+    where file_name not in (
+        select distinct file_name from {{source('aspwks_integration','TRATBL_sdl_rg_travel_retail_sales_stock__null_test')}}
+        union all
+        select distinct file_name from {{source('aspwks_integration','TRATBL_sdl_rg_travel_retail_sales_stock__product_lookup_test')}}
+        union all
+        select distinct file_name from {{source('aspwks_integration','TRATBL_sdl_rg_travel_retail_sales_stock__channel_lookup_test')}}
+    )
 ),
 final as (
     select
@@ -7,7 +14,7 @@ final as (
         trim(retailer_name) as retailer_name,
         trim(year) as year,
         trim(month) as month,
-        trim(dcl_code) as dcl_code,
+        REGEXP_REPLACE(dcl_code, '[^A-Za-z0-9-]','') as dcl_code,
         trim(sap_code) as sap_code,
         trim(reference) as reference,
         trim(product_desc) as product_desc,

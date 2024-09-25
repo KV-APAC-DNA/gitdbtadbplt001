@@ -21,13 +21,15 @@ sources:
                 config:
                   store_failures: true
                   schema: ntawks_integration
+                  severity: error
             - test_null:
                 select_columns: ["retailer_sku_code", "name", "ean"]
                 not_null_columns: ["retailer_sku_code", "name", "ean"]
                 name: TRATBL_sdl_mds_kr_ecom_offtake_product_mapping__null_test
                 config:
                   store_failures: true
-                  schema: ntawks_integration     
+                  schema: ntawks_integration  
+                  severity: error   
       - name: sdl_kr_ecommerce_offtake_product_master
       - name: sdl_mds_tw_sku_benchmarks
       - name: sdl_mds_kr_sku_benchmarks
@@ -42,6 +44,7 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+                severity: error
           - test_duplicate:
               select_columns: ["begin","end","nts_si","offtake_si","tp_si","ciw_si"]
               group_by_columns: ["begin","end","nts_si","offtake_si","tp_si","ciw_si"]
@@ -49,6 +52,7 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+                severity: error
       - name: sdl_mds_tw_sfmc_gender
         tags: ["na_mds_sdl_itg_load","ingestion"]
         tests:
@@ -58,12 +62,14 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+                severity: error
           - test_duplicate__ff:
               group_by_columns: ["gender_raw"]
               name: TRATBL_sdl_mds_tw_sfmc_gender__duplicate_test
               config:
                 store_failures: true
                 schema: ntawks_integration
+                severity: error
       - name: sdl_mds_tw_sfmc_member_tier
         tags: ["na_mds_sdl_itg_load","ingestion"]
         tests:
@@ -73,12 +79,14 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+                severity: error
           - test_duplicate__ff:
               group_by_columns: ["tier_raw"]
               name: TRATBL_sdl_mds_tw_sfmc_member_tier__duplicate_test
               config:
                 store_failures: true
                 schema: ntawks_integration
+                severity: error
       - name: sdl_mds_tw_sfmc_channel
         tags: ["na_mds_sdl_itg_load","ingestion"]
         tests:
@@ -88,12 +96,14 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+                severity: error
           - test_duplicate__ff:
               group_by_columns: ["channel_raw"]
               name: TRATBL_sdl_mds_tw_sfmc_channel__duplicate_test
               config:
                 store_failures: true
                 schema: ntawks_integration
+                severity: error
       - name: sdl_mds_tw_ps_weights
         tags: ["na_mds_sdl_itg_load","ingestion"]
         tests:
@@ -104,6 +114,7 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+                severity: error
           - test_duplicate:
               select_columns: ["re","kpi","channel"]
               group_by_columns: ["re","kpi","channel"]
@@ -111,6 +122,7 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+                severity: error
       - name: sdl_mds_kr_ps_weights
         tags: ["na_mds_sdl_itg_load","ingestion"]
         tests:
@@ -121,6 +133,7 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+                severity: error
           - test_duplicate:
               select_columns: ["re","kpi","channel"]
               group_by_columns: ["re","kpi","channel"]
@@ -128,6 +141,7 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+                severity: error
       - name: sdl_mds_hk_ps_weights
         tags: ["na_mds_sdl_itg_load","ingestion"]
         tests:
@@ -138,6 +152,7 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+                severity: error
           - test_duplicate:
               select_columns: ["re","kpi","channel"]
               group_by_columns: ["re","kpi","channel"]
@@ -145,6 +160,7 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+                severity: error
       - name: sdl_mds_tw_ps_targets
         tags: ["na_mds_sdl_itg_load","ingestion"]
         tests:
@@ -155,6 +171,7 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+                severity: error
           - test_duplicate:
               select_columns: ["kpi","channel","re","attribute_1","attribute_2","value"]
               group_by_columns: ["channel","re","attribute_1","attribute_2","value"]
@@ -162,6 +179,7 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+                severity: error
       - name: sdl_mds_kr_ps_targets
         tags: ["na_mds_sdl_itg_load","ingestion"]    
         tests:
@@ -172,6 +190,7 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+                severity: error
           - test_duplicate:
               select_columns: ["kpi","channel","re","attribute_1","attribute_2","value"]
               group_by_columns: ["channel","re","attribute_1","attribute_2","value"]
@@ -179,6 +198,7 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration   
+                severity: error
       - name: sdl_mds_hk_ps_targets 
         tags: ["na_mds_sdl_itg_load","ingestion"]
         tests:
@@ -189,6 +209,7 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+                severity: error
           - test_duplicate:
               select_columns: ["kpi","channel","re","attribute_1","attribute_2","value"]
               group_by_columns: ["channel","re","attribute_1","attribute_2","value"]
@@ -196,6 +217,7 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+                severity: error
       - name: sdl_tw_sales_target
         tags: ['j_tw_sales_target_wrapper',"transformation"]
 
@@ -209,6 +231,7 @@ sources:
                 config:
                   store_failures: true
                   schema: ntawks_integration
+                  severity: error
             - test_null:
                 not_null_columns: ["code","name","reportto_code","reportto_name","reverse_code"]
                 select_columns: ["code","name","reportto_code","reportto_name","reverse_code"]
@@ -216,6 +239,7 @@ sources:
                 config:
                   store_failures: true
                   schema: ntawks_integration
+                  severity: error
       - name: sdl_mds_tw_customer_sales_rep_mapping
         tags: ["na_mds_sdl_itg_load","ingestion"]
         tests:
@@ -226,6 +250,7 @@ sources:
                 config:
                   store_failures: true
                   schema: ntawks_integration
+                  severity: error
             - test_null:
                 not_null_columns: ["year_code","month_code","month_name","ec_code","ec_name","offtake_inc_code","offtake_inc_name","customer_code","customer_name_code"]
                 select_columns: ["year_code","month_code","month_name","ec_code","ec_name","offtake_inc_code","offtake_inc_name","customer_code","customer_name_code","customer_name_local","s_name","psr_code_01_code","psr_code_01_name","psr_code_02_code","psr_code_02_name","psr_code_03_code","psr_code_03_name","psr_code_04_code","psr_code_04_name","psr_code_05_code","psr_code_05_name"]
@@ -233,4 +258,13 @@ sources:
                 config:
                   store_failures: true
                   schema: ntawks_integration
-     
+                  severity: error
+  - name: aspitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: aspitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_mysls_prod_trnl

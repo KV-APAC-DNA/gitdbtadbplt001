@@ -29,7 +29,7 @@ edw_vw_vn_material_dim as
 ),
 itg_query_parameters as
 (
-    select * from {{ source('aspitg_integration','itg_query_parameters') }}
+    select * from {{ source('sgpitg_integration','itg_query_parameters') }}
 ),
 edw_list_price as
 (

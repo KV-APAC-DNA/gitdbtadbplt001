@@ -100,7 +100,7 @@ from (
                             and agg.sap_parent_customer_key = base.sap_prnt_cust_key (+)
                             and agg.dstrbtr_grp_cd = base.dstrbtr_grp_cd (+)
                             and agg.dstr_cd_nm = base.dstr_cd_nm (+)
-                            and agg.parent_customer_cd = base.parent_customer_cd
+                            and agg.parent_customer_cd = base.parent_customer_cd(+)
                             and agg.matl_num = base.matl_num (+)
                             and agg.month = base.jj_mnth_id (+)
                             and agg.month <= (

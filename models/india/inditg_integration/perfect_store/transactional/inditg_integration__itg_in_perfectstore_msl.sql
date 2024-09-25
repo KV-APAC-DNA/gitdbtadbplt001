@@ -16,12 +16,12 @@
         (SELECT Visit_ID,
                 CASE
                 WHEN REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-3][0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9]') OR REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9]') 
-                THEN TO_DATE(Visit_DateTime,'YYYY-MM-DD')
+                THEN TO_DATE(Visit_DateTime)
                 WHEN REGEXP_LIKE (UPPER(TRIM(Visit_DateTime)),'[0-3][0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9][0-9][0-9]') OR REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9][0-9][0-9]')
-                THEN TO_DATE(Visit_DateTime,'YYYY-MM-DD')
+                THEN TO_DATE(Visit_DateTime)
                 WHEN REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-3][0-9]-[1-2][0-9]') OR REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-3][0-9]-[1-2][0-9]') OR REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-9]-[1-2][0-9]') OR REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-9]-[1-2][0-9]') 
-                THEN TO_DATE(Visit_DateTime,'YYYY-MM-DD')
-                ELSE TO_DATE(TRIM(Visit_DateTime),'YYYY-MM-DD')
+                THEN TO_DATE(Visit_DateTime)
+                ELSE TO_DATE(TRIM(Visit_DateTime))
             END AS Visit_DateTime,
             Region,
             JnJRKAM,
@@ -49,21 +49,28 @@
     )
 }}
 
+
 with source as
 (
     select * from {{ source('indsdl_raw', 'sdl_in_perfectstore_msl') }}
+    where file_name not in (
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_perfectstore_msl__null_test')}}
+        union all
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_perfectstore_msl__duplicate_test')}}
+        union all
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_perfectstore_msl__date_format_test')}})
 ),
 final as
 (
     SELECT Visit_ID,
             CASE
             WHEN REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-3][0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9]') OR REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9]') 
-            THEN TO_DATE(Visit_DateTime,'YYYY-MM-DD')
+            THEN TO_DATE(Visit_DateTime)
             WHEN REGEXP_LIKE (UPPER(TRIM(Visit_DateTime)),'[0-3][0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9][0-9][0-9]') OR REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9][0-9][0-9]')
-            THEN TO_DATE(Visit_DateTime,'YYYY-MM-DD')
+            THEN TO_DATE(Visit_DateTime)
             WHEN REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-3][0-9]-[1-2][0-9]') OR REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-3][0-9]-[1-2][0-9]') OR REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-9]-[1-2][0-9]') OR REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-9]-[1-2][0-9]') 
-            THEN TO_DATE(Visit_DateTime,'YYYY-MM-DD')
-            ELSE TO_DATE(TRIM(Visit_DateTime),'YYYY-MM-DD')
+            THEN TO_DATE(Visit_DateTime)
+            ELSE TO_DATE(TRIM(Visit_DateTime))
         END AS Visit_DateTime,
         Region,
         JnJRKAM,

@@ -39,7 +39,7 @@ final as (
         currency,
         crt_dttm,
         updt_dttm as upd_dttm,
-        null::varchar(100) as filename,
+        file_name::varchar(255) as filename,
         null::varchar(14) as run_id
     from source
 )

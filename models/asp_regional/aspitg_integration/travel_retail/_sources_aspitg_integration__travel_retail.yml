@@ -122,7 +122,7 @@ sources:
                 schema: aspwks_integration
           - test_lookup__ff:
               failure_reason: "Missing DCL Code records compared with master"
-              column: "trim(dcl_code)"
+              column: " REGEXP_REPLACE(dcl_code, '[^A-Za-z0-9-]','')"
               lookup_column: "trim(dcl_code)"
               lookup_table: "{{ ref('aspitg_integration__itg_rg_travel_retail_product_mapping') }}"
               lookup_filter: "upper(ctry_cd) = 'KR'"
@@ -132,8 +132,7 @@ sources:
                 schema: aspwks_integration
           - test_lookup__ff:
               failure_reason: "Missing Channel records compared with master"
-              extra_col: "case when upper(retailer_name) in ('LTJ','LTM','LTW') then 'LOTTE' when upper(retailer_name) in ('SLJ','SLM') then 'SHILLA' when upper(retailer_name) in ('SGB','SGM') then 'SSG' when upper(retailer_name) in ('HDC') then 'HDC' when upper(retailer_name) in ('DOOTA') then 'DOOTA' when upper(retailer_name) in ('HANWHA') then 'HANWHA' when upper(retailer_name) in ('DONGWHA') then 'DONGWHA' when upper(retailer_name) in ('HYUNDAI','HYUNDAI DDM','HYUNDAI COEX') then 'HYUNDAI' end as retailer_name_ss"
-              column: "(upper(retailer_name_ss),upper(location_name))"
+              column: "(upper(case when upper(retailer_name) in ('LTJ','LTM','LTW') then 'LOTTE' when upper(retailer_name) in ('SLJ','SLM') then 'SHILLA' when upper(retailer_name) in ('SGB','SGM') then 'SSG' when upper(retailer_name) in ('HDC') then 'HDC' when upper(retailer_name) in ('DOOTA') then 'DOOTA' when upper(retailer_name) in ('HANWHA') then 'HANWHA' when upper(retailer_name) in ('DONGWHA') then 'DONGWHA' when upper(retailer_name) in ('HYUNDAI','HYUNDAI DDM','HYUNDAI COEX') then 'HYUNDAI' end),upper(location_name))"
               lookup_column: "upper(retailer_name),upper(door_name)"
               lookup_table: "{{ ref('aspitg_integration__itg_rg_travel_retail_channel_mapping') }}"
               lookup_filter: "upper(ctry_cd) = 'KR'"

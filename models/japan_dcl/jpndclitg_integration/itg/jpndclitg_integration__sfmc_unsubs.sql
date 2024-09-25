@@ -2,15 +2,16 @@
     config
     (
         materialized='incremental',
-        incremental_strategy = 'delete+insert',
-        unique_key = ['subscriberkey']
+        incremental_strategy = 'append'
     )
 }}
 
 
 with source as
 (
-    select * from {{ source('jpdclsdl_raw', 'sfmc_unsubs') }}
+    select *, dense_rank() over(partition by subscriberkey order by file_name desc) as rnk 
+    from {{ source('jpdclsdl_raw', 'sfmc_unsubs') }}
+    --qualify rnk =1
 ),
 
 final as
@@ -30,7 +31,8 @@ final as
         current_timestamp()::timestamp_ntz(9) as inserted_date,
         null::varchar(100) as inserted_by,
         current_timestamp()::timestamp_ntz(9) as updated_date,
-        null::varchar(9) as updated_by
+        null::varchar(9) as updated_by,
+        file_name::varchar(255) as file_name
     from source
 )
 

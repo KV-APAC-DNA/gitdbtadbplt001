@@ -7,6 +7,9 @@
 
 with sdl_kr_dongbu_lsd_gt_sellout as (
     select * from {{ source('ntasdl_raw', 'sdl_kr_dongbu_lsd_gt_sellout') }}
+    where file_name not in (
+        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_dongbu_lsd_gt_sellout__null_test') }}
+    )
 ),
 final as (
 SELECT dstr_nm,
@@ -21,7 +24,8 @@ SELECT dstr_nm,
   qty,
   unit_price,
   cust_cd,
-  current_timestamp() as crtd_dttm
+  current_timestamp() as crtd_dttm,
+  file_name::varchar(255) as file_name
 FROM sdl_kr_dongbu_lsd_gt_sellout
 
 )

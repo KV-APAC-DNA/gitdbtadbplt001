@@ -11,7 +11,13 @@
                                         TRIM(SDII.INVOICE_NO),
                                         TRIM(SDII.PRODUCT_CODE),
                                         replace(sdii.invoice_date,'T',' ')::timestamp_ntz(9)
-                                FROM {{ source('idnsdl_raw', 'sdl_distributor_ivy_invoice') }} SDII) 
+                                FROM {{ source('idnsdl_raw', 'sdl_distributor_ivy_invoice') }} SDII
+                                where SDII.file_name not in (
+                                select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_invoice__null_test') }}
+                                union all
+                                select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_invoice__test_lookup__ff') }}
+                                )
+                                ) 
                                 AND 
                                     (
                                         (nvl(upper(trim(DSTRBTR_GRP_CD)),'NA')) in 
@@ -28,7 +34,13 @@
 
 
 with source as (
-    select * from {{ source('idnsdl_raw', 'sdl_distributor_ivy_invoice') }}
+    select *, dense_rank() over(partition by TRIM(DISTRIBUTOR_CODE),TRIM(INVOICE_NO),TRIM(PRODUCT_CODE),replace(invoice_date,'T',' ') order by file_name desc) as rnk 
+    from {{ source('idnsdl_raw', 'sdl_distributor_ivy_invoice') }}
+    where file_name not in (
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_invoice__null_test') }}
+            union all
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_invoice__test_lookup__ff') }}
+    ) qualify rnk =1
 ),
 itg_mds_id_dist_reporting_control_sellout_sales as (
     select * from {{ ref('idnitg_integration__itg_mds_id_dist_reporting_control_sellout_sales') }}
@@ -67,7 +79,8 @@ invoice as (
         ,jj_mnth_id
         ,trim(sdii.batch_no) as batch_no
         ,trim(sdii.uom) as uom
-        ,invoice_status
+        ,invoice_status,
+        sdii.file_name
     from sdii
         ,edw_distributor_dim edd
         ,edw_product_dim epd
@@ -248,7 +261,8 @@ transformed as (
 		,sdii.run_id
 		,trim(sdii.batch_no) as batch_no
 		,trim(sdii.uom) as uom
-		,trim(invoice_status) as invoice_status
+		,trim(invoice_status) as invoice_status,
+        sdii.file_name as file_name
 	FROM sdii
 		,edw_distributor_dim edd
 		,edw_product_dim epd
@@ -297,6 +311,7 @@ final as (
         ,crtd_dttm::timestamp_ntz(9) as crtd_dttm
         ,updt_dttm::timestamp_ntz(9) as updt_dttm
         ,run_id::number(14,0) as run_id
+        ,transformed.file_name::varchar(255) as file_name
     from transformed
     left join joined lkp on coalesce(lkp.trans_key,'') || coalesce(lkp.batch_no,'') || coalesce(lkp.uom,'')  =   coalesce(transformed.trans_key,'') || coalesce(transformed.batch_no,'') || coalesce(transformed.uom,'')
 )

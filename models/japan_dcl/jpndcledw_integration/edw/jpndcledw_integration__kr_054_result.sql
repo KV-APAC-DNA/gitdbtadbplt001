@@ -1,3 +1,4 @@
+{% if build_month_end_job_models()  %}
 with KR_054_POINT_HIST as (
 select * from {{ ref('jpndcledw_integration__kr_054_point_hist') }}
 ),
@@ -309,3 +310,6 @@ pt_rsn::varchar(300) as pt_rsn
 from transformed
 )
 select * from final
+{% else %}
+    select * from {{this}}
+{% endif %}

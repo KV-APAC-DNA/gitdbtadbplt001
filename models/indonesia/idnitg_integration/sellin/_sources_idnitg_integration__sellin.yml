@@ -19,6 +19,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
           - test_duplicate:
               select_columns: ["region_code","region_id","distrbutor_code_id","brand_id","jj_year_month"]
               group_by_columns: ["region_code","region_id","distrbutor_code_id","brand_id","jj_year_month"]
@@ -26,4 +27,5 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
           
