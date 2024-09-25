@@ -13,7 +13,8 @@ SELECT
     jj_year,
     jj_mnth_id,
     MAX(wk_end_dt) as wk_end_dt,
-    coalesce (matl_id,lst_sku) as matl_id,
+    matl_id,
+    lst_sku,
     matl_desc,
     iri_ean,
     iri_market,
@@ -65,15 +66,15 @@ SELECT
     iri.sales_grp_cd,
     iri.sales_grp_nm,
     iri.scan_sales + LAG(iri.scan_sales, 1) OVER (
-        PARTITION BY iri.matl_id,
+        PARTITION BY iri.lst_sku,
         iri.representative_cust_cd
-        ORDER BY iri.matl_id,
+        ORDER BY iri.lst_sku,
             iri.jj_mnth_id,
             iri.representative_cust_cd
     ) + LAG(iri.scan_sales, 2) OVER (
-        PARTITION BY iri.matl_id,
+        PARTITION BY iri.lst_sku,
         iri.representative_cust_cd
-        ORDER BY iri.matl_id,
+        ORDER BY iri.lst_sku,
             iri.jj_mnth_id,
             iri.representative_cust_cd
     ) AS scan_sales
