@@ -6,13 +6,13 @@
         unique_key= ["year"],
         pre_hook = "{% if is_incremental() %}
         delete from {{this}} where cast(year as integer) in (
-        select cast(year as integer) from {{ source('idnsdl_raw', 'sdl_mds_id_lav_mcs_list') }});
+        select cast(year as integer) from {{ source('idnsdl_raw', 'sdl_mds_id_lav_mcs_list_adftemp') }});
         {% endif %}"
     )
 }}
 with source as 
 (
-    select * from {{ source('idnsdl_raw', 'sdl_mds_id_lav_mcs_list') }}
+    select * from {{ source('idnsdl_raw', 'sdl_mds_id_lav_mcs_list_adftemp') }}
 ),
 edw_time_dim as 
 (

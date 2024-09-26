@@ -1,6 +1,6 @@
 with source as 
 (
-    select * from {{ source('idnsdl_raw', 'sdl_mds_id_distributor_customer_update') }}
+    select * from {{ source('idnsdl_raw', 'sdl_mds_id_distributor_customer_update_adftemp') }}
 ),
 final as 
 (
