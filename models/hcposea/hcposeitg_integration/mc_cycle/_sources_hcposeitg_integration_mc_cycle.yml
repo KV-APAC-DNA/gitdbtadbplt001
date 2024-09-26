@@ -1,0 +1,49 @@
+version: 2
+
+sources:
+  - name: hcposesdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: hcposesdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+
+    - name: sdl_hcp_osea_mc_cycle
+      tags: ["iconnect_data_ingestion","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["mc_cycle_id", "country_code"]
+          not_null_columns: ["mc_cycle_id", "country_code"]
+          name: TRATBL_sdl_hcp_osea_mc_cycle__null_test
+          config:
+            store_failures: true
+            schema: hcposewks_integration
+      - test_duplicate:
+          select_columns: ["mc_cycle_id", "country_code"]
+          group_by_columns: ["mc_cycle_id", "country_code"]
+          name: TRATBL_sdl_hcp_osea_mc_cycle__duplicate_test
+          config:
+            store_failures: true
+            schema: hcposewks_integration
+            
+      
+    - name: sdl_hcp_osea_mc_cycle_channel
+      tags: ["iconnect_data_ingestion","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["mc_cycle_channel_id"]
+          not_null_columns: ["mc_cycle_channel_id"]
+          name: TRATBL_sdl_hcp_osea_mc_cycle_channel__null_test
+          config:
+            store_failures: true
+            schema: hcposewks_integration
+      - test_duplicate:
+          select_columns: ["mc_cycle_channel_id", "country_code"]
+          group_by_columns: ["mc_cycle_channel_id", "country_code"]
+          name: TRATBL_sdl_hcp_osea_mc_cycle_channel__duplicate_test
+          config:
+            store_failures: true
+            schema: hcposewks_integration
+            
