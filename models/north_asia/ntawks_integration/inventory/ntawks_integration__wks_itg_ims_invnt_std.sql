@@ -4,15 +4,14 @@
     )
 }}
 with sdl_tw_ims_dstr_std_stock as(
-    select *, dense_rank() over (partition by coalesce(invnt_dt,'1/1/1900'),coalesce(wks_itg_ims_invnt_std.prod_cd,'#'),coalesce(wks_itg_ims_invnt_std.ean_num,'#'),coalesce(wks_itg_ims_invnt_std.dstr_nm,'#') order by filename desc ) rnk from {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_stock') }}
-    qualify rnk =1
+    select * from {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_stock') }}
 ),
 tw_ims_distributor_ingestion_metadata as(
     select * from {{ source('ntawks_integration', 'tw_ims_distributor_ingestion_metadata') }}
 ),
 itg_ims_invnt as(
     select * from {{ source('ntaitg_integration', 'itg_ims_invnt_temp') }}
-)
+),
 stock as
 (
     SELECT 
