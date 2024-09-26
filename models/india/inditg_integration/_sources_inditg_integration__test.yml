@@ -55,6 +55,7 @@ sources:
     - name: TRATBL_sdl_rrl_ruralstoreorderdetail__null_test
     - name: TRATBL_sdl_rrl_ruralstoreorderheader__null_test
     - name: TRATBL_sdl_rrl_retailermaster__null_test
+    - name: TRATBL_sdl_rrl_udcmapping__null_test
 
       
      

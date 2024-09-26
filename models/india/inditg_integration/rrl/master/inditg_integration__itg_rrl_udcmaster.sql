@@ -8,8 +8,9 @@
 
 with source as
 (
-    select *,dense_rank()over(partition by udccode order by filename desc) from {{ source('indsdl_raw', 'sdl_rrl_udcmaster') }}
+    select *,dense_rank()over(partition by udccode order by filename desc) rnk from {{ source('indsdl_raw', 'sdl_rrl_udcmaster') }}
      where filename not in (select distinct file_name from {{ source('indwks_integration', 'TRATBL_sdl_rrl_udcmaster__null_test') }})
+     qualify rnk =1
 ),
 final as
 (
