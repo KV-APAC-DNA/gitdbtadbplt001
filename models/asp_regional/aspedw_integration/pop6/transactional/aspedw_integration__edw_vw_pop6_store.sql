@@ -1,3 +1,9 @@
+{{
+    config(
+        materialized='view'
+    )
+}}
+
 with source as (
     select * from {{ ref('aspitg_integration__itg_pop6_pops') }}
 ),
