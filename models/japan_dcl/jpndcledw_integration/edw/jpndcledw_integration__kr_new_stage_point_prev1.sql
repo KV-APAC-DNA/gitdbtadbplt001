@@ -1,6 +1,6 @@
 with source as
 (
-    select * from {{ ref('jpndcledw_integration__kr_new_stage_point_prev') }}
+    select * from {{ source('jpdcledw_integration', 'kr_new_stage_point_prev') }}
 ),
 
 final as

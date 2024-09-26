@@ -8,7 +8,9 @@
 
 with source as
 (
-    select * from {{ source('indsdl_raw', 'sdl_rrl_udcmaster') }}
+    select *,dense_rank()over(partition by udccode order by filename desc) rnk from {{ source('indsdl_raw', 'sdl_rrl_udcmaster') }}
+     where filename not in (select distinct file_name from {{ source('indwks_integration', 'TRATBL_sdl_rrl_udcmaster__null_test') }})
+     qualify rnk =1
 ),
 final as
 (
@@ -20,7 +22,6 @@ final as
     filename::varchar(100) as filename,
     crt_dttm::timestamp_ntz(9) as crt_dttm,
     convert_timezone('Asia/Singapore',current_timestamp())::timestamp_ntz as updt_dttm
-    
     from source
 )
 select * from final

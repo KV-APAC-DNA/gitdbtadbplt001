@@ -193,6 +193,11 @@ sources:
       - name: cit85osalh_kkng
       - name: item_bom_ikou_kizuna
       - name: tm14shkos_mainte_work
+      - name: dm_user_attr_prev
+      - name: dm_kesai_mart_dly_general_prev
+      - name: kr_new_stage_point_prev
+      - name: teikikeiyaku_data_mart_uni_prev
+      - name: dm_user_attr_sfcc_v_prev
       
 
   - name: jpdclitg_integration
