@@ -1,3 +1,11 @@
+{{
+    config
+    (
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";",
+    )
+}}
+
+
 with tw06_kokyastatus as (
     select * from  {{ ref('jpndcledw_integration__tw06_kokyastatus') }}
 ),
