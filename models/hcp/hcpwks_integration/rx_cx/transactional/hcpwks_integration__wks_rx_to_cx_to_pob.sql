@@ -91,6 +91,24 @@ itg_query_parameters as
 (
     select * from {{ source('inditg_integration', 'itg_query_parameters') }}
 ),
+wks_rx_to_cx_to_pob_rxrtl_urc as (
+SELECT rtl.urc,
+       rxrtl.rx_product,
+       SUM(rxrtl.rx_units) AS rx_units,
+       rxrtl.quarter,
+       rxrtl.MONTH,
+       rxrtl.YEAR
+FROM wks_rx_to_cx_to_pob_rxrtl rxrtl
+LEFT JOIN (SELECT urc,
+                  v_custid_rtl
+                  --ROW_NUMBER() OVER (PARTITION BY urc ORDER BY v_custid_rtl DESC) AS rnk
+           FROM itg_hcp360_in_ventasys_rtlmaster
+           WHERE urc IS NOT NULL 
+		   AND is_active = 'Y'
+		   GROUP BY 1,2) rtl
+	   ON rxrtl.v_custid_rtl = rtl.v_custid_rtl
+GROUP BY 1,2,4,5,6
+),
 final as
 (
     SELECT cal."year",
@@ -139,7 +157,7 @@ FROM (SELECT *
                     FROM itg_query_parameters
                     WHERE parameter_type = 'Rx_to_Cx_to_Pob_Product_Mapping'
                     GROUP BY 1)
-              WHERE UPPER(prod_vent) LIKE 'ORSL%'
+              --WHERE UPPER(prod_vent) LIKE 'ORSL%'
               GROUP BY 1) mapp
   LEFT JOIN (SELECT franchise_name, brand_name, pmap.prod_vent
              FROM edw_product_dim pd
@@ -164,7 +182,7 @@ FROM (SELECT *
                          WHERE parameter_type = 'Rx_to_Cx_to_Pob_Product_Mapping'
                          GROUP BY 1,2) pmap
                      ON sd.product_code = pmap.product_code
-                    AND UPPER(prod_vent) LIKE 'ORSL%'
+                    --AND UPPER(prod_vent) LIKE 'ORSL%'
              WHERE sd.fisc_yr >= EXTRACT(YEAR FROM current_timestamp()) - 2
              GROUP BY 1,2,3,4) sales         
          ON cal."year" = sales.year
@@ -180,7 +198,7 @@ FROM (SELECT *
                     SUM(pob_units) AS pob_units
              FROM edw_rpt_pob_cx_final
              WHERE year >= EXTRACT(YEAR FROM current_timestamp()) - 2
-             AND UPPER(ventasys_product) LIKE 'ORSL%'
+             --AND UPPER(ventasys_product) LIKE 'ORSL%'
              GROUP BY 1,
                       2,
                       3,
@@ -193,10 +211,10 @@ FROM (SELECT *
              FROM itg_hcp360_in_ventasys_hcprtl) hcprtl
          ON rtl.v_custid_rtl = hcprtl.v_custid_rtl
         AND hcprtl.rnk = 1
-  LEFT JOIN (SELECT * FROM wks_rx_to_cx_to_pob_rxrtl) rxrtl
+  LEFT JOIN (SELECT * FROM wks_rx_to_cx_to_pob_rxrtl_urc) rxrtl
          ON cal."year" = rxrtl.year
         AND LTRIM(cal."month",0) = LTRIM(rxrtl.month,0)
-        AND rtl.v_custid_rtl = rxrtl.v_custid_rtl
+        AND rtl.urc = rxrtl.urc
         AND mapp.prod_vent = rxrtl.rx_product
   LEFT JOIN (SELECT *
              FROM wks_rx_to_cx_to_pob_rtl_dim) rd
