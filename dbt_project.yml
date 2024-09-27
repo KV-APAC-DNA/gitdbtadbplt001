@@ -578,6 +578,9 @@ models:
         pos:
           view:
             +materialized: view
+        lidar:
+          view:
+            +materialized: view
       inditg_integration:
         +materialized: table
         +transient: false
