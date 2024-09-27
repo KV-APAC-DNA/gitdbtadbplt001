@@ -1,3 +1,9 @@
+{{
+    config(
+        sql_header = "alter session set week_start= 7;"
+    )
+}}
+
 with wks_ph_inventory_healthy_unhealthy_analysis as(
 	SELECT * FROM {{ ref('phlwks_integration__wks_ph_inventory_healthy_unhealthy_analysis') }}
 ),
@@ -13,19 +19,19 @@ SELECT inv.*,
 	wkly_avg.min_date,
 	datediff(week, wkly_avg.min_date, last_day(to_date(left(mnth_id, 4) || right(mnth_id, 2), 'yyyymm'))) diff_weeks,
 	CASE 
-		WHEN least(diff_weeks, 52) <= 0
+		WHEN least_ignore_nulls(diff_weeks, 52) <= 0
 			THEN 1
-		ELSE least(diff_weeks, 52)
+		ELSE least_ignore_nulls(diff_weeks, 52)
 		END AS l12m_weeks,
 	CASE 
-		WHEN least(diff_weeks, 26) <= 0
+		WHEN least_ignore_nulls(diff_weeks, 26) <= 0
 			THEN 1
-		ELSE least(diff_weeks, 26)
+		ELSE least_ignore_nulls(diff_weeks, 26)
 		END AS l6m_weeks,
 	CASE 
-		WHEN least(diff_weeks, 13) <= 0
+		WHEN least_ignore_nulls(diff_weeks, 13) <= 0
 			THEN 1
-		ELSE least(diff_weeks, 13)
+		ELSE least_ignore_nulls(diff_weeks, 13)
 		END AS l3m_weeks,
 	inv.last_12months_so_val / l12m_weeks AS l12m_weeks_avg_sales,
 	inv.last_6months_so_val / l6m_weeks AS l6m_weeks_avg_sales,
