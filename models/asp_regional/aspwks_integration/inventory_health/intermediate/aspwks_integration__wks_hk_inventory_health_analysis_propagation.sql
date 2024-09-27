@@ -58,7 +58,7 @@ select * from {{ ref('aspedw_integration__v_edw_customer_sales_dim') }}
 ),
 wks_hk_inventory_health_analysis_propagation_prestep as 
 (
-select * from {{ ref('aspwks_integration__wks_hk_inventory_health_analysis_propagation_prestep') }}
+select * from aspwks_integration.wks_hk_inventory_health_analysis_propagation_prestep
 ),
 cal AS
    (
@@ -451,7 +451,7 @@ round(cast(si_sls_qty as numeric(38,5)),5) as si_sls_qty,round(cast(si_gts_val a
  round(cast (inventory_val_usd as numeric(38,5)),5) as inventory_val_usd,round(cast (so_sls_qty as numeric(38,5)),5) as so_sls_qty,
   round(cast (so_trd_sls as numeric(38,5)),5) as so_trd_sls,
 so_trd_sls_usd  as so_trd_sls_usd,round(cast (COPA.gts as numeric(38,5)),5)as SI_ALL_DB_VAL, round(cast (COPA.gts_usd as numeric (38,5)),5)
- as SI_ALL_DB_VAL_USD,round(cast (Regional.si_inv_db_val as numeric(38,5)),5) as si_inv_db_val, round(cast (Regional.si_inv_db_val_usd as numeric(38,5)),5) as si_inv_db_val_usd,
+ as SI_ALL_DB_VAL_USD,round(cast (COPA.si_inv_db_val as numeric(38,5)),5) as si_inv_db_val, round(cast (COPA.si_inv_db_val_usd as numeric(38,5)),5) as si_inv_db_val_usd,
 last_3months_so_qty,
 		last_6months_so_qty,
 		last_12months_so_qty,
