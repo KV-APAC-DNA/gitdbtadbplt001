@@ -1,60 +1,78 @@
 with edw_vw_os_time_dim as (
-select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
+select * from sgpedw_integration.edw_vw_os_time_dim
+--{{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 vw_edw_reg_exch_rate as (
-select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
+select * from aspedw_integration.vw_edw_reg_exch_rate 
+--{{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
 ),
 edw_vw_greenlight_skus as (
-select * from {{ ref('aspedw_integration__edw_vw_greenlight_skus') }}
+select * from aspedw_integration.edw_vw_greenlight_skus
+--{{ ref('aspedw_integration__edw_vw_greenlight_skus') }}
 ),
 edw_gch_producthierarchy as (
-select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
+select * from aspedw_integration.edw_gch_producthierarchy
+--{{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 edw_material_sales_dim as (
-select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
+select * from aspedw_integration.edw_material_sales_dim
+--{{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 edw_gch_customerhierarchy as (
-select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
+select * from aspedw_integration.edw_gch_customerhierarchy
+--{{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
 ),
 edw_customer_sales_dim as (
-select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
+select * from aspedw_integration.edw_customer_sales_dim
+--{{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
 edw_customer_base_dim as (
-select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
+select * from aspedw_integration.edw_customer_base_dim
+--{{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 edw_company_dim as (
-select * from {{ ref('aspedw_integration__edw_company_dim') }}
+select * from aspedw_integration.edw_company_dim
+--{{ ref('aspedw_integration__edw_company_dim') }}
 ),
 edw_dstrbtn_chnl  as (
-select * from {{ ref('aspedw_integration__edw_dstrbtn_chnl') }}
+select * from aspedw_integration.edw_dstrbtn_chnl
+--{{ ref('aspedw_integration__edw_dstrbtn_chnl') }}
 ),
 edw_sales_org_dim as (
-select * from {{ ref('aspedw_integration__edw_sales_org_dim') }}
+select * from aspedw_integration.edw_sales_org_dim
+--{{ ref('aspedw_integration__edw_sales_org_dim') }}
 ),
 edw_code_descriptions as (
-select * from {{ ref('aspedw_integration__edw_code_descriptions') }}
+select * from aspedw_integration.edw_code_descriptions
+--{{ ref('aspedw_integration__edw_code_descriptions') }}
 ),
 edw_subchnl_retail_env_mapping as (
 select * from {{ source('aspedw_integration','edw_subchnl_retail_env_mapping') }}
 ),
 edw_customer_dim as (
-select * from {{ ref('indedw_integration__edw_customer_dim') }}
+select * from indedw_integration.edw_customer_dim
+--{{ ref('indedw_integration__edw_customer_dim') }}
 ),
 wks_hk_siso_propagate_final as (
-select * from {{ ref('ntawks_integration__wks_hk_siso_propagate_final') }}
+select * from DEV_DNA_CORE.ALAKSH01_WORKSPACE.ntawks_integration__wks_hk_siso_propagate_final
+--{{ ref('ntawks_integration__wks_hk_siso_propagate_final') }}
 ),
 vw_edw_reg_exch_rate as (
-select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
+select * from aspedw_integration.vw_edw_reg_exch_rate
+--{{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
 ),
 edw_copa_trans_fact as (
-select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
+select * from aspedw_integration.edw_copa_trans_fact
+--{{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 edw_material_dim as (
-select * from {{ ref('aspedw_integration__edw_material_dim') }}
+select * from aspedw_integration.edw_material_dim
+--{{ ref('aspedw_integration__edw_material_dim') }}
 ),
 v_edw_customer_sales_dim as 
 (
-select * from {{ ref('aspedw_integration__v_edw_customer_sales_dim') }}
+select * from aspedw_integration.v_edw_customer_sales_dim
+--{{ ref('aspedw_integration__v_edw_customer_sales_dim') }}
 ),
 wks_hk_inventory_health_analysis_propagation_prestep as 
 (
@@ -451,7 +469,7 @@ round(cast(si_sls_qty as numeric(38,5)),5) as si_sls_qty,round(cast(si_gts_val a
  round(cast (inventory_val_usd as numeric(38,5)),5) as inventory_val_usd,round(cast (so_sls_qty as numeric(38,5)),5) as so_sls_qty,
   round(cast (so_trd_sls as numeric(38,5)),5) as so_trd_sls,
 so_trd_sls_usd  as so_trd_sls_usd,round(cast (COPA.gts as numeric(38,5)),5)as SI_ALL_DB_VAL, round(cast (COPA.gts_usd as numeric (38,5)),5)
- as SI_ALL_DB_VAL_USD,round(cast (Regional.si_inv_db_val as numeric(38,5)),5) as si_inv_db_val, round(cast (Regional.si_inv_db_val_usd as numeric(38,5)),5) as si_inv_db_val_usd,
+ as SI_ALL_DB_VAL_USD,round(cast (COPA.si_inv_db_val as numeric(38,5)),5) as si_inv_db_val, round(cast (COPA.si_inv_db_val_usd as numeric(38,5)),5) as si_inv_db_val_usd,
 last_3months_so_qty,
 		last_6months_so_qty,
 		last_12months_so_qty,
