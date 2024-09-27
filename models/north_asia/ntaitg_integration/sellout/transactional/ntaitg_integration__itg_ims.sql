@@ -10,7 +10,8 @@
     )
 }}
 with sdl_tw_ims_dstr_std_sel_out as (
-    select * from {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_sel_out') }}
+    select *,dense_rank() over(partition by transaction_date,distributor_code order by file_name desc) rnk from {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_sel_out') }}
+    qualify rnk = 1
 ),
 itg_ims_dstr_cust_attr as (
     select * from {{ ref('ntaitg_integration__itg_ims_dstr_cust_attr') }}
