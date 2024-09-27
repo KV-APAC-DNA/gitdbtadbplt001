@@ -1,50 +1,50 @@
 with wks_my_siso_propagate_final as
 (
-select * from snaposewks_integration.wks_my_siso_propagate_final
+select * from {{ref('myswks_integration__wks_my_siso_propagate_final')}}
 ),
 edw_vw_os_customer_dim as 
 (
-select * from snaposeedw_integration.edw_vw_os_customer_dim
+select * from {{ref('mysedw_integration__edw_vw_my_customer_dim')}}
 ),
 edw_vw_os_time_dim as
 (
-select * from snaposeedw_integration.edw_vw_os_time_dim
+select * from {{ref('sgpedw_integration__edw_vw_os_time_dim')}}
 ),
 itg_my_dstrbtrr_dim as 
 (
-select * from snaposeitg_integration.itg_my_dstrbtrr_dim
+select * from {{ref('mysitg_integration__itg_my_dstrbtrr_dim')}}
 ),
 vw_edw_reg_exch_rate as
 (
-select * from snapaspedw_integration.vw_edw_reg_exch_rate
+select * from {{ref('aspedw_integration__vw_edw_reg_exch_rate')}}
 ),
 edw_my_siso_analysis as
 (
-select * from  snaposeedw_integration.edw_my_siso_analysis
+select * from  {{ref('mysedw_integration__edw_my_siso_analysis')}}
 ),
 edw_vw_my_si_pos_inv_analysis as
 (
-select * from snaposeedw_integration.edw_vw_my_si_pos_inv_analysis
+select * from {{ref('mysedw_integration__edw_vw_my_si_pos_inv_analysis')}}
 ),
 edw_material_dim as
 (
-select * from snapaspedw_integration.edw_material_dim
+select * from {{ref('aspedw_integration__edw_material_dim')}}
 ),
 edw_copa_trans_fact as 
 (
-select * from snapaspedw_integration.edw_copa_trans_fact
+select * from {{ref('aspedw_integration__edw_copa_trans_fact')}}
 ),
 wks_my_inventory_health_analysis_propagation_prestep as
 (
-select * from SSHUKL02_WORKSPACE.myswks_integration__wks_my_inventory_health_analysis_propagation_prestep
+select * from {{ref('aspwks_integration__wks_my_inventory_health_analysis_propagation_prestep')}}
 ),
 edw_company_dim as 
 (
-  select * from snapaspedw_integration.edw_company_dim
+  select * from {{ref('aspedw_integration__edw_company_dim')}}
 ),
 v_edw_customer_sales_dim as 
 (
-  select * from snapaspedw_integration.v_edw_customer_sales_dim
+  select * from {{ref('aspedw_integration__v_edw_customer_sales_dim')}}
 ),
 
 regional as 

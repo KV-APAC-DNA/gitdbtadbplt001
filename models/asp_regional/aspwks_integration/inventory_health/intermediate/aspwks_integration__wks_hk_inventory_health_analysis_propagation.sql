@@ -58,7 +58,7 @@ select * from {{ ref('aspedw_integration__v_edw_customer_sales_dim') }}
 ),
 wks_hk_inventory_health_analysis_propagation_prestep as 
 (
-select * from aspwks_integration.wks_hk_inventory_health_analysis_propagation_prestep
+select * from {{ref('aspwks_integration__wks_hk_inventory_health_analysis_propagation_prestep')}}
 ),
 cal AS
    (
