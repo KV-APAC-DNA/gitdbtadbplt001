@@ -1769,7 +1769,7 @@ sotp as
                                     7,
                                     8,
                                     9
-                            ) sap ON sap."ean" = trax_master."ean"
+                            ) sap ON sap."ean" = trax_master."ean" and ltrim(trax_master."ean",0) <> ''
                         )
                     group by 1,
                         2,
