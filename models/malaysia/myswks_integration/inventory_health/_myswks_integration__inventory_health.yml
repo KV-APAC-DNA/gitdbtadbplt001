@@ -41,7 +41,4 @@ models:
     config:
       alias: wks_my_inventory_healthy_unhealthy_analysis
       tags: ["j_ap_my_reg_data_refresh","transformation"]
-  - name: myswks_integration__wks_my_inventory_health_analysis_propagation_prestep
-    config:
-      alias: wks_my_inventory_health_analysis_propagation_prestep
-      tags: ["j_ap_my_reg_data_refresh","transformation"]
+
