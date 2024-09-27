@@ -3,12 +3,21 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['group_ds', 'material', 'file_name', 'syslot'],
-        pre_hook= "delete from {{this}} where trim(coalesce(upper(group_ds), '')) || trim(upper(material)) || trim(substring(file_name, 12, 8)) || trim(coalesce(upper(syslot), '')) in ( select distinct trim(coalesce(upper(group_ds), '')) || trim(upper(material)) || trim(file_date) || trim(coalesce(upper(syslot), '')) from {{ source('vnmsdl_raw', 'sdl_vn_dksh_daily_sales') }} );"
+        pre_hook= "{% if is_incremental()%}
+        delete from {{this}} where trim(coalesce(upper(group_ds), '')) || trim(upper(material)) || trim(substring(file_name, 12, 8)) || trim(coalesce(upper(syslot), '')) in ( select distinct trim(coalesce(upper(group_ds), '')) || trim(upper(material)) || trim(file_date) || trim(coalesce(upper(syslot), '')) from {{ source('vnmsdl_raw', 'sdl_vn_dksh_daily_sales') }} 
+        where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dksh_daily_sales__null_test')}}
+    ));
+        {% endif %}"
     )
 }}
 
 with source as(
-    select * from {{ source('vnmsdl_raw', 'sdl_vn_dksh_daily_sales') }}
+    select *, dense_rank() over (partition by group_ds, material, file_name, syslot order by file_name desc) rnk 
+    from {{ source('vnmsdl_raw', 'sdl_vn_dksh_daily_sales') }}
+    where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dksh_daily_sales__null_test')}}
+    ) qualify rnk = 1
 ),
 final as(
     select

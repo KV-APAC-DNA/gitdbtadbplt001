@@ -174,11 +174,11 @@ kesai AS (
     LEFT JOIN tbpromotion prom ON h.dipromid = prom.dipromid
     LEFT JOIN amount_header wh ON wh.saleno_key = h.saleno_key
     LEFT JOIN prev_ship ON h.kokyano = prev_ship.kokyano
-        AND to_date(IFF(CAST(h.SHUKADATE_P AS STRING) = '0', NULL, CAST(h.SHUKADATE_P AS STRING)),'YYYYMMDD') = prev_ship.ship_dt --- ヘッダーテーブル
+        AND to_date(IFF(CAST(h.SHUKADATE AS STRING) = '0', NULL, CAST(h.SHUKADATE AS STRING)),'YYYYMMDD') = prev_ship.ship_dt --- ヘッダーテーブル
     LEFT JOIN prev_order ON h.kokyano = prev_order.kokyano
         AND to_date(IFF(CAST(h.juchdate AS STRING) = '0', NULL, CAST(h.juchdate AS STRING)),'YYYYMMDD') = prev_order.order_dt
     LEFT JOIN c_tbecclient client ON h.tenpocode = client.c_dstempocode
-    LEFT JOIN cld_m x ON to_date(IFF(CAST(h.SHUKADATE_P AS STRING) = '0', NULL, CAST(h.SHUKADATE_P AS STRING)),'YYYYMMDD') = x.ymd_dt
+    LEFT JOIN cld_m x ON to_date(IFF(CAST(h.SHUKADATE AS STRING) = '0', NULL, CAST(h.SHUKADATE AS STRING)),'YYYYMMDD') = x.ymd_dt
     LEFT JOIN TEIKIKEIYAKU_DATA_MART_UNI a ON h.kesaiid::varchar = a.c_dikesaiid::varchar
         AND h.ordercode = a.diordercode
         AND m.gyono = a.dimeisaiid
@@ -382,7 +382,7 @@ bs AS (
                             OR kesai.meisaikbn <> '商品'
                             )
                         THEN 0
-                    ELSE kesai.warimaenukikingaku / kesai.warimaenukigokei
+                    ELSE trunc((kesai.warimaenukikingaku::number(38,20) / kesai.warimaenukigokei),11)
                     END
                 ), 1) AS RATIO2,
         i13.teikikeiyaku,
@@ -766,7 +766,7 @@ final as(
         z_item_hen_suryo::number(18,0) as z_item_hen_suryo,
         anbun_amount_tax110_ex::float as anbun_amount_tax110_ex,
         z_item_amount_tax_ex::float as z_item_amount_tax_ex,
-        ratio2::number(16,8) as ratio2,
+        trunc(ratio2,8)::number(16,8) as ratio2,
         anbun_soryo::float as anbun_soryo,
         anbun_point_tax_ex::float as anbun_point_tax_ex,
         anbun_tokuten::float as anbun_tokuten,

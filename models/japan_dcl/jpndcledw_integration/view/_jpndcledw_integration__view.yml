@@ -991,9 +991,13 @@ models:
   - name: jpndcledw_integration__cewq028
     config:
       alias: '"cewq028破損商品"'
-      tags: ["japan_dcl_views","inactive"]
+      tags: ["japan_dcl_views","transformation"]
 
   - name: jpndcledw_integration__tw05kokyarecalc
     config:
       alias: tw05kokyarecalc
+      tags: ["japan_dcl_views","transformation"]
+  - name: jpndcledw_integration__list_teiki_remind_new2_v_final
+    config:
+      alias: list_teiki_remind_new2_v_final
       tags: ["japan_dcl_views","transformation"]

@@ -1,5 +1,8 @@
 with source as (
-    select * from {{ source('myssdl_raw', 'sdl_my_dstrbtr_doc_type') }}
+    select * from {{ source('myssdl_raw', 'sdl_my_dstrbtr_doc_type') }} where file_name not in
+    ( 
+      select distinct file_name from {{ source('myswks_integration', 'TRATBL_sdl_my_dstrbtr_doc_type__duplicate_test') }}
+    )
 ),
 final as (
     select
@@ -12,7 +15,8 @@ final as (
         doc_type_desc::varchar(20) as doc_type_desc,
         cdl_dttm::varchar(255) as cdl_dttm,
         curr_dt::timestamp_ntz(9) as crtd_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        file_name::varchar(255) as file_name
     from source
 )
 

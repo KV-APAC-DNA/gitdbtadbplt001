@@ -17,6 +17,7 @@ select
     to_timestamp(store_chk_date, 'DD/MM/YYYY')::timestamp_ntz(9)::timestamp_ntz(9) as store_chk_date,
     run_id::number(14,0) as run_id,
     create_dt::timestamp_ntz(9) as create_dt,
-    current_timestamp()::timestamp_ntz(9) as update_dt 
+    current_timestamp()::timestamp_ntz(9) as update_dt ,
+    file_name::varchar(255) as file_name
 from sdl_perenso_store_chk_hdr )
 select * from final

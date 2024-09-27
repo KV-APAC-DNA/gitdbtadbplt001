@@ -1,5 +1,7 @@
 with source as (
-    select * from {{ source('myssdl_raw','sdl_my_pos_cust_mstr') }}
+    select * from {{ source('myssdl_raw','sdl_my_pos_cust_mstr') }} where file_name not in
+    ( select distinct file_name from {{ source('myswks_integration', 'TRATBL_sdl_my_pos_cust_mstr__duplicate_test') }}
+    )
 ),
 
 final as (
@@ -15,7 +17,8 @@ final as (
         store_type::varchar(255) as store_type,
         cdl_dttm::varchar(50) as cdl_dttm,
         current_timestamp()::timestamp_ntz(9) as crtd_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        file_name::varchar(255) as file_name
     from source
 )
 

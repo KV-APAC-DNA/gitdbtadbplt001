@@ -71,6 +71,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnitg_integration
+                severity: error
           - test_duplicate:
               select_columns: ["code"]
               group_by_columns: ["code"]
@@ -78,6 +79,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnitg_integration
+                severity: error
 
     - name: sdl_mds_id_ps_priority_store
       tags: ["id_mds_itg_load","ingestion"]
@@ -89,6 +91,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
           - test_duplicate:
               select_columns: ["jjid"]
               group_by_columns: ["jjid"]
@@ -96,6 +99,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
 
     - name: sdl_id_ps_planogram
       tags: ["id_perfectstore_part_one","ingestion"]
@@ -133,7 +137,7 @@ sources:
               store_failures: true
               schema: idnwks_integration
     - name: sdl_mds_id_ps_brand
-      tags: ["id_perfectstore_part_one","ingestion"]
+      tags: ["id_mds_itg_load","ingestion"]
       tests:
         - test_null:
             select_columns: ["franchise", "brand", "rg_brand"]
@@ -142,6 +146,7 @@ sources:
             config:
               store_failures: true
               schema: idnwks_integration
+              
         - test_duplicate:
             select_columns: ["franchise", "brand", "rg_brand"]
             group_by_columns: ["franchise", "brand", "rg_brand"]
@@ -150,7 +155,7 @@ sources:
               store_failures: true
               schema: idnwks_integration
     - name: sdl_mds_id_ps_weights
-      tags: ["id_perfectstore_part_one","ingestion"]
+      tags: ["id_mds_itg_load","ingestion"]
       tests:
         - test_null:
             select_columns: ["channel", "kpi", "re"]
@@ -167,7 +172,7 @@ sources:
               store_failures: true
               schema: idnwks_integration
     - name: sdl_mds_id_ps_targets
-      tags: ["id_perfectstore_part_one","ingestion"]
+      tags: ["id_mds_itg_load","ingestion"]
       tests:
         - test_null:
             select_columns: ["channel", "kpi"]
@@ -177,7 +182,7 @@ sources:
               store_failures: true
               schema: idnwks_integration
     - name: sdl_mds_id_ps_msl
-      tags: ["id_perfectstore_part_one","ingestion"]
+      tags: ["id_mds_itg_load","ingestion"]
       tests:
         - test_null:
             select_columns: ["sku", "cust_group", "channel", "identifier"]

@@ -1053,7 +1053,7 @@ AS (
         CASE 
             WHEN 
             -- ((pop.channel)::TEXT LIKE ('General%'::CHARACTER VARYING)::TEXT)
-            pop.channel::text = 'GT%'::character varying::text
+            trim(upper(pop.channel::text)) = 'GT'::character varying::text
                 THEN mkt_share_gt."target"
             ELSE mkt_share_mt."target"
             END AS mkt_share,

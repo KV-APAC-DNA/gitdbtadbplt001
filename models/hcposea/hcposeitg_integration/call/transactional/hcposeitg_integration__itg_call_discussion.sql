@@ -5,10 +5,10 @@
         pre_hook = "{% if is_incremental() %}
                     DELETE FROM {{this}}
                     WHERE (CALL_DISCUSSION_SOURCE_ID) IN (SELECT STG.CALL_DISCUSSION_SOURCE_ID
-                                                    FROM {{this}} STG
+                                                    FROM {{ source('hcposesdl_raw', 'sdl_hcp_osea_call_discussion') }} STG
                                                     WHERE STG.CALL_DISCUSSION_SOURCE_ID = CALL_DISCUSSION_SOURCE_ID
                                                     AND CALL_SOURCE_ID IN (SELECT CALL_SOURCE_ID FROM {{ ref('hcposeitg_integration__itg_call') }}))
-                    AND COUNTRY_CODE IN (SELECT UPPER(COUNTRY_CODE) FROM {{ ref('hcposeitg_integration__itg_call') }} WHERE  CALL_SOURCE_ID IN (SELECT CALL_SOURCE_ID FROM {{this}})) ;
+                    AND COUNTRY_CODE IN (SELECT UPPER(COUNTRY_CODE) FROM {{ ref('hcposeitg_integration__itg_call') }} WHERE  CALL_SOURCE_ID IN (SELECT CALL_SOURCE_ID FROM {{ source('hcposesdl_raw', 'sdl_hcp_osea_call_discussion') }})) ;
                     {% endif %}"
     )
 }}

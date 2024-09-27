@@ -7,6 +7,8 @@
 with source as
 (
     select * from {{ source('indsdl_raw', 'sdl_rrl_ruralstoreorderheader') }}
+    where filename not in (select distinct file_name from {{ source('indwks_integration', 'TRATBL_sdl_rrl_ruralstoreorderheader__null_test') }})
+
 ),
 final as
 (

@@ -398,6 +398,7 @@ px_forecast as (
             )::numeric(18, 0) = vdt.time_id
             and 
             vdt.jj_year in(date_part(year, current_timestamp), date_part(year, current_timestamp)+1)
+             and vdt.jj_mnth_id > prev_jj_period
         )
 ),
 sapbw_actual as (

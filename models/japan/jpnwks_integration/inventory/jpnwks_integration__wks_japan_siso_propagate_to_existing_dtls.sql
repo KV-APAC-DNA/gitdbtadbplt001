@@ -2,7 +2,7 @@ with wks_japan_base_detail as(
     select * from {{ ref('jpnwks_integration__wks_japan_base_detail') }}
 ),
 japan_propagate_from_to as(
-    select * from {{ ref('jpwks_integration__japan_propagate_from_to') }}
+    select * from {{ ref('jpnwks_integration__japan_propagate_from_to') }}
 ),
 final as(
     SELECT p_from_to.sap_parent_customer_key,
@@ -25,7 +25,7 @@ final as(
        base.replicated_flag
 FROM wks_japan_base_detail  base
      ,japan_propagate_from_to p_from_to
-where base.sap_parent_customer_key = p_from_to.sap_parent_customer_key 
+where base.sap_parent_customer_key = p_from_to.sap_parent_customer_key
   and base.month = p_from_to.propagate_to
 )
 select * from final

@@ -21,7 +21,7 @@ as (
 itg_query_parameters
 as (
     select *
-    from {{ source('inditg_integration', 'itg_query_parameters') }}
+    from {{ source('aspitg_integration', 'itg_query_parameters') }}
     ),
 itg_tblpf_sit
 as (
@@ -208,7 +208,7 @@ AS (
                                             )::TIMESTAMP without TIME zone, (- (1)::BIGINT)))
                                 )::CHARACTER VARYING
                             )::TEXT,
-                        6,
+                        5,
                         2
                         )
                     )::INTEGER AS prev_mon,
@@ -865,7 +865,7 @@ AS (
     FROM (
         SELECT CASE 
     WHEN cal_dim.mon IS NULL THEN 
-        TO_NUMBER(SUBSTR(TO_CHAR(DATE_TRUNC('MONTH', DATEADD(MONTH, 1, TO_DATE(opnstkm.yr || LPAD(opnstkm.mon::TEXT, 2, '0'), 'YYYYMM'))), 'YYYYMM'), 6, 2))
+        TO_NUMBER(SUBSTR(TO_CHAR(DATE_TRUNC('MONTH', DATEADD(MONTH, 1, TO_DATE(opnstkm.yr || LPAD(opnstkm.mon::TEXT, 2, '0'), 'YYYYMM'))), 'YYYYMM'), 5, 2))
     ELSE 
         cal_dim.mon 
 END AS mon,
@@ -916,7 +916,7 @@ END AS yr,
                             )::INTEGER AS yr,
                         TO_NUMBER(SUBSTR(
         TO_CHAR(DATE_TRUNC('month', ADD_MONTHS(TO_DATE(SUBSTR(CAST(edw_retailer_calendar_dim.mth_mm AS VARCHAR), 1, 4) || SUBSTR(CAST(edw_retailer_calendar_dim.mth_mm AS VARCHAR), 5, 2), 'YYYYMM'), -1)), 'YYYYMM'), 
-        6, 
+        5, 
         2
     )) AS prev_mon,
 
@@ -1097,7 +1097,7 @@ CASE
     WHEN cal_dim.mon IS NULL THEN 
         TO_NUMBER(SUBSTR(
             TO_CHAR(DATE_TRUNC('month', ADD_MONTHS(TO_DATE(prevsit.year || LPAD(prevsit.month::TEXT, 2, '0'), 'YYYYMM'), 1)), 'YYYYMM'), 
-            6, 
+            5, 
             2
         ))
     ELSE cal_dim.mon
@@ -1133,7 +1133,7 @@ END AS yr,
                             )::INTEGER AS yr,
                         TO_NUMBER(SUBSTR(
         TO_CHAR(DATE_TRUNC('month', ADD_MONTHS(TO_DATE(SUBSTR(CAST(edw_retailer_calendar_dim.mth_mm AS VARCHAR), 1, 4) || SUBSTR(CAST(edw_retailer_calendar_dim.mth_mm AS VARCHAR), 5, 2), 'YYYYMM'), -1)), 'YYYYMM'), 
-        6, 
+        5, 
         2
     )) AS prev_mon,
                         TO_NUMBER(SUBSTR(
@@ -1317,7 +1317,7 @@ cal_dim as
                                                     )::TIMESTAMP without TIME zone, (- (1)::BIGINT)))
                                         )::CHARACTER VARYING
                                     )::TEXT,
-                                6,
+                                5,
                                 2
                                 )
                             )::INTEGER AS prev_mon,

@@ -304,6 +304,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
           - test_format:
               select_columns: ["year","region","distributor_code","sap_code","target_growth","target_coverage"]
               where_clause: "Distributor_Code IN (SELECT DISTINCT REPLACE(Distributor_Code, '.0', '') AS Distributor_Code FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_hero_list') }} x MINUS SELECT DISTINCT b.dstrbtr_id FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_hero_list') }} a, {{ ref('idnedw_integration__edw_distributor_dim') }} b WHERE a.Distributor_Code = b.dstrbtr_id)"
@@ -311,6 +312,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration 
+                severity: error
           - test_format:
               select_columns: ["year","region","distributor_code","sap_code","target_growth","target_coverage"]
               where_clause: "region in ( SELECT DISTINCT region FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_hero_list') }} x MINUS SELECT DISTINCT b.region FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_hero_list') }} a, {{ ref('idnedw_integration__edw_distributor_dim') }} b WHERE a.region = b.region)"
@@ -318,6 +320,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
           - test_format:
               select_columns: ["year","region","distributor_code","sap_code","target_growth","target_coverage"]
               where_clause: "SAP_Code IN ( SELECT DISTINCT SAP_Code FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_hero_list') }} x MINUS SELECT DISTINCT b.jj_sap_prod_id FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_hero_list') }} a, {{ ref('idnedw_integration__edw_product_dim') }} b WHERE a.SAP_Code = b.jj_sap_prod_id )"
@@ -325,6 +328,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
     - name: sdl_mds_id_lav_mcs_list
       tags: ["id_mds_itg_load","transformation"]
     - name: sdl_mds_id_lav_npi_sku_list
@@ -337,6 +341,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
     - name : sdl_mds_id_pos_cust_prod_mapping
       tags: ["id_mds_itg_load","ingestion"] 
       tests:
@@ -346,12 +351,14 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
           - test_duplicate__ff:
               group_by_columns: ["account","plu_sku_desc","jj_sap_code"]
               name: TRATBL_sdl_mds_id_pos_cust_prod_mapping__duplicate_test
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
     - name: sdl_mds_id_lav_inventory_intransit
       tags: ["id_mds_itg_load","ingestion"] 
       tests:
@@ -362,6 +369,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
           - test_duplicate:
               select_columns: ["document","material","description","name1"]
               group_by_columns: ["document","material","description"]
@@ -369,6 +377,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
           - test_lookup:
               select_columns: ["document","material","description","name1"]
               failure_reason: "'SHIT-TO CODE VALIDITY CHECK FAILED'"
@@ -379,6 +388,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
           - test_lookup:
               select_columns: ["document","material","description","name1"]
               failure_reason: "'MATERIAL CODE VALIDITY CHECK FAILED'"
@@ -389,6 +399,7 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+                severity: error
 
     - name: sdl_id_pos_guardian_stock
       tags: ["id_pos","ingestion"]
@@ -504,13 +515,13 @@ sources:
         #     config:
         #       store_failures: true
         #       schema: idnwks_integration 
-        # - test_duplicate:
-        #     select_columns: ["filename", "pos_cust", "description", "branch", "type", "values", "yearmonth"] 
-        #     group_by_columns: ["filename", "pos_cust", "description", "branch", "type", "values", "yearmonth"] 
-        #     name: TRATBL_sdl_id_pos_igr_sellout__duplicate_test
-        #     config:
-        #       store_failures: true
-        #       schema: idnwks_integration
+        #- test_duplicate:
+        #    select_columns: ["filename", "pos_cust", "description", "branch", "type", "\"values\"", "yearmonth"] 
+        #    group_by_columns: ["filename", "pos_cust", "description", "branch", "type", "\"values\"", "yearmonth"] 
+        #    name: TRATBL_sdl_id_pos_igr_sellout__duplicate_test
+        #    config:
+        #      store_failures: true
+        #      schema: idnwks_integration
     - name: sdl_id_pos_matahari_otc_stock
       tags: ["id_pos","ingestion"]
       tests:

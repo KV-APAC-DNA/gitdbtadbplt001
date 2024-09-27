@@ -2,12 +2,14 @@
     config(
         materialized="incremental",
         incremental_strategy="append",
-        pre_hook="{% if var('crm_job_to_execute') == 'th_crm_files' %}
+        pre_hook="{%if is_incremental()%}
+                {% if var('crm_job_to_execute') == 'th_crm_files' %}
                     delete from {{this}} where cntry_cd='TH' and crtd_dttm < (select min(crtd_dttm) from {{ source('thasdl_raw', 'sdl_th_sfmc_consumer_master') }});
                     {% elif var('crm_job_to_execute') == 'ph_crm_files' %}
                     delete from {{this}} where cntry_cd='PH';
                     {% elif var('crm_job_to_execute') == 'nta_crm_files' %}
                     delete from {{this}} where cntry_cd='TW';
+                    {% endif %}
                     {% endif %}"
     )
 }}
@@ -15,6 +17,11 @@ with
 source as
 (
     select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('thasdl_raw', 'sdl_th_sfmc_consumer_master') }}
+    where file_name not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_consumer_master__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_consumer_master__duplicate_test') }}
+    )
 ),
 wks_itg_sfmc_consumer_master as
 (

@@ -150,8 +150,8 @@ grofers as
     convert_timezone('UTC',current_timestamp()) as crt_dttm,
     mapping.lakshya_sku_name as generic_product_code
     from itg_ecommerce_offtake_grofers itg_grofers left join itg_ecommerce_offtake_master_mapping mapping 
-    on itg_grofers.product_id = mapping.account_sku_code 
-    where l_cat not like '%Total%' and l1_cat not like '%Total%' and itg_grofers.source_file_name = (select distinct source_file_name from sdl_ecommerce_offtake_grofers) 
+    on coalesce(itg_grofers.product_id,'') = coalesce(mapping.account_sku_code,'') 
+    where coalesce(l_cat,'') not like '%Total%' and coalesce(l1_cat,'') not like '%Total%' and itg_grofers.source_file_name = (select distinct source_file_name from sdl_ecommerce_offtake_grofers) 
 ),
 nykaa as
 (
