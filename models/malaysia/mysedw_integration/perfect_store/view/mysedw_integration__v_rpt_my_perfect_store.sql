@@ -960,11 +960,11 @@ merchandising_response_mt_msl as
                                                         rtrim(upper((msl.channel_nm)::text)) = rtrim(upper((osa.channel)::text))
                                                     )
                                                     AND (
-                                                        ((osa.date)::character varying)::text >= ((msl.valid_from)::character varying)::text
+                                                        (osa.date)::date >= (msl.valid_from)::date
                                                     )
                                                 )
                                                 AND (
-                                                    ((osa.date)::character varying)::text <= ((msl.valid_to)::character varying)::text
+                                                    (osa.date)::date <= (msl.valid_to)::date
                                                 )
                                             )
                                         )

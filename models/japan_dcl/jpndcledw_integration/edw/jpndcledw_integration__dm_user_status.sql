@@ -3,8 +3,9 @@
         materialized= "incremental",
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
-                delete from {{this}} where kokyano in ( select kokyano from {{ ref('jpndcledw_integration__temp_kesai_016') }} );
-                    {% endif %}"
+                    delete from {{this}} where kokyano in ( select kokyano from {{ ref('jpndcledw_integration__temp_kesai_016') }} );
+                    {% endif %}",
+        post_hook = "delete from {{this}} where kokyano not in (select kokyano from {{ ref('jpndcledw_integration__temp_existing_kokyano_list_016') }});"
     )
 }}
 

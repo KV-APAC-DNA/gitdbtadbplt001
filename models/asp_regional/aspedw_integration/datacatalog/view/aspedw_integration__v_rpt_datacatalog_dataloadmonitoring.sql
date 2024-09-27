@@ -15,9 +15,9 @@ dw_iv_month_end as
 (
     select * from {{ ref('jpnedw_integration__dw_iv_month_end') }}
 ),
-t_bi_posdata as
+dw_pos_daily as
 (
-    select * from {{ source('jpnedw_integration', 't_bi_posdata') }}
+    select * from {{ ref('jpnedw_integration__dw_pos_daily') }}
 ),
 m_account_store as
 (
@@ -335,31 +335,30 @@ AS (
               tp_promo_nm,
               DATE_TRUNC('day',tp_res_payment_dt)
        ),
-t_bi_posdata_temp1
+dw_pos_daily_temp1
 AS (
        SELECT 'POS' AS jcp_data_source,
               'POS' AS jcp_analysis_type,
               'POS' AS jcp_data_category,
-              output_dt AS jcp_create_date,
-              entry_dt AS jcp_load_date,
-              SUM(sales_qty) AS jcp_qty_sum,
-              SUM(sales_amnt) AS jcp_amt_sum,
-              DATE_TRUNC('day',sales_dt) AS transaction_date,
+              UPLOAD_DT AS jcp_create_date,
+              null AS jcp_load_date,
+              SUM(QUANTITY) AS jcp_qty_sum,
+              SUM(AMOUNT) AS jcp_amt_sum,
+              DATE_TRUNC('day',ACCOUNTING_DATE) AS transaction_date,
               'Retailers' AS subject_name,
-              a.account_cd AS account_cd,
+              a.ACCOUNT_KEY AS account_cd,
               b.account_nm AS account_nm,
-              entry_fname AS file_name,
+              NULL AS file_name,
               'JP' AS country
-       FROM T_BI_POSDATA a
-       LEFT JOIN M_ACCOUNT_STORE b ON b.account_cd = a.account_cd
-              AND a.str_cd = b.store_cd
-       WHERE sales_dt >= CURRENT_DATE - INTERVAL '90 days'
-       GROUP BY entry_dt,
-              entry_fname,
-              a.account_cd,
+       FROM dw_pos_daily a
+       LEFT JOIN m_account_store b ON b.account_cd = a.ACCOUNT_KEY
+              --AND a.str_cd = b.store_cd
+       WHERE ACCOUNTING_DATE >= CURRENT_DATE - INTERVAL '90 days'
+       GROUP BY 
+              a.ACCOUNT_KEY,
               b.account_nm,
-              output_dt,
-              DATE_TRUNC('day',sales_dt)
+              UPLOAD_DT,
+              DATE_TRUNC('day',ACCOUNTING_DATE)
        ),
 itg_my_sellout_sales_fact_temp1
 AS (
@@ -605,7 +604,7 @@ AS (
               SUM(qty) AS jcp_qty_sum,
               SUM(amt_obj_crncy) AS jcp_amt_sum,
               CASE 
-                WHEN caln_day = '00000000' THEN '00010101'
+                WHEN caln_day = '00000000' THEN '00010101'::date
                 ELSE TO_DATE(caln_day, 'yyyymmdd')
             END AS transaction_date,
               'GL Accounts' AS subject_name,
@@ -614,10 +613,8 @@ AS (
               NULL AS file_name,
               ctry_key AS country
        FROM EDW_COPA_TRANS_FACT
-        WHERE CASE 
-            WHEN caln_day = '00000000' THEN '00010101'
-            ELSE TO_DATE(caln_day, 'yyyymmdd')
-            END >= CURRENT_DATE - INTERVAL '90 days'
+        WHERE 
+            transaction_date >= CURRENT_DATE - INTERVAL '90 days'
        GROUP BY acct_num,
               crt_dttm,
               ctry_key,
@@ -1532,7 +1529,7 @@ AS (
               UNION ALL
               
               SELECT *
-              FROM t_bi_posdata_temp1
+              FROM dw_pos_daily_temp1
               
               UNION ALL
               
