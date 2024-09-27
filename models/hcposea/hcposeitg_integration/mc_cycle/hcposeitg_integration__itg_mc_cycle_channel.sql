@@ -36,7 +36,7 @@ from sdl_hcp_osea_mc_cycle_channel
 ,
 final as
 (select 
-	mc_cycle_channel_id::varchar(18) AS mc_cycle_channel_id,
+mc_cycle_channel_id::varchar(18) AS mc_cycle_channel_id,
 IS_DELETED::NUMBER(38,0) as IS_DELETED,
 cycle_channel_name::varchar(255) AS cycle_channel_name,
 record_type_id::varchar(18) AS record_type_id,
