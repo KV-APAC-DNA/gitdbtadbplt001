@@ -1,14 +1,18 @@
 with wks_hk_base_detail as (
-select * from {{ ref('ntawks_integration__wks_hk_base_detail') }}
+select * from DEV_DNA_CORE.ALAKSH01_WORKSPACE.ntawks_integration__wks_hk_base_detail
+--{{ ref('ntawks_integration__wks_hk_base_detail') }}
 ),
 hk_propagate_from_to as (
-select * from {{ ref('ntawks_integration__hk_propagate_from_to') }}
+select * from DEV_DNA_CORE.ALAKSH01_WORKSPACE.ntawks_integration__hk_propagate_from_to
+--{{ ref('ntawks_integration__hk_propagate_from_to') }}
 ),
 wks_hk_siso_propagate_to_details as (
-select * from {{ ref('ntawks_integration__wks_hk_siso_propagate_to_details') }}
+select * from DEV_DNA_CORE.ALAKSH01_WORKSPACE.ntawks_integration__wks_hk_siso_propagate_to_details
+--{{ ref('ntawks_integration__wks_hk_siso_propagate_to_details') }}
 ),
 wks_hk_siso_propagate_to_existing_dtls as (
-select * from {{ ref('ntawks_integration__wks_hk_siso_propagate_to_existing_dtls') }}
+select * from DEV_DNA_CORE.ALAKSH01_WORKSPACE.ntawks_integration__wks_hk_siso_propagate_to_existing_dtls
+--{{ ref('ntawks_integration__wks_hk_siso_propagate_to_existing_dtls') }}
 ),
 union_1 as (
 SELECT sap_parent_customer_key,

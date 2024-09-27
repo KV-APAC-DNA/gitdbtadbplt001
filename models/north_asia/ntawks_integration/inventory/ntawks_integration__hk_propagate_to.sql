@@ -6,7 +6,8 @@ as (
 wks_hk_base_detail
 as (
 	select *
-	from {{ ref('ntawks_integration__wks_hk_base_detail') }}
+	from DEV_DNA_CORE.ALAKSH01_WORKSPACE.ntawks_integration__wks_hk_base_detail
+    --{{ ref('ntawks_integration__wks_hk_base_detail') }}
 	),
 transformed
 AS (

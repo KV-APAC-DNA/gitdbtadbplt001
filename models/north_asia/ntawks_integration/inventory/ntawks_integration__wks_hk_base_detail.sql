@@ -1,7 +1,8 @@
 with wks_hk_lastnmonths
 as (
   select *
-  from {{ ref('ntawks_integration__wks_hk_lastnmonths') }}
+  from DEV_DNA_CORE.ALAKSH01_WORKSPACE.ntawks_integration__wks_hk_lastnmonths
+  --{{ ref('ntawks_integration__wks_hk_lastnmonths') }}
   ),
 edw_vw_os_time_dim
 as (
@@ -9,7 +10,8 @@ as (
   from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
   ),
 wks_hk_base as (
-  select * from {{ ref('ntawks_integration__wks_hk_base') }}
+  select * from DEV_DNA_CORE.ALAKSH01_WORKSPACE.NTAWKS_INTEGRATION__wks_hk_base
+  --{{ ref('ntawks_integration__wks_hk_base') }}
   ),
 transformed
 AS (

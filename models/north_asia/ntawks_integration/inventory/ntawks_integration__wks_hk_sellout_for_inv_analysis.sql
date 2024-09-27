@@ -1,37 +1,44 @@
 with edw_gch_customerhierarchy
 as (
     select *
-    from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
+    from aspedw_integration.edw_gch_customerhierarchy
+    --{{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
     ),
 edw_customer_sales_dim
 as (
     select *
-    from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
+    from aspedw_integration.edw_customer_sales_dim
+    --{{ ref('aspedw_integration__edw_customer_sales_dim') }}
     ),
 edw_customer_base_dim
 as (
     select *
-    from {{ ref('aspedw_integration__edw_customer_base_dim') }}
+    from aspedw_integration.edw_customer_base_dim
+    --{{ ref('aspedw_integration__edw_customer_base_dim') }}
     ),
 edw_company_dim
 as (
     select *
-    from {{ ref('aspedw_integration__edw_company_dim') }}
+    from aspedw_integration.edw_company_dim
+    --{{ ref('aspedw_integration__edw_company_dim') }}
     ),
 edw_dstrbtn_chnl
 as (
     select *
-    from {{ ref('aspedw_integration__edw_dstrbtn_chnl') }}
+    from aspedw_integration.edw_dstrbtn_chnl
+    --{{ ref('aspedw_integration__edw_dstrbtn_chnl') }}
     ),
 edw_sales_org_dim
 as (
     select *
-    from {{ ref('aspedw_integration__edw_sales_org_dim') }}
+    from aspedw_integration.edw_sales_org_dim
+    --{{ ref('aspedw_integration__edw_sales_org_dim') }}
     ),
 edw_code_descriptions
 as (
     select *
-    from {{ ref('aspedw_integration__edw_code_descriptions') }}
+    from aspedw_integration.edw_code_descriptions
+    --{{ ref('aspedw_integration__edw_code_descriptions') }}
     ),
 edw_subchnl_retail_env_mapping
 as (
@@ -41,12 +48,14 @@ as (
 edw_customer_dim
 as (
     select *
-    from {{ ref('indedw_integration__edw_customer_dim') }}
+    from indedw_integration.edw_customer_dim
+    --{{ ref('indedw_integration__edw_customer_dim') }}
     ),
 v_rpt_ims_inventory_analysis
 as (
     select *
-    from {{ ref('ntaedw_integration__v_rpt_ims_inventory_analysis') }}
+    from ntaedw_integration.v_rpt_ims_inventory_analysis
+    --{{ ref('ntaedw_integration__v_rpt_ims_inventory_analysis') }}
     ),
 itg_parameter_reg_inventory
 as (
@@ -56,27 +65,32 @@ as (
 edw_list_price
 as (
     select *
-    from {{ ref('aspedw_integration__edw_list_price') }}
+    from aspedw_integration.edw_list_price
+    --{{ ref('aspedw_integration__edw_list_price') }}
     ),
 edw_material_sales_dim
 as (
     select *
-    from {{ ref('aspedw_integration__edw_material_sales_dim') }}
+    from aspedw_integration.edw_material_sales_dim
+    --{{ ref('aspedw_integration__edw_material_sales_dim') }}
     ),
 edw_vw_greenlight_skus
 as (
     select *
-    from {{ ref('aspedw_integration__edw_vw_greenlight_skus') }}
+    from aspedw_integration.edw_vw_greenlight_skus
+    --{{ ref('aspedw_integration__edw_vw_greenlight_skus') }}
     ),
 edw_gch_producthierarchy
 as (
     select *
-    from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
+    from aspedw_integration.edw_gch_producthierarchy
+    --{{ ref('aspedw_integration__edw_gch_producthierarchy') }}
     ),
 edw_material_dim
 as (
     select *
-    from {{ ref('aspedw_integration__edw_material_dim') }}
+    from aspedw_integration.edw_material_dim
+    --{{ ref('aspedw_integration__edw_material_dim') }}
     ),
 CUSTOMER
 AS (

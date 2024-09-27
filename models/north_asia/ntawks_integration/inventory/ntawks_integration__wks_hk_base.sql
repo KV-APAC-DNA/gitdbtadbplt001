@@ -1,7 +1,8 @@
 WITH v_rpt_ims_inventory
 AS (
     SELECT *
-    FROM {{ ref('ntaedw_integration__v_rpt_ims_inventory') }}
+    FROM ntaedw_integration.v_rpt_ims_inventory
+    --{{ ref('ntaedw_integration__v_rpt_ims_inventory') }}
     ),
 itg_parameter_reg_inventory
 AS (
@@ -11,27 +12,32 @@ AS (
 EDW_VW_OS_TIME_DIM
 AS (
     SELECT *
-    FROM {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
+    FROM sgpedw_integration.edw_vw_os_time_dim
+    --{{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
     ),
 v_rpt_ims_inventory_analysis
 AS (
     SELECT *
-    FROM {{ ref('ntaedw_integration__v_rpt_ims_inventory_analysis') }}
+    FROM ntaedw_integration.v_rpt_ims_inventory_analysis
+    --{{ ref('ntaedw_integration__v_rpt_ims_inventory_analysis') }}
     ),
 edw_billing_fact
 AS (
     SELECT *
-    FROM {{ ref('aspedw_integration__edw_billing_fact') }}
+    FROM aspedw_integration.edw_billing_fact
+    --{{ ref('aspedw_integration__edw_billing_fact') }}
     ),
 edw_list_price
 AS (
     SELECT *
-    FROM {{ ref('aspedw_integration__edw_list_price') }}
+    FROM aspedw_integration.edw_list_price
+    --{{ ref('aspedw_integration__edw_list_price') }}
     ),
 edw_material_sales_dim
 AS (
     SELECT *
-    FROM {{ ref('aspedw_integration__edw_material_sales_dim') }}
+    FROM aspedw_integration.edw_material_sales_dim
+    --{{ ref('aspedw_integration__edw_material_sales_dim') }}
     ),
 t1
 AS (

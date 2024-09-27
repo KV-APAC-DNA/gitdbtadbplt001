@@ -1,7 +1,8 @@
 with wks_hk_allmonths_base
 as (
   select *
-  from {{ ref('ntawks_integration__wks_hk_allmonths_base') }}
+  from DEV_DNA_CORE.ALAKSH01_WORKSPACE.NTAWKS_INTEGRATION__WKS_HK_ALLMONTHS_BASE
+  --{{ ref('ntawks_integration__wks_hk_allmonths_base') }}
   ),
 edw_vw_os_time_dim
 as (

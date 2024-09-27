@@ -1,12 +1,14 @@
 WITH hk_propagate_to
 as (
   select *
-  from {{ ref('ntawks_integration__hk_propagate_to') }}
+  from --{{ ref('ntawks_integration__hk_propagate_to') }}
+  DEV_DNA_CORE.ALAKSH01_WORKSPACE.ntawks_integration__hk_propagate_to
   ),
 wks_hk_base_detail
 as (
   select *
-  from {{ ref('ntawks_integration__wks_hk_base_detail') }}
+  from --{{ ref('ntawks_integration__wks_hk_base_detail') }}
+  DEV_DNA_CORE.ALAKSH01_WORKSPACE.ntawks_integration__wks_hk_base_detail
   ),
 transformed
 AS (
