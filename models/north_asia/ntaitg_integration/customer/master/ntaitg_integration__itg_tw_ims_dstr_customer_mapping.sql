@@ -16,7 +16,7 @@ final as
 (
     select
         distributor_code::varchar(255) as distributor_code,
-        distributor_name::varchar(255) as distributor_name,
+        rtrim(distributor_name)::varchar(255) as distributor_name,
         distributors_customer_code::varchar(255) as distributors_customer_code,
         distributors_customer_name::varchar(255) as distributors_customer_name,
         store_type::varchar(255) as store_type,

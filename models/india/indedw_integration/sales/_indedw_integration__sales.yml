@@ -16,7 +16,7 @@ models:
   - name: indedw_integration__v_rpt_rt_sales
     config:
       alias: v_rpt_rt_sales
-      tags: ["in_mi_dashboard_datamart","transformation"]
+      tags: ["in_rt_sales","transformation"]
   - name: indedw_integration__edw_rpt_mi_rt_sales_details
     config:
       alias: edw_rpt_mi_rt_sales_details

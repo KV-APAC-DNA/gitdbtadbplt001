@@ -1,6 +1,6 @@
 with source as
 (
-    select * from {{ ref('jpndcledw_integration__dm_kesai_mart_dly_general_prev') }}
+    select * from {{ source('jpdcledw_integration', 'dm_kesai_mart_dly_general_prev') }}
 ),
 
 final as

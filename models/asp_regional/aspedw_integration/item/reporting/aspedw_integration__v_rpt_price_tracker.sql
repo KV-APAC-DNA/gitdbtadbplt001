@@ -185,7 +185,7 @@ pka as
                     ltrim((edw_product_key_attributes.ean_upc):: text,('0' :: character varying):: text) AS ean_upc, 
                     edw_product_key_attributes.pka_rootcode, 
                     edw_product_key_attributes.lst_nts AS latest_nts_date, 
-                    row_number() OVER(PARTITION BY edw_product_key_attributes.ctry_nm,edw_product_key_attributes.ean_upc ORDER BY edw_product_key_attributes.lst_nts DESC) AS row_number 
+                    row_number() OVER(PARTITION BY edw_product_key_attributes.ctry_nm,edw_product_key_attributes.ean_upc ORDER BY edw_product_key_attributes.lst_nts DESC, edw_product_key_attributes.crt_on DESC) AS row_number 
                 FROM edw_product_key_attributes 
                 WHERE (((((edw_product_key_attributes.matl_type_cd):: text = ('FERT' :: character varying):: text)
                 OR ((edw_product_key_attributes.matl_type_cd):: text = ('HALB' :: character varying):: text))
@@ -194,7 +194,8 @@ pka as
                 GROUP BY edw_product_key_attributes.ctry_nm, 
                         edw_product_key_attributes.ean_upc, 
                         edw_product_key_attributes.pka_rootcode, 
-                        edw_product_key_attributes.lst_nts
+                        edw_product_key_attributes.lst_nts,
+                         edw_product_key_attributes.crt_on
             ) b ON (((((((a.ctry_nm):: text = (b.ctry_nm):: text) 
                 AND (a.ean_upc = b.ean_upc)) 
                 AND ((a.pka_rootcode):: text = (b.pka_rootcode):: text)) 
@@ -276,7 +277,7 @@ pka as
                                 ltrim((edw_product_key_attributes.ean_upc):: text,('0' :: character varying):: text) AS ean_upc, 
                                 edw_product_key_attributes.pka_rootcode, 
                                 edw_product_key_attributes.lst_nts AS latest_nts_date, 
-                                row_number() OVER(PARTITION BY edw_product_key_attributes.ean_upc ORDER BY edw_product_key_attributes.lst_nts DESC) AS row_number 
+                                row_number() OVER(PARTITION BY edw_product_key_attributes.ean_upc ORDER BY edw_product_key_attributes.lst_nts DESC,edw_product_key_attributes.crt_on DESC) AS row_number 
                             FROM edw_product_key_attributes 
                             WHERE (((((edw_product_key_attributes.matl_type_cd):: text = ('FERT' :: character varying):: text) 
                             OR ((edw_product_key_attributes.matl_type_cd):: text = ('HALB' :: character varying):: text))
@@ -285,7 +286,8 @@ pka as
                             GROUP BY edw_product_key_attributes.ctry_nm, 
                                     edw_product_key_attributes.ean_upc, 
                                     edw_product_key_attributes.pka_rootcode, 
-                                    edw_product_key_attributes.lst_nts
+                                    edw_product_key_attributes.lst_nts,
+                                    edw_product_key_attributes.crt_on
                         ) b ON (((((((a.ctry_nm):: text = (b.ctry_nm):: text) 
                             AND (a.ean_upc = b.ean_upc))
                             AND ((a.pka_rootcode):: text = (b.pka_rootcode):: text))

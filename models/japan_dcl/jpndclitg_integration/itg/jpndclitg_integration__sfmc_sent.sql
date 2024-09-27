@@ -2,8 +2,7 @@
     config
     (
         materialized='incremental',
-        incremental_strategy= 'delete+insert',
-        unique_key= ['subscriberkey']
+        incremental_strategy= 'append'
     )
 }}
 
@@ -11,7 +10,7 @@ with source as
 (
     select *, dense_rank() over(partition by subscriberkey order by file_name desc) as rnk 
     from {{ source('jpdclsdl_raw', 'sfmc_sent') }}
-    qualify rnk =1
+    --qualify rnk =1
 ),
 
 final as
