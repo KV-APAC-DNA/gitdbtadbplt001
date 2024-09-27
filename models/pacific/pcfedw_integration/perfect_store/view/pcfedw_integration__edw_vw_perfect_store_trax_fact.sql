@@ -1,6 +1,6 @@
 with itg_trax_fct_psd_kpis as
 (
-select * from {{ source('aspacshare_integration','v_rpt_psd_kpis') }}
+select * from {{ source('aspacshare_integration','v_rpt_psd_kpis_redshift_snap') }}
 ),
 itg_trax_md_store as(
 select * from {{ source('aspacshare_integration','trax_md_store') }}

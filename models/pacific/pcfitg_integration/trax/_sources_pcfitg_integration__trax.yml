@@ -22,5 +22,6 @@ sources:
       identifier: false
     tables:
       - name: v_rpt_psd_kpis
+      - name: v_rpt_psd_kpis_redshift_snap
       - name: trax_md_product
       - name: trax_md_store
