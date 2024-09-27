@@ -10,17 +10,17 @@ final AS
         prod_mjr_cd::varchar(30) AS prod_mjr_cd,
         
         -- GOAL values ((target type is null and left(time_period, 4)<2024)?
-        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' OR (target_type IS NULL AND left(time_period, 4)<2024) THEN goal_qty END))::number(18,0) AS goal_qty,
-        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' OR (target_type IS NULL AND left(time_period, 4)<2024) THEN goal_gts END))::number(18,2) AS goal_gts,
-        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' OR (target_type IS NULL AND left(time_period, 4)<2024) THEN goal_eff_val END))::number(18,2) AS goal_eff_val,
-        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' OR (target_type IS NULL AND left(time_period, 4)<2024) THEN goal_jgf_si_val END))::number(18,2) AS goal_jgf_si_val,
-        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' OR (target_type IS NULL AND left(time_period, 4)<2024) THEN goal_pmt_terms_val END))::number(18,2) AS goal_pmt_terms_val,
-        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' OR (target_type IS NULL AND left(time_period, 4)<2024) THEN goal_datains_val END))::number(18,2) AS goal_datains_val,
-        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' OR (target_type IS NULL AND left(time_period, 4)<2024) THEN goal_exp_adj_val END))::number(18,2) AS goal_exp_adj_val,
-        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' OR (target_type IS NULL AND left(time_period, 4)<2024) THEN goal_jgf_sd_val END))::number(18,2) AS goal_jgf_sd_val,
-        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' OR (target_type IS NULL AND left(time_period, 4)<2024) THEN goal_ciw_tot END))::number(18,2) AS goal_ciw_tot,
-        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' OR (target_type IS NULL AND left(time_period, 4)<2024) THEN goal_cogs END))::number(18,2) AS goal_cogs,
-        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' OR (target_type IS NULL AND left(time_period, 4)<2024) THEN goal_gp END))::number(18,2) AS goal_gp,
+        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' THEN goal_qty END))::number(18,0) AS goal_qty,
+        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' THEN goal_gts END))::number(18,2) AS goal_gts,
+        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' THEN goal_eff_val END))::number(18,2) AS goal_eff_val,
+        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' THEN goal_jgf_si_val END))::number(18,2) AS goal_jgf_si_val,
+        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' THEN goal_pmt_terms_val END))::number(18,2) AS goal_pmt_terms_val,
+        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' THEN goal_datains_val END))::number(18,2) AS goal_datains_val,
+        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' THEN goal_exp_adj_val END))::number(18,2) AS goal_exp_adj_val,
+        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' THEN goal_jgf_sd_val END))::number(18,2) AS goal_jgf_sd_val,
+        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' THEN goal_ciw_tot END))::number(18,2) AS goal_ciw_tot,
+        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' THEN goal_cogs END))::number(18,2) AS goal_cogs,
+        ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' THEN goal_gp END))::number(18,2) AS goal_gp,
         
         -- JU values
         ZEROIFNULL((CASE WHEN UPPER(target_type) = 'JU' THEN goal_qty END))::number(18,0) AS ju_qty,
