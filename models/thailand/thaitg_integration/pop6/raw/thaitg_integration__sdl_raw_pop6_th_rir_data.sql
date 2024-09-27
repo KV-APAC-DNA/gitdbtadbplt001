@@ -5,7 +5,7 @@
     )}}
 
 with source as(
-    select * from {{ source('thasdl_raw', 'sdl_pop6_th_rir_data_test') }}
+    select * from {{ source('thasdl_raw', 'sdl_pop6_th_rir_data') }}
 
     where file_name not in (
                             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_pop6_th_rir_data__null_test') }}
@@ -13,9 +13,6 @@ with source as(
                             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_pop6_th_rir_data__duplicate_test') }}
                             )
 
-
-
->>>>>>> a00217e64c0a5ffc4e767095697d4f3b99f5328e
 ),
 final as(
     select * from source
