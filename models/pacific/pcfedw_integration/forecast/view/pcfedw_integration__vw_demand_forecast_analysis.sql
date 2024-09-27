@@ -17,8 +17,10 @@ edw_px_forecast_fact as (
     select * from {{ ref('pcfedw_integration__edw_px_forecast_fact') }}
 ),
 vw_sapbw_fact as (
-    select * from {{ ref('pcfedw_integration__vw_sapbw_fact') }}
+    select * from {{ ref('pcfedw_integration__vw_sapbw_fact')}}
+     where CIW_CTGRY='GTS' 
 ),
+
 projprd as (
     select (
             to_char(
