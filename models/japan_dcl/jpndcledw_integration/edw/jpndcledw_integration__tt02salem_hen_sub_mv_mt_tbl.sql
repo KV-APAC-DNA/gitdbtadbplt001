@@ -34,7 +34,7 @@ AS (
                     (
                         (NVL(c_tbEcInquireMeisai.ditotalprc,'0') * NVL(c_tbEcInquireMeisai.c_dihenpinnum,'0'))												--税込金額(単価) * 返品数量
                             - (NVL(c_tbEcInquireMeisai.c_didiscountmeisai,'0')	* NVL(c_tbEcInquireMeisai.c_dihenpinnum,'0'))								--割引額 * 返品数量
-                    )/(DECODE(c_tbEcInquireMeisai.diitemprc,0,1,(c_tbEcInquireMeisai.ditotalprc/c_tbEcInquireMeisai.diitemprc)))						--消費税率
+                    )/round(DECODE(c_tbEcInquireMeisai.diitemprc,0,1,(c_tbEcInquireMeisai.ditotalprc/c_tbEcInquireMeisai.diitemprc)))						--消費税率
             )
         )AS	MEISAINUKIKINGAKU																															--割引後明細税抜金額：(税込金額(単価) * 返品数量 - 割引額 * 返品数量) * 消費税率																															
 

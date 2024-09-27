@@ -8,7 +8,7 @@
 )}}
 
 with source as (
-    select * from {{ source('ntasdl_raw','sdl_mds_kr_target') }}
+    select * from {{ source('ntasdl_raw','sdl_mds_kr_target') }} 
 ),
 cte1 as (
     select 

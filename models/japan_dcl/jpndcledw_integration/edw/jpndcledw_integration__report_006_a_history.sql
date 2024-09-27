@@ -1,3 +1,11 @@
+{{
+    config
+    (
+        materialized = 'incremental',
+        incremental_logic = 'append'
+    )
+}}
+
 WITH report_006_a
 AS (
     select * from {{ ref('jpndcledw_integration__report_006_a') }}

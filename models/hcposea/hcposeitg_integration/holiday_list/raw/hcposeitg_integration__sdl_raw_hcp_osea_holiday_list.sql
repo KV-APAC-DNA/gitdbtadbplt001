@@ -7,6 +7,11 @@
 
 with sdl_hcp_osea_holiday_list as (
     select * from {{ source('hcposesdl_raw', 'sdl_hcp_osea_holiday_list') }}
+    where filename not in (
+            select distinct file_name from {{ source('hcposewks_integration', 'TRATBL_sdl_hcp_osea_holiday_list__null_test') }}
+            union all
+            select distinct file_name from {{ source('hcposewks_integration', 'TRATBL_sdl_hcp_osea_holiday_list__duplicate_test') }}
+    )
 ),
 
 result as (

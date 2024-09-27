@@ -6,6 +6,21 @@
 
 with source as(
     select * from {{ source('thasdl_raw', 'sdl_th_gt_msl_distribution') }}
+    where filename not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__duplicate_test') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__test_format') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__test_date_format_odd_eve_leap') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__test_format_flag') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__test_format_null_flag') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__test_multiple_column') }}
+    )
 ),
 final as(
     select   

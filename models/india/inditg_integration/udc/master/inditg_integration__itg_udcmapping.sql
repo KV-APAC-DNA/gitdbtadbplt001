@@ -6,14 +6,19 @@
         pre_hook = "{% if is_incremental() %}
         delete from {{this}} where (upper(distCode),upper(RsdCode),upper(OutletCode),
         upper(UserCode),upper(UdcCode)) in (select distinct upper(distCode),upper(RsdCode),
-        upper(OutletCode),upper(UserCode),upper(UdcCode) from {{ source('indsdl_raw', 'sdl_rrl_udcmapping') }} ) ;
+        upper(OutletCode),upper(UserCode),upper(UdcCode) from {{ source('indsdl_raw', 'sdl_rrl_udcmapping') }}
+        where filename not in (select distinct file_name from {{ source('indwks_integration', 'TRATBL_sdl_rrl_udcmapping__null_test') }}))
+         ;
         {% endif %}"
     )
 }}
 
 with source as
 (
-    select * from {{ source('indsdl_raw', 'sdl_rrl_udcmapping') }}
+    select *, dense_rank() over(partition by upper(distCode),upper(RsdCode),
+        upper(OutletCode),upper(UserCode),upper(UdcCode) order by filename desc) rnk from {{ source('indsdl_raw', 'sdl_rrl_udcmapping') }}
+    where filename not in (select distinct file_name from {{ source('indwks_integration', 'TRATBL_sdl_rrl_udcmapping__null_test') }})
+    qualify rnk = 1
 ),
 final as
 (

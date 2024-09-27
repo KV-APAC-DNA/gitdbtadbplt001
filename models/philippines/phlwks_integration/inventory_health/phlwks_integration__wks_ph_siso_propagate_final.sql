@@ -51,16 +51,16 @@ SELECT sap_parent_customer_key,
 	cast(NULL AS NUMERIC(38, 5)) existing_last_12months_so_value
 FROM wks_PH_base_detail
 WHERE (
-		sap_parent_customer_key,
-		dstrbtr_grp_cd,
-		dstr_cd_nm,
-		parent_customer_cd,
+		nvl(sap_parent_customer_key,'#'),
+		nvl(rtrim(dstrbtr_grp_cd),'#'),
+		nvl(rtrim(dstr_cd_nm),'#'),
+		nvl(rtrim(parent_customer_cd),'#'),
 		month
 		) NOT IN (
-		SELECT sap_parent_customer_key,
-			dstrbtr_grp_cd,
-			dstr_cd_nm,
-			parent_customer_cd,
+		SELECT nvl(sap_parent_customer_key,'#'),
+    		nvl(rtrim(dstrbtr_grp_cd),'#'),
+    		nvl(rtrim(dstr_cd_nm),'#'),
+    		nvl(rtrim(parent_customer_cd),'#'),
 			propagate_to
 		FROM PH_propagate_from_to p_from_to
 		)
@@ -106,20 +106,68 @@ FROM wks_PH_siso_propagate_to_details propagated
 WHERE NOT EXISTS (
 		SELECT 1
 		FROM wks_PH_siso_propagate_to_existing_dtls existing
-		WHERE existing.sap_parent_customer_key = propagated.sap_parent_customer_key
-			AND existing.dstrbtr_grp_cd = propagated.dstrbtr_grp_cd
-			AND existing.dstr_cd_nm = propagated.dstr_cd_nm
-			AND existing.parent_customer_cd = propagated.parent_customer_cd
+		WHERE nvl(existing.sap_parent_customer_key,'#') = nvl(propagated.sap_parent_customer_key,'#')
+			AND rtrim(existing.dstrbtr_grp_cd) = rtrim(propagated.dstrbtr_grp_cd)
+			AND rtrim(existing.dstr_cd_nm) = rtrim(propagated.dstr_cd_nm)
+			AND rtrim(existing.parent_customer_cd) = rtrim(propagated.parent_customer_cd)
 			--                and  existing.sls_grp_desc    = propagated.sls_grp_desc                      
-			AND existing.matl_num = propagated.matl_num
-			AND existing.month = propagated.month
+			AND rtrim(existing.matl_num) = rtrim(propagated.matl_num)
+			AND rtrim(existing.month) = rtrim(propagated.month)
 		)
                    
    ),
+union_3 as 
+(select propagated.sap_parent_customer_key,
+       propagated.dstrbtr_grp_cd,
+       propagated.dstr_cd_nm,
+       propagated.parent_customer_cd,
+       propagated.sls_grp_desc ,
+       propagated.month,                     
+       propagated.matl_num,                       
+       propagated.so_qty,                          
+       propagated.so_value,                     
+       propagated.inv_qty,                   
+       propagated.inv_value,                     
+       propagated.sell_in_qty,               
+       propagated.sell_in_value,                 
+       propagated.last_3months_so,               
+       propagated.last_6months_so,           
+       propagated.last_12months_so,          
+       propagated.last_3months_so_value,    
+       propagated.last_6months_so_value,     
+       propagated.last_12months_so_value,  
+	   propagated.last_36months_so_value,	
+       propagated.Propagation_Flag,               
+       cast (propagated.propagate_from as integer),                                          
+       propagated.reason,  
+       propagated.replicated_flag,                                 
+       existing.so_qty,                             
+       existing.so_value,                                   
+       existing.inv_qty,                             
+       existing.inv_value,                               
+       existing.sell_in_qty,                            
+       existing.sell_in_value,                         
+       existing.last_3months_so,                             
+       existing.last_6months_so,                       
+       existing.last_12months_so,                     
+       existing.last_3months_so_value,             
+       existing.last_6months_so_value,                     
+       existing.last_12months_so_value                      
+  from wks_PH_siso_propagate_to_details  propagated ,
+       wks_PH_siso_propagate_to_existing_dtls existing
+ where existing.sap_parent_customer_key = propagated.sap_parent_customer_key 
+    and  existing.dstrbtr_grp_cd = propagated.dstrbtr_grp_cd                           
+    and  existing.dstr_cd_nm     = propagated.dstr_cd_nm                          
+    and  existing.parent_customer_cd = propagated.parent_customer_cd                      
+ --   and  existing.sls_grp_desc    = propagated.sls_grp_desc 
+   and existing.matl_num = propagated.matl_num
+   and existing.month = propagated.month),
 transformed as (
 select * from union_1
 union all
 select * from union_2
+union all
+select * from union_3
 ),
 final as (
 select 

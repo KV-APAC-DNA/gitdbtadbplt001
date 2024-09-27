@@ -1,0 +1,61 @@
+version: 2
+
+sources:
+  - name: indwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: indwks_integration
+
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: TRATBL_sdl_in_retailer__null_test
+    - name: TRATBL_sdl_in_retailer__duplicate_test
+    - name: TRATBL_sdl_sss_scorecard_data__null_test
+    - name: TRATBL_sdl_in_perfectstore_promo__null_test
+    - name: TRATBL_sdl_in_perfectstore_promo__duplicate_test
+    - name: TRATBL_sdl_in_perfectstore_promo__date_format_test
+    - name: TRATBL_sdl_in_perfectstore_sos__null_test
+    - name: TRATBL_sdl_in_perfectstore_sos__duplicate_test
+    - name: TRATBL_sdl_in_perfectstore_sos__date_format_test
+    - name: TRATBL_sdl_in_perfectstore_msl__null_test
+    - name: TRATBL_sdl_in_perfectstore_msl__duplicate_test
+    - name: TRATBL_sdl_in_perfectstore_msl__date_format_test
+    - name: TRATBL_sdl_in_perfectstore_paid_display__null_test
+    - name: TRATBL_sdl_in_perfectstore_paid_display__duplicate_test
+    - name: TRATBL_sdl_in_perfectstore_paid_display__date_format_test
+    - name: TRATBL_sdl_rrl_townmaster__null_test
+    - name: TRATBL_sdl_rrl_usermaster__null_test
+    - name: TRATBL_sdl_rrl_retailervalueclass__null_test
+    - name: TRATBL_sdl_rrl_retailercategory__null_test
+    - name: TRATBL_sdl_in_retailer_route__null_test
+    - name: TRATBL_sdl_in_retailer_route__duplicate_test
+    - name: TRATBL_sdl_in_rrsrdistributor__null_test
+    - name: TRATBL_sdl_in_rrsrdistributor__duplicate_test
+    - name: TRATBL_sdl_in_rrsrheader__null_test
+    - name: TRATBL_sdl_in_rrsrheader__duplicate_test
+    - name: TRATBL_sdl_in_rtlsalesman__null_test
+    - name: TRATBL_sdl_in_rtlsalesman__duplicate_test  
+    - name: TRATBL_sdl_in_rtldistributor__null_test
+    - name: TRATBL_sdl_in_rtldistributor__duplicate_test
+    - name: TRATBL_sdl_in_rtlheader__null_test
+    - name: TRATBL_sdl_in_rtlheader__duplicate_test
+    - name: TRATBL_sdl_in_route__null_test
+    - name: TRATBL_sdl_in_route__duplicate_test
+    - name: TRATBL_sdl_in_salesman__null_test
+    - name: TRATBL_sdl_in_salesman__duplicate_test
+    - name: TRATBL_sdl_in_salesman_route__null_test
+    - name: TRATBL_sdl_in_salesman_route__duplicate_test
+    - name: TRATBL_sdl_in_rretailergeoextension__null_test
+    - name: TRATBL_sdl_in_rretailergeoextension__duplicate_test
+    - name: TRATBL_sdl_rrl_retailer_geocoordinates__null_test
+    - name: TRATBL_sdl_rrl_udcmaster__null_test
+    - name: TRATBL_sdl_rrl_rsdmaster__null_test
+    - name: TRATBL_sdl_rrl_ruralstoreorderdetail__null_test
+    - name: TRATBL_sdl_rrl_ruralstoreorderheader__null_test
+    - name: TRATBL_sdl_rrl_retailermaster__null_test
+    - name: TRATBL_sdl_rrl_udcmapping__null_test
+
+      
+     

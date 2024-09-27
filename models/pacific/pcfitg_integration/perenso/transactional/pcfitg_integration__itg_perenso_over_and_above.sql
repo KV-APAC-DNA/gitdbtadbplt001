@@ -3,7 +3,9 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['over_and_above_key','acct_key','prod_grp_key'],
-        pre_hook= "delete from {{this}} where (over_and_above_key,acct_key,prod_grp_key) in (select distinct over_and_above_key,acct_key,prod_grp_key from {{ source('pcfsdl_raw', 'sdl_perenso_over_and_above') }});"
+        pre_hook= "{%if is_incremental()%}
+        delete from {{this}} where (over_and_above_key,acct_key,prod_grp_key) in (select distinct over_and_above_key,acct_key,prod_grp_key from {{ source('pcfsdl_raw', 'sdl_perenso_over_and_above') }});{%endif%}
+        "
     )
 }}
 with source as 
@@ -21,7 +23,8 @@ final as
 	notes::varchar(255) as notes,
 	run_id::number(14,0) as run_id,
 	current_timestamp()::timestamp_ntz(9) as create_dt,
-	current_timestamp()::timestamp_ntz(9) as update_dt 
+	current_timestamp()::timestamp_ntz(9) as update_dt ,
+    file_name::varchar(255) as file_name
     from source
 )
 select * from final

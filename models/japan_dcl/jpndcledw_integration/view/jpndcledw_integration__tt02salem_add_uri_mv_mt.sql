@@ -154,7 +154,7 @@ AS (
 							AND (3 IS NULL)
 							)
 						)
-					THEN (- ceil(((COALESCE(c_tbecprivilegekesai.c_diprivilegetotalprc, (0)::BIGINT) / ((100 + tbecorder.ditaxrate) / 100)))::DOUBLE PRECISION))
+					THEN (- ceil(((COALESCE(c_tbecprivilegekesai.c_diprivilegetotalprc, (0)::BIGINT) / round((100 + tbecorder.ditaxrate) / 100)))::DOUBLE PRECISION))
 				ELSE (0)::DOUBLE PRECISION
 				END AS meisainukikingaku
 			,0 AS wariritu

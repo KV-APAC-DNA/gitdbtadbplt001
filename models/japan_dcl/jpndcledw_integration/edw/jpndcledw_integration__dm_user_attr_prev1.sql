@@ -1,6 +1,6 @@
 with source as
 (
-    select * from {{ ref('jpndcledw_integration__dm_user_attr_prev') }}
+    select * from {{ source('jpdcledw_integration', 'dm_user_attr_prev') }}
 ),
 
 final as

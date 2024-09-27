@@ -1,5 +1,8 @@
 with sdl_prox_md_material as(
     select * from {{ source('aspsdl_raw', 'sdl_prox_md_material') }}
+    where filename not in (
+        select distinct file_name from {{source('aspwks_integration','TRATBL_sdl_prox_md_material____null_test')}}
+    )
 ),
 final as(
     select 
