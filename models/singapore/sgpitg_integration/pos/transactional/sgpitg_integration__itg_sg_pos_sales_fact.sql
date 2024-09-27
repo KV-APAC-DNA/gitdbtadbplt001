@@ -6,7 +6,7 @@ edw_product_key_attributes as (
     select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
 ),
 itg_query_parameters as (
-    select * from {{ source('aspitg_integration','itg_query_parameters') }}
+    select * from {{ source('sgpitg_integration','itg_query_parameters') }}
 ),
 
 itg_sg_scan_data_watsons as (

@@ -11,5 +11,19 @@ sources:
     tables:
     - name: sdl_rrl_ruralstoreorderheader
       tags: ["in_rt_sales","ingestion"]
+      tests:
+        - test_null__ff:
+            not_null_columns: ["orderdate","linespercall","retailerid"]
+            name: TRATBL_sdl_rrl_ruralstoreorderheader__null_test
+            config:
+              store_failures: true
+              schema: indwks_integration
     - name: sdl_rrl_ruralstoreorderdetail
       tags: ["in_rt_sales","ingestion"]
+      tests:
+        - test_null__ff:
+            not_null_columns: ["orderid","productid","usercode","ordd_distributorcode","orderdate"]
+            name: TRATBL_sdl_rrl_ruralstoreorderdetail__null_test
+            config:
+              store_failures: true
+              schema: indwks_integration
