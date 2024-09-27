@@ -1,3 +1,8 @@
+{{
+    config(
+        pre_hook="{{build_itg_kr_sales_target_am_brand_temp()}}"
+    )
+}}
 with source as (
     select * from {{ source('ntasdl_raw','sdl_kr_sales_target_am_brand') }}
 ),

@@ -39,15 +39,15 @@ models:
   - name: jpnwks_integration__wks_japan_inventory_health_analysis_propagation
     config:
         alias: wks_japan_inventory_health_analysis_propagation
-        tags: ["inventory_workflow","transformation"] 
+        tags: ["inventory_workflow","transformation"]
   - name: jpnwks_integration__wks_japan_inventory_health_analysis_propagation_prestep
     config:
         alias: wks_japan_inventory_health_analysis_propagation_prestep
-        tags: ["inventory_workflow","transformation"] 
+        tags: ["inventory_workflow","transformation"]
   - name: jpnwks_integration__wks_japan_lastnmonths
     config:
         alias: wks_japan_lastnmonths
-        tags: ["inventory_workflow","transformation"] 
+        tags: ["inventory_workflow","transformation"]
   - name: jpnwks_integration__wks_japan_siso_propagate_final
     config:
         alias: wks_japan_siso_propagate_final
@@ -60,7 +60,7 @@ models:
     config:
         alias: wks_japan_siso_propagate_to_existing_dtls
         tags: ["inventory_workflow","transformation"]
-  - name: jpwks_integration__japan_propagate_from_to
+  - name: jpnwks_integration__japan_propagate_from_to
     config:
         alias: japan_propagate_from_to
         tags: ["inventory_workflow","transformation"]
