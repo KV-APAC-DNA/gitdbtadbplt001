@@ -16,11 +16,9 @@ vw_apo_parent_child_dim as (
 edw_px_forecast_fact as (
     select * from {{ ref('pcfedw_integration__edw_px_forecast_fact') }}
 ),
-vw_sapbw_fact_all as (
-    select * from {{ ref('pcfedw_integration__vw_sapbw_fact') }}
-),
 vw_sapbw_fact as (
-    select * from vw_sapbw_fact_all where CIW_CTGRY='GTS'
+    select * from {{ ref('pcfedw_integration__vw_sapbw_fact')}}
+     where CIW_CTGRY='GTS' 
 ),
 
 projprd as (
