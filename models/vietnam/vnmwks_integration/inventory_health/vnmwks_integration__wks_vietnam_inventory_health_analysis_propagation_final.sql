@@ -18,19 +18,19 @@ final as (
     wkly_avg.min_date,
     datediff (week, wkly_avg.min_date, last_day(to_date(left(mnth_id,4)||right(mnth_id,2),'yyyymm'))) diff_weeks,
     case
-        when least_ignore_nulls(diff_weeks, 52) <= 0 then 1
+        when least(diff_weeks, 52) <= 0 then 1
         when diff_weeks is NULL then 52
-        else least_ignore_nulls(diff_weeks, 52)
+        else least(diff_weeks, 52)
     end as l12m_weeks,
     case
-        when least_ignore_nulls(diff_weeks, 26) <= 0 then 1
+        when least(diff_weeks, 26) <= 0 then 1
         when diff_weeks is NULL then 26
-        else least_ignore_nulls(diff_weeks, 26)
+        else least(diff_weeks, 26)
     end as l6m_weeks,
     case
-        when least_ignore_nulls(diff_weeks, 13) <= 0 then 1
+        when least(diff_weeks, 13) <= 0 then 1
         when diff_weeks is NULL then 13
-        else least_ignore_nulls(diff_weeks, 13)
+        else least(diff_weeks, 13)
     end as l3m_weeks,
     trunc(inv.last_12months_so_val / l12m_weeks,11) as l12m_weeks_avg_sales,
     trunc(inv.last_6months_so_val / l6m_weeks,11) as l6m_weeks_avg_sales,

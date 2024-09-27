@@ -1,3 +1,9 @@
+{{
+    config(
+        sql_header = "alter session set week_start= 7;"
+    )
+}}
+
 with wks_indonesia_inventory_health_analysis_propagation as(
     SELECT * FROM {{ ref('idnwks_integration__wks_indonesia_inventory_health_analysis_propagation') }}
 ), 
@@ -81,19 +87,19 @@ transformed as(
 		wkly_avg.min_date,
 		datediff(week, wkly_avg.min_date, last_day(to_date(left(month_year, 4) || right(month_year, 2), 'yyyymm'))) diff_weeks,
 		CASE 
-			WHEN least(diff_weeks, 52) <= 0
+			WHEN least_ignore_nulls(diff_weeks, 52) <= 0
 				THEN 1
-			ELSE least(diff_weeks, 52)
+			ELSE least_ignore_nulls(diff_weeks, 52)
 			END AS l12m_weeks,
 		CASE 
-			WHEN least(diff_weeks, 26) <= 0
+			WHEN least_ignore_nulls(diff_weeks, 26) <= 0
 				THEN 1
-			ELSE least(diff_weeks, 26)
+			ELSE least_ignore_nulls(diff_weeks, 26)
 			END AS l6m_weeks,
 		CASE 
-			WHEN least(diff_weeks, 13) <= 0
+			WHEN least_ignore_nulls(diff_weeks, 13) <= 0
 				THEN 1
-			ELSE least(diff_weeks, 13)
+			ELSE least_ignore_nulls(diff_weeks, 13)
 			END AS l3m_weeks,
 		inv.last_12months_so_val / l12m_weeks AS l12m_weeks_avg_sales,
 		inv.last_6months_so_val / l6m_weeks AS l6m_weeks_avg_sales,
