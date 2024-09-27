@@ -1,7 +1,7 @@
 {{ 
     config(
         materialized="incremental", 
-        incremental_strategy="delete+insert",
+        incremental_strategy="append",
         unique_key = ['itemid'],
         pre_hook = "{% if is_incremental() %}
                     UPDATE {{this}} SET source_file_date = NULL;
@@ -14,7 +14,7 @@ with
     sdl_extracted_table as (
         select *, dense_rank() over(partition by itemid order by file_name desc) as rnk
         from {{source('jpdclsdl_raw','extraction_table')}}
-        qualify rnk =1
+        --qualify rnk =1
     ),
 
      final as (
