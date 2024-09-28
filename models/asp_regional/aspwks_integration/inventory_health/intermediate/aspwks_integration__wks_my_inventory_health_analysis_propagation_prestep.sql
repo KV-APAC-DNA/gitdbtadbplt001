@@ -1,42 +1,42 @@
 with wks_my_siso_propagate_final
 as (
     select *
-    from PROD_DNA_CORE.myswks_integration.wks_my_siso_propagate_final
+    from {{ref('myswks_integration__wks_my_siso_propagate_final')}}
     ),
 edw_vw_os_customer_dim
 as (
     select *
-    from PROD_DNA_CORE.mysedw_integration.edw_vw_my_customer_dim
+    from {{ref('mysedw_integration__edw_vw_my_customer_dim')}}
     ),
 itg_my_dstrbtrr_dim
 as (
     select *
-    from PROD_DNA_CORE.mysitg_integration.itg_my_dstrbtrr_dim
+    from {{ref('mysitg_integration__itg_my_dstrbtrr_dim')}}
     ),
 vw_edw_reg_exch_rate
 as (
     select *
-    from PROD_DNA_CORE.aspedw_integration.vw_edw_reg_exch_rate
+    from {{ref('aspedw_integration__vw_edw_reg_exch_rate')}}
     ),
 edw_my_siso_analysis
 as (
     select *
-    from PROD_DNA_CORE.mysedw_integration.edw_my_siso_analysis
+    from {{ref('mysedw_integration__edw_my_siso_analysis')}}
     ),
 edw_vw_my_si_pos_inv_analysis
 as (
     select *
-    from PROD_DNA_CORE.mysedw_integration.edw_vw_my_si_pos_inv_analysis
+    from {{ref('mysedw_integration__edw_vw_my_si_pos_inv_analysis')}}
     ),
 edw_material_dim
 as (
     select *
-    from PROD_DNA_CORE.aspedw_integration.edw_material_dim
+    from {{ref('aspedw_integration__edw_material_dim')}}
     ),
 edw_vw_os_time_dim
 as (
     select *
-    from PROD_DNA_CORE.sgpedw_integration.edw_vw_os_time_dim
+    from {{ref('sgpedw_integration__edw_vw_os_time_dim')}}
     ),
 ONSESEA
 AS (
