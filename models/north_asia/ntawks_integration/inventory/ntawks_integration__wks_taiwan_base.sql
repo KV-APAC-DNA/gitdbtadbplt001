@@ -101,6 +101,11 @@ AS (
                 END)
         AND rtrim(TO_CHAR(invnt_dt, 'yyyymm')) = rtrim(inv_max.cal_month)
         AND rtrim(inv.invnt_dt) = rtrim(inv_max.max_invnt_dt)
+    WHERE ctry_nm = 'Taiwan'
+        AND non_sellable_product = 'sellable products'
+        AND from_crncy = 'TWD'
+        AND to_crncy = 'TWD'
+        AND LEFT(invnt_dt, 4) >= (DATE_PART(YEAR, SYSDATE()) - 6)
     ),
 t1
 AS (
