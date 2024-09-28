@@ -97,9 +97,9 @@ AS (
         SUM(last_6months_so_value) AS last_6months_so_val,
         SUM(last_12months_so_value) AS last_12months_so_val,
         SUM(last_36months_so_value) AS last_36months_so_val,
-        CAST((SUM(last_3months_so_value) * c.Exch_rate) AS NUMERIC(38, 5)) AS last_3months_so_val_usd,
-        CAST((SUM(last_6months_so_value) * c.Exch_rate) AS NUMERIC(38, 5)) AS last_6months_so_val_usd,
-        CAST((SUM(last_12months_so_value) * c.Exch_rate) AS NUMERIC(38, 5)) AS last_12months_so_val_usd,
+        CAST(SUM(last_3months_so_value * c.Exch_rate) AS NUMERIC(38, 5)) AS last_3months_so_val_usd,
+        CAST(SUM(last_6months_so_value * c.Exch_rate) AS NUMERIC(38, 5)) AS last_6months_so_val_usd,
+        CAST(SUM(last_12months_so_value * c.Exch_rate) AS NUMERIC(38, 5)) AS last_12months_so_val_usd,
         propagate_flag,
         propagate_from,
         CASE 
