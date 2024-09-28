@@ -62,7 +62,7 @@ select * from {{ref('aspwks_integration__wks_hk_inventory_health_analysis_propag
 ),
 cal AS
    (
-SELECT DISTINCT year as CAL_YEAR,QRTR_NO as cal_qrtr_no,MNTH_ID as cal_mnth_id,MNTH_NO  as cal_mnth_no FROM EDW_VW_OS_TIME_DIM
+SELECT DISTINCT "year" as CAL_YEAR,QRTR_NO as cal_qrtr_no,MNTH_ID as cal_mnth_id,MNTH_NO  as cal_mnth_no FROM EDW_VW_OS_TIME_DIM
    ),
 CURRENCY AS
       (
