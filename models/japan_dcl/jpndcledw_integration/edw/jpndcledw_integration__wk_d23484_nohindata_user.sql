@@ -1,4 +1,15 @@
+{{
+    config
+    (
+        pre_hook = "{% if build_month_end_job_models()  %}
+                    {{wk_rankdt_fun()}}
+                    {% endif %}"
+    )
+}}
+
+
 {% if build_month_end_job_models()  %}
+
 with wk_d22687_ruikei
 as (
   select *
