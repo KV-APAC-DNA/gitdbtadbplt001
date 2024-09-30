@@ -1,6 +1,7 @@
 with
 itg_trax_md_product as (
 select * from {{ source('aspacshare_integration','trax_md_product') }}
+where businessunitid = 'PC'
 ),
 final as (
 SELECT 
