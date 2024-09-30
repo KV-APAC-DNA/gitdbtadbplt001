@@ -1,20 +1,28 @@
+{{
+    config(
+        sql_header = "alter session set week_start= 7;"
+    )
+}}
 
 with wks_hk_inventory_health_analysis_propagation as (
-select * from {{ ref('aspwks_integration__wks_hk_inventory_health_analysis_propagation') }}
+select * from DEV_DNA_CORE.ALAKSH01_WORKSPACE.aspwks_integration__wks_hk_inventory_health_analysis_propagation
+--{{ ref('aspwks_integration__wks_hk_inventory_health_analysis_propagation') }}
 ),
 wks_hk_sellout_for_inv_analysis as (
-select * from {{ ref('ntawks_integration__wks_hk_sellout_for_inv_analysis') }}
+select * from DEV_DNA_CORE.ALAKSH01_WORKSPACE.NTAWKS_INTEGRATION__WKS_HK_SELLOUT_FOR_INV_ANALYSIS
+--{{ ref('ntawks_integration__wks_hk_sellout_for_inv_analysis') }}
 ),
 wks_hk_inventory_healthy_unhealthy_analysis as (
-select * from {{ ref('ntawks_integration__wks_hk_inventory_healthy_unhealthy_analysis') }}
+select * from DEV_DNA_CORE.ALAKSH01_WORKSPACE.NTAWKS_INTEGRATION__wks_hk_inventory_healthy_unhealthy_analysis
+--{{ ref('ntawks_integration__wks_hk_inventory_healthy_unhealthy_analysis') }}
 ),
 final as (
 SELECT inv.*,healthy_inv.healthy_inventory
       ,wkly_avg.min_date
       ,datediff ( week,wkly_avg.min_date, last_day(to_date(left(cal_mnth_id,4)||right(cal_mnth_id,2),'yyyymm')) )diff_weeks
-      ,case when least(diff_weeks,52) <= 0 then 1 else least(diff_weeks,52) end as l12m_weeks
-      ,case when least(diff_weeks,26) <= 0 then 1 else least(diff_weeks,26) end as l6m_weeks 
-      ,case when least(diff_weeks,13) <= 0 then 1 else least(diff_weeks,13) end as l3m_weeks
+       ,case when least_ignore_nulls(diff_weeks,52) <= 0 then 1 else least_ignore_nulls(diff_weeks,52) end as l12m_weeks
+      ,case when least_ignore_nulls(diff_weeks,26) <= 0 then 1 else least_ignore_nulls(diff_weeks,26) end as l6m_weeks 
+      ,case when least_ignore_nulls(diff_weeks,13) <= 0 then 1 else least_ignore_nulls(diff_weeks,13) end as l3m_weeks
       ,inv.last_12months_so_val /l12m_weeks as l12m_weeks_avg_sales  
       ,inv.last_6months_so_val /l6m_weeks as l6m_weeks_avg_sales
       ,inv.last_3months_so_val /l3m_weeks as l3m_weeks_avg_sales

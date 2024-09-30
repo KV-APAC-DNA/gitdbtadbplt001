@@ -429,7 +429,7 @@ order by 1 desc, 2,3,4
  GTS as 
 (
 Select      ctry_key, obj_crncy_co_obj,caln_yr_mo,fisc_yr,
-    sum(SI_ALL_DB_VAL)as gts_value,sum(case when avail_customer is null then 0 else si_all_db_val end) as si_inv_db_val
+    sum(SI_ALL_DB_VAL)as gts_value,sum(case when nullif(avail_customer,'') is null then 0 else si_all_db_val end) as si_inv_db_val
     from(
 
 select a.ctry_key,a.obj_crncy_co_obj,a.caln_yr_mo,a.fisc_yr, a.prnt_cust_key as total_customer, b.sap_prnt_cust_key as avail_customer,
