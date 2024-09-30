@@ -1769,7 +1769,7 @@ sotp as
                                     7,
                                     8,
                                     9
-                            ) sap ON sap."ean" = trax_master."ean"
+                            ) sap ON nullif(sap."ean",'') = nullif(trax_master."ean",'')
                         )
                     group by 1,
                         2,
