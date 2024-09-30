@@ -6,7 +6,7 @@ final as
 (
     select
 		dstr_code::varchar(10) as dstr_cd,
-		dstr_name::varchar(20) as dstr_nm,
+		rtrim(dstr_name)::varchar(20) as dstr_nm,
 		ean_code::varchar(20) as ean_cd,
 		dstr_product_code::varchar(20) as dstr_prod_cd,
 		dstr_product_name::varchar(200) as dstr_prod_nm,

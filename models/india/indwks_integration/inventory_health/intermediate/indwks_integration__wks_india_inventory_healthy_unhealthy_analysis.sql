@@ -115,13 +115,13 @@ FROM (
   PRODUCT T3
 WHERE LTRIM(T3.SAP_MATL_NUM(+), '0') = SISO.matl_num
 GROUP BY month,
-  T3.GPH_PROD_BRND,
-  T3.GPH_PROD_VRNT,
-  T3.GPH_PROD_SGMNT,
-  T3.GPH_PROD_CTGRY,
-  T3.pka_size_desc,
-  T3.pka_product_key,
-  SISO.sap_parent_customer_key
+TRIM(NVL(NULLIF(T3.GPH_PROD_BRND, ''), 'NA')),
+TRIM(NVL(NULLIF(T3.GPH_PROD_VRNT, ''), 'NA')),
+TRIM(NVL(NULLIF(T3.GPH_PROD_SGMNT, ''), 'NA')),
+TRIM(NVL(NULLIF(T3.GPH_PROD_CTGRY, ''), 'NA')),
+TRIM(NVL(NULLIF(T3.pka_product_key, ''), 'NA')),
+TRIM(NVL(NULLIF(T3.pka_size_desc, ''), 'NA')),
+TRIM(NVL(NULLIF(SISO.sap_parent_customer_key, ''), 'Not Assigned'))
   ),
   final as
   (
