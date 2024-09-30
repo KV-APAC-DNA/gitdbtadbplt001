@@ -19,8 +19,11 @@
             select 
             {%- for col in reversed_columns %}
                 {% if col in file_name_columns%}
-                    {{ col }} as file_name
-                {% if  group_by_columns %},{% endif %}
+                    {{ col }} as file_name,
+                   {% break %}
+                {% endif %}
+                {% if col not in file_name_columns and loop.last %}
+                    'Filename N/A' as file_name,
                    {% break %}
                 {% endif %}   
             {%- endfor %}
@@ -35,13 +38,7 @@
                 where {{where_condition}}
             {% endif %}
             group by 
-           {%- for col in reversed_columns %}
-                {% if col in file_name_columns%}
-                    {{ col }}
-                {% if  not loop.last %},{% endif %}
-                   {% break %}
-                {% endif %}   
-            {%- endfor %}
+           file_name,
             {% for item in group_by_columns -%}
                 {% if item | lower not in  file_name_columns %}
                              {{item}}
@@ -60,12 +57,17 @@
             {%- for col in reversed_columns %}
                 {% if col in file_name_columns%}
                     {{ col }} as file_name,
-                    *exclude({{col}})
-                {% if  group_by_columns %},{% endif %}
+                     '{{failure_reason}}' AS failure_reason,
+                     *exclude({{col}})
+                   {% break %}
+                {% endif %}
+                {% if col not in file_name_columns and loop.last %}
+                    'Filename N/A' as file_name,
+                    '{{failure_reason}}' AS failure_reason,
+                     *
                    {% break %}
                 {% endif %}   
-            {%- endfor %} 
-            '{{failure_reason}}' AS failure_reason
+            {%- endfor %}
         from {{model}}
         where ({%- for col in reversed_columns %}
                 {% if col in file_name_columns%}

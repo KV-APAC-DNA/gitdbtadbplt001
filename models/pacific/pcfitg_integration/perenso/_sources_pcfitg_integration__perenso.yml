@@ -243,6 +243,7 @@ sources:
               config:
                 store_failures: true
                 schema: pcfwks_integration
+                severity: error
     - name: sdl_pacific_perenso_call_coverage_targets
       tags: ["anz_perenso_weekly_load",""]
     - name: sdl_over_and_above_points

@@ -13,7 +13,9 @@
 
 with source as
 (
-    select * from {{ source('hcpsdl_raw', 'sdl_hcp360_in_sfmc_hcp_details') }}
+    select *, dense_rank() over(partition by SUBSCRIBER_KEY order by file_name desc) as rnk 
+    from {{ source('hcpsdl_raw', 'sdl_hcp360_in_sfmc_hcp_details') }}
+    qualify rnk =1
 ),
 final as
 (
@@ -68,5 +70,6 @@ select first_name::varchar(100) as first_name,
     device_id::varchar(20) as device_id,
     how_did_you_hear_about_us::varchar(20) as how_did_you_hear_about_us,
     crt_dttm::timestamp_ntz(9) as crt_dttm,
-    updt_dttm::timestamp_ntz(9) as updt_dttm
+    updt_dttm::timestamp_ntz(9) as updt_dttm,
+    file_name::varchar(255) as file_name
     from final

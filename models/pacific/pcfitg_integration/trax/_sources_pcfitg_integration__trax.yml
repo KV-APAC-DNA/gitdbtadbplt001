@@ -12,6 +12,7 @@ sources:
       - name: sdl_trax_fct_psd_kpis
       - name: sdl_trax_md_product
       - name: sdl_trax_md_store
+      - name: sdl_trax_md_store
 
   - name: aspacshare_integration
     database: "{{ env_var('DBT_ENV_EMEA_DB') }}"

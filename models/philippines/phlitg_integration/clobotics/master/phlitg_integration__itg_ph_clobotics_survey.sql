@@ -2,7 +2,6 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        unique_key=  ['filename'],
         pre_hook= [
         "{% if is_incremental() %}
                 delete from {{this}} where split_part(filename, '_', 1) in (
@@ -17,6 +16,14 @@
                 select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_clobotics_survey_data__format_test3')}}
                 )
         );{%endif%}"]
+        ,
+    post_hook=
+    "update {{this}} a
+    set a.store_code = b.store_code
+    from {{ source('phlitg_integration', 'itg_ph_clobotics_store_mapping') }} b 
+    where trim(a.store_code) = trim(b.old_store_code)
+    and split_part(trim(a.store_name), ' ', 1) = split_part(trim(b.store_name), ' ', 1);"
+    
     )
 }}
 
@@ -81,7 +88,7 @@ final as
     cast(a.plan_finish_time as timestamp_ntz(9)) as plan_finish_time,
     a.username::varchar(200) as username,
 	a.user_display_name::varchar(200) as user_display_name,
-    trim(b.store_code)::varchar(255) as store_code,
+    rtrim(a.store_code)::varchar(255) as store_code,
     a.store_name::varchar(255) as store_name,
 	a.city::varchar(255) as city,
 	a.channel::varchar(255) as channel,
@@ -103,9 +110,9 @@ final as
     current_timestamp()::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm
 from trans as a 
-    left join itg_ph_clobotics_store_mapping b on 
-    trim(a.store_code) = trim(b.old_store_code)
-    and split_part(trim(a.store_name), ' ', 1) = split_part(trim(b.store_name), ' ', 1)
+    -- left join itg_ph_clobotics_store_mapping b on 
+    -- trim(a.store_code) = trim(b.old_store_code)
+    -- and split_part(trim(a.store_name), ' ', 1) = split_part(trim(b.store_name), ' ', 1)
 )  
 
 select * from final

@@ -2,14 +2,23 @@ with
 sdl_pharm_sellout_probe as
 (
     select * from {{ source('pcfsdl_raw', 'sdl_pharm_sellout_probe') }}
+    where filename not in (
+        select distinct file_name from {{source('pcfwks_integration','TRATBL_sdl_pharm_sellout_probe__duplicate_test')}}
+    )
 ),
 sdl_pharm_sellout_outlet as
 (
     select * from {{ source('pcfsdl_raw', 'sdl_pharm_sellout_outlet') }}
+    where filename not in (
+        select distinct file_name from {{source('pcfwks_integration','TRATBL_sdl_pharm_sellout_outlet__duplicate_test')}}
+    )
 ),
 sdl_pharm_sellout_product as
 (
     select * from {{ source('pcfsdl_raw', 'sdl_pharm_sellout_product') }}
+    where filename not in (
+        select distinct file_name from {{source('pcfwks_integration','TRATBL_sdl_pharm_sellout_product__duplicate_test')}}
+    )
 ),
 outlet as 
 (

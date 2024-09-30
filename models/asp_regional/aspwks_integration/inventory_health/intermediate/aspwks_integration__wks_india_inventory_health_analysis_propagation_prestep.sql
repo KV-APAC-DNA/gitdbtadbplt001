@@ -56,7 +56,7 @@ edw_customer_dim as
 ),
 wks_india_siso_propagate_final as
 (
-    select * from ({{ ref('indwks_integration__wks_india_siso_propagate_final') }})
+    select * from {{ ref('indwks_integration__wks_india_siso_propagate_final') }}
 ),
 edw_vw_os_time_dim
 as (
@@ -288,9 +288,9 @@ FROM (
               sum(last_6months_so_value) AS last_6months_so_val,
               sum(last_12months_so_value) AS last_12months_so_val,
               sum(last_36months_so_value) AS last_36months_so_val,
-              cast((sum(last_3months_so_value) * t2.Exch_rate) AS NUMERIC(38, 5)) AS last_3months_so_val_usd,
-              cast((sum(last_6months_so_value) * t2.Exch_rate) AS NUMERIC(38, 5)) AS last_6months_so_val_usd,
-              cast((sum(last_12months_so_value) * t2.Exch_rate) AS NUMERIC(38, 5)) AS last_12months_so_val_usd,
+              cast((sum(last_3months_so_value * t2.Exch_rate) ) AS NUMERIC(38, 5)) AS last_3months_so_val_usd,
+              cast((sum(last_6months_so_value * t2.Exch_rate) ) AS NUMERIC(38, 5)) AS last_6months_so_val_usd,
+              cast((sum(last_12months_so_value * t2.Exch_rate) ) AS NUMERIC(38, 5)) AS last_12months_so_val_usd,
               propagate_flag,
               propagate_from,
               CASE 
