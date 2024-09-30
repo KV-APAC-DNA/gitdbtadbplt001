@@ -10,6 +10,8 @@
         (select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_as_watsons_inventory__null_test') }}
         union all
         select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_as_watsons_inventory__duplicate_test') }}
+        union all
+        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_as_watsons_inventory__lookup_test') }}
         ));
         {% endif %}"
     )
@@ -20,6 +22,9 @@ with sdl_tw_as_watsons_inventory as (
      (select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_as_watsons_inventory__null_test') }}
       union all
       select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_as_watsons_inventory__duplicate_test') }}
+      union all
+    select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_as_watsons_inventory__lookup_test') }}
+
      ) qualify rnk =1
 ),
 final as (

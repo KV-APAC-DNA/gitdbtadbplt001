@@ -4,7 +4,7 @@
         incremental_strategy= "append",
         pre_hook= "{% if is_incremental() %}
         delete from {{this}} where report_date in  (select distinct report_date from {{ source('ntasdl_raw', 'sdl_kr_dads_coupang_price') }}
-        where file_name in (
+        where file_name not in (
         select distinct file_name  from {{ source('ntawks_integration', 'TRATBL_sdl_kr_dads_coupang_price__format_test') }}
         ));
         {% endif %}"
