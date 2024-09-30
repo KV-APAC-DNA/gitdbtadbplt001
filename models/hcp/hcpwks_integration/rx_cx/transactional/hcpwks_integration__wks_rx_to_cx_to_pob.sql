@@ -89,7 +89,7 @@ wks_rx_to_cx_to_pob_rxrtl as
 ),
 itg_query_parameters as
 (
-    select * from {{ source('inditg_integration', 'itg_query_parameters') }}
+    select * from dev_dna_core.inditg_integration.itg_query_parameters
 ),
 wks_rx_to_cx_to_pob_rxrtl_urc as (
 SELECT rtl.urc,
