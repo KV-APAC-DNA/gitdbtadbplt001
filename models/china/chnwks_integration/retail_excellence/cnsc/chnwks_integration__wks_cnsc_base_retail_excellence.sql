@@ -8,7 +8,8 @@ edw_vw_cal_Retail_excellence_Dim as (
     select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 itg_mds_cn_otc_product_mapping as (
-    select * from {{ source('chnitg_integration', 'itg_mds_cn_otc_product_mapping') }}
+    select * from {{ ref('chnitg_integration__itg_mds_cn_otc_product_mapping') }}
+    --{{ source('chnitg_integration', 'itg_mds_cn_otc_product_mapping') }}
 ),
 
 itg_query_parameters as (
