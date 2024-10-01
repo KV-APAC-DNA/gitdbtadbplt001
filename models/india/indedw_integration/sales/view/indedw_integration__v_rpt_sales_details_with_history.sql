@@ -78,7 +78,7 @@ select * from {{ ref('inditg_integration__itg_in_rrsrdistributor') }}
 ),
 itg_in_rretailergeoextension as 
 (
-select * from {{ ref('inditg_integration__itg_in_rretailergeoextension') }}
+select * from {{ ref('inditg_integration__itg_csl_retailerhierarchy') }}
 ),
 final as 
 (

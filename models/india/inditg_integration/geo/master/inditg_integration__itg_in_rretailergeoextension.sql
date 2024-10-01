@@ -41,3 +41,4 @@ final as
     from source
 )
 select * from final
+where 1=1
