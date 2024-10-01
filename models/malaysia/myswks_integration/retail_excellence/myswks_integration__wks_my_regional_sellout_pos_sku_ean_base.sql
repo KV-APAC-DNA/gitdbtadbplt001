@@ -1,6 +1,6 @@
 --Import CTE   
 with edw_rpt_regional_sellout_offtake as (
-    select * from {{ source('aspedw_integration', 'edw_rpt_regional_sellout_offtake') }}
+    select * from {{ ref('aspedw_integration__edw_rpt_regional_sellout_offtake_dbt') }}
 ),
 edw_material_sales_dim as (
     select * from {{ ref( 'aspedw_integration__edw_material_sales_dim') }}

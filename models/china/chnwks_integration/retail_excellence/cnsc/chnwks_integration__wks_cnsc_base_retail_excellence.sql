@@ -1,5 +1,5 @@
 with EDW_RPT_REGIONAL_SELLOUT_OFFTAKE as (
-    select * from {{ source('aspedw_integration', 'edw_rpt_regional_sellout_offtake') }}
+    select * from {{ ref('aspedw_integration__edw_rpt_regional_sellout_offtake_dbt') }}
 ),
 itg_CS_re_store as (
     select * from {{ source('chnitg_integration', 'itg_cs_re_store') }}
