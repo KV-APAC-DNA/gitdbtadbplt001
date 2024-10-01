@@ -2,6 +2,9 @@
     config
     (
         pre_hook = "{% if build_month_end_job_models()  %}
+                    truncate table {{ source('jpdcledw_integration', 'wk_rankdt_tmp') }};
+                    {% endif %}",
+        post_hook = "{% if build_month_end_job_models()  %}
                     {{wk_rankdt_fun()}}
                     {% endif %}"
     )
