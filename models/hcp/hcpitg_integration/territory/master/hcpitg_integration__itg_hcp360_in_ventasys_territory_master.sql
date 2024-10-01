@@ -9,7 +9,13 @@
         FROM {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_territory_master') }} SEMP
         INNER JOIN {{this}} IEMP
         ON SEMP.V_TERRID = IEMP.V_TERRID
-        AND SEMP.TEAM_NAME = IEMP.TEAM_NAME);
+        AND SEMP.TEAM_NAME = IEMP.TEAM_NAME
+        where SEMP.filename not in (
+            select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_ventasys_territory_master__null_test') }}
+            union all
+            select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_ventasys_territory_master__duplicate_test') }}
+        )
+        );
         {% endif %}"
     )
 }}
@@ -18,7 +24,11 @@ with source as
 (
     select *, dense_rank() over (partition by TEAM_NAME,V_TERRID order by filename desc) rn 
     from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_territory_master') }}
-    qualify rn=1
+    where filename not in (
+            select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_ventasys_territory_master__null_test') }}
+            union all
+            select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_ventasys_territory_master__duplicate_test') }}
+    ) qualify rn=1
 ),
 final as
 (

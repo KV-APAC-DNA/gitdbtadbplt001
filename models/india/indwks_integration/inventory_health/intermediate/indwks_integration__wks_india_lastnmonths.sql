@@ -1,7 +1,6 @@
 with wks_india_allmonths_base
 as (
-  select *
-  from ({{ ref('indwks_integration__wks_india_allmonths_base') }})
+  select * from {{ ref('indwks_integration__wks_india_allmonths_base') }}
   ),
 edw_vw_os_time_dim
 as (
@@ -61,7 +60,7 @@ AS (
             SELECT mnth_id,
               third_month
             FROM (
-              SELECT year,
+              SELECT "year",
                 mnth_id,
                 lag(mnth_id, 2) OVER (
                   ORDER BY mnth_id
@@ -95,7 +94,7 @@ AS (
             SELECT mnth_id,
               sixth_month
             FROM (
-              SELECT year,
+              SELECT "year",
                 mnth_id,
                 lag(mnth_id, 5) OVER (
                   ORDER BY mnth_id
@@ -129,7 +128,7 @@ AS (
             SELECT mnth_id,
               twelfth_month
             FROM (
-              SELECT year,
+              SELECT "year",
                 mnth_id,
                 lag(mnth_id, 11) OVER (
                   ORDER BY mnth_id
@@ -163,7 +162,7 @@ AS (
             SELECT mnth_id,
               thirtysixth_month
             FROM (
-              SELECT year,
+              SELECT "year",
                 mnth_id,
                 lag(mnth_id, 35) OVER (
                   ORDER BY mnth_id

@@ -7,8 +7,15 @@
 }}
 --Import CTE
 with source as (
-    select *
+    select *,
+    dense_rank() over(partition by month_number order by file_name) rnk 
     from {{ source('sgpsdl_raw', 'sdl_sg_tp_closed_month') }}
+    where file_name not in 
+    (
+        select distinct file_name from {{ source('sgpwks_integration', 'TRATBL_sdl_sg_tp_closed_month__null_test') }}
+        union all 
+        select distinct file_name from {{ source('sgpwks_integration', 'TRATBL_sdl_sg_tp_closed_month__lookup_test') }}
+    ) qualify rnk =1 
 ),
 
 --Logical CTE

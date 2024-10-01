@@ -1,15 +1,14 @@
 {{
     config(
         materialized= "incremental",
-        incremental_strategy= "append",
-        pre_hook = "{% if is_incremental() %}
-            delete from {{this}} where subscriberkey in (select subscriberkey from {{ source('jpdclsdl_raw', 'sfmc_clicks') }});
-                    {% endif %}"
+        incremental_strategy= "append"       
     )
 }}
 
 with source as(
-    select * from {{ source('jpdclsdl_raw', 'sfmc_clicks') }}
+    select *, dense_rank() over(partition by subscriberkey order by file_name desc) as rnk 
+    from {{ source('jpdclsdl_raw', 'sfmc_clicks') }}
+    --qualify rnk =1
 ),
 final as(
     select 
@@ -31,7 +30,8 @@ final as(
         current_timestamp()::timestamp_ntz(9) as inserted_date,
         NULL::varchar(10) as inserted_by,
         current_timestamp()::timestamp_ntz(9) as updated_date,
-        NULL::varchar(100) as updated_by
+        NULL::varchar(100) as updated_by,
+        file_name::varchar(255) as file_name
     from source
 )
 select * from final

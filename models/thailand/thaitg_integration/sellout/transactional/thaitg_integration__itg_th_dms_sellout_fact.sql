@@ -9,7 +9,7 @@
 with source as(
     select *,
     dense_rank() over(partition by distributorid,orderno,orderdate,arcode,linenumber order by source_file_name desc) as rnk
-    from {{ source('thasdl_raw', 'sdl_th_dms_sellout_fact') }}
+    from {{ source('thasdl_raw', 'sdl_th_dms_sellout_fact') }} qualify rnk=1
 ),
 final as(
     select
@@ -59,7 +59,8 @@ final as(
         promocode3::varchar(255) as promocode3,
         avgdiscount::number(18,4) as avgdiscount,
         current_timestamp()::timestamp_ntz(9) as curr_date,
-        run_id::number(18,0) as run_id
+        run_id::number(18,0) as run_id,
+        SOURCE_FILE_NAME::varchar(255) as file_name
     from source
     where rnk=1
 )

@@ -308,8 +308,8 @@ FROM
             (
               (
                 SELECT 
-                  DISTINCT dly_sls_cust_attrb_lkp.sls_org, 
-                  dly_sls_cust_attrb_lkp.cmp_id 
+                  DISTINCT dly_sls_cust_attrb_lkp.sls_org_code, 
+                  dly_sls_cust_attrb_lkp.cmp_id_code
                 FROM 
                   dly_sls_cust_attrb_lkp 
                 UNION ALL 
@@ -341,7 +341,7 @@ FROM
                     )
                   ) 
                   AND (
-                    (copa.co_cd):: text = (lkp.cmp_id):: text
+                    (copa.co_cd):: text = (lkp.cmp_id_code):: text
                   )
                 ) 
                 AND (

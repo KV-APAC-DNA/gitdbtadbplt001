@@ -19,6 +19,7 @@ sources:
               config:
                 store_failures: true
                 schema: pcfwks_integration
+                severity: error
     - name: sdl_mds_pacific_sapbw_plan_lkp
       tags: ["anz_mds_sdl_to_edw_load","ingestion"]
       tests:
@@ -29,6 +30,7 @@ sources:
               config:
                 store_failures: true
                 schema: pcfwks_integration
+                severity: error
     - name: sdl_mds_pacific_sap_gl_ciw_mapping
       tags: ["anz_mds_sdl_to_edw_load","ingestion"]
       tests:
@@ -39,6 +41,7 @@ sources:
               config:
                 store_failures: true
                 schema: pcfwks_integration 
+                severity: error
 
     - name: sdl_mds_pacific_px_gl_ciw_mapping     
       tags: ["anz_mds_sdl_to_edw_load","ingestion"] 
@@ -50,6 +53,7 @@ sources:
               config:
                 store_failures: true
                 schema: pcfwks_integration
+                severity: error
 
   - name: pcfedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"

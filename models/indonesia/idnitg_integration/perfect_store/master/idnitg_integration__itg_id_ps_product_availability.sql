@@ -7,14 +7,26 @@
         delete from {{this}} 
         where (outlet_id,merchandiser_id,input_date,upper(put_up_sku))
         in (select distinct trim(outlet_id),trim(merchandiser_id),cast(trim(input_date) as date),upper(trim(put_up_sku))
-        from {{source ('idnsdl_raw','sdl_id_ps_product_availability')}});
+        from {{source ('idnsdl_raw','sdl_id_ps_product_availability')}}
+        where file_name not in (
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_ps_product_availability__null_test') }}
+            union all
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_ps_product_availability__duplicate_test') }}
+        )
+        );
         {% endif %}" 
     )
 }}
 
 with source as
 (
-    select * from {{source ('idnsdl_raw', 'sdl_id_ps_product_availability')}}
+    select *, dense_rank() over(partition by trim(outlet_id),trim(merchandiser_id),cast(trim(input_date) as date),upper(trim(put_up_sku)) order by file_name desc) as rnk 
+    from {{source ('idnsdl_raw', 'sdl_id_ps_product_availability')}}
+    where file_name not in (
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_ps_product_availability__null_test') }}
+            union all
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_ps_product_availability__duplicate_test') }}
+    ) qualify rnk =1
 ),
 final as
 (

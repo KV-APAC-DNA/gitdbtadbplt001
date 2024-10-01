@@ -19,6 +19,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
           - test_duplicate:
               group_by_columns: ["code"]
               select_columns: ["code","name"]
@@ -26,3 +27,4 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
