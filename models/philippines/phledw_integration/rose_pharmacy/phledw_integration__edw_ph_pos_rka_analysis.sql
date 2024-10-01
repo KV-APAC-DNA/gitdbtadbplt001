@@ -80,8 +80,9 @@ select
     null as chnl_desc,
     null as sub_chnl_cd,
     null as sub_chnl_desc,
-    split_part(cust.Code,'-',1) as parent_customer_cd,
-    cust.cust_cd as parent_customer,
+   ROSE PHARMACY, INC.
+   'RKA007' as parent_customer_cd,
+    'ROSE PHARMACY, INC.' as parent_customer,
    ltrim(veomd.sap_matl_num, '0') as sku,
 	veomd.sap_mat_desc as sku_desc,
     POS.qty::integer as qty,
@@ -107,7 +108,7 @@ select
 ,veomd.gph_prod_put_up_desc as global_put_up_desc
 ,veomd.sap_base_prod_cd as sap_base_prod_cd
 ,gph_prod_sub_brnd as global_prod_sub_brand
-,null as account_grp
+,'ROSE PHARMACY, INC.' as account_grp
 ,veomd.sap_base_prod_desc as sap_base_prod_desc
 ,veomd.gph_prod_needstate as global_prod_need_state
 ,'MODERN TRADE' as trade_type
@@ -171,7 +172,7 @@ select
 ,cust.prov_nm as prov_nm
 ,null as sap_curr_cd
 ,null as sap_prod_mnr_desc
-,null as gch_region
+,'APAC' as gch_region
 ,null as sap_prod_hier_cd
 ,cust.mncplty_cd as mncplty_cd
 ,cust.mncplty_nm as mncplty_nm
@@ -180,7 +181,7 @@ select
 ,null as gch_subcluster
 ,null as global_mat_region
 ,null as city_cd
-,null as gch_market
+,'Philippines' as gch_market
 ,null as global_prod_franchise
 ,null as city_nm
 ,null as gch_retail_banner
