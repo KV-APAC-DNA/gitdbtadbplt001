@@ -200,6 +200,76 @@ select
      left   join price_list price on (prod.sap_item_cd=price.item_cd and prod.mnth_id=price.jj_mnth_id and price.active='Y') 
      left join veomd on  (upper(ltrim(veomd.sap_matl_num, 0)) = upper(ltrim(prod.sap_item_cd,0)))
      left join epmad on (upper(trim(epmad.item_cd)) = upper(ltrim(prod.sap_item_cd,0)))
+     left join  (
+                            SELECT edw_vw_ph_material_dim.cntry_key,
+                                edw_vw_ph_material_dim.sap_matl_num,
+                                edw_vw_ph_material_dim.sap_mat_desc,
+                                edw_vw_ph_material_dim.ean_num,
+                                edw_vw_ph_material_dim.sap_mat_type_cd,
+                                edw_vw_ph_material_dim.sap_mat_type_desc,
+                                edw_vw_ph_material_dim.sap_base_uom_cd,
+                                edw_vw_ph_material_dim.sap_prchse_uom_cd,
+                                edw_vw_ph_material_dim.sap_prod_sgmt_cd,
+                                edw_vw_ph_material_dim.sap_prod_sgmt_desc,
+                                edw_vw_ph_material_dim.sap_base_prod_cd,
+                                edw_vw_ph_material_dim.sap_base_prod_desc,
+                                edw_vw_ph_material_dim.sap_mega_brnd_cd,
+                                edw_vw_ph_material_dim.sap_mega_brnd_desc,
+                                edw_vw_ph_material_dim.sap_brnd_cd,
+                                edw_vw_ph_material_dim.sap_brnd_desc,
+                                edw_vw_ph_material_dim.sap_vrnt_cd,
+                                edw_vw_ph_material_dim.sap_vrnt_desc,
+                                edw_vw_ph_material_dim.sap_put_up_cd,
+                                edw_vw_ph_material_dim.sap_put_up_desc,
+                                edw_vw_ph_material_dim.sap_grp_frnchse_cd,
+                                edw_vw_ph_material_dim.sap_grp_frnchse_desc,
+                                edw_vw_ph_material_dim.sap_frnchse_cd,
+                                edw_vw_ph_material_dim.sap_frnchse_desc,
+                                edw_vw_ph_material_dim.sap_prod_frnchse_cd,
+                                edw_vw_ph_material_dim.sap_prod_frnchse_desc,
+                                edw_vw_ph_material_dim.sap_prod_mjr_cd,
+                                edw_vw_ph_material_dim.sap_prod_mjr_desc,
+                                edw_vw_ph_material_dim.sap_prod_mnr_cd,
+                                edw_vw_ph_material_dim.sap_prod_mnr_desc,
+                                edw_vw_ph_material_dim.sap_prod_hier_cd,
+                                edw_vw_ph_material_dim.sap_prod_hier_desc,
+                                edw_vw_ph_material_dim.gph_region,
+                                edw_vw_ph_material_dim.gph_reg_frnchse,
+                                edw_vw_ph_material_dim.gph_reg_frnchse_grp,
+                                edw_vw_ph_material_dim.gph_prod_frnchse,
+                                edw_vw_ph_material_dim.gph_prod_brnd,
+                                edw_vw_ph_material_dim.gph_prod_sub_brnd,
+                                edw_vw_ph_material_dim.gph_prod_vrnt,
+                                edw_vw_ph_material_dim.gph_prod_needstate,
+                                edw_vw_ph_material_dim.gph_prod_ctgry,
+                                edw_vw_ph_material_dim.gph_prod_subctgry,
+                                edw_vw_ph_material_dim.gph_prod_sgmnt,
+                                edw_vw_ph_material_dim.gph_prod_subsgmnt,
+                                edw_vw_ph_material_dim.gph_prod_put_up_cd,
+                                edw_vw_ph_material_dim.gph_prod_put_up_desc,
+                                edw_vw_ph_material_dim.gph_prod_size,
+                                edw_vw_ph_material_dim.gph_prod_size_uom,
+                                edw_vw_ph_material_dim.launch_dt,
+                                edw_vw_ph_material_dim.qty_shipper_pc,
+                                edw_vw_ph_material_dim.prft_ctr,
+                                edw_vw_ph_material_dim.shlf_life
+                            FROM edw_vw_ph_material_dim
+                            WHERE (
+                                    (edw_vw_ph_material_dim.cntry_key)::text = ('PH'::character varying)::text
+                                )
+                        ) veomd ON (
+                            (
+                                upper(
+                                    ltrim(
+                                        (veomd.sap_matl_num)::text,
+                                        ((0)::character varying)::text
+                                    )
+                                ) = ltrim(
+                                    (prod.sap_item_cd)::text,
+                                    ('0'::character varying)::text
+                                )
+                            )
+                        )
   ),
 final as 
 (
