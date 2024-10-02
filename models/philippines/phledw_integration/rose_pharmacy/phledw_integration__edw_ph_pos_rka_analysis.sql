@@ -156,10 +156,10 @@ select
 ,null as sap_frnchse_desc
 ,null as is_mcl
 ,null as sap_chnl_desc
-,null as sap_prod_frnchse_cd
+,veomd.sap_prod_frnchse_cd as sap_prod_frnchse_cd
 ,null as local_mat_npi_strt_period
 ,null as sap_sls_office_cd
-,null as sap_prod_frnchse_desc
+,veomd.sap_prod_frnchse_desc as sap_prod_frnchse_desc
 ,null as sap_sls_office_desc
 ,null as sap_prod_mjr_cd
 ,null as region_cd
