@@ -182,7 +182,7 @@ select
 ,null as global_mat_region
 ,null as city_cd
 ,'Philippines' as gch_market
-,null as global_prod_franchise
+,veomd.gph_prod_frnchse as global_prod_franchise
 ,null as city_nm
 ,null as gch_retail_banner
 ,veomd.gph_prod_brnd as global_prod_brand
