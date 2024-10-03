@@ -34,7 +34,7 @@ itg_mds_ph_lav_product as (
 ),
 itg_query_parameters as (
     select * from {{source ('phlitg_integration','itg_query_parameters' )}} where country_code='PH' and parameter_name='ROSE_PHARMACY'
-)
+),
 veomd as (
     select mat.*,
 			prod.pka_productkey
