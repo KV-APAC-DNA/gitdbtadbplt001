@@ -125,7 +125,7 @@ select
 ,null as sap_cmp_id
 ,veomd.sap_vrnt_cd as sap_vrnt_cd
 ,veomd.gph_prod_size as global_prod_size
-,veomd.sap_cntry_cd as sap_cntry_cd
+,veocd.sap_cntry_cd as sap_cntry_cd
 ,veomd.sap_vrnt_desc as sap_vrnt_desc
 ,veomd.gph_prod_size_uom as global_prod_size_uom
 ,null as sap_cntry_nm
@@ -199,7 +199,7 @@ select
      left   join price_list price on (prod.sap_item_cd=price.item_cd and prod.mnth_id=price.jj_mnth_id and price.active='Y') 
      left join veomd on  (upper(ltrim(veomd.sap_matl_num, 0)) = upper(ltrim(prod.sap_item_cd,0)))
      left join epmad on (upper(trim(epmad.item_cd)) = upper(ltrim(prod.sap_item_cd,0)))
-     
+    
   ),
 final as 
 (
