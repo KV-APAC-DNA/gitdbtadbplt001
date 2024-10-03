@@ -80,7 +80,6 @@ select
     null as chnl_desc,
     null as sub_chnl_cd,
     null as sub_chnl_desc,
-   ROSE PHARMACY, INC.
    'RKA007' as parent_customer_cd,
     'ROSE PHARMACY, INC.' as parent_customer,
    ltrim(veomd.sap_matl_num, '0') as sku,
