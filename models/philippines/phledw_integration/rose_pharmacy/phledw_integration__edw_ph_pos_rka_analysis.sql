@@ -148,6 +148,7 @@ select
 		ELSE 'NA'
 		END AS IS_HERO
 ,null as sap_chnl_cd
+,null as chnl_cd
 ,null as sap_frnchse_desc
 ,null as is_mcl
 ,null as sap_chnl_desc
