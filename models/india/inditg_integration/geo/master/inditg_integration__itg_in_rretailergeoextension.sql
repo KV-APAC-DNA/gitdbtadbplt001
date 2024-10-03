@@ -41,4 +41,4 @@ final as
     from source
 )
 select * from final
-where 1=1
+where 2=2
