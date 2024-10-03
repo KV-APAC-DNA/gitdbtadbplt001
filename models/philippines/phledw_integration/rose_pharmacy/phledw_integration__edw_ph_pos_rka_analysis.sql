@@ -172,7 +172,7 @@ select
 ,cust.mncplty_cd as mncplty_cd
 ,cust.mncplty_nm as mncplty_nm
 ,null as gch_cluster
-,veomd as sap_prod_hier_desc
+,veomd.sap_prod_hier_desc as sap_prod_hier_desc
 ,null as gch_subcluster
 ,null as global_mat_region
 ,null as city_cd
