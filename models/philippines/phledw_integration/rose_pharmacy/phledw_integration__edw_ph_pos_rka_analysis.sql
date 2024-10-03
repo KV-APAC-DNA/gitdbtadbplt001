@@ -121,7 +121,7 @@ select
 ,null as sap_cmp_id
 ,veomd.sap_vrnt_cd as sap_vrnt_cd
 ,veomd.gph_prod_size as global_prod_size
-,'PH'as sap_cntry_cd
+,'PH' as sap_cntry_cd
 ,veomd.sap_vrnt_desc as sap_vrnt_desc
 ,veomd.gph_prod_size_uom as global_prod_size_uom
 ,null as sap_cntry_nm
