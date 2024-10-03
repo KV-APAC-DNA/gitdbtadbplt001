@@ -13,6 +13,7 @@ final as
     run_id::varchar(50) as run_id,
     crt_dttm::timestamp_ntz(9) as crt_dttm,
     convert_timezone('Asia/Singapore',current_timestamp())::timestamp_ntz as updt_dttm
+    
     from source
 )
 select * from final

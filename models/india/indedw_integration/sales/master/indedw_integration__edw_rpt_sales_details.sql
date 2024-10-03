@@ -1,3 +1,9 @@
+{{
+    config(
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )
+}}
+
 with source as 
 (
     select * from {{ ref('indedw_integration__v_rpt_sales_details') }}

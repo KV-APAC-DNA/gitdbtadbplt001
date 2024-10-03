@@ -4,7 +4,9 @@
         materialized="incremental",
         incremental_strategy="append",
         unique_key = "visit_date",
-        pre_hook="delete from {{this}} where visit_date in (select distinct visit_date from {{ source('pcfsdl_raw', 'sdl_trax_fct_psd_kpis') }})"
+        pre_hook="{%if is_incremental()%}
+        delete from {{this}} where visit_date in (select distinct visit_date from {{ source('pcfsdl_raw', 'sdl_trax_fct_psd_kpis') }});
+        {%endif%}"
     )
 }}
 with source as

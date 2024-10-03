@@ -69,14 +69,42 @@ final as
         and a.sap_parent_customer_key = cust_hier.sap_prnt_cust_key(+)
         and a.parent_customer_cd = cust_hier.parent_cust_cd(+)
     group by month,
-        a.dstrbtr_grp_cd,
-        a.dstr_cd_nm,
-        product.global_prod_brand,
-        product.global_prod_variant,
-        product.global_prod_segment,
-        product.global_prod_category,
-        product.pka_product_key,
-        product.pka_size_desc,
-        cust_hier.sap_prnt_cust_key
+        case
+            when a.dstrbtr_grp_cd is null then 'NA'
+            when a.dstrbtr_grp_cd = '' then 'NA'
+            else trim(a.dstrbtr_grp_cd)
+        end,
+        case
+            when a.dstr_cd_nm is null then 'NA'
+            when a.dstr_cd_nm = '' then 'NA'
+            else trim(a.dstr_cd_nm)
+        end,
+        case
+            when product.global_prod_brand is null then 'NA'
+            when product.global_prod_brand = '' then 'NA'
+            else trim(product.global_prod_brand)
+        end,
+        case
+            when product.global_prod_variant is null then 'NA'
+            when product.global_prod_variant = '' then 'NA'
+            else trim(product.global_prod_variant)
+        end,
+        case
+            when product.global_prod_segment is null then 'NA'
+            when product.global_prod_segment = '' then 'NA'
+            else trim(product.global_prod_segment)
+        end,
+        case
+            when product.global_prod_category is null then 'NA'
+            when product.global_prod_category = '' then 'NA'
+            else trim(product.global_prod_category)
+        end,
+        trim(nvl(nullif(product.pka_product_key, ''), 'NA')),
+        trim(nvl(nullif(product.pka_size_desc, ''), 'NA')),
+        case
+            when cust_hier.sap_prnt_cust_key is null then 'Not Assigned'
+            when cust_hier.sap_prnt_cust_key = '' then 'Not Assigned'
+            else trim(cust_hier.sap_prnt_cust_key)
+        end
 )
 select * from final

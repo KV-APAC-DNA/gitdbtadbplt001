@@ -94,7 +94,7 @@ Regional AS (
 										AND copa.cust_num = cus_sales_extn.cust_num
 									WHERE cmp.ctry_group = 'Philippines'
 										AND left(fisc_yr_per, 4) >= (DATE_PART(YEAR, current_timestamp()) - 2)
-										AND copa.cust_num IS NOT NULL
+										--AND copa.cust_num IS NOT NULL
 										AND copa.acct_hier_shrt_desc = 'GTS'
 										AND amt_obj_crncy > 0
 									GROUP BY 1,

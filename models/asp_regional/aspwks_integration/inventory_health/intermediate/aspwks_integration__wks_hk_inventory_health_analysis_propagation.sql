@@ -49,6 +49,17 @@ select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
 edw_copa_trans_fact as (
 select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
+edw_material_dim as (
+select * from {{ ref('aspedw_integration__edw_material_dim') }}
+),
+v_edw_customer_sales_dim as 
+(
+select * from {{ ref('aspedw_integration__v_edw_customer_sales_dim') }}
+),
+wks_hk_inventory_health_analysis_propagation_prestep as 
+(
+select * from {{ref('aspwks_integration__wks_hk_inventory_health_analysis_propagation_prestep')}}
+),
 cal AS
    (
 SELECT DISTINCT "year" as CAL_YEAR,QRTR_NO as cal_qrtr_no,MNTH_ID as cal_mnth_id,MNTH_NO  as cal_mnth_no FROM EDW_VW_OS_TIME_DIM
@@ -59,25 +70,24 @@ CURRENCY AS
 	  ),
 PRODUCT AS
 (
-SELECT DISTINCT 
-
+    SELECT DISTINCT 
           EMD.matl_num AS SAP_MATL_NUM,
           EMD.MATL_DESC AS SAP_MAT_DESC,
           EMD.MATL_TYPE_CD AS SAP_MAT_TYPE_CD,
           EMD.MATL_TYPE_DESC AS SAP_MAT_TYPE_DESC,
-          EMD.SAP_BASE_UOM_CD AS SAP_BASE_UOM_CD,
-          EMD.SAP_PRCHSE_UOM_CD AS SAP_PRCHSE_UOM_CD,
+         -- EMD.SAP_BASE_UOM_CD AS SAP_BASE_UOM_CD,
+         -- EMD.SAP_PRCHSE_UOM_CD AS SAP_PRCHSE_UOM_CD,
           EMD.PRODH1 AS SAP_PROD_SGMT_CD,
           EMD.PRODH1_TXTMD AS SAP_PROD_SGMT_DESC,
-          EMD.SAP_BASE_PROD_CD AS SAP_BASE_PROD_CD,
+        --  EMD.SAP_BASE_PROD_CD AS SAP_BASE_PROD_CD,
           EMD.BASE_PROD_DESC AS SAP_BASE_PROD_DESC,
-          EMD.SAP_MEGA_BRND_CD AS SAP_MEGA_BRND_CD,
+        --  EMD.SAP_MEGA_BRND_CD AS SAP_MEGA_BRND_CD,
           EMD.MEGA_BRND_DESC AS SAP_MEGA_BRND_DESC,
-          EMD.SAP_BRND_CD AS SAP_BRND_CD,
+        --  EMD.SAP_BRND_CD AS SAP_BRND_CD,
           EMD.BRND_DESC AS SAP_BRND_DESC,
-          EMD.SAP_VRNT_CD AS SAP_VRNT_CD,
+        --  EMD.SAP_VRNT_CD AS SAP_VRNT_CD,
           EMD.VARNT_DESC AS SAP_VRNT_DESC,
-          EMD.SAP_PUT_UP_CD AS SAP_PUT_UP_CD,
+        --  EMD.SAP_PUT_UP_CD AS SAP_PUT_UP_CD,
           EMD.PUT_UP_DESC AS SAP_PUT_UP_DESC,
           EMD.PRODH2 AS SAP_GRP_FRNCHSE_CD,
           EMD.PRODH2_TXTMD AS SAP_GRP_FRNCHSE_DESC,
@@ -91,12 +101,12 @@ SELECT DISTINCT
           EMD.PRODH5_TXTMD AS SAP_PROD_MNR_DESC,
           EMD.PRODH6 AS SAP_PROD_HIER_CD,
           EMD.PRODH6_TXTMD AS SAP_PROD_HIER_DESC,
-		  EMD.greenlight_sku_flag as greenlight_sku_flag,
+		  --EMD.greenlight_sku_flag as greenlight_sku_flag,
 		  EMD.pka_product_key as pka_product_key,
 		  EMD.pka_size_desc as pka_size_desc,
 		  EMD.pka_product_key_description as pka_product_key_description,
-		  EMD.product_key as product_key,
-		  EMD.product_key_description as product_key_description,
+		  EMD.pka_product_key as product_key,
+		  EMD.pka_product_key_description as product_key_description,
           EGPH."region" AS GPH_REGION,
           EGPH.regional_franchise AS GPH_REG_FRNCHSE,
           EGPH.regional_franchise_group AS GPH_REG_FRNCHSE_GRP,
@@ -115,10 +125,11 @@ SELECT DISTINCT
           EGPH.UNIT_OF_MEASURE AS GPH_PROD_SIZE_UOM
           
 FROM 
- (Select * from edw_vw_greenlight_skus WHERE sls_org in ( '1110')) EMD,
+-- (Select * from rg_edw.edw_vw_greenlight_skus WHERE sls_org in ( '1110')) EMD,
+(Select * from edw_material_dim)EMD,
 EDW_GCH_PRODUCTHIERARCHY EGPH
 
-WHERE EMD.MATL_NUM = ltrim(EGPH.MATERIALNUMBER(+),0)
+WHERE LTRIM(EMD.MATL_NUM,'0') = ltrim(EGPH.MATERIALNUMBER(+),0)
 AND   EMD.PROD_HIER_CD <> ''
 AND   LTRIM(EMD.MATL_NUM,'0')  
 IN  (SELECT DISTINCT LTRIM(MATL_NUM,'0') FROM edw_material_sales_dim WHERE sls_org ='1110')
@@ -221,7 +232,7 @@ onsesea as (
        --TRIM(NVL (NULLIF(T3.GPH_PROD_PUT_UP_DESC,''),'NA')) AS GLOBAL_PUT_UP_DESC,
        TRIM(NVL (NULLIF(T3.SAP_MATL_NUM,''),'NA')) AS SKU_CD,
        TRIM(NVL (NULLIF(T3.SAP_MAT_DESC,''),'NA')) AS SKU_DESCRIPTION,
-     TRIM(NVL(NULLIF(T3.greenlight_sku_flag,''),'NA')) AS greenlight_sku_flag,
+        -- TRIM(NVL(NULLIF(T3.greenlight_sku_flag,''),'NA')) AS greenlight_sku_flag,
 		TRIM(NVL(NULLIF(T3.pka_product_key,''),'NA')) AS pka_product_key,
 		TRIM(NVL(NULLIF(T3.pka_size_desc,''),'NA')) AS pka_size_desc,
 		TRIM(NVL(NULLIF(T3.pka_product_key_description,''),'NA')) AS pka_product_key_description,
@@ -307,7 +318,7 @@ AND   cal.CAL_YEAR >= (DATE_PART(YEAR,convert_timezone('UTC',current_timestamp()
         --GLOBAL_PUT_UP_DESC,
         SKU_CD, 
         SKU_DESCRIPTION,
-        			greenlight_sku_flag,
+        			-- greenlight_sku_flag,
             pka_product_key,
 			pka_size_desc,
             pka_product_key_description,
@@ -368,34 +379,54 @@ RegionalCurrency AS
 Select cntry_key,cntry_nm,rate_type,from_ccy,to_ccy,valid_date,jj_year,jj_mnth_id as MNTH_ID,(cast(EXCH_RATE as numeric(15,5))) as EXCH_RATE
   FROM vw_edw_reg_exch_rate where cntry_key='HK' and jj_mnth_id>= (DATE_PART(YEAR,convert_timezone('UTC',current_timestamp())::timestamp_ntz(9)) -2) and  to_ccy='USD'
  ),
+ sellin_all as
+ (
+    Select ctry_key,obj_crncy_co_obj,prnt_cust_key,caln_yr_mo,fisc_yr,(cast(gts as numeric(38,15))) as gts
+    from
+(
+	select copa.ctry_key as ctry_key, obj_crncy_co_obj,cus_sales_extn.prnt_cust_key,substring(fisc_yr_per,1,4)||substring(fisc_yr_per,6,2) 
+	as caln_yr_mo ,fisc_yr,
+	SUM(amt_obj_crncy) AS gts
+	from edw_copa_trans_fact copa
+	LEFT JOIN edw_company_dim cmp ON copa.co_cd = cmp.co_cd
+	LEFT JOIN v_edw_customer_sales_dim cus_sales_extn
+		ON copa.sls_org = cus_sales_extn.sls_org
+	    AND copa.dstr_chnl = cus_sales_extn.dstr_chnl::TEXT
+	    AND copa.div = cus_sales_extn.div
+	    AND copa.cust_num = cus_sales_extn.cust_num
+	  WHERE cmp.ctry_group = 'Hong Kong' and left(fisc_yr_per,4)>= (DATE_PART(YEAR,convert_timezone('UTC',current_timestamp())) -2)
+	  --and copa.cust_num is not null
+	  and copa.acct_hier_shrt_desc = 'GTS' and amt_obj_crncy > 0
+	  group by 1,2,3,4,5)	
+ ),
+ available_customers as
+ (
+    select cal_mnth_id, cntry_nm, sap_prnt_cust_key, sap_prnt_cust_desc,
+sum(si_gts_val) as si_gts_val, sum(si_sls_qty) as si_sls_qty
+from wks_hk_inventory_health_analysis_propagation_prestep inv
+where cntry_nm in ('Hong Kong')
+group by 1,2,3,4 having (sum(inventory_quantity) <> 0 or sum(inventory_val) <> 0)
+order by 1 desc, 2,3,4
+ ),
  GTS as 
 (
-Select ctry_key,obj_crncy_co_obj,caln_yr_mo,fisc_yr,(cast (gts_value as numeric(38,15))) as gts_value
-from (
+Select      ctry_key, obj_crncy_co_obj,caln_yr_mo,fisc_yr,
+    sum(SI_ALL_DB_VAL)as gts_value,sum(case when avail_customer is null then 0 else si_all_db_val end) as si_inv_db_val
+    from(
 
-SELECT ctry_key,
-obj_crncy_co_obj,
-substring(fisc_yr_per,1,4)||substring(fisc_yr_per,6,2) as caln_yr_mo,
-       fisc_yr,
-       SUM(amt_obj_crncy) AS GTS_value
- FROM edw_copa_trans_fact 
-WHERE TRIM(UPPER(acct_hier_shrt_desc))='GTS'
-AND   fisc_yr >= (DATE_PART(YEAR,convert_timezone('UTC',current_timestamp())::timestamp_ntz(9)) -2)
-AND   ctry_key IN ('HK')	
-GROUP BY ctry_key,
-obj_crncy_co_obj,
-substring(fisc_yr_per,1,4)||substring(fisc_yr_per,6,2),
-         fisc_yr
-
-		 )
+select a.ctry_key,a.obj_crncy_co_obj,a.caln_yr_mo,a.fisc_yr, a.prnt_cust_key as total_customer, b.sap_prnt_cust_key as avail_customer,
+sum(gts) as SI_ALL_DB_VAL
+from sellin_all a left join available_customers b
+	on b.cal_mnth_id=a.caln_yr_mo
+	and a.prnt_cust_key = b.sap_prnt_cust_key
+group by 1,2,3,4,5,6 order by 1 desc,2,3,4
+		 ) group by 1,2,3,4
 		 ),
 copa as (
-Select ctry_key,obj_crncy_co_obj,caln_yr_mo,fisc_yr,(cast (gts_value as numeric(38,15)))as gts,
+Select ctry_key,obj_crncy_co_obj,caln_yr_mo,fisc_yr,(cast (gts_value as numeric(38,5)))as gts,si_inv_db_val,
 Case 
-
---when ctry_key='TW' then gts_value*exch_rate
-when ctry_key='HK' then gts_value*exch_rate
-end as GTS_USD
+when ctry_key='HK' then cast((gts_value *exch_rate)/1000 as numeric(38,5))
+end as GTS_USD, case when ctry_key='HK' then cast((si_inv_db_val *exch_rate)/1000 as numeric(38,5)) end as  si_inv_db_val_usd
 
 FROM gts,RegionalCurrency 
 WHERE GTS.obj_crncy_co_obj=RegionalCurrency.from_ccy
@@ -405,7 +436,8 @@ transformed as (
 Select 
 cal_year,cal_qrtr_no,cal_mnth_id,cal_mnth_no,cntry_nm,dstrbtr_grp_cd,dstrbtr_grp_cd_name,global_prod_franchise,global_prod_brand,
 global_prod_sub_brand,global_prod_variant,global_prod_segment,global_prod_subsegment,global_prod_category,
-global_prod_subcategory,pka_size_desc as global_put_up_desc,sku_cd,sku_description,			greenlight_sku_flag,
+global_prod_subcategory,pka_size_desc as global_put_up_desc,sku_cd,sku_description,			
+--greenlight_sku_flag,
             pka_product_key,
             pka_product_key_description,
             product_key,
@@ -419,7 +451,7 @@ round(cast(si_sls_qty as numeric(38,5)),5) as si_sls_qty,round(cast(si_gts_val a
  round(cast (inventory_val_usd as numeric(38,5)),5) as inventory_val_usd,round(cast (so_sls_qty as numeric(38,5)),5) as so_sls_qty,
   round(cast (so_trd_sls as numeric(38,5)),5) as so_trd_sls,
 so_trd_sls_usd  as so_trd_sls_usd,round(cast (COPA.gts as numeric(38,5)),5)as SI_ALL_DB_VAL, round(cast (COPA.gts_usd as numeric (38,5)),5)
- as SI_ALL_DB_VAL_USD,round(cast (Regional.si_inv_db_val as numeric(38,5)),5) as si_inv_db_val, round(cast (Regional.si_inv_db_val_usd as numeric(38,5)),5) as si_inv_db_val_usd,
+ as SI_ALL_DB_VAL_USD,round(cast (COPA.si_inv_db_val as numeric(38,5)),5) as si_inv_db_val, round(cast (COPA.si_inv_db_val_usd as numeric(38,5)),5) as si_inv_db_val_usd,
 last_3months_so_qty,
 		last_6months_so_qty,
 		last_12months_so_qty,

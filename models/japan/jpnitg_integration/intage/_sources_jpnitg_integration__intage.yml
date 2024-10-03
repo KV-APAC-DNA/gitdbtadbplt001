@@ -19,6 +19,7 @@ sources:
             config:
               store_failures: true
               schema: jpnwks_integration
+              severity: error
         - test_duplicate:
                 select_columns: ["jan_code"]
                 group_by_columns: ["jan_code"] 
@@ -26,6 +27,7 @@ sources:
                 config:
                   store_failures: true
                   schema: jpnwks_integration
+                  severity: error
 
       - name: edi_invt_dt
         tags: ["inventory_workflow","ingestion"]

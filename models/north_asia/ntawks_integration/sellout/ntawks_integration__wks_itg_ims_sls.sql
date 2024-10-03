@@ -4,7 +4,7 @@
     )
 }}
 with sdl_hk_ims_viva_sel_out as (
-    select * from {{ source('ntasdl_raw', 'sdl_hk_ims_viva_sel_out') }}
+    select * from {{ source('ntasdl_raw', 'sdl_hk_ims_viva_sel_out') }} 
 ),
 sdl_hk_ims_wingkeung_sel_out as (
     select * from {{ source('ntasdl_raw', 'sdl_hk_ims_wingkeung_sel_out') }}

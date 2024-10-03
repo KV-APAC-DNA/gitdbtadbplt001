@@ -31,6 +31,7 @@
     {% set result = run_query(query).columns[0][0] %}
 
     {% if result == 'TRUE' %}
+    {% set query %}
         TRUNCATE TABLE 
         {% if target.name=='prod' %}
                     jpdcledw_integration.kr_comm_point_para
@@ -46,7 +47,7 @@
             term_start, term_end, target_year, last_year, this_year, next_year, 
             last_yearym, this_yearym, keikatuki, fromdate, todate, 
             bonus_fromdate, bonus_todate, updatedt, memo, source_file_date, bd_target_year
-        ) VALUES (
+        ) select
             REPLACE(cast(to_date(CONVERT_TIMEZONE('Asia/Tokyo',dateadd(day,-365,current_timestamp() ))) as VARCHAR),'-',''),
             REPLACE(cast(to_date(CONVERT_TIMEZONE('Asia/Tokyo',dateadd(day,-1,current_timestamp() ))) as VARCHAR),'-',''),
             (select year_445 from {{source_table}} where to_date(ymd_dt) = to_date(CONVERT_TIMEZONE('Asia/Tokyo',dateadd(day,-1,current_timestamp() )))),
@@ -55,7 +56,9 @@
             '2022年1月2日分までの抽出の為(単票No.D28315〜28318)※2021/12/27平井作成',
             REPLACE(cast(to_date(CONVERT_TIMEZONE('Asia/Tokyo',current_timestamp())) as VARCHAR),'-',''),
             '2021'
-        );
+        ;
+    {% endset %}
+    {% do run_query(query) %}
         {%endif%}
     {% endif %}
 {% endmacro %}
