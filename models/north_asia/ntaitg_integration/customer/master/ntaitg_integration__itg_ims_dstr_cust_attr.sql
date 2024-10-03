@@ -19,7 +19,8 @@
     )
 }}
 with source as (
-    select * from  {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_customer') }}
+    select *,dense_rank() over(partition by distributor_code, distributor_cusotmer_code order by file_name desc) rnk from {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_customer') }}
+    qualify rnk =1
 ),
 tw_ims_distributor_ingestion_metadata as
 (

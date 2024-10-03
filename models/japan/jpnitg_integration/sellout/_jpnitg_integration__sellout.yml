@@ -36,7 +36,7 @@ models:
       alias: dw_so_planet_err_cd_backup
       tags: ["j_so_japan_improvement_etl_framework",transformation]
 
-  - name: jpnsdl_integration__edi_sell_out_planet_backup
+  - name: jpnitg_integration__edi_sell_out_planet_backup
     config:
       alias: edi_sell_out_planet_backup
       tags: ["j_so_japan_improvement_etl_framework","transformation"]

@@ -2,7 +2,8 @@
     config
     (
         materialized="incremental",
-        incremental_strategy= "append"       
+        incremental_strategy= "append",
+        unique_key = ['customer_id']     
     )
 }}
 
