@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: aspwks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: aspwks_integration
+    schema: "{{ target.schema if target.name in ('default') else 'aspwks_integration' }}"
     quoting:
       database: false
       schema: false

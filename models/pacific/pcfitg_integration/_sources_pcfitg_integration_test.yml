@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: pcfwks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: pcfwks_integration
+    schema: "{{ target.schema if target.name in ('default') else 'pcfwks_integration' }}"
     quoting:
       database: false
       schema: false
