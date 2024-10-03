@@ -171,7 +171,7 @@ select
 ,cust.prov_nm as prov_nm
 ,null as sap_curr_cd
 ,veomd.sap_prod_mnr_desc as sap_prod_mnr_desc
-,select distinct parameter_value from itg_query_parameters where parameter_type='GCH_REGION' as gch_region
+,(select distinct parameter_value from itg_query_parameters where parameter_type='GCH_REGION') as gch_region
 ,veomd.sap_prod_hier_cd as sap_prod_hier_cd
 ,cust.mncplty_cd as mncplty_cd
 ,cust.mncplty_nm as mncplty_nm
@@ -180,7 +180,7 @@ select
 ,null as gch_subcluster
 ,null as global_mat_region
 ,null as city_cd
-,select distinct parameter_value from itg_query_parameters where parameter_type='GCH_MARKET' as gch_market
+,(select distinct parameter_value from itg_query_parameters where parameter_type='GCH_MARKET') as gch_market
 ,veomd.gph_prod_frnchse as global_prod_franchise
 ,null as city_nm
 ,null as gch_retail_banner
