@@ -41,3 +41,4 @@ models:
     config:
       alias: wks_my_inventory_healthy_unhealthy_analysis
       tags: ["j_ap_my_reg_data_refresh","transformation"]
+

@@ -1,19 +1,19 @@
 version: 2
 
 models:
-  - name: jpnitg_interation__sdl_raw_pop6_jp_promotion_plans
+  - name: jpnitg_integration__sdl_raw_pop6_jp_promotion_plans
     config:
         alias: sdl_raw_pop6_jp_promotion_plans
         tags: ["pop6_master_load","ingestion"]
-  - name: jpnitg_interation__sdl_raw_pop6_jp_promotions
+  - name: jpnitg_integration__sdl_raw_pop6_jp_promotions
     config:
         alias: sdl_raw_pop6_jp_promotions
         tags: ["pop6_master_load","ingestion"]
-  - name: jpnitg_interation__sdl_raw_pop6_jp_tasks
+  - name: jpnitg_integration__sdl_raw_pop6_jp_tasks
     config:
         alias: sdl_raw_pop6_jp_tasks
         tags: ["pop6_master_load","ingestion"]
-  - name: jpnitg_interation__sdl_raw_pop6_jp_exclusion
+  - name: jpnitg_integration__sdl_raw_pop6_jp_exclusion
     config:
         alias: sdl_raw_pop6_jp_exclusion
         tags: ["pop6_master_load","ingestion"]
