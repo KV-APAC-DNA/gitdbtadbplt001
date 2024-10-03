@@ -80,7 +80,7 @@ select
     'ROSE PHARMACY, INC.' as parent_customer,
    ltrim(veomd.sap_matl_num, '0') as sku,
 	veomd.sap_mat_desc as sku_desc,
-    POS.qty::integer as qty,
+    POS.qty::integer as pos_qty,
     --(pos.qty*jj_item_prc_per_pc) ::decimal(38,3) as pos_gts,
     null as pos_gts,
     null as pos_item_prc,
