@@ -32,6 +32,9 @@ edw_product_key_attributes as(
 itg_mds_ph_lav_product as (
     select * from {{ ref('phlitg_integration__itg_mds_ph_lav_product') }}
 ),
+itg_query_parameters as (
+    select * from {{source ('phlitg_integration','itg_query_parameters' )}} where country_code='PH' and parameter_name='ROSE_PHARMACY'
+)
 veomd as (
     select mat.*,
 			prod.pka_productkey
@@ -76,7 +79,7 @@ select
     null as chnl_desc,
     null as sub_chnl_cd,
     null as sub_chnl_desc,
-   'RKA007' as parent_customer_cd,
+    'RKA007' as parent_customer_cd,
     'ROSE PHARMACY, INC.' as parent_customer,
    ltrim(veomd.sap_matl_num, '0') as sku,
 	veomd.sap_mat_desc as sku_desc,
@@ -103,7 +106,7 @@ select
 ,veomd.gph_prod_put_up_desc as global_put_up_desc
 ,veomd.sap_base_prod_cd as sap_base_prod_cd
 ,gph_prod_sub_brnd as global_prod_sub_brand
-,'ROSE PHARMACY, INC.' as account_grp
+,(select distinct parameter_value from itg_query_parameters where parameter_type='account_grp') as account_grp
 ,veomd.sap_base_prod_desc as sap_base_prod_desc
 ,veomd.gph_prod_needstate as global_prod_need_state
 ,'MODERN TRADE' as trade_type
@@ -168,7 +171,7 @@ select
 ,cust.prov_nm as prov_nm
 ,null as sap_curr_cd
 ,veomd.sap_prod_mnr_desc as sap_prod_mnr_desc
-,'APAC' as gch_region
+,select distinct parameter_value from itg_query_parameters where parameter_type='GCH_REGION' as gch_region
 ,veomd.sap_prod_hier_cd as sap_prod_hier_cd
 ,cust.mncplty_cd as mncplty_cd
 ,cust.mncplty_nm as mncplty_nm
@@ -177,7 +180,7 @@ select
 ,null as gch_subcluster
 ,null as global_mat_region
 ,null as city_cd
-,'Philippines' as gch_market
+,select distinct parameter_value from itg_query_parameters where parameter_type='GCH_MARKET' as gch_market
 ,veomd.gph_prod_frnchse as global_prod_franchise
 ,null as city_nm
 ,null as gch_retail_banner
@@ -196,57 +199,7 @@ select
      left   join price_list price on (prod.sap_item_cd=price.item_cd and prod.mnth_id=price.jj_mnth_id and price.active='Y') 
      left join veomd on  (upper(ltrim(veomd.sap_matl_num, 0)) = upper(ltrim(prod.sap_item_cd,0)))
      left join epmad on (upper(trim(epmad.item_cd)) = upper(ltrim(prod.sap_item_cd,0)))
-    LEFT JOIN (
-                    SELECT edw_vw_ph_customer_dim.sap_cust_id,
-                        edw_vw_ph_customer_dim.sap_cust_nm,
-                        edw_vw_ph_customer_dim.sap_sls_org,
-                        edw_vw_ph_customer_dim.sap_cmp_id,
-                        edw_vw_ph_customer_dim.sap_cntry_cd,
-                        edw_vw_ph_customer_dim.sap_cntry_nm,
-                        edw_vw_ph_customer_dim.sap_addr,
-                        edw_vw_ph_customer_dim.sap_region,
-                        edw_vw_ph_customer_dim.sap_state_cd,
-                        edw_vw_ph_customer_dim.sap_city,
-                        edw_vw_ph_customer_dim.sap_post_cd,
-                        edw_vw_ph_customer_dim.sap_chnl_cd,
-                        edw_vw_ph_customer_dim.sap_chnl_desc,
-                        edw_vw_ph_customer_dim.sap_sls_office_cd,
-                        edw_vw_ph_customer_dim.sap_sls_office_desc,
-                        edw_vw_ph_customer_dim.sap_sls_grp_cd,
-                        edw_vw_ph_customer_dim.sap_sls_grp_desc,
-                        edw_vw_ph_customer_dim.sap_curr_cd,
-                        edw_vw_ph_customer_dim.sap_prnt_cust_key,
-                        edw_vw_ph_customer_dim.sap_prnt_cust_desc,
-                        edw_vw_ph_customer_dim.sap_cust_chnl_key,
-                        edw_vw_ph_customer_dim.sap_cust_chnl_desc,
-                        edw_vw_ph_customer_dim.sap_cust_sub_chnl_key,
-                        edw_vw_ph_customer_dim.sap_sub_chnl_desc,
-                        edw_vw_ph_customer_dim.sap_go_to_mdl_key,
-                        edw_vw_ph_customer_dim.sap_go_to_mdl_desc,
-                        edw_vw_ph_customer_dim.sap_bnr_key,
-                        edw_vw_ph_customer_dim.sap_bnr_desc,
-                        edw_vw_ph_customer_dim.sap_bnr_frmt_key,
-                        edw_vw_ph_customer_dim.sap_bnr_frmt_desc,
-                        edw_vw_ph_customer_dim.retail_env,
-                        edw_vw_ph_customer_dim.gch_region,
-                        edw_vw_ph_customer_dim.gch_cluster,
-                        edw_vw_ph_customer_dim.gch_subcluster,
-                        edw_vw_ph_customer_dim.gch_market,
-                        edw_vw_ph_customer_dim.gch_retail_banner
-                    FROM edw_vw_ph_customer_dim
-                    WHERE (
-                            (edw_vw_ph_customer_dim.sap_cntry_cd)::text = ('PH'::character varying)::text
-                        )
-                ) veocd ON (
-                    (
-                        upper(
-                            ltrim(
-                                (veocd.sap_cust_id)::text,
-                                ('0'::character varying)::text
-                            )
-                        ) = upper(trim((sold_to)::text))
-                    )
-                )
+    
   ),
 final as 
 (
