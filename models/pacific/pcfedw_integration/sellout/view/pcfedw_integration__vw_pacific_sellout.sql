@@ -233,7 +233,7 @@ FROM (
                                                 to_date(
                                                     (edw_list_price.dt_from)::text,
                                                     ('YYYYMMDD'::character varying)::text
-                                                ) DESC
+                                                ) DESC,cdl_dttm desc
                                         ) AS rn
                                     FROM edw_list_price
                                     WHERE (
@@ -420,7 +420,7 @@ FROM (
                                                         to_date(
                                                             (edw_list_price.dt_from)::text,
                                                             ('YYYYMMDD'::character varying)::text
-                                                        ) DESC
+                                                        ) DESC,cdl_dttm desc
                                                 ) AS rn
                                             FROM edw_list_price
                                             WHERE (

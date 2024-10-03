@@ -64,7 +64,7 @@ t1 as
                 ) --and sap_cust_id in ('108830','108832','116819','108835')
                 and sap_sls_org in ('2400', '2500')
         )
-        and cast(to_char(bill_dt::date, 'YYYY') as int) >= (date_part(year, current_date) -6)
+        and cast(to_char(bill_dt::date, 'YYYY') as int) >= (date_part(year, current_timestamp) -6)
     group by bill_dt,
         bill_type,
         sold_to,
@@ -330,14 +330,14 @@ th_gt as
                 sap_prnt_cust_key
             from edw_th_inventory_analysis_base_6year_filter
             where sap_prnt_cust_key <> 'PC3159'
-        ) dist on ltrim(main.sap_prnt_cust_key, '0') = ltrim(dist.sap_prnt_cust_key, '0')
+        ) dist on rtrim(ltrim(main.sap_prnt_cust_key, '0')) = rtrim(ltrim(dist.sap_prnt_cust_key, '0'))
     ) A 
     left join inv on
-    a.data_type = inv.data_type
-    and a.cal_year = inv.year
-    and a.cal_mnth_no = inv.month_number
-    and a.distributor_id = inv.distributor_id
-    and inv.mx_order_date = a.order_date
+    rtrim(a.data_type) = rtrim(inv.data_type)
+    and rtrim(a.cal_year) = rtrim(inv.year)
+    and rtrim(a.cal_mnth_no) = rtrim(inv.month_number)
+    and rtrim(a.distributor_id) = rtrim(inv.distributor_id)
+    and rtrim(inv.mx_order_date) = rtrim(a.order_date)
     group by 
     cal_mnth_id,
     a.cal_mnth_id,
@@ -381,7 +381,7 @@ transformed as
             sum(sellout_quantity) sellout_quantity,
             sum(sellout_value) sellout_value
         from vw_edw_th_mt_sellout
-        where left (mnth_id, 4) >= (DATE_PART(YEAR, current_date) -6)
+        where left (mnth_id, 4) >= (DATE_PART(YEAR, current_timestamp) -6)
         group by mnth_id,
             sap_prnt_cust_key,
             sap_prnt_cust_desc,
@@ -399,7 +399,7 @@ transformed as
             0 as sellout_quantity,
             0 as sellout_value
         from vw_edw_th_mt_inventory
-        where left (mnth_id, 4) >= (DATE_PART(YEAR, current_date) -6)
+        where left (mnth_id, 4) >= (DATE_PART(YEAR, current_timestamp) -6)
         group by mnth_id,
             sap_prnt_cust_key,
             sap_prnt_cust_desc,
@@ -448,7 +448,7 @@ transformed as
                     )
                     and sls_org in ('2400', '2500')
                     and bill_type = 'ZF2L'
-                    and cast(to_char(bill_dt::date, 'YYYY') as int) >= (date_part(year, current_date) -6)
+                    and cast(to_char(bill_dt::date, 'YYYY') as int) >= (date_part(year, current_timestamp) -6)
                 group by bill_dt,
                     bill_type,
                     sold_to,
@@ -460,7 +460,7 @@ transformed as
             matl_num
         ) T1
         join edw_vw_os_time_dim t2 on t1.bill_dt = t2.cal_date
-        left join edw_vw_th_customer_dim c on ltrim (t1.sold_to, 0) = ltrim (c.sap_cust_id, 0)
+        left join edw_vw_th_customer_dim c on rtrim(ltrim(t1.sold_to, 0)) = rtrim(ltrim(c.sap_cust_id, 0))
         group by 
         mnth_id,
         sap_prnt_cust_key,
