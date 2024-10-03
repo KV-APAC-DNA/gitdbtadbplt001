@@ -481,7 +481,7 @@ GTS as (
                             AND copa.cust_num = cus_sales_extn.cust_num
                         WHERE cmp.ctry_group = 'Vietnam'
                             and left(fisc_yr_per, 4) >= (DATE_PART(YEAR, current_timestamp()::date) -2)
-                            and copa.cust_num is not null
+                            --and copa.cust_num is not null
                             and copa.acct_hier_shrt_desc = 'GTS'
                             and amt_obj_crncy > 0
                         group by 1,

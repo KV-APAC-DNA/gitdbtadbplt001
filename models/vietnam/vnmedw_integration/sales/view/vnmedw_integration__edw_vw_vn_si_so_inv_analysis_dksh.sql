@@ -394,12 +394,12 @@ FROM (
                             smdp.jnj_sap_code AS matl_id,
                             a.region,
                             a.zone,
-                            try_to_date(
+                            to_date(
                                 (
                                     (
                                         (
                                             (
-                                                "substring"((a.invoice_date)::text, 0, 5) || ('-'::character varying)::text
+                                                "substring"((a.invoice_date)::text, 0, 4) || ('-'::character varying)::text
                                             ) || "substring"((a.invoice_date)::text, 5, 2)
                                         ) || ('-'::character varying)::text
                                     ) || "substring"((a.invoice_date)::text, 7, 2)
