@@ -40,11 +40,7 @@ veomd as (
 		where cntry_key = 'PH'
 			AND upper(prod.ctry_nm) = 'PHILIPPINES'
 ),
-veocd as(
-    select *
-		from edw_vw_ph_customer_dim
-		where sap_cntry_cd = 'PH'
-),
+
 epmad as(
     select distinct item_cd,
 			promo_reg_ind,
@@ -125,7 +121,7 @@ select
 ,null as sap_cmp_id
 ,veomd.sap_vrnt_cd as sap_vrnt_cd
 ,veomd.gph_prod_size as global_prod_size
-,veocd.sap_cntry_cd as sap_cntry_cd
+,'PH'as sap_cntry_cd
 ,veomd.sap_vrnt_desc as sap_vrnt_desc
 ,veomd.gph_prod_size_uom as global_prod_size_uom
 ,null as sap_cntry_nm
@@ -199,7 +195,57 @@ select
      left   join price_list price on (prod.sap_item_cd=price.item_cd and prod.mnth_id=price.jj_mnth_id and price.active='Y') 
      left join veomd on  (upper(ltrim(veomd.sap_matl_num, 0)) = upper(ltrim(prod.sap_item_cd,0)))
      left join epmad on (upper(trim(epmad.item_cd)) = upper(ltrim(prod.sap_item_cd,0)))
-    
+    LEFT JOIN (
+                    SELECT edw_vw_ph_customer_dim.sap_cust_id,
+                        edw_vw_ph_customer_dim.sap_cust_nm,
+                        edw_vw_ph_customer_dim.sap_sls_org,
+                        edw_vw_ph_customer_dim.sap_cmp_id,
+                        edw_vw_ph_customer_dim.sap_cntry_cd,
+                        edw_vw_ph_customer_dim.sap_cntry_nm,
+                        edw_vw_ph_customer_dim.sap_addr,
+                        edw_vw_ph_customer_dim.sap_region,
+                        edw_vw_ph_customer_dim.sap_state_cd,
+                        edw_vw_ph_customer_dim.sap_city,
+                        edw_vw_ph_customer_dim.sap_post_cd,
+                        edw_vw_ph_customer_dim.sap_chnl_cd,
+                        edw_vw_ph_customer_dim.sap_chnl_desc,
+                        edw_vw_ph_customer_dim.sap_sls_office_cd,
+                        edw_vw_ph_customer_dim.sap_sls_office_desc,
+                        edw_vw_ph_customer_dim.sap_sls_grp_cd,
+                        edw_vw_ph_customer_dim.sap_sls_grp_desc,
+                        edw_vw_ph_customer_dim.sap_curr_cd,
+                        edw_vw_ph_customer_dim.sap_prnt_cust_key,
+                        edw_vw_ph_customer_dim.sap_prnt_cust_desc,
+                        edw_vw_ph_customer_dim.sap_cust_chnl_key,
+                        edw_vw_ph_customer_dim.sap_cust_chnl_desc,
+                        edw_vw_ph_customer_dim.sap_cust_sub_chnl_key,
+                        edw_vw_ph_customer_dim.sap_sub_chnl_desc,
+                        edw_vw_ph_customer_dim.sap_go_to_mdl_key,
+                        edw_vw_ph_customer_dim.sap_go_to_mdl_desc,
+                        edw_vw_ph_customer_dim.sap_bnr_key,
+                        edw_vw_ph_customer_dim.sap_bnr_desc,
+                        edw_vw_ph_customer_dim.sap_bnr_frmt_key,
+                        edw_vw_ph_customer_dim.sap_bnr_frmt_desc,
+                        edw_vw_ph_customer_dim.retail_env,
+                        edw_vw_ph_customer_dim.gch_region,
+                        edw_vw_ph_customer_dim.gch_cluster,
+                        edw_vw_ph_customer_dim.gch_subcluster,
+                        edw_vw_ph_customer_dim.gch_market,
+                        edw_vw_ph_customer_dim.gch_retail_banner
+                    FROM edw_vw_ph_customer_dim
+                    WHERE (
+                            (edw_vw_ph_customer_dim.sap_cntry_cd)::text = ('PH'::character varying)::text
+                        )
+                ) veocd ON (
+                    (
+                        upper(
+                            ltrim(
+                                (veocd.sap_cust_id)::text,
+                                ('0'::character varying)::text
+                            )
+                        ) = upper(trim((sold_to)::text))
+                    )
+                )
   ),
 final as 
 (
