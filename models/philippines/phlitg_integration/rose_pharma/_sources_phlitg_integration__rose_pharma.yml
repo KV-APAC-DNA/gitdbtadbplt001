@@ -24,4 +24,4 @@ sources:
     tables:
       - name: itg_mds_ph_pos_rosepharma_products
       - name : itg_mds_ph_pos_rosepharma_customers
-      - name : itg_query_parameters
+     
