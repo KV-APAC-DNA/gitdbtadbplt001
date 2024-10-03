@@ -1,4 +1,15 @@
-
+{{
+    config(
+        materialized= "incremental",
+        incremental_strategy= "append",
+        pre_hook = "{% if is_incremental() %}
+                delete from {{this}}
+                where (sample_receipt_id) in (select sample_receipt_id
+                from {{ source('hcposesdl_raw', 'sdl_hcp_osea_sample_receipt') }} stg_sample_receipt
+                where stg_sample_receipt.sample_receipt_id = sample_receipt_id);
+                {% endif %}"
+    )
+}}
 with sdl_hcp_osea_sample_receipt
 as
 (

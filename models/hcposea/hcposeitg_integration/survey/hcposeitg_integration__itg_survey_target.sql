@@ -1,4 +1,15 @@
-
+{{
+    config(
+        materialized= "incremental",
+        incremental_strategy= "append",
+        pre_hook = "{% if is_incremental() %}
+                delete from {{this}}
+                where (survey_target_id) in (select survey_target_id
+                from {{ source('hcposesdl_raw', 'sdl_hcp_osea_survey_target') }} stg_survey_target
+                where stg_survey_target.survey_target_id = survey_target_id);
+                {% endif %}"
+    )
+}}
 with sdl_hcp_osea_survey_target
 as
 (

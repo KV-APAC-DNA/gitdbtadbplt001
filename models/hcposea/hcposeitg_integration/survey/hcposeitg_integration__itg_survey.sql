@@ -1,4 +1,15 @@
-
+{{
+    config(
+        materialized= "incremental",
+        incremental_strategy= "append",
+        pre_hook = "{% if is_incremental() %}
+                delete from {{this}}
+                where (survey_id) in (select survey_id
+                from {{ source('hcposesdl_raw', 'sdl_hcp_osea_survey') }} stg_survey
+                where stg_survey.survey_id = survey_id);
+                {% endif %}"
+    )
+}}
 with sdl_hcp_osea_survey
 as
 (
@@ -71,7 +82,7 @@ from sdl_hcp_osea_survey
 ,
 final as
 (select 
-	SURVEY_ID::VARCHAR(18) AS RECORD_ID,
+	SURVEY_ID::VARCHAR(18) AS SURVEY_ID,
 OWNER_ID::VARCHAR(30) AS OWNER_ID,
 IS_DELETED::NUMBER(38,0) AS IS_DELETED,
 SURVEY_NAME::VARCHAR(100) AS SURVEY_NAME,

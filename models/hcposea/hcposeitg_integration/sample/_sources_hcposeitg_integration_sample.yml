@@ -46,3 +46,24 @@ sources:
           config:
             store_failures: true
             schema: hcposewks_integration
+
+            
+    - name: sdl_hcp_osea_sample_transaction
+      tags: ["iconnect_data_ingestion","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["sample_transaction_id"]
+          not_null_columns: ["sample_transaction_id"]
+          name: TRATBL_sdl_hcp_osea_sample_transaction__null_test
+          config:
+            store_failures: true
+            schema: hcposewks_integration
+      - test_duplicate:
+          select_columns: ["sample_transaction_id"]
+          group_by_columns: ["sample_transaction_id"]
+          name: TRATBL_sdl_hcp_osea_sample_transaction__duplicate_test
+          config:
+            store_failures: true
+            schema: hcposewks_integration
+
+

@@ -1,4 +1,15 @@
-
+{{
+    config(
+        materialized= "incremental",
+        incremental_strategy= "append",
+        pre_hook = "{% if is_incremental() %}
+                delete from {{this}}
+                where (mc_cycle_plan_channel_id) in (select mc_cycle_plan_channel_id
+                from {{ source('hcposesdl_raw', 'sdl_hcp_osea_mc_cycle_plan_channel') }} stg_mc_cycle_plan_channel
+                where stg_mc_cycle_plan_channel.mc_cycle_plan_channel_id = mc_cycle_plan_channel_id);
+                {% endif %}"
+    )
+}}
 with sdl_hcp_osea_mc_cycle_plan_channel
 as
 (

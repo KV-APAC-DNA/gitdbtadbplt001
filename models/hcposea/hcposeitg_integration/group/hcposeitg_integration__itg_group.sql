@@ -1,4 +1,15 @@
-
+{{
+    config(
+        materialized= "incremental",
+        incremental_strategy= "append",
+        pre_hook = "{% if is_incremental() %}
+                delete from {{this}}
+                where (group_id) in (select group_id
+                from {{ source('hcposesdl_raw', 'sdl_hcp_osea_group') }} stg_osea_group
+                where stg_osea_group.group_id = group_id);
+                {% endif %}"
+    )
+}}
 with sdl_hcp_osea_group
 as
 (
