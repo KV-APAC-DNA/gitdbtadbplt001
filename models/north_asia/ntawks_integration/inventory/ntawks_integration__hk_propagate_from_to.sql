@@ -16,7 +16,7 @@ AS (
     base.month propagate_from,
     base.so_qty,
     base.inv_qty,
-    datediff(month, to_date(base.month), to_date(latest_month)) diff_month,
+    datediff(month, to_date(base.month, 'YYYYMM'), to_date(latest_month, 'YYYYMM')) diff_month,
     p_to.reason
   FROM (
     SELECT *,
@@ -78,7 +78,7 @@ AS (
       ) base
   WHERE p_to.sap_parent_customer_key = base.sap_parent_customer_key
     AND base.month < p_to.month
-    AND datediff(month, to_date(base.month), to_date(latest_month)) <= 2
+    AND datediff(month, to_date(base.month, 'YYYYMM'), to_date(latest_month, 'YYYYMM')) <= 2
   ),
 final
 AS (
