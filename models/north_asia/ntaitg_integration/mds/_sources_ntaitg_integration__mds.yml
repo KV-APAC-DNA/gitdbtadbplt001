@@ -47,7 +47,7 @@ sources:
                 severity: error
           - test_duplicate:
               select_columns: ["type_code","begin","end","nts_si","offtake_si","tp_si","ciw_si"]
-              group_by_columns: ["type_code",begin","end","nts_si","offtake_si","tp_si","ciw_si"]
+              group_by_columns: ["type_code","begin","end","nts_si","offtake_si","tp_si","ciw_si"]
               name: TRATBL_sdl_mds_tw_incentive_schemes__duplicate_test
               config:
                 store_failures: true
