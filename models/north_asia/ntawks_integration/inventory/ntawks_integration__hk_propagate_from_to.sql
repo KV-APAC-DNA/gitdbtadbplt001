@@ -78,7 +78,7 @@ AS (
       ) base
   WHERE p_to.sap_parent_customer_key = base.sap_parent_customer_key
     AND base.month < p_to.month
-    AND datediff(month, to_date(base.month, 'YYYYMM'), to_date(latest_month, 'YYYYMM')) <= 2
+    AND datediff(month, to_date(base.month), to_date(latest_month)) <= 2
   ),
 final
 AS (
