@@ -63,3 +63,8 @@ models:
     config: 
       alias: wks_commercial_excellence_market_share_summation_ytd
       tags: ["comex_base_datamart","transformation"]
+  - name: aspwks_integration__wks_commercial_excellence_otif_base
+    config:
+      alias: wks_commercial_excellence_otif_base
+      tags:  ["comex_base_datamart","transformation"]
+      
