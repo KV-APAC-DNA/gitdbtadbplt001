@@ -330,7 +330,7 @@ sellin_all as
             and left(fisc_yr_per, 4) >= (
                 date_part(year, current_timestamp()) - 2
             )
-            and not copa.cust_num is null
+            --and not copa.cust_num is null
             and copa.acct_hier_shrt_desc = 'GTS'
             and amt_obj_crncy > 0
         group by 1,
