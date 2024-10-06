@@ -18,7 +18,8 @@ SELLOUT_TARGET.GROUP_VARIANT_CODE,
 SELLOUT_TARGET.sellout_target,
 prod_master.team_code,
 store_master.store_code,
-store_master.customer_code
+store_master.customer_code,
+store_master.sales_allocated
 
 from PH_HCP_SELLOUT_TARGET SELLOUT_TARGET 
   inner join (select distinct GROUP_VARIANT_CODE, team_code from HCP_PRODUCT_MASTER where team_code='HCP') prod_master on (SELLOUT_TARGET.GROUP_VARIANT_CODE=
