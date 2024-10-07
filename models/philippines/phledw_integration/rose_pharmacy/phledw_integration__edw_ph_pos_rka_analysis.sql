@@ -109,7 +109,7 @@ select
 ,(select distinct parameter_value from itg_query_parameters where parameter_type='account_grp') as account_grp
 ,veomd.sap_base_prod_desc as sap_base_prod_desc
 ,veomd.gph_prod_needstate as global_prod_need_state
-,'MODERN TRADE' as trade_type
+,'RKA' as trade_type
 ,veomd.sap_mega_brnd_cd as sap_mega_brnd_cd
 ,veomd.gph_prod_ctgry as global_prod_category
 ,null as sls_grp_desc
