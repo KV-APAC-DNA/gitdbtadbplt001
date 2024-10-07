@@ -9,6 +9,7 @@ hce_product_master as
  (
 
     select 
+     'HCE_TARGETS' as data_src,
      target.year_month,
      target.territory_code_code,
      target.GROUP_VARIANT_CODE,

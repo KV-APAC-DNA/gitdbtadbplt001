@@ -1,5 +1,5 @@
 with  acommerce_sellout_target as (
-    select * from {{ ref('phledw_integration__edw_ph_acommerce_sellout_target') }}
+    select * from {{ ref('phlitg_integration__itg_ph_acommerce_sellout_data') }}
 ),
 hce_product_master as 
 (
