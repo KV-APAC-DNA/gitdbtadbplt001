@@ -1649,10 +1649,10 @@ AS (
     SELECT *
     FROM ct5
 
-    UNION ALL
+    /*UNION ALL --commented as its not going to get used as for now
     
     SELECT *
-    FROM ct6
+    FROM ct6*/
     
     )
 SELECT *
