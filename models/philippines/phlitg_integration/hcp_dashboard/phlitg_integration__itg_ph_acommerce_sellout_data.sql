@@ -6,14 +6,18 @@
         unique_key=["month","brand","item_sku","month_no"]
     )
 }}
-with source as 
+with hcp_acommerce_load as 
 (
     select * from {{source('phlsdl_raw','sdl_hcp_acommerce_load')}}
+),
+edw_vw_os_time_dim as 
+(
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 transformed as 
 (
     select 
-
+   mnth_id,
     prefix,
     month,
     month_no,
@@ -29,8 +33,9 @@ transformed as
     jj_srp,
     quantity,
     gmv
-    from source 
-),
+    from hcp_acommerce_load a
+    inner join (select distinct mnth_long,mnth_no,mnth_id from edw_vw_os_time_dim where cal_year=year(current_date) ) cal on (a.month=cal.mnth_long and a.month_no=cal.mnth_no)
+), 
 final as 
 (
     select 
