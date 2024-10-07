@@ -8,7 +8,7 @@
                     FROM {{this}}
                     WHERE visit_id IN (
                             SELECT DISTINCT visit_id
-                            from {{ source('thasdl_raw', 'sdl_pop6_th_rir_data_test') }}
+                            from {{ source('thasdl_raw', 'sdl_pop6_th_rir_data') }}
                             );
                     {% endif %}"
     )
@@ -17,7 +17,7 @@
 
 with source as
 (
-    select * from {{ source('thasdl_raw', 'sdl_pop6_th_rir_data_test') }}
+    select * from {{ source('thasdl_raw', 'sdl_pop6_th_rir_data') }}
 ),
 
 final as
