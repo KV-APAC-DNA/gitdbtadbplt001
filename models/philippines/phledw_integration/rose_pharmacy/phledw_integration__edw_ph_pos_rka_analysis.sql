@@ -68,7 +68,7 @@ select
     pos.jj_month as jj_mnth_no,
     pos.jj_month_id as JJ_MNTH_ID,
     time_dim.qrtr_no as jj_qtr,
-    cust.Code as cust_cd,
+    split_part(cust.Code,'-',1) as cust_cd,
     cust.brnch_cd as cust_brnch_cd,
     cust.brnch_nm as mt_cust_brnch_nm,
     prod.sap_item_cd as item_cd,
