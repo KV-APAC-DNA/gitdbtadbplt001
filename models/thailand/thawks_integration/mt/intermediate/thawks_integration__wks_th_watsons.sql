@@ -79,8 +79,12 @@ final as (
 	win::varchar(50) as win,
 	pog_2::varchar(50) as pog_2,
 	file_name::varchar(100) as file_name,
-	date::varchar(10) as date
+	date::varchar(10) as date,
+    current_timestamp()::timestamp_ntz(9) as crtd_dttm
     from source
+    -- {% if is_incremental() %}
+    --     where crtd_dttm > (select max(crtd_dttm) from {{ this }}) 
+    -- {% endif %}
 )
 
 select * from final
