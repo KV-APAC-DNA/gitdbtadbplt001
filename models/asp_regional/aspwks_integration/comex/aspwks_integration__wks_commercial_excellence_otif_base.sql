@@ -47,8 +47,8 @@ final AS
          denominator::NUMERIC(38,5) AS otif_denominator,
          otif::NUMERIC(38,5) AS otif,
          otif_ytd::NUMERIC(38,5) AS otif_ytd
-  FROM (SELECT base.fiscal_yr_mo,
-               base.country_name,
+  FROM (SELECT REPLACE(base.fiscal_yr_mo, '_', '') AS fiscal_yr_mo,
+               INITCAP(base.country_name) AS country_name,
                base."cluster",
                base.segment_information,
                base.numerator,

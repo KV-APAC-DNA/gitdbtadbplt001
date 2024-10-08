@@ -1,17 +1,18 @@
 version: 2
 
 sources:
-  - name: aspedw_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: aspedw_integration
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
-      - name: edw_market_mirror_fact
-      - name: edw_rpt_ecomm_oneview
-      - name: edw_reg_inventory_health_analysis_propagation_sync
+  # Below commented sources are defined in OKR Source YML file
+  # - name: aspedw_integration
+  #   database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+  #   schema: aspedw_integration
+  #   quoting:
+  #     database: false
+  #     schema: false
+  #     identifier: false
+  #   tables:
+  #     - name: edw_market_mirror_fact
+  #     - name: edw_rpt_ecomm_oneview
+  #     - name: edw_reg_inventory_health_analysis_propagation_sync
 
   - name: aspedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -32,3 +33,8 @@ sources:
       identifier: false
     tables:
       - name: vw_itg_custgp_customer_hierarchy_sync
+
+
+
+
+

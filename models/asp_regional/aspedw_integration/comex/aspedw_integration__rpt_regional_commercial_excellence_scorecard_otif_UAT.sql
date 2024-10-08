@@ -336,9 +336,9 @@ final as (
         --START OF ALL OTIF
         select market        
         ,"cluster"           
-        ,segment_information as cust_seg           
+        ,'NA' as cust_seg           
         ,'NA' as retail_env 
-        ,'NA' as mega_brand       
+        ,segment_information as mega_brand       
         ,month_id  
         ,0 as dso_kv_days
         ,0 as ytd_week_passed

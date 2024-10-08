@@ -13,3 +13,6 @@ sources:
       tags: ["okr_dashboard_datamart_refresh","transformation"]
     - name: edw_okr_core_ppm
       tags: ["okr_dashboard_datamart_refresh","transformation"]
+    - name: edw_market_mirror_fact
+    - name: edw_rpt_ecomm_oneview
+    - name: edw_reg_inventory_health_analysis_propagation_sync
