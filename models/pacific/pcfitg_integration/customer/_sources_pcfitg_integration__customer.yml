@@ -9,7 +9,7 @@ sources:
       schema: false
       identifier: false
     tables:
-    - name: pacific_cust_ciw_plan_temp
+    - name: sdl_mds_pacific_cust_ciw_plan
       tags: ["anz_mds_sdl_to_edw_load","ingestion"]
       tests:
           - test_duplicate:

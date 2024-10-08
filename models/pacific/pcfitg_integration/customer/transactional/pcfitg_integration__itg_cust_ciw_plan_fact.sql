@@ -3,20 +3,13 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['time_period'],
-        pre_hook= "
-        create or replace table prod_dna_core.dbt_cloud_pr_5458_1369.pcfitg_integration__itg_cust_ciw_plan_fact clone 
-        prod_dna_core.pcfitg_integration.itg_cust_ciw_plan_fact;
-
-        ALTER TABLE prod_dna_core.dbt_cloud_pr_5458_1369.pcfitg_integration__itg_cust_ciw_plan_fact 
-        ADD COLUMN IF NOT EXISTS target_type varchar(10);
-        
-        delete from {{this}} where left(time_period, 4) in (
-        select left(time_period, 4) from {{ source('pcfsdl_raw', 'pacific_cust_ciw_plan_temp') }});"
+        pre_hook= "delete from {{this}} where left(time_period, 4) in (
+        select left(time_period, 4) from {{ source('pcfsdl_raw', 'sdl_mds_pacific_cust_ciw_plan') }});"
     )
 }}
 with source as 
 (
-    select * from {{ source('pcfsdl_raw', 'pacific_cust_ciw_plan_temp') }}
+    select * from {{ source('pcfsdl_raw', 'sdl_mds_pacific_cust_ciw_plan') }}
 ),
 final as 
 (
