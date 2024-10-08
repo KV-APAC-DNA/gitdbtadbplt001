@@ -20,12 +20,15 @@ SELLOUT_TARGET.sellout_target,
 prod_master.team_code,
 store_master.store_code,
 store_master.customer_code,
-store_master.sales_allocated
+store_master.sales_allocated,
+store_master.DISTRICT_CODE
 
 from PH_HCP_SELLOUT_TARGET SELLOUT_TARGET 
-  inner join (select distinct GROUP_VARIANT_CODE, team_code from HCP_PRODUCT_MASTER where team_code='HCP') prod_master on (SELLOUT_TARGET.GROUP_VARIANT_CODE=
+  inner join (select distinct GROUP_VARIANT_CODE, team_code from HCP_PRODUCT_MASTER ) prod_master on (SELLOUT_TARGET.GROUP_VARIANT_CODE=
 prod_master.GROUP_VARIANT_CODE)
-  inner join (select distinct store_code,customer_code,TERRITORY_CODE_CODE from HCP_store_MASTER where customer_code='RPI' ) store_master on (sellout_target.TERRITORY_CODE_CODE=store_master.TERRITORY_CODE_CODE)
+  inner join (select distinct GROUP_VARIANT_CODE,store_code,customer_code,TERRITORY_CODE_CODE,DISTRICT_CODE,sales_allocated
+  from HCP_store_MASTER ) store_master on (sellout_target.TERRITORY_CODE_CODE=store_master.TERRITORY_CODE_CODE and  SELLOUT_TARGET.GROUP_VARIANT_CODE=
+store_master.GROUP_VARIANT_CODE)
 
 ),
 final as 
