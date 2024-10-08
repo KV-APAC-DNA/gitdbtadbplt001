@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: thawks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: thawks_integration
+    schema: "{{ target.schema if target.name in ('dev','default') else 'thawks_integration' }}"
     quoting:
       database: false
       schema: false
