@@ -10,6 +10,9 @@ select * from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }}
 itg_vn_dms_customer_dim as (
 select * from {{ ref('vnmitg_integration__itg_vn_dms_customer_dim') }}
 ),
+sdl_mds_vn_store_retail_environment_mapping as (
+select * from {{ source('vnmsdl_raw', 'sdl_mds_vn_store_retail_environment_mapping_adftemp') }}
+),
 edw_vw_os_time_dim as (
 select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
@@ -104,14 +107,17 @@ select 'SELL-OUT' as data_src,
 	   so_fact.jj_net_sls as so_sls_value,
        nvl(mat.prmry_upc_cd,matsls.matsls_ean) as msl_product_code,
        --prod_dim.product_name as msl_product_desc,
-       cust.shop_type as retail_env,
-       cust.shop_type as channel
+       --cust.shop_type as retail_env,
+       --cust.shop_type as channel
+	   re_map.msl_re_name as retail_env,
+	   re_map.channel_name as channel
       from edw_vw_vn_sellout_sales_fact so_fact
 	join(select dstrb.dstrbtr_id, mapp.sap_sold_to_code, dstrb.territory_dist,dstrb.dstrbtr_type, dstrb.dstrbtr_name, dstrb.region, dstrb.province from itg_vn_distributor_sap_sold_to_mapping mapp, itg_vn_dms_distributor_dim dstrb 
 	where mapp.distributor_id = nvl(dstrb.mapped_spk,dstrb.dstrbtr_id)
 	) d on so_fact.dstrbtr_grp_cd = d.dstrbtr_id
 	left join itg_vn_dms_customer_dim cust
 	  on so_fact.dstrbtr_grp_cd = cust.dstrbtr_id and so_fact.cust_cd = cust.outlet_id
+	left join sdl_mds_vn_store_retail_environment_mapping re_map on upper(cust.shop_type) = upper(re_map.code)
 	left join edw_vw_os_time_dim time_dim on so_fact.bill_date::date = time_dim.cal_date
 	left join itg_vn_dms_product_dim prod_dim on prod_dim.product_code=so_fact.dstrbtr_matl_num
         left join (select matl_num,ean_num as matsls_ean from (         
