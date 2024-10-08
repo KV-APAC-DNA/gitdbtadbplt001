@@ -93,7 +93,7 @@ sources:
                 store_failures: true
                 schema: thawks_integration
           - test_duplicate:
-              group_by_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
+              group_by_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id","field_type","response"]
               need_counts: "no"
               name: TRATBL_sdl_pop6_th_general_audits__duplicate_test
               config:
