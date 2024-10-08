@@ -86,7 +86,7 @@ sources:
         tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
-              not_null_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
+              not_null_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id","field_type","response"]
               condition: "and"
               name: TRATBL_sdl_pop6_th_general_audits__null_test
               config:
