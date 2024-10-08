@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: aspedw_access__vw_rpt_chanz_okr
+    config: 
+      alias: vw_rpt_chanz_okr
+      tags: ["okr_dashboard_datamart_refresh","transformation"]
+
+  - name: aspedw_access__vw_rpt_ma_okr
+    config: 
+      alias: vw_rpt_ma_okr
+      tags: ["okr_dashboard_datamart_refresh","transformation"]
+
+  - name: aspedw_access__vw_rpt_onechina_okr
+    config: 
+      alias: vw_rpt_onechina_okr
+      tags: ["okr_dashboard_datamart_refresh","transformation"]

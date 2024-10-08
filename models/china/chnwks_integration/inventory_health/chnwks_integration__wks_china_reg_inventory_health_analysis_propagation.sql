@@ -899,7 +899,7 @@ GTS as
                   and left(fisc_yr_per, 4)>= (
                     DATE_PART(YEAR, current_timestamp()) -2
                   ) 
-                  and copa.cust_num is not null 
+                  --and copa.cust_num is not null 
                   and copa.acct_hier_shrt_desc = 'GTS' 
                   and amt_obj_crncy > 0 
                 group by 
