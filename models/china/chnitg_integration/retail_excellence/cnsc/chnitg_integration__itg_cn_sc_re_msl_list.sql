@@ -1,5 +1,6 @@
 with ITG_RE_MSL_INPUT_DEFINITION as (
-    select * from {{ source('aspitg_integration', 'itg_re_msl_input_definition') }}
+    select * from {{ ref('aspitg_integration__itg_re_msl_input_definition') }}
+    --select * from {{ source('aspitg_integration', 'itg_re_msl_input_definition') }}
 ),
 WKS_CNSC_BASE_RETAIL_EXCELLENCE as (
     select * from {{ ref('chnwks_integration__wks_cnsc_base_retail_excellence') }}
@@ -8,7 +9,8 @@ edw_vw_cal_Retail_excellence_Dim as (
     select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 itg_mds_cn_otc_product_mapping as (
-    select * from {{ source('chnitg_integration', 'itg_mds_cn_otc_product_mapping') }}
+    select * from {{ ref('chnitg_integration__itg_mds_cn_otc_product_mapping') }}
+    --{{ source('chnitg_integration', 'itg_mds_cn_otc_product_mapping') }}
 ),
 edw_calendar_dim as (
     select * from {{ ref('aspedw_integration__edw_calendar_dim') }}

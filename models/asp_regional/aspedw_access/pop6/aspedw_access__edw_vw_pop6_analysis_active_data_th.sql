@@ -118,6 +118,9 @@ final as (
         mkt_share as "mkt_share",
         planned_visit_date as "planned_visit_date",
         visited_flag as "visited_flag",
+        related_attribute as "related_attribute",
+        total_layer as "total_layer",
+        layer as "layer",
         facing as "facing",
         is_eyelevel as "is_eyelevel"
     from source
