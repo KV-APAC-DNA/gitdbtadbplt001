@@ -26,21 +26,6 @@ edw_invoice_fact as(
 v_edw_customer_sales_dim as(
     select * from {{ ref('aspedw_integration__v_edw_customer_sales_dim') }}
 ),
-VW_DIM_GMC_SKU_MAPPINGS as(
-    select * from {{ source('GLOBALMASTER_ACCESS','VW_DIM_GMC_SKU_MAPPINGS') }}
-),
-VW_DIM_GMC_ATTRIBUTE_MAPPINGS as(
-    select * from {{ source('GLOBALMASTER_ACCESS','VW_DIM_GMC_ATTRIBUTE_MAPPINGS') }}
-),
-VW_DIM_GMC_GLOBAL_CATEGORY_HIER as(
-    select * from {{ source('GLOBALMASTER_ACCESS','VW_DIM_GMC_GLOBAL_CATEGORY_HIER') }}
-),
-VW_DIM_GMC_GLOBAL_BRAND_HIER as(
-    select * from {{ source('GLOBALMASTER_ACCESS','VW_DIM_GMC_GLOBAL_BRAND_HIER') }}
-),
-VW_DIM_GMC_PROFIT_CENTER_HIER as(
-    select * from {{ source('GLOBALMASTER_ACCESS','VW_DIM_GMC_PROFIT_CENTER_HIER') }}
-),
 vw_itg_custgp_customer_hierarchy as(
     select * from {{ ref('aspitg_integration__vw_itg_custgp_customer_hierarchy') }}
 ),
