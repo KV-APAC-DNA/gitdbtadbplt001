@@ -1,5 +1,5 @@
 with EDW_RPT_REGIONAL_SELLOUT_OFFTAKE as (
-    select * from {{ ref('aspedw_integration__edw_rpt_regional_sellout_offtake_dbt') }}
+    select * from {{ ref('aspedw_integration__edw_rpt_regional_sellout_offtake') }}
 ),
 edw_vw_cal_Retail_excellence_Dim as (
     select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
