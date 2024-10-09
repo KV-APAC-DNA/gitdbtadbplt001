@@ -4,7 +4,7 @@ with edw_otif_consumer_attr as (
 final as (
     select
 			region as "region",
-            rgn_mkt_cd  as "rgn_mkt_cd",
+            market  as "market",
 			fiscal_yr_mo  as "fiscal_yr_mo",
             segment_information as "segment_information",
 			numerator  as "numerator",
