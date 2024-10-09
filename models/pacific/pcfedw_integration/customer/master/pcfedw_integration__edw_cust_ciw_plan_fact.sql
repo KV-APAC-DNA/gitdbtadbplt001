@@ -9,7 +9,7 @@ final AS
         sales_grp_cd::varchar(10) AS sales_grp_cd,
         prod_mjr_cd::varchar(30) AS prod_mjr_cd,
         
-        -- GOAL values ((target type is null and left(time_period, 4)<2024)?
+        -- GOAL values
         ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' THEN goal_qty END))::number(18,0) AS goal_qty,
         ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' THEN goal_gts END))::number(18,2) AS goal_gts,
         ZEROIFNULL((CASE WHEN UPPER(target_type) = 'GOAL' THEN goal_eff_val END))::number(18,2) AS goal_eff_val,
