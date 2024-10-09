@@ -10,7 +10,7 @@ hcp_sellout_targets  as
 transformed as 
 (
     select 
-    data_src,
+    data_src as varchar(50),
     JJ_MNTH_ID ,
     JJ_YEAR,
     store_code,
@@ -26,7 +26,7 @@ transformed as
   union all
  
    select  
- data_src,
+ data_src ,
  jj_month as jj_mnth_id,
   jj_year,
   store_code,

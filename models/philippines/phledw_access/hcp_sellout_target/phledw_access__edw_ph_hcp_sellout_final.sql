@@ -5,20 +5,17 @@ with source as
 final  as 
 (
     select 
-DATA_SRC  AS  "data_src",
-JJ_MNTH_ID   AS  "jj_mnth_id",
-JJ_YEAR   AS  "jj_year",
-SKU   AS  "sku",
-ITEM_CD   AS  "item_cd",
-POS_GTS   AS  "pos_gts",
-POS_NTS   AS  "pos_nts",
-POS_QTY   AS  "pos_qty",
-STORE_CODE   AS  "store_code",
-GROUP_VARIANT_CODE   AS  "group_variant_code",
-TERRITORY_CODE_CODE   AS  "territory_code_code",
-TEAM_CODE   AS  "team_code"
-
-    
+data_src as "data_src",
+jj_mnth_id as "jj_mnth_id",
+jj_year as "jj_year",
+store_code as "store_code",
+sku as "sku",
+group_variant_code  as "group_variant_code",
+territory_code_code as "territory_code_code",
+team_code as "team_code",
+district_code as "district_code",
+sellout_target  as "sellout_target",
+pos_gts  as "jj_gts"    
     from source
 )
 select * from final 
