@@ -53,7 +53,7 @@ final as (
         try_to_date(laepr) as laepr,
         zkprs::number(11,2) as zkprs,
         try_to_date(zkdat) as zkdat,
-        timestamps::number(15,0) as timestamps,
+        timestamps::timestamp_ntz(9) as timestamps,
         bwprs::number(11,2) as bwprs,
         bwprh::number(11,2) as bwprh,
         vjbws::number(11,2) as vjbws,
