@@ -1,5 +1,5 @@
 with source as (
-    select * from {{ ref('aspedw_integration__edw_perfect_store_rebase_wt_dbt') }}
+    select * from {{ ref('aspedw_integration__edw_perfect_store_rebase_wt') }}
 ),
 final as (
     select
