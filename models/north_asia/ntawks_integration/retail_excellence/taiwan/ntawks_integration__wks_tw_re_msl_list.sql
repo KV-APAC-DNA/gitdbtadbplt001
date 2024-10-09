@@ -12,7 +12,8 @@ wks_tw_base_re as (
     select * from {{ ref('ntawks_integration__wks_tw_base_re') }}
 ),
 edw_vw_pop6_products as (
-    select * from {{ source('ntaedw_integration', 'edw_vw_pop6_products') }}
+    --select * from {{ source('ntaedw_integration', 'edw_vw_pop6_products') }}
+    select * from {{ ref('aspedw_integration__edw_vw_pop6_products') }}
 ),
 edw_vw_cal_retail_excellence_dim as (
     select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}

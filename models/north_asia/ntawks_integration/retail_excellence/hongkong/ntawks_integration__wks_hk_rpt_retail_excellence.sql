@@ -6,7 +6,8 @@ wks_hk_regional_sellout_actuals as (
     select * from {{ ref('ntawks_integration__wks_hk_regional_sellout_actuals' )}}
 ),
 v_rpt_pop6_perfectstore as (
-    select * from {{ source('ntaedw_integration','v_rpt_pop6_perfectstore') }}
+    --select * from {{ source('ntaedw_integration','v_rpt_pop6_perfectstore') }}
+    select * from {{ ref('aspedw_integration__v_rpt_pop6_perfectstore') }}
 ),
 customer_hierarchy as (
     select * from {{ ref('aspedw_integration__edw_generic_customer_hierarchy') }}

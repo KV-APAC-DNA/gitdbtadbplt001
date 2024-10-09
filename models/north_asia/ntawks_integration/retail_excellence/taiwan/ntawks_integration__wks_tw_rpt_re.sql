@@ -16,7 +16,8 @@ edw_company_dim as (
     select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 edw_vw_pop6_products as (
-    select * from {{ source('ntaedw_integration', 'edw_vw_pop6_products') }}
+    --select * from {{ source('ntaedw_integration', 'edw_vw_pop6_products') }}
+    select * from {{ ref('aspedw_integration__edw_vw_pop6_products') }}
 ),
 
 TW_RPT_RE_mdp  as (
