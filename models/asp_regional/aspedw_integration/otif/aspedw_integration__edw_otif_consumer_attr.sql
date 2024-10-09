@@ -20,7 +20,7 @@ itg_mds_ap_sales_ops_map as (
 
 
 --Final CTE
-final as (select region,RGN_MKT_CD, fiscal_yr_mo, segment_information, sum(numerator) as numerator, 
+final as (select region, market, fiscal_yr_mo, segment_information, sum(numerator) as numerator, 
 sum(denominator) as denominator,DIV0(sum(numerator),sum(denominator)) as otif
 from (
 SELECT
@@ -30,14 +30,14 @@ FISC_YR_WK_NUM as fiscal_yr_wk,
 upper(RGN_CD) AS region,
 SLORG_NUM as sls_org,
 GCPH_GFO_DESC  as segment_information,
-upper(trim(RGN_MKT_CD)) as RGN_MKT_CD,
+upper(trim(GEO_CTRY_NM)) as Market,
 ltrim(SOLD_TO_CUST_NUM, '0') as sold_to,
 ltrim(MATL_NUM, '0') as matl_num,
-sum(case when upper(trim(RGN_MKT_CD)) = 'JAPAN' and OTIF_EXCL_IND = 1 then NUMRTR_UNIT_QTY_SC
-		when upper(trim(RGN_MKT_CD)) <> 'JAPAN' and OTIF_EXCL_IND = 0 then NUMRTR_UNIT_QTY_DELV else 0
+sum(case when upper(trim(GEO_CTRY_NM)) = 'JAPAN' and OTIF_EXCL_IND = 1 then NUMRTR_UNIT_QTY_SC
+		when upper(trim(GEO_CTRY_NM)) <> 'JAPAN' and OTIF_EXCL_IND = 0 then NUMRTR_UNIT_QTY_DELV else 0
 	end) as numerator,
-sum(case when upper(trim(RGN_MKT_CD)) = 'JAPAN' and OTIF_EXCL_IND = 1 then DENOM_UNIT_QTY_SC
-		when upper(trim(RGN_MKT_CD)) <> 'JAPAN' and OTIF_EXCL_IND = 0 then DENOM_UNIT_QTY_DELV else 0
+sum(case when upper(trim(GEO_CTRY_NM)) = 'JAPAN' and OTIF_EXCL_IND = 1 then DENOM_UNIT_QTY_SC
+		when upper(trim(GEO_CTRY_NM)) <> 'JAPAN' and OTIF_EXCL_IND = 0 then DENOM_UNIT_QTY_DELV else 0
 	end) as denominator
 from itg_otif_consumer_attr		--// from DELV.otif_d_cnsmr_attr_detl
 Where FISC_YR_MO_NUM >= '2023_08'
@@ -46,8 +46,8 @@ and NO_CHRG_IND = '0'
 and upper(RGN_CD) = 'APAC'
 and (OTIF_EXCL_IND = 0 or OTIF_EXCL_IND = 1)
 Group by FISC_YR_NBR,FISC_YR_MO_NUM,FISC_YR_WK_NUM,upper(RGN_CD),SLORG_NUM,segment_information,
-upper(trim(RGN_MKT_CD)),ltrim(SOLD_TO_CUST_NUM, '0'),ltrim(MATL_NUM, '0')
-) a Group by region,RGN_MKT_CD,fiscal_yr_mo,segment_information
+upper(trim(GEO_CTRY_NM)),ltrim(SOLD_TO_CUST_NUM, '0'),ltrim(MATL_NUM, '0')
+) a Group by region,Market,fiscal_yr_mo,segment_information
  
 UNION ALL
  
