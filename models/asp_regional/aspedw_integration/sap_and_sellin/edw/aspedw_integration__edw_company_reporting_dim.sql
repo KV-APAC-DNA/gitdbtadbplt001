@@ -16,7 +16,7 @@ select a.*,b.*,ctry_group as reporting_market,"cluster" as reporting_cluster fro
 union all
 select a.*,b.*,ctry_group as reporting_market,"cluster" as reporting_cluster from edw_company_dim a,(select 'Dr Ci Labo' as mega_brnd_desc) b where ctry_group='Hong Kong'
 union all
-select a.*,b.*,ctry_group as reporting_market,"cluster" as reporting_clusterfrom edw_company_dim a,(select 'Dr Ci Labo' as mega_brnd_desc) b where ctry_group='Thailand'
+select a.*,b.*,ctry_group as reporting_market,"cluster" as reporting_clusterfrom from edw_company_dim a,(select 'Dr Ci Labo' as mega_brnd_desc) b where ctry_group='Thailand'
 union all
 select a.*,b.*,'China Jupiter' as reporting_market,"cluster" as reporting_cluster  from edw_company_dim a,(select 'Jupiter (PH to CH)' as mega_brnd_desc) b where ctry_group='China Selfcare' 
 union all
