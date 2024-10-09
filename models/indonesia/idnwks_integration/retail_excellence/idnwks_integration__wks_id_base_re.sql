@@ -1,6 +1,6 @@
 --import cte
 with edw_rpt_regional_sellout_offtake as (
-    select * from {{ ref('aspedw_integration__edw_rpt_regional_sellout_offtake_dbt') }}
+    select * from {{ ref('aspedw_integration__edw_rpt_regional_sellout_offtake') }}
 ),
 
 v_edw_vw_cal_Retail_excellence_dim as (

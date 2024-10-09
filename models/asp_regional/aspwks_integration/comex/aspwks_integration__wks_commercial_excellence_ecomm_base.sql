@@ -1,6 +1,7 @@
 with edw_rpt_ecomm_oneview as (
-    select * from {{ source('aspedw_integration', 'edw_rpt_ecomm_oneview') }}
+    select * from {{ ref('aspedw_integration__edw_rpt_ecomm_oneview') }}
 ),
+
 final as ( 
     select 
 NVL(base_dist.market,'NA') :: varchar(40) AS market, 
