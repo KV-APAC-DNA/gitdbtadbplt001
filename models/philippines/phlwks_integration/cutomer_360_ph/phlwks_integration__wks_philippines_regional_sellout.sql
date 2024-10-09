@@ -137,6 +137,7 @@ final as
             ELSE TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA')) END)
             END) END AS msl_product_desc,
             TRIM(NVL (NULLIF(SELLOUT.channel,''),'NA')) AS channel,
+			TRIM(NVL (NULLIF(SELLOUT.retail_env,''),'NA')) AS retail_env,
         SELLOUT.crtd_dttm,
         SELLOUT.updt_dttm
     FROM  WKS_PHILIPPINES_REGIONAL_SELLOUT_BASE SELLOUT
@@ -336,6 +337,7 @@ final as
                 --SELLOUT.msl_product_desc,
                 emsd.mstr_cd,
                 SELLOUT.channel,
+				SELLOUT.retail_env,
                 SELLOUT.crtd_dttm,
                 SELLOUT.updt_dttm
     HAVING NOT (SUM(SELLOUT.so_sls_value) = 0 and SUM(SELLOUT.so_sls_qty) = 0)

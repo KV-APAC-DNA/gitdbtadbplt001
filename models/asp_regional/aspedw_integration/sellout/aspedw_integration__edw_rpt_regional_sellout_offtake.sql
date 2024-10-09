@@ -1021,7 +1021,7 @@ final as
         main.msl_product_code,
         main.msl_product_desc,
         'NA' AS store_grade,
-        'NA' AS retail_env,
+        main.retail_env,
         main.channel,
         main.crtd_dttm,
         main.updt_dttm,
