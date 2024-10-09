@@ -12,10 +12,12 @@
     select * from {{ ref('aspitg_integration__itg_re_msl_input_definition') }}
  ),
  EDI_STORE_M as (
-    select * from {{ source('jpnedw_integration', 'edi_store_m') }}
+    --select * from {{ source('jpnedw_integration', 'edi_store_m') }}
+    select * from {{ ref('jpnedw_integration__edi_store_m') }}
  ),
   EDI_CHN_M as (
-    select * from {{ source('jpnedw_integration', 'edi_chn_m') }}
+    --select * from {{ source('jpnedw_integration', 'edi_chn_m') }}
+    select * from {{ ref('jpnedw_integration__edi_chn_m') }}
  ),
   MT_SGMT as (
     select * from {{ source('jpnedw_integration', 'mt_sgmt') }}
@@ -27,7 +29,8 @@
     select * from {{ source('jpnedw_integration', 'jp_inv_coverage_area_region_mapping') }}
  ),
   SDL_MDS_JP_C360_ENG_TRANSLATION as (
-    select * from {{ source('jpnsdl_raw', 'sdl_mds_jp_c360_eng_translation') }}
+    --select * from {{ source('jpnsdl_raw', 'sdl_mds_jp_c360_eng_translation') }}
+    select * from {{ ref('jpnitg_integration__itg_mds_jp_c360_eng_translation') }}
  ),
 
 transformation as (

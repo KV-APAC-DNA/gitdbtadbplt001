@@ -42,19 +42,23 @@ EDW_VW_POP6_PRODUCTS as (
     select * from {{ ref('aspedw_integration__edw_vw_pop6_products') }}
 ),
 VW_JAN_CHANGE as ( 
-    select * from {{ source('jpnedw_integration', 'vw_jan_change') }}
+    --select * from {{ source('jpnedw_integration', 'vw_jan_change') }}
+    select * from {{ ref('jpnedw_integration__vw_jan_change') }}
 ),
 EDI_STORE_M as (
-    select * from {{ source('jpnedw_integration', 'edi_store_m') }}
+    --select * from {{ source('jpnedw_integration', 'edi_store_m') }}
+    select * from {{ ref('jpnedw_integration__edi_store_m') }}
  ),
 EDI_CHN_M as (
-    select * from {{ source('jpnedw_integration', 'edi_chn_m') }}
+    --select * from {{ source('jpnedw_integration', 'edi_chn_m') }}
+    select * from {{ ref('jpnedw_integration__edi_chn_m') }}
  ),
 MT_SGMT as (
     select * from {{ source('jpnedw_integration', 'mt_sgmt') }}
  ),
 EDI_CSTM_M as (
-    select * from {{ source('jpnedw_integration', 'edi_cstm_m') }}
+    --select * from {{ source('jpnedw_integration', 'edi_cstm_m') }}
+    select * from {{ ref('jpnedw_integration__edi_cstm_m') }}
 ),
 EDW_LIST_PRICE as (
     select * from {{ ref('aspedw_integration__edw_list_price') }}
@@ -66,7 +70,8 @@ JP_INV_COVERAGE_AREA_REGION_MAPPING as (
     select * from {{ source('jpnedw_integration', 'jp_inv_coverage_area_region_mapping') }}
 ),
 SDL_MDS_JP_C360_ENG_TRANSLATION as (
-    select * from {{ source('jpnsdl_raw', 'sdl_mds_jp_c360_eng_translation') }}
+    --select * from {{ source('jpnsdl_raw', 'sdl_mds_jp_c360_eng_translation') }}
+    select * from {{ ref('jpnitg_integration__itg_mds_jp_c360_eng_translation') }}
 ),
 ITG_JP_RE_MSL_LIST as (
     select * from {{ ref('jpnitg_integration__itg_jp_re_msl_list') }}
