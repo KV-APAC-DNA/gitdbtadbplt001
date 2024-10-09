@@ -27,10 +27,12 @@ itg_mds_sg_customer_hierarchy as (
     select * from {{ ref('sgpitg_integration__itg_mds_sg_customer_hierarchy') }}
 ),
 edw_vw_pop6_products as (
-    select * from {{ source('ntaedw_integration','edw_vw_pop6_products') }}
+    --select * from {{ source('ntaedw_integration','edw_vw_pop6_products') }}
+    select * from {{ ref('aspedw_integration__edw_vw_pop6_products') }}
 ),
 v_rpt_pop6_perfectstore as (
-    select * from {{ source('ntaedw_integration','v_rpt_pop6_perfectstore') }}
+    --select * from {{ source('ntaedw_integration','v_rpt_pop6_perfectstore') }}
+    select * from {{ ref('aspedw_integration__v_rpt_pop6_perfectstore') }}
 ),
 
 edw_list_price as (

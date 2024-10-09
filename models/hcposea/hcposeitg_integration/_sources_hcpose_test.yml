@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: hcposewks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: hcposewks_integration
+    schema: "{{ target.schema if target.name in ('dev','default') else 'hcposewks_integration' }}"
     quoting:
       database: false
       schema: false

@@ -2,7 +2,7 @@ with edw_list_price as (
 select * from {{ ref('aspedw_integration__edw_list_price') }}
 ),
 edw_rpt_regional_sellout_offtake as (
-    select * from {{ source('aspedw_integration', 'edw_rpt_regional_sellout_offtake') }}
+    select * from {{ ref('aspedw_integration__edw_rpt_regional_sellout_offtake') }}
 ),
 edw_sales_org_dim as 
 (

@@ -118,6 +118,9 @@ SELECT
   edw_vw_pop6_analysis_data.mkt_share, 
   edw_vw_pop6_analysis_data.planned_visit_date, 
   edw_vw_pop6_analysis_data.visited_flag, 
+  edw_vw_pop6_analysis_data.related_attribute,
+  edw_vw_pop6_analysis_data.total_layer,
+  edw_vw_pop6_analysis_data.layer,
   edw_vw_pop6_analysis_data.facing, 
   edw_vw_pop6_analysis_data.is_eyelevel 
 FROM 
