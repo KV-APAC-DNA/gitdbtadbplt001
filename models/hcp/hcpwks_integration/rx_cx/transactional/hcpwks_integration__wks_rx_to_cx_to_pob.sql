@@ -118,6 +118,10 @@ final as
        mapp.prod_vent AS ventasys_product,
        prod.franchise_name,
        prod.brand_name,
+       prod.variant_name,
+       prod.mothersku_name,
+       prod.product_code,
+       prod.product_name,
        sales.quantity AS sales_qty,
        sales.achievement_nr AS sales_ach_nr,
        pob.pob_units,
@@ -137,6 +141,13 @@ final as
        NVL(rd.retailer_channel_level2,sd.retailer_channel_2) AS retailer_channel_2,
        NVL(rd.retailer_channel_level3,sd.retailer_channel_3) AS retailer_channel_3,
        NVL(rd.urc_active_flag,'N') AS "URC Active Flag",
+       sd.latest_customer_code,
+       sd.latest_customer_name,
+       sd.latest_salesman_code,
+       sd.latest_salesman_name,
+       sd.latest_region,
+       sd.latest_zone,
+       sd.latest_territory,
        sm.smcode AS salesman_code_sales,
        sm.smname AS salesman_name_sales,
        hcpdim.customer_name AS hcp_name,
@@ -144,7 +155,13 @@ final as
        hcpdim.employee_id AS emp_id,
        hcpdim.region AS region_vent,
        hcpdim.territory AS territory_vent,
-       hcpdim.zone AS zone_vent    
+       hcpdim.zone AS zone_vent,
+       hcpdim.emp_hq_name,
+       hcpdim.city,
+       hcpdim.state,
+       hcpdim.customer_type,
+       hcpdim.core_noncore,
+       hcpdim.is_active    
 FROM (SELECT * 
       FROM wks_rx_to_cx_to_pob_base_rtl) rtl
   CROSS JOIN (SELECT LEFT(mth_mm,4) AS "year", RIGHT(mth_mm,2) AS "month"
@@ -159,7 +176,7 @@ FROM (SELECT *
                     GROUP BY 1)
               --WHERE UPPER(prod_vent) LIKE 'ORSL%'
               GROUP BY 1) mapp
-  LEFT JOIN (SELECT franchise_name, brand_name, pmap.prod_vent
+  LEFT JOIN (SELECT franchise_name, brand_name,variant_name,mothersku_name,pd.product_code,product_name, pmap.prod_vent
              FROM edw_product_dim pd
              INNER JOIN (SELECT SPLIT_PART(parameter_name,'-',1) AS prod_vent,
                                 SPLIT_PART(parameter_value,'-',1) AS product_code
@@ -167,7 +184,7 @@ FROM (SELECT *
                          WHERE parameter_type = 'Rx_to_Cx_to_Pob_Product_Mapping'
                          GROUP BY 1,2) pmap
                      ON pd.product_code = pmap.product_code
-             GROUP BY 1,2,3) prod
+             GROUP BY 1,2,3,4,5,6,7) prod
          ON UPPER(mapp.prod_vent) = UPPER(prod.prod_vent)
   LEFT JOIN (SELECT LEFT(sd.mth_mm,4) AS year,
                     RIGHT(sd.mth_mm,2) AS month,
@@ -228,13 +245,20 @@ FROM (SELECT *
          AND rd.retailer_code = sm.rtrcode
   LEFT JOIN (SELECT hcp.hcp_id,
                   hcp.customer_name,
+                  hcp.customer_type,
+                  hcp.core_noncore,
+                  hcp.is_active,
                   emp.name,
                   emp.employee_id,
                   emp.region,
                   emp.territory,
-                  emp.zone
+                  emp.zone,
+                  emp.emp_hq_name,
+                  emp.city,
+                  emp.state
            FROM edw_hcp360_in_ventasys_hcp_dim_latest hcp
-           LEFT JOIN (SELECT emp_terrid,name,employee_id,region,territory,zone, row_number() over(partition by emp_terrid order by join_date desc) AS rnk
+           LEFT JOIN (SELECT emp_terrid,name,employee_id,region,territory,zone,emp_hq_name,city,state,
+                         row_number() over(partition by emp_terrid order by join_date desc) AS rnk
                       FROM   edw_hcp360_in_ventasys_employee_dim
                       WHERE  is_active = 'Y' ) emp
                   ON hcp.territory_id = emp.emp_terrid
