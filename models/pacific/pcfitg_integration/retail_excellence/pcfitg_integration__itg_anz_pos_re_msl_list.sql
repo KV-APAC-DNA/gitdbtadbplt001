@@ -22,7 +22,8 @@ edw_sales_org_dim as (
     select * from {{ ref('aspedw_integration__edw_sales_org_dim') }}
 ),
 itg_trax_md_product as (
-    select * from {{ ref('pcfitg_integration__itg_trax_md_product') }}
+    --select * from {{ ref('pcfitg_integration__itg_trax_md_product') }}
+    select * from {{ source('aspacshare_integration', 'trax_md_product') }}
 ),
 
 --final cte

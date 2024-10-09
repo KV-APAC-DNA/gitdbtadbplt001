@@ -6,7 +6,7 @@ itg_mds_pacific_ps_targets as (
     select * from {{ ref('pcfitg_integration__itg_mds_pacific_ps_targets') }}
 ),
 itg_mds_jp_ps_targets as (
-    select * from jpnitg_integration.itg_mds_jp_ps_targets
+    select * from {{ ref('jpnitg_integration__itg_mds_jp_ps_targets') }}
 ),
 itg_mds_hk_ps_targets as (
     select * from {{ ref('ntaitg_integration__itg_mds_hk_ps_targets') }}
