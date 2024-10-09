@@ -8,7 +8,8 @@
     select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
  ),
  ITG_RE_MSL_INPUT_DEFINITION as (
-    select * from {{ source('aspitg_integration', 'itg_re_msl_input_definition') }}
+    --select * from {{ source('aspitg_integration', 'itg_re_msl_input_definition') }}
+    select * from {{ ref('aspitg_integration__itg_re_msl_input_definition') }}
  ),
  EDI_STORE_M as (
     select * from {{ source('jpnedw_integration', 'edi_store_m') }}

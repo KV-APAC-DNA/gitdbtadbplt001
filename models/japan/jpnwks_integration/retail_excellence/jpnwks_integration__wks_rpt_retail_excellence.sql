@@ -38,7 +38,8 @@ WKS_JAPAN_REGIONAL_SELLOUT_ACTUALS as (
     select * from {{ ref('jpnwks_integration__wks_japan_regional_sellout_actuals') }}
 ),
 EDW_VW_POP6_PRODUCTS as ( 
-    select * from  {{ source('ntaedw_integration', 'edw_vw_pop6_products') }}
+    --select * from  {{ source('ntaedw_integration', 'edw_vw_pop6_products') }}
+    select * from {{ ref('aspedw_integration__edw_vw_pop6_products') }}
 ),
 VW_JAN_CHANGE as ( 
     select * from {{ source('jpnedw_integration', 'vw_jan_change') }}
