@@ -13,7 +13,8 @@ HCP_store_MASTER as
 transformed as (
 select distinct 
 'HCP_SELLOUT_TARGET' as data_src,
-SELLOUT_TARGET.year_month,
+substr(SELLOUT_TARGET.year_month,1,4) as jj_year,
+SELLOUT_TARGET.year_month as jj_month,
 SELLOUT_TARGET.TERRITORY_CODE_CODE,
 SELLOUT_TARGET.GROUP_VARIANT_CODE,
 SELLOUT_TARGET.sellout_target,

@@ -25,8 +25,7 @@ POS as
     pos.POS_GTS,
     pos.POS_NTS,
     pos.POS_QTY,
-    pos.CUST_BRNCH_CD,
-    pos.GLOBAL_PROD_BRAND,
+    pos.CUST_BRNCH_CD as store_code,
     store.GROUP_VARIANT_CODE,
     store.territory_code_code,
     prod.team_code
