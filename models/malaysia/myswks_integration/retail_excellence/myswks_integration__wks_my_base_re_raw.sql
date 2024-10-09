@@ -1,6 +1,6 @@
 --import cte
 with edw_rpt_regional_sellout_offtake as (   
-    select * from {{ ref('aspedw_integration__edw_rpt_regional_sellout_offtake_dbt') }}
+    select * from {{ ref('aspedw_integration__edw_rpt_regional_sellout_offtake') }}
 ),
 wks_my_regional_sellout_pos_ean_lookup as (
     select * from {{ ref('myswks_integration__wks_my_regional_sellout_pos_ean_lookup') }}
