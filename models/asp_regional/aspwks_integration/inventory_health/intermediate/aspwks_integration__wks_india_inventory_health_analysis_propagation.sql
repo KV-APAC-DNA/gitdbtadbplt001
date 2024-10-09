@@ -473,7 +473,7 @@ FROM (
                                         AND copa.cust_num = cus_sales_extn.cust_num
                                     WHERE cmp.ctry_group = 'India'
                                         AND left(fisc_yr_per, 4) >= (date_part(year, convert_timezone('UTC', current_timestamp())) -2)
-                                        AND copa.cust_num IS NOT NULL
+                                        --AND copa.cust_num IS NOT NULL
                                         AND copa.acct_hier_shrt_desc = 'GTS'
                                         AND amt_obj_crncy > 0
                                     GROUP BY 1,

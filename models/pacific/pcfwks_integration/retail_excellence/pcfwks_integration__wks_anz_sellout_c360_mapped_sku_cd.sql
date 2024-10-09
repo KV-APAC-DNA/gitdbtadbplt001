@@ -1,7 +1,6 @@
 with EDW_RPT_REGIONAL_SELLOUT_OFFTAKE as(
-    select * from {{ source('aspedw_integration', 'edw_rpt_regional_sellout_offtake') }}
+    select * from {{ ref('aspedw_integration__edw_rpt_regional_sellout_offtake_dbt') }}
 ),
-
 transformation as (
 select * from (SELECT DISTINCT ltrim(msl_product_code,'0') AS EAN,
        LTRIM(sku_code,'0') AS sku_code,

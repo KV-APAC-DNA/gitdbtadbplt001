@@ -26,7 +26,7 @@ models:
       alias: wks_issue_rev_itg_in_rsalesman
       tags: ["in_os_mgm_rpt_datamart","transformation"]
 
-  - name: indwks_integration__wks_issue_rev_sku_recom_sm_gtm
-    config:
-      alias: wks_issue_rev_sku_recom_sm_gtm
-      tags: ["in_os_mgm_rpt_datamart","transformation"]
+  # - name: indwks_integration__wks_issue_rev_sku_recom_sm_gtm
+  #   config:
+  #     alias: wks_issue_rev_sku_recom_sm_gtm
+  #     tags: ["in_os_mgm_rpt_datamart","transformation"]

@@ -679,8 +679,8 @@ onsesea as
           TIME T5 CROSS JOIN 
           customer T4 
         WHERE 
-          LTRIM(T3.SAP_MATL_NUM,'0') = ltrim(T1.matl_num, 0) 
-          and LTRIM(T4.SAP_CUST_ID,'0')= ltrim(T1.sold_to, 0) 
+          LTRIM(T3.SAP_MATL_NUM(+),'0') = ltrim(T1.matl_num, 0) 
+          and LTRIM(T4.SAP_CUST_ID(+),'0')= ltrim(T1.sold_to, 0) 
           AND T1.month = T5.cal_mnth_id 
           AND LEFT(T1.MONTH, 4) >= (DATE_PART(year, current_timestamp()) -2) 
         GROUP BY 
@@ -690,8 +690,8 @@ onsesea as
           T5.cal_MNTH_NO, 
           t1.country_name, 
           t1.sold_to, 
-          --DSTRBTR_GRP_CD, 
-          --DSTRBTR_GRP_CD_name, 
+          DSTRBTR_GRP_CD, 
+          DSTRBTR_GRP_CD_name, 
           T1.bu, 
           T3.GPH_PROD_FRNCHSE, 
           T3.GPH_PROD_BRND, 
