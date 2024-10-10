@@ -89,7 +89,25 @@ wks_rx_to_cx_to_pob_rxrtl as
 ),
 itg_query_parameters as
 (
-    select * from {{ source('inditg_integration', 'itg_query_parameters') }}
+    select * from dev_dna_core.inditg_integration.itg_query_parameters
+),
+wks_rx_to_cx_to_pob_rxrtl_urc as (
+SELECT rtl.urc,
+       rxrtl.rx_product,
+       SUM(rxrtl.rx_units) AS rx_units,
+       rxrtl.quarter,
+       rxrtl.MONTH,
+       rxrtl.YEAR
+FROM wks_rx_to_cx_to_pob_rxrtl rxrtl
+LEFT JOIN (SELECT urc,
+                  v_custid_rtl
+                  --ROW_NUMBER() OVER (PARTITION BY urc ORDER BY v_custid_rtl DESC) AS rnk
+           FROM itg_hcp360_in_ventasys_rtlmaster
+           WHERE urc IS NOT NULL 
+		   AND is_active = 'Y'
+		   GROUP BY 1,2) rtl
+	   ON rxrtl.v_custid_rtl = rtl.v_custid_rtl
+GROUP BY 1,2,4,5,6
 ),
 final as
 (
@@ -119,6 +137,13 @@ final as
        NVL(rd.retailer_channel_level2,sd.retailer_channel_2) AS retailer_channel_2,
        NVL(rd.retailer_channel_level3,sd.retailer_channel_3) AS retailer_channel_3,
        NVL(rd.urc_active_flag,'N') AS "URC Active Flag",
+       sd.latest_customer_code,
+       sd.latest_customer_name,
+       sd.latest_salesman_code,
+       sd.latest_salesman_name,
+       sd.latest_region,
+       sd.latest_zone,
+       sd.latest_territory,
        sm.smcode AS salesman_code_sales,
        sm.smname AS salesman_name_sales,
        hcpdim.customer_name AS hcp_name,
@@ -126,7 +151,13 @@ final as
        hcpdim.employee_id AS emp_id,
        hcpdim.region AS region_vent,
        hcpdim.territory AS territory_vent,
-       hcpdim.zone AS zone_vent    
+       hcpdim.zone AS zone_vent,
+       hcpdim.emp_hq_name,
+       hcpdim.city,
+       hcpdim.state,
+       hcpdim.customer_type,
+       hcpdim.core_noncore,
+       hcpdim.is_active    
 FROM (SELECT * 
       FROM wks_rx_to_cx_to_pob_base_rtl) rtl
   CROSS JOIN (SELECT LEFT(mth_mm,4) AS "year", RIGHT(mth_mm,2) AS "month"
@@ -139,7 +170,7 @@ FROM (SELECT *
                     FROM itg_query_parameters
                     WHERE parameter_type = 'Rx_to_Cx_to_Pob_Product_Mapping'
                     GROUP BY 1)
-              WHERE UPPER(prod_vent) LIKE 'ORSL%'
+              --WHERE UPPER(prod_vent) LIKE 'ORSL%'
               GROUP BY 1) mapp
   LEFT JOIN (SELECT franchise_name, brand_name, pmap.prod_vent
              FROM edw_product_dim pd
@@ -164,7 +195,7 @@ FROM (SELECT *
                          WHERE parameter_type = 'Rx_to_Cx_to_Pob_Product_Mapping'
                          GROUP BY 1,2) pmap
                      ON sd.product_code = pmap.product_code
-                    AND UPPER(prod_vent) LIKE 'ORSL%'
+                    --AND UPPER(prod_vent) LIKE 'ORSL%'
              WHERE sd.fisc_yr >= EXTRACT(YEAR FROM current_timestamp()) - 2
              GROUP BY 1,2,3,4) sales         
          ON cal."year" = sales.year
@@ -180,7 +211,7 @@ FROM (SELECT *
                     SUM(pob_units) AS pob_units
              FROM edw_rpt_pob_cx_final
              WHERE year >= EXTRACT(YEAR FROM current_timestamp()) - 2
-             AND UPPER(ventasys_product) LIKE 'ORSL%'
+             --AND UPPER(ventasys_product) LIKE 'ORSL%'
              GROUP BY 1,
                       2,
                       3,
@@ -193,10 +224,10 @@ FROM (SELECT *
              FROM itg_hcp360_in_ventasys_hcprtl) hcprtl
          ON rtl.v_custid_rtl = hcprtl.v_custid_rtl
         AND hcprtl.rnk = 1
-  LEFT JOIN (SELECT * FROM wks_rx_to_cx_to_pob_rxrtl) rxrtl
+  LEFT JOIN (SELECT * FROM wks_rx_to_cx_to_pob_rxrtl_urc) rxrtl
          ON cal."year" = rxrtl.year
         AND LTRIM(cal."month",0) = LTRIM(rxrtl.month,0)
-        AND rtl.v_custid_rtl = rxrtl.v_custid_rtl
+        AND rtl.urc = rxrtl.urc
         AND mapp.prod_vent = rxrtl.rx_product
   LEFT JOIN (SELECT *
              FROM wks_rx_to_cx_to_pob_rtl_dim) rd
@@ -210,13 +241,20 @@ FROM (SELECT *
          AND rd.retailer_code = sm.rtrcode
   LEFT JOIN (SELECT hcp.hcp_id,
                   hcp.customer_name,
+                  hcp.customer_type,
+                  hcp.core_noncore,
+                  hcp.is_active,
                   emp.name,
                   emp.employee_id,
                   emp.region,
                   emp.territory,
-                  emp.zone
+                  emp.zone,
+                  emp.emp_hq_name,
+                  emp.city,
+                  emp.state
            FROM edw_hcp360_in_ventasys_hcp_dim_latest hcp
-           LEFT JOIN (SELECT emp_terrid,name,employee_id,region,territory,zone, row_number() over(partition by emp_terrid order by join_date desc) AS rnk
+           LEFT JOIN (SELECT emp_terrid,name,employee_id,region,territory,zone,emp_hq_name,city,state,
+                         row_number() over(partition by emp_terrid order by join_date desc) AS rnk
                       FROM   edw_hcp360_in_ventasys_employee_dim
                       WHERE  is_active = 'Y' ) emp
                   ON hcp.territory_id = emp.emp_terrid
