@@ -6,7 +6,7 @@
 }}
 
 with source as(
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_sm') }}
+    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_sm_test') }}
     where filename not in (
         select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_non_ise_robinsons_sm__null_test')}}
         union all

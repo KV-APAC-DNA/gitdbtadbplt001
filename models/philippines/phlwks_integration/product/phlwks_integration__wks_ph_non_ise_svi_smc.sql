@@ -1,5 +1,5 @@
 with source as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_svi_smc') }}
+    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_svi_smc_test') }}
     where filename not in (
         select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_non_ise_svi_smc__null_test')}}
         union all

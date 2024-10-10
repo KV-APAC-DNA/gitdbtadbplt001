@@ -9,7 +9,8 @@ sources:
       schema: false
       identifier: false
     tables:
-    - name: sdl_ph_non_ise_robinsons_ds
+ 
+    - name: sdl_ph_non_ise_robinsons_ds_test
       tags: ["ph_non_pos","ingestion"]
       tests:
         - test_null:
@@ -47,7 +48,7 @@ sources:
               config:
                 store_failures: true
                 schema: phlwks_integration
-    - name: sdl_ph_non_ise_waltermart
+    - name: sdl_ph_non_ise_waltermart_test
       tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
@@ -85,7 +86,7 @@ sources:
             config:
               store_failures: true
               schema: phlwks_integration
-    - name: sdl_ph_non_ise_svi_smc
+    - name: sdl_ph_non_ise_svi_smc_test
       tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
@@ -123,7 +124,7 @@ sources:
             config:
               store_failures: true
               schema: phlwks_integration
-    - name: sdl_ph_non_ise_shm
+    - name: sdl_ph_non_ise_shm_test
       tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
@@ -161,7 +162,7 @@ sources:
             config:
               store_failures: true
               schema: phlwks_integration
-    - name: sdl_ph_non_ise_robinsons_sm
+    - name: sdl_ph_non_ise_robinsons_sm_test
       tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
@@ -199,7 +200,7 @@ sources:
             config:
               store_failures: true
               schema: phlwks_integration
-    - name: sdl_ph_non_ise_landmark_sm
+    - name: sdl_ph_non_ise_landmark_sm_test
       tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
@@ -237,7 +238,7 @@ sources:
             config:
               store_failures: true
               schema: phlwks_integration
-    - name: sdl_ph_non_ise_super_8
+    - name: sdl_ph_non_ise_super_8_test
       tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
@@ -275,7 +276,7 @@ sources:
             config:
               store_failures: true
               schema: phlwks_integration
-    - name: sdl_ph_non_ise_puregold
+    - name: sdl_ph_non_ise_puregold_test
       tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
@@ -313,7 +314,7 @@ sources:
             config:
               store_failures: true
               schema: phlwks_integration
-    - name: sdl_ph_non_ise_landmark_ds
+    - name: sdl_ph_non_ise_landmark_ds_test
       tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
@@ -351,7 +352,7 @@ sources:
             config:
               store_failures: true
               schema: phlwks_integration
-    - name: sdl_ph_non_ise_rustans
+    - name: sdl_ph_non_ise_rustans_test
       tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
