@@ -9,7 +9,8 @@ sources:
       schema: false
       identifier: false
     tables:
-    - name: sdl_ph_non_ise_robinsons_ds
+ 
+    - name: sdl_ph_non_ise_robinsons_ds_test
       tags: ["ph_non_pos","ingestion"]
       tests:
         - test_null:
@@ -29,7 +30,7 @@ sources:
               store_failures: true
               schema: phlwks_integration
         - test_date_format_odd_eve_leap:
-            model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
+            model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_ds') }}  WHERE ENCODED_REPORT = '1'"
             date_column: "osa_check_date"
             filter: "(odd_mon.osa_check_date) = (even_mon.osa_check_date) and (even_mon.osa_check_date) = (feb.osa_check_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
             failure_reason: "'OSA CHECK DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
@@ -47,7 +48,7 @@ sources:
               config:
                 store_failures: true
                 schema: phlwks_integration
-    - name: sdl_ph_non_ise_waltermart
+    - name: sdl_ph_non_ise_waltermart_test
       tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
@@ -67,7 +68,7 @@ sources:
             store_failures: true
             schema: phlwks_integration
       - test_date_format_odd_eve_leap:
-          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
+          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_waltermart') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
           filter: "(odd_mon.osa_check_date) = (even_mon.osa_check_date) and (even_mon.osa_check_date) = (feb.osa_check_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
           failure_reason: "'OSA CHECK DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
@@ -85,7 +86,7 @@ sources:
             config:
               store_failures: true
               schema: phlwks_integration
-    - name: sdl_ph_non_ise_svi_smc
+    - name: sdl_ph_non_ise_svi_smc_test
       tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
@@ -105,7 +106,7 @@ sources:
             store_failures: true
             schema: phlwks_integration
       - test_date_format_odd_eve_leap:
-          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
+          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_svi_smc') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
           filter: "(odd_mon.osa_check_date) = (even_mon.osa_check_date) and (even_mon.osa_check_date) = (feb.osa_check_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
           failure_reason: "'OSA CHECK DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
@@ -123,7 +124,7 @@ sources:
             config:
               store_failures: true
               schema: phlwks_integration
-    - name: sdl_ph_non_ise_shm
+    - name: sdl_ph_non_ise_shm_test
       tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
@@ -161,7 +162,7 @@ sources:
             config:
               store_failures: true
               schema: phlwks_integration
-    - name: sdl_ph_non_ise_robinsons_sm
+    - name: sdl_ph_non_ise_robinsons_sm_test
       tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
@@ -181,7 +182,7 @@ sources:
             store_failures: true
             schema: phlwks_integration
       - test_date_format_odd_eve_leap:
-          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
+          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_sm') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
           filter: "(odd_mon.osa_check_date) = (even_mon.osa_check_date) and (even_mon.osa_check_date) = (feb.osa_check_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
           failure_reason: "'OSA CHECK DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
@@ -199,7 +200,7 @@ sources:
             config:
               store_failures: true
               schema: phlwks_integration
-    - name: sdl_ph_non_ise_landmark_sm
+    - name: sdl_ph_non_ise_landmark_sm_test
       tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
@@ -219,7 +220,7 @@ sources:
             store_failures: true
             schema: phlwks_integration
       - test_date_format_odd_eve_leap:
-          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
+          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_landmark_sm') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
           filter: "(odd_mon.osa_check_date) = (even_mon.osa_check_date) and (even_mon.osa_check_date) = (feb.osa_check_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
           failure_reason: "'OSA CHECK DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
@@ -237,7 +238,7 @@ sources:
             config:
               store_failures: true
               schema: phlwks_integration
-    - name: sdl_ph_non_ise_super_8
+    - name: sdl_ph_non_ise_super_8_test
       tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
@@ -257,7 +258,7 @@ sources:
             store_failures: true
             schema: phlwks_integration
       - test_date_format_odd_eve_leap:
-          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
+          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_super_8') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
           filter: "(odd_mon.osa_check_date) = (even_mon.osa_check_date) and (even_mon.osa_check_date) = (feb.osa_check_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
           failure_reason: "'OSA CHECK DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
@@ -275,7 +276,7 @@ sources:
             config:
               store_failures: true
               schema: phlwks_integration
-    - name: sdl_ph_non_ise_puregold
+    - name: sdl_ph_non_ise_puregold_test
       tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
@@ -295,7 +296,7 @@ sources:
             store_failures: true
             schema: phlwks_integration
       - test_date_format_odd_eve_leap:
-          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
+          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_puregold') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
           filter: "(odd_mon.osa_check_date) = (even_mon.osa_check_date) and (even_mon.osa_check_date) = (feb.osa_check_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
           failure_reason: "'OSA CHECK DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
@@ -313,7 +314,7 @@ sources:
             config:
               store_failures: true
               schema: phlwks_integration
-    - name: sdl_ph_non_ise_landmark_ds
+    - name: sdl_ph_non_ise_landmark_ds_test
       tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
@@ -333,7 +334,7 @@ sources:
             store_failures: true
             schema: phlwks_integration
       - test_date_format_odd_eve_leap:
-          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
+          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_landmark_ds') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
           filter: "(odd_mon.osa_check_date) = (even_mon.osa_check_date) and (even_mon.osa_check_date) = (feb.osa_check_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
           failure_reason: "'OSA CHECK DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
@@ -351,7 +352,7 @@ sources:
             config:
               store_failures: true
               schema: phlwks_integration
-    - name: sdl_ph_non_ise_rustans
+    - name: sdl_ph_non_ise_rustans_test
       tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
@@ -371,7 +372,7 @@ sources:
             store_failures: true
             schema: phlwks_integration
       - test_date_format_odd_eve_leap:
-          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
+          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_rustans') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
           filter: "(odd_mon.osa_check_date) = (even_mon.osa_check_date) and (even_mon.osa_check_date) = (feb.osa_check_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
           failure_reason: "'OSA CHECK DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"

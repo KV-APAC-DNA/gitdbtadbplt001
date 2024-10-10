@@ -6,7 +6,7 @@
 }}
 
 with source as(
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_puregold') }}
+    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_puregold_test') }}
     where filename not in (
         select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_non_ise_puregold__null_test')}}
         union all
@@ -43,7 +43,11 @@ final as
         retailer_name as retailer_name,
         filename as filename,
         run_id as run_id,
-        crtd_dttm as crtd_dttm
+        crtd_dttm as crtd_dttm,
+        sub_channel as sub_channel,
+        diser_name as diser_name,
+        msl_reseller as msl_reseller,
+        msl_priceclub as msl_priceclub
     from source
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
