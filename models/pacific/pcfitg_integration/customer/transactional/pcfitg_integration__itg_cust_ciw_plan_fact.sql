@@ -28,7 +28,8 @@ select
 	goal_ciw_tot::number(18,2) as goal_ciw_tot,
 	goal_cogs::number(18,0) as goal_cogs,
 	goal_gp::number(18,2) as goal_gp,
-	local_ccy::varchar(10) as local_ccy
+	local_ccy::varchar(10) as local_ccy,
+    target_type::varchar(10) as target_type
 from source
 )
 select * from final
