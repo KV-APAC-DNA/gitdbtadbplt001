@@ -1,7 +1,7 @@
 WITH edw_otif_consumer_attr AS
 (
   SELECT *
-  FROM {{ source ('aspedw_integration','ASPEDW_INTEGRATION__EDW_OTIF_CONSUMER_ATTR') }}
+  FROM {{ source ('aspedw_integration','aspedw_integration__edw_otif_consumer_attr') }}
 ),
 edw_company_dim AS
 (
