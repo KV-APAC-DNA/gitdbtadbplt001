@@ -72,9 +72,9 @@ itg_hk_re_msl_list as
 	   REG_SO.SKU_DESCRIPTION,
        SYSDATE() AS CRTD_DTTM
     FROM MSL
-    LEFT JOIN REG_SO ON  UPPER (MSL.store_grade) = UPPER (REG_SO.store_grade)
-				     AND UPPER (LTRIM(MSL.sku_unique_identifier,'0')) = UPPER (LTRIM(REG_SO.EAN,'0'))
+    LEFT JOIN REG_SO ON  UPPER (LTRIM(MSL.sku_unique_identifier,'0')) = UPPER (LTRIM(REG_SO.EAN,'0'))
 				     AND UPPER (MSL.retail_environment) = UPPER (REG_SO.RETAIL_ENVIRONMENT)
+                     --AND UPPER (MSL.store_grade) = UPPER (REG_SO.store_grade)
     WHERE MSL.JJ_MNTH_ID >= (SELECT last_16mnths
                          FROM edw_vw_cal_Retail_excellence_Dim)
     AND   MSL.JJ_MNTH_ID <= (SELECT prev_mnth FROM edw_vw_cal_Retail_excellence_Dim)
