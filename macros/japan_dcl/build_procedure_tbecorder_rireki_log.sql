@@ -22,12 +22,6 @@
                 UPDATED_DATE TIMESTAMP_NTZ(9),
                 UPDATED_BY VARCHAR(100)       
             );
-        -- create or replace table {{tablename}} clone
-        -- {% if target.name=='prod' %}
-        --     jpdcledw_integration.tbecorder_rireki_log
-        -- {% else %}
-        --     {{schema}}.jpndcledw_integration__tbecorder_rireki_log
-        -- {% endif %};
         UPDATE {{tablename}}
         SET T_KBN = 'T',
             updated_date = GETDATE(),
