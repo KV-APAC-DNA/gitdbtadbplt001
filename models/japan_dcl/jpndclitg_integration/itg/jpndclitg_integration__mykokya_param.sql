@@ -21,7 +21,7 @@ transformed as (
         purpose_type,
         upload_by,
         customer_no_type,
-        'Src_File_Dt' as source_file_date,
+        source_file_date as source_file_date,
         (
             select last_file_id + 1
             from last_file_id
