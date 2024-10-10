@@ -118,10 +118,6 @@ final as
        mapp.prod_vent AS ventasys_product,
        prod.franchise_name,
        prod.brand_name,
-       prod.variant_name,
-       prod.mothersku_name,
-       prod.product_code,
-       prod.product_name,
        sales.quantity AS sales_qty,
        sales.achievement_nr AS sales_ach_nr,
        pob.pob_units,
@@ -176,7 +172,7 @@ FROM (SELECT *
                     GROUP BY 1)
               --WHERE UPPER(prod_vent) LIKE 'ORSL%'
               GROUP BY 1) mapp
-  LEFT JOIN (SELECT franchise_name, brand_name,variant_name,mothersku_name,pd.product_code,product_name, pmap.prod_vent
+  LEFT JOIN (SELECT franchise_name, brand_name, pmap.prod_vent
              FROM edw_product_dim pd
              INNER JOIN (SELECT SPLIT_PART(parameter_name,'-',1) AS prod_vent,
                                 SPLIT_PART(parameter_value,'-',1) AS product_code
@@ -184,7 +180,7 @@ FROM (SELECT *
                          WHERE parameter_type = 'Rx_to_Cx_to_Pob_Product_Mapping'
                          GROUP BY 1,2) pmap
                      ON pd.product_code = pmap.product_code
-             GROUP BY 1,2,3,4,5,6,7) prod
+             GROUP BY 1,2,3) prod
          ON UPPER(mapp.prod_vent) = UPPER(prod.prod_vent)
   LEFT JOIN (SELECT LEFT(sd.mth_mm,4) AS year,
                     RIGHT(sd.mth_mm,2) AS month,
