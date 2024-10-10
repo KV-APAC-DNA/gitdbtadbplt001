@@ -1,3 +1,9 @@
+{{
+    config(
+        sql_header = "alter session set week_start= 7;"
+    )
+}}
+
 with wks_tw_inventory_health_analysis_propagation as (
     select * from {{ ref('aspwks_integration__wks_tw_inventory_health_analysis_propagation') }}
 ),
@@ -23,16 +29,16 @@ final as
             )
         ) diff_weeks,
         case
-            when least(diff_weeks, 52) <= 0 then 1
-            else least(diff_weeks, 52)
+            when least_ignore_nulls(diff_weeks, 52) <= 0 then 1
+            else least_ignore_nulls(diff_weeks, 52)
         end as l12m_weeks,
         case
-            when least(diff_weeks, 26) <= 0 then 1
-            else least(diff_weeks, 26)
+            when least_ignore_nulls(diff_weeks, 26) <= 0 then 1
+            else least_ignore_nulls(diff_weeks, 26)
         end as l6m_weeks,
         case
-            when least(diff_weeks, 13) <= 0 then 1
-            else least(diff_weeks, 13)
+            when least_ignore_nulls(diff_weeks, 13) <= 0 then 1
+            else least_ignore_nulls(diff_weeks, 13)
         end as l3m_weeks,
         inv.last_12months_so_val / l12m_weeks as l12m_weeks_avg_sales,
         inv.last_6months_so_val / l6m_weeks as l6m_weeks_avg_sales,

@@ -6,7 +6,9 @@
     )
 }}
 with sdl_th_mt_makro as (
-  select * from {{ source('thasdl_raw', 'sdl_th_mt_makro') }}
+  select *, dense_rank() over(partition by transaction_date order by file_name desc) as rnk 
+  from {{ source('thasdl_raw', 'sdl_th_mt_makro') }}
+  qualify rnk =1
 ),
 transformed as (
     select

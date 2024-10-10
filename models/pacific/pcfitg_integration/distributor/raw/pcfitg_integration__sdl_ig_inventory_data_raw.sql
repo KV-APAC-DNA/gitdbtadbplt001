@@ -65,7 +65,8 @@ final as
         try_to_number(sales_week_2) as sales_week_2,
         try_to_number(sales_week_1) as sales_week_1,
         try_to_number(sales_this_week) as sales_this_week,
-        current_timestamp()::timestamp_ntz(9) as crtd_dttm
+        current_timestamp()::timestamp_ntz(9) as crtd_dttm,
+        file_name::varchar(255) as file_name
     from source
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run

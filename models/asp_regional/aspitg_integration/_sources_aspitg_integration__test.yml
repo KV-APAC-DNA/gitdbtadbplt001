@@ -1,0 +1,43 @@
+version: 2
+
+sources:
+  - name: aspwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: "{{ target.schema if target.name in ('dev','default') else 'aspwks_integration' }}"
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: TRATBL_sdl_prox_md_expensetype__null_test
+      - name: TRATBL_sdl_prox_report_bi_contract__null_test
+      - name: TRATBL_sdl_prox_report_bi_monthcommitment__null_test
+      - name: TRATBL_sdl_prox_md_material____null_test
+      - name: TRATBL_sdl_okr_alteryx_automation____null_test
+      - name: TRATBL_sdl_okr_alteryx_automation__duplicate_test
+      - name: TRATBL_sdl_rg_travel_retail_lstr__null_test
+      - name: TRATBL_sdl_rg_travel_retail_shilla__null_test
+      - name: TRATBL_sdl_rg_travel_retail_shilla__product_lookup_test
+      - name: TRATBL_sdl_rg_travel_retail_shilla__channel_lookup_test
+      - name: TRATBL_sdl_prox_report_bi_payment__null_test
+      - name: TRATBL_sdl_prox_md_channel__null_test
+      - name: TRATBL_sdl_prox_md_customer__null_test
+      - name: TRATBL_sdl_prox_md_ppgallocation____null_test
+      - name: TRATBL_sdl_prox_report_bi_budgetusage__null_test
+      - name: TRATBL_sdl_prox_sys_department__null_test
+      - name: TRATBL_sdl_prox_md_accountgroup__null_test
+      - name: TRATBL_ssdl_prox_md_theme____null_test
+      - name: TRATBL_sdl_rg_travel_retail_dfs_hainan__null_test
+      - name: TRATBL_sdl_rg_travel_retail_cnsc__null_test
+      - name: TRATBL_sdl_rg_travel_retail_dufry_hainan__null_test
+      - name: TRATBL_sdl_rg_travel_retail_dfs__null_test
+      - name: TRATBL_sdl_rg_travel_retail_dfs__product_lookup_test
+      - name: TRATBL_sdl_rg_travel_retail_dfs__channel_lookup_test
+      - name: TRATBL_sdl_rg_travel_retail_sales_stock__null_test
+      - name: TRATBL_sdl_rg_travel_retail_sales_stock__product_lookup_test
+      - name: TRATBL_sdl_rg_travel_retail_sales_stock__channel_lookup_test
+      - name: TRATBL_sdl_rg_travel_retail_cdfg__null_test
+      - name: TRATBL_sdl_rg_travel_retail_cdfg__product_lookup_test
+      - name: TRATBL_sdl_rg_travel_retail_cdfg__channel_lookup_test
+
+

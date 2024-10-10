@@ -2,11 +2,17 @@
     config(
         materialized='incremental',
         incremental_strategy='append'
+
     )
 }}
 
 with source as(
     select * from {{ source('phlsdl_raw', 'sdl_ph_tbl_surveyanswers') }}
+    where filename not in (
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_tbl_surveyanswers__null_test')}}
+        union all
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_tbl_surveyanswers__duplicate_test')}}
+    )
 ),
 final as(
     select 

@@ -1,6 +1,6 @@
 {{
     config(
-        pre_hook = "{{build_wk_birthday_cinextbioptron()}}"     
+        pre_hook = "{{build_wk_birthday_cinextbioptron()}}"
     )
 }}
 
@@ -32,9 +32,9 @@ AS (
     FROM tbEcOrder o
     INNER JOIN c_tbEcShippingResults s ON o.diOrderID = s.diOrderID
     WHERE o.dirouteid NOT IN ('7', '8', '9', '12', '13')
-        AND TO_CHAR(s.c_dsShukkaDate, 'YYYYMMDD') >= TO_CHAR(dateadd(day,-181,(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', '2024-07-01'::date))) , 'YYYYMMDD')  
-        --TO_CHAR(dateadd(day,-181,(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()))) , 'YYYYMMDD')  
-        --TO_CHAR((TRUNC(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', SYSDATE)) - 181), 'YYYYMMDD') 
+        AND TO_CHAR(s.c_dsShukkaDate, 'YYYYMMDD') >= TO_CHAR(dateadd(day,-181,(convert_timezone('Asia/Tokyo', current_timestamp()))) , 'YYYYMMDD')
+        --TO_CHAR(dateadd(day,-181,(convert_timezone('Asia/Tokyo', current_timestamp()))) , 'YYYYMMDD')
+        --TO_CHAR((TRUNC(convert_timezone('Asia/Tokyo', SYSDATE)) - 181), 'YYYYMMDD')
         --TO_CHAR((TO_DATE('&1','YYYYMMDD') - 181),'YYYYMMDD')
         AND o.c_diallhenpinflg = '0'
         AND o.diCancel = '0'
@@ -46,9 +46,9 @@ AS (
         c_diaddadmid,
         TO_CHAR(dsOrderDt, 'YYYYMMDD') AS c_dsShukkaDate
     FROM c_tbEcRankAddAmountAdm
-    WHERE TO_CHAR(dsOrderDt, 'YYYYMMDD') >= TO_CHAR(dateadd(day,-181,(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', '2024-07-01'::date))) , 'YYYYMMDD')  
-    --TO_CHAR(dateadd(day,-181,(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()))) , 'YYYYMMDD') 
-    --TO_CHAR((TRUNC(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', SYSDATE)) - 181), 'YYYYMMDD') 
+    WHERE TO_CHAR(dsOrderDt, 'YYYYMMDD') >= TO_CHAR(dateadd(day,-181,(convert_timezone('Asia/Tokyo', current_timestamp()))) , 'YYYYMMDD')
+    --TO_CHAR(dateadd(day,-181,(convert_timezone('Asia/Tokyo', current_timestamp()))) , 'YYYYMMDD')
+    --TO_CHAR((TRUNC(convert_timezone('Asia/Tokyo', SYSDATE)) - 181), 'YYYYMMDD')
     --TO_CHAR((TO_DATE('&1','YYYYMMDD') - 181),'YYYYMMDD')
         AND dielimflg = 0
     ),
@@ -60,9 +60,9 @@ AS (
     FROM (
         SELECT *
         FROM order_join_shipping
-        
+
         UNION
-        
+
         SELECT *
         FROM rankadd
         )
@@ -77,7 +77,7 @@ AS (
         ''::VARCHAR(32) AS DIMONTH
     FROM WK
     INNER JOIN TBUSRPRAM AS UP ON UP.DIUSRID = WK.diEcUsrID
-        
+
     ),
 final as
 (

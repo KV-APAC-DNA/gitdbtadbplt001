@@ -19,6 +19,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
           - test_duplicate:
               group_by_columns: ["re","kpi","channel"]
               select_columns: ["re","kpi","channel"]
@@ -26,8 +27,12 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
 
     - name: sdl_mds_th_ps_store
+      tags: ["th_non_tesco","ingestion"]
+
+    - name: sdl_mds_th_ps_handeye_level
       tags: ["th_non_tesco","ingestion"]
 
     - name: sdl_mds_th_ps_targets
@@ -40,6 +45,7 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
+              severity: error
         - test_duplicate:
             group_by_columns: ["kpi", "channel","re","attribute_1","attribute_2"]
             select_columns: ["kpi", "channel","re","attribute_1","attribute_2","value"]
@@ -47,6 +53,7 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
+              severity: error
 
     - name: sdl_jnj_mer_cop
       tags: ["j_th_perfect_store_transaction","ingestion"]

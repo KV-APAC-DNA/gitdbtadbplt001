@@ -1,5 +1,8 @@
 with sdl_tw_pos_poya as (
     select * from {{ source('ntasdl_raw', 'sdl_tw_pos_poya') }}
+     where file_name not in (
+        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_pos_poya__null_test') }}
+    )
 ),
 itg_pos as (
     select * from {{ source('ntaitg_integration', 'itg_pos_temp') }}

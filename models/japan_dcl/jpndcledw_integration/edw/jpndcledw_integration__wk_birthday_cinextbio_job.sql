@@ -44,19 +44,19 @@ AS (
                 AND o.dirouteid <> '9'
                 )
             AND TO_CHAR(s.c_dsShukkaDate, 'YYYYMMDD') >= TO_CHAR(dateadd(day, - 181, current_timestamp()), 'YYYYMMDD')
-            --TO_CHAR(dateadd(day, - 181, '2024-07-25'), 'YYYYMMDD')
+            --TO_CHAR(dateadd(day, - 181, current_timestamp()), 'YYYYMMDD')
             AND o.c_diallhenpinflg = '0'
             AND o.diCancel = '0'
             AND o.dielimflg = '0'
-        
+
         UNION
-        
+
         SELECT diEcUsrid,
             c_diaddadmid,
             TO_CHAR(dsOrderDt, 'YYYYMMDD') AS c_dsShukkaDate
         FROM c_tbEcRankAddAmountAdm
         WHERE TO_CHAR(dsOrderDt, 'YYYYMMDD') >= TO_CHAR(dateadd(day, - 181, current_timestamp()), 'YYYYMMDD')
-        --TO_CHAR(dateadd(day, - 181, '2024-07-25'), 'YYYYMMDD')
+        --TO_CHAR(dateadd(day, - 181, current_timestamp()), 'YYYYMMDD')
         --TO_CHAR(dateadd(day, - 181, current_timestamp()), 'YYYYMMDD')
             AND dielimflg = 0
         )
@@ -71,7 +71,7 @@ AS (
         ''::VARCHAR(3) AS DIMONTH
     FROM WK
     INNER JOIN TBUSRPRAM UP ON UP.DIUSRID = WK.diEcUsrID
-    
+
     ),
 final AS
 (
@@ -84,7 +84,7 @@ final AS
     WHERE NOT EXISTS (SELECT 'X'
                         FROM {{this}}
                        WHERE DIUSRID = t1.DIUSRID
-            ) 
+            )
 )
 SELECT *
 FROM final

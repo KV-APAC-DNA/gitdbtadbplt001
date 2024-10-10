@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: hcposewks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: "{{ target.schema if target.name in ('dev','default') else 'hcposewks_integration' }}"
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    
+    - name: TRATBL_sdl_hcp_osea_isight_licenses__null_test
+    - name: TRATBL_sdl_hcp_osea_isight_licenses__duplicate_test
+    - name: TRATBL_sdl_hcp_osea_isight_sector_mapping__null_test
+    - name: TRATBL_sdl_hcp_osea_isight_sector_mapping__duplicate_test
+    - name: TRATBL_sdl_hcp_osea_holiday_list__null_test
+    - name: TRATBL_sdl_hcp_osea_holiday_list__duplicate_test

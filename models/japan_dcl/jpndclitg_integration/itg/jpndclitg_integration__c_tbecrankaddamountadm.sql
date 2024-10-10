@@ -23,7 +23,7 @@ final as(
         direnusr::number(38,0) as direnusr,
         dielimflg::varchar(1) as dielimflg,
         source_file_date::varchar(10) as source_file_date,
-        inserted_date as inserted_date,
+        current_timestamp()::timestamp_ntz(9) as inserted_date,
         inserted_by::varchar(10) as inserted_by,
         current_timestamp()::timestamp_ntz(9) as updated_date,
         updated_by::varchar(100) as updated_by

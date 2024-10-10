@@ -42,10 +42,13 @@ final as
     BASE.so_sls_qty,
     BASE.so_sls_value,
     BASE.msl_product_code,
-    BASE.msl_product_desc,
+    --BASE.msl_product_desc,
     BASE.store_grade,
     UPPER(BASE.retail_env) as retail_env,
     BASE.channel,
+    BASE.numeric_distribution,
+    BASE.weighted_distribution,
+    BASE.store_count_where_scanned,
     convert_timezone('UTC',current_timestamp()) AS crtd_dttm,
     convert_timezone('UTC',current_timestamp()) AS updt_dttm
     FROM
@@ -74,11 +77,19 @@ final as
         'NA' AS distributor_additional_attribute3,
         scan_units as SO_SLS_QTY, 
         scan_sales as SO_SLS_VALUE,
-        'NA' as msl_product_code,
-            'NA' as msl_product_desc,
-            'NA'as store_grade,
-            'NA' as retail_env,
-            'NA' as channel
+        iri_ean as msl_product_code,
+        --    'NA' as msl_product_desc,
+        'A' as store_grade,
+        Case WHEN UPPER(ac_longname) = 'NZ WOOLWORTHS SCAN' THEN 'NZ Major Chain Super'
+         WHEN UPPER(ac_longname)= 'AU MY CHEMIST GROUP SCAN' THEN 'Big Box'    
+         WHEN UPPER(ac_longname) in ('NEW ZEALAND PHARMACY COMBINED (INCL CWH)','TOTAL SUBSCRIBED PHARMACY NZ') THEN 'NZ Pharmacy'
+         WHEN UPPER(ac_longname) in ('AU WOOLWORTHS SCAN', 'AU COLES GROUP SCAN') THEN 'AU Major Chain Super'
+         ELSE 'NA' END as retail_env,
+       CASE WHEN NULLIF(TRIM(SPLIT_PART(channel_desc,'-',2)),'') IS NULL THEN TRIM(channel_desc)
+         ELSE TRIM(SPLIT_PART(channel_desc,'-',2)) END AS channel,
+      numeric_distribution,
+      weighted_distribution,
+      store_count_where_scanned
         FROM  vw_iri_scan_sales_analysis 
         WHERE NVL(representative_cust_cd,'NA')<>'NA'
         
@@ -109,7 +120,7 @@ final as
         unit_qty as SO_SLS_QTY, 
         nis as SO_SLS_VALUE,
         prod_ean as msl_product_code,
-            prod_desc as msl_product_desc,
+            --prod_desc as msl_product_desc,
             case when acct_grade in ('A','A Grade','A+ Grade','AR Grade') then 'A'
                 when acct_grade in ('B','B Grade','BR Grade') then 'B'
                 when acct_grade in ('C','C Grade','CR Grade') then 'C'
@@ -125,7 +136,10 @@ final as
                 when acct_type_desc = 'NZ Pharmacy Account' then 'NZ Pharmacy'
                 when acct_banner in ('Woolworths','Coles') then 'AU Major Chain Super' 
                 when acct_type_desc in ('AU Independent Grocery Account') then 'Independent Grocery' end  as retail_env,
-            acct_banner_division as channel
+            acct_banner_division as channel,
+            0 AS numeric_distribution,
+            0 AS weighted_distribution,
+            0 AS store_count_where_scanned
         FROM edw_pacific_perenso_ims_analysis sls
         LEFT JOIN itg_query_parameters iqp
         on upper(trim(iqp.parameter_name)) = upper(trim(sls.order_type)) and iqp.parameter_type='order_type' and iqp.country_code='Pacific'   

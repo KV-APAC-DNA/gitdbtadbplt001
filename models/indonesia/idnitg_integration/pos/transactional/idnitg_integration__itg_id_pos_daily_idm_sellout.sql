@@ -10,7 +10,9 @@
 }}
 with source as 
 (
-    select * from {{ source('idnsdl_raw', 'sdl_id_pos_daily_idm_sellout') }}
+    select *, dense_rank() over(partition by yearmonth order by filename desc) as rnk 
+    from {{ source('idnsdl_raw', 'sdl_id_pos_daily_idm_sellout') }}
+    qualify rnk =1
 ),
 
 

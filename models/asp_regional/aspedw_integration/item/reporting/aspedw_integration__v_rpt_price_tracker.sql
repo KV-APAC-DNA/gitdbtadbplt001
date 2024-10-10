@@ -1,6 +1,8 @@
 {{
     config(
-        materialized='view'
+        materialized='view',
+        sql_header = "alter session set week_start= 7;"
+
     )
 }}
 
@@ -129,7 +131,7 @@ pka as
         derived_table1.pka_skuiddesc, 
         row_number() OVER(PARTITION BY derived_table1.ctry_nm,derived_table1.ean_upc ORDER BY derived_table1.pka_rootcode DESC) AS row_number 
     FROM (SELECT CASE WHEN ((a.ctry_nm):: text = ('APSC Regional' :: character varying):: text) THEN 'China Personal Care' :: character varying ELSE a.ctry_nm END AS ctry_nm, 
-                (a.ean_upc):: character varying AS ean_upc, 
+                trim(a.ean_upc):: character varying AS ean_upc, 
                 a.gcph_franchise, 
                 a.pka_franchise_description, 
                 a.gcph_category, 
@@ -183,7 +185,7 @@ pka as
                     ltrim((edw_product_key_attributes.ean_upc):: text,('0' :: character varying):: text) AS ean_upc, 
                     edw_product_key_attributes.pka_rootcode, 
                     edw_product_key_attributes.lst_nts AS latest_nts_date, 
-                    row_number() OVER(PARTITION BY edw_product_key_attributes.ctry_nm,edw_product_key_attributes.ean_upc ORDER BY edw_product_key_attributes.lst_nts DESC) AS row_number 
+                    row_number() OVER(PARTITION BY edw_product_key_attributes.ctry_nm,edw_product_key_attributes.ean_upc ORDER BY edw_product_key_attributes.lst_nts DESC, edw_product_key_attributes.crt_on DESC) AS row_number 
                 FROM edw_product_key_attributes 
                 WHERE (((((edw_product_key_attributes.matl_type_cd):: text = ('FERT' :: character varying):: text)
                 OR ((edw_product_key_attributes.matl_type_cd):: text = ('HALB' :: character varying):: text))
@@ -192,14 +194,15 @@ pka as
                 GROUP BY edw_product_key_attributes.ctry_nm, 
                         edw_product_key_attributes.ean_upc, 
                         edw_product_key_attributes.pka_rootcode, 
-                        edw_product_key_attributes.lst_nts
+                        edw_product_key_attributes.lst_nts,
+                         edw_product_key_attributes.crt_on
             ) b ON (((((((a.ctry_nm):: text = (b.ctry_nm):: text) 
                 AND (a.ean_upc = b.ean_upc)) 
                 AND ((a.pka_rootcode):: text = (b.pka_rootcode):: text)) 
                 AND (b.latest_nts_date = a.nts_date))
                 AND (b.row_number = 1)))) 
     GROUP BY CASE WHEN ((a.ctry_nm):: text = ('APSC Regional' :: character varying):: text) THEN 'China Personal Care' :: character varying ELSE a.ctry_nm END, 
-            (a.ean_upc):: character varying, 
+            trim(a.ean_upc):: character varying, 
             a.gcph_franchise, 
             a.pka_franchise_description, 
             a.gcph_category, 
@@ -217,7 +220,7 @@ pka as
     UNION ALL 
 
     SELECT 'Japan DCL' :: character varying AS ctry_nm, 
-            (a.ean_upc):: character varying AS ean_upc, 
+            trim(a.ean_upc):: character varying AS ean_upc, 
             a.gcph_franchise, 
             a.pka_franchise_description, 
             a.gcph_category, 
@@ -274,7 +277,7 @@ pka as
                                 ltrim((edw_product_key_attributes.ean_upc):: text,('0' :: character varying):: text) AS ean_upc, 
                                 edw_product_key_attributes.pka_rootcode, 
                                 edw_product_key_attributes.lst_nts AS latest_nts_date, 
-                                row_number() OVER(PARTITION BY edw_product_key_attributes.ean_upc ORDER BY edw_product_key_attributes.lst_nts DESC) AS row_number 
+                                row_number() OVER(PARTITION BY edw_product_key_attributes.ean_upc ORDER BY edw_product_key_attributes.lst_nts DESC,edw_product_key_attributes.crt_on DESC) AS row_number 
                             FROM edw_product_key_attributes 
                             WHERE (((((edw_product_key_attributes.matl_type_cd):: text = ('FERT' :: character varying):: text) 
                             OR ((edw_product_key_attributes.matl_type_cd):: text = ('HALB' :: character varying):: text))
@@ -283,14 +286,15 @@ pka as
                             GROUP BY edw_product_key_attributes.ctry_nm, 
                                     edw_product_key_attributes.ean_upc, 
                                     edw_product_key_attributes.pka_rootcode, 
-                                    edw_product_key_attributes.lst_nts
+                                    edw_product_key_attributes.lst_nts,
+                                    edw_product_key_attributes.crt_on
                         ) b ON (((((((a.ctry_nm):: text = (b.ctry_nm):: text) 
                             AND (a.ean_upc = b.ean_upc))
                             AND ((a.pka_rootcode):: text = (b.pka_rootcode):: text))
                             AND (b.latest_nts_date = a.nts_date))
                             AND (b.row_number = 1)))) 
                             GROUP BY 1, 
-                            (a.ean_upc):: character varying, 
+                            trim(a.ean_upc):: character varying, 
                             a.gcph_franchise, 
                             a.pka_franchise_description, 
                             a.gcph_category, 
@@ -630,57 +634,57 @@ mkt_mirror as
                 trans.brand AS source_prod_hier_l3, 
                 trans.sub_brand AS source_prod_hier_l5, 
                 trans.packsize AS source_packsize, 
-                max(CASE WHEN (upper((trans.attribute_1):: text) = ('EAN' :: character varying):: text) 
-                        THEN CASE WHEN (position(ltrim((trans.attribute_1_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text) IS NULL) THEN ltrim((trans.attribute_1_desc):: text, ('0' :: character varying):: text)
-                                ELSE left(ltrim((trans.attribute_1_desc):: text,('0' :: character varying):: text),position(ltrim((trans.attribute_1_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text)) END 
+                rtrim(max(CASE WHEN (upper((trans.attribute_1):: text) = ('EAN' :: character varying):: text) 
+                        THEN CASE WHEN (position((' ' :: character varying),ltrim((trans.attribute_1_desc):: text,('0' :: character varying):: text):: text) IS NULL) THEN ltrim((trans.attribute_1_desc):: text, ('0' :: character varying):: text)
+                                ELSE left(ltrim((trans.attribute_1_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim((trans.attribute_1_desc):: text,('0' :: character varying):: text):: text)) END 
                         WHEN (upper((trans.attribute_2):: text) = ('EAN' :: character varying):: text) 
-                        THEN CASE WHEN (position(ltrim((trans.attribute_2_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text) IS NULL) THEN ltrim((trans.attribute_2_desc):: text, ('0' :: character varying):: text) 
-                                ELSE left(ltrim((trans.attribute_2_desc):: text,('0' :: character varying):: text),position(ltrim(( trans.attribute_2_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text)) END 
+                        THEN CASE WHEN (position((' ' :: character varying),ltrim((trans.attribute_2_desc):: text,('0' :: character varying):: text):: text) IS NULL) THEN ltrim((trans.attribute_2_desc):: text, ('0' :: character varying):: text) 
+                                ELSE left(ltrim((trans.attribute_2_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim(( trans.attribute_2_desc):: text,('0' :: character varying):: text):: text)) END 
                         WHEN (upper((trans.attribute_3):: text) = ('EAN' :: character varying):: text) 
-                        THEN CASE WHEN (position(ltrim((trans.attribute_3_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text) IS NULL) THEN ltrim((trans.attribute_3_desc):: text, ('0' :: character varying):: text)
-                                ELSE left(ltrim((trans.attribute_3_desc):: text,('0' :: character varying):: text),position(ltrim((trans.attribute_3_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text)) END 
+                        THEN CASE WHEN (position((' ' :: character varying),ltrim((trans.attribute_3_desc):: text,('0' :: character varying):: text):: text) IS NULL) THEN ltrim((trans.attribute_3_desc):: text, ('0' :: character varying):: text)
+                                ELSE left(ltrim((trans.attribute_3_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim((trans.attribute_3_desc):: text,('0' :: character varying):: text):: text)) END 
                         WHEN (upper((trans.attribute_4):: text) = ('EAN' :: character varying):: text) 
-                        THEN CASE WHEN (position(ltrim((trans.attribute_4_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text) IS NULL) THEN ltrim((trans.attribute_4_desc):: text, ('0' :: character varying):: text)
-                                ELSE left(ltrim((trans.attribute_4_desc):: text,('0' :: character varying):: text),position(ltrim((trans.attribute_4_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text)) END 
+                        THEN CASE WHEN (position((' ' :: character varying),ltrim((trans.attribute_4_desc):: text,('0' :: character varying):: text):: text) IS NULL) THEN ltrim((trans.attribute_4_desc):: text, ('0' :: character varying):: text)
+                                ELSE left(ltrim((trans.attribute_4_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim((trans.attribute_4_desc):: text,('0' :: character varying):: text):: text)) END 
                         WHEN (upper((trans.attribute_5):: text) = ('EAN' :: character varying):: text) 
-                        THEN CASE WHEN (position(ltrim((trans.attribute_5_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text) IS NULL) THEN ltrim((trans.attribute_5_desc):: text, ('0' :: character varying):: text)
-                                ELSE left(ltrim((trans.attribute_5_desc):: text,('0' :: character varying):: text),position(ltrim((trans.attribute_5_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text)) END 
+                        THEN CASE WHEN (position((' ' :: character varying),ltrim((trans.attribute_5_desc):: text,('0' :: character varying):: text):: text) IS NULL) THEN ltrim((trans.attribute_5_desc):: text, ('0' :: character varying):: text)
+                                ELSE left(ltrim((trans.attribute_5_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim((trans.attribute_5_desc):: text,('0' :: character varying):: text):: text)) END 
                         WHEN (upper((trans.attribute_6):: text) = ('EAN' :: character varying):: text) 
-                        THEN CASE WHEN (position(ltrim((trans.attribute_6_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text) IS NULL) THEN ltrim((trans.attribute_6_desc):: text, ('0' :: character varying):: text)
-                                ELSE left(ltrim((trans.attribute_6_desc):: text,('0' :: character varying):: text),position(ltrim((trans.attribute_6_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text)) END 
+                        THEN CASE WHEN (position((' ' :: character varying),ltrim((trans.attribute_6_desc):: text,('0' :: character varying):: text):: text) IS NULL) THEN ltrim((trans.attribute_6_desc):: text, ('0' :: character varying):: text)
+                                ELSE left(ltrim((trans.attribute_6_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim((trans.attribute_6_desc):: text,('0' :: character varying):: text):: text)) END 
                         WHEN (upper((trans.attribute_7):: text) = ('EAN' :: character varying):: text) 
-                        THEN CASE WHEN (position(ltrim((trans.attribute_7_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text) IS NULL) THEN ltrim((trans.attribute_7_desc):: text, ('0' :: character varying):: text)
-                                ELSE left(ltrim((trans.attribute_7_desc):: text,('0' :: character varying):: text),position(ltrim((trans.attribute_7_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text)) END 
+                        THEN CASE WHEN (position((' ' :: character varying),ltrim((trans.attribute_7_desc):: text,('0' :: character varying):: text):: text) IS NULL) THEN ltrim((trans.attribute_7_desc):: text, ('0' :: character varying):: text)
+                                ELSE left(ltrim((trans.attribute_7_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim((trans.attribute_7_desc):: text,('0' :: character varying):: text):: text)) END 
                         WHEN (upper((trans.attribute_8):: text) = ('EAN' :: character varying):: text) 
-                        THEN CASE WHEN (position(ltrim((trans.attribute_8_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text) IS NULL) THEN ltrim((trans.attribute_8_desc):: text, ('0' :: character varying):: text)
-                                ELSE left(ltrim((trans.attribute_8_desc):: text,('0' :: character varying):: text),position(ltrim((trans.attribute_8_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text)) END 
+                        THEN CASE WHEN (position((' ' :: character varying),ltrim((trans.attribute_8_desc):: text,('0' :: character varying):: text):: text) IS NULL) THEN ltrim((trans.attribute_8_desc):: text, ('0' :: character varying):: text)
+                                ELSE left(ltrim((trans.attribute_8_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim((trans.attribute_8_desc):: text,('0' :: character varying):: text):: text)) END 
                         WHEN (upper((trans.attribute_9):: text) = ('EAN' :: character varying):: text) 
-                        THEN CASE WHEN (position(ltrim((trans.attribute_9_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text) IS NULL) THEN ltrim((trans.attribute_9_desc):: text, ('0' :: character varying):: text)
-                                ELSE left(ltrim((trans.attribute_9_desc):: text,('0' :: character varying):: text),position(ltrim((trans.attribute_9_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text)) END 
+                        THEN CASE WHEN (position((' ' :: character varying),ltrim((trans.attribute_9_desc):: text,('0' :: character varying):: text):: text) IS NULL) THEN ltrim((trans.attribute_9_desc):: text, ('0' :: character varying):: text)
+                                ELSE left(ltrim((trans.attribute_9_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim((trans.attribute_9_desc):: text,('0' :: character varying):: text):: text)) END 
                         WHEN (upper((trans.attribute_10):: text) = ('EAN' :: character varying):: text) 
-                        THEN CASE WHEN (position(ltrim((trans.attribute_10_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text) IS NULL) THEN ltrim((trans.attribute_10_desc):: text, ('0' :: character varying):: text) 
-                                ELSE left(ltrim((trans.attribute_10_desc):: text,('0' :: character varying):: text),position(ltrim((trans.attribute_10_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text)) END 
+                        THEN CASE WHEN (position((' ' :: character varying),ltrim((trans.attribute_10_desc):: text,('0' :: character varying):: text):: text) IS NULL) THEN ltrim((trans.attribute_10_desc):: text, ('0' :: character varying):: text) 
+                                ELSE left(ltrim((trans.attribute_10_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim((trans.attribute_10_desc):: text,('0' :: character varying):: text):: text)) END 
                         WHEN (upper((trans.attribute_11):: text) = ('EAN' :: character varying):: text) 
-                        THEN CASE WHEN (position(ltrim((trans.attribute_11_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text) IS NULL) THEN ltrim((trans.attribute_11_desc):: text, ('0' :: character varying):: text) 
-                                ELSE left(ltrim((trans.attribute_11_desc):: text,('0' :: character varying):: text),position(ltrim((trans.attribute_11_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text)) END 
+                        THEN CASE WHEN (position((' ' :: character varying),ltrim((trans.attribute_11_desc):: text,('0' :: character varying):: text):: text) IS NULL) THEN ltrim((trans.attribute_11_desc):: text, ('0' :: character varying):: text) 
+                                ELSE left(ltrim((trans.attribute_11_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim((trans.attribute_11_desc):: text,('0' :: character varying):: text):: text)) END 
                         WHEN (upper((trans.attribute_12):: text) = ('EAN' :: character varying):: text) 
-                        THEN CASE WHEN (position(ltrim((trans.attribute_12_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text) IS NULL) THEN ltrim((trans.attribute_12_desc):: text, ('0' :: character varying):: text) 
-                                ELSE left(ltrim((trans.attribute_12_desc):: text,('0' :: character varying):: text),position(ltrim((trans.attribute_12_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text)) END 
+                        THEN CASE WHEN (position((' ' :: character varying),ltrim((trans.attribute_12_desc):: text,('0' :: character varying):: text):: text) IS NULL) THEN ltrim((trans.attribute_12_desc):: text, ('0' :: character varying):: text) 
+                                ELSE left(ltrim((trans.attribute_12_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim((trans.attribute_12_desc):: text,('0' :: character varying):: text):: text)) END 
                         WHEN (upper((trans.attribute_13):: text) = ('EAN' :: character varying):: text) 
-                        THEN CASE WHEN (position(ltrim((trans.attribute_13_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text) IS NULL) THEN ltrim((trans.attribute_13_desc):: text, ('0' :: character varying):: text) 
-                                ELSE left(ltrim((trans.attribute_13_desc):: text,('0' :: character varying):: text),position(ltrim((trans.attribute_13_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text)) END 
+                        THEN CASE WHEN (position((' ' :: character varying),ltrim((trans.attribute_13_desc):: text,('0' :: character varying):: text):: text) IS NULL) THEN ltrim((trans.attribute_13_desc):: text, ('0' :: character varying):: text) 
+                                ELSE left(ltrim((trans.attribute_13_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim((trans.attribute_13_desc):: text,('0' :: character varying):: text):: text)) END 
                         WHEN (upper((trans.attribute_14):: text) = ('EAN' :: character varying):: text) 
-                        THEN CASE WHEN (position(ltrim((trans.attribute_14_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text) IS NULL) THEN ltrim((trans.attribute_14_desc):: text, ('0' :: character varying):: text) 
-                                ELSE left(ltrim((trans.attribute_14_desc):: text,('0' :: character varying):: text),position(ltrim((trans.attribute_14_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text)) END 
+                        THEN CASE WHEN (position((' ' :: character varying),ltrim((trans.attribute_14_desc):: text,('0' :: character varying):: text):: text) IS NULL) THEN ltrim((trans.attribute_14_desc):: text, ('0' :: character varying):: text) 
+                                ELSE left(ltrim((trans.attribute_14_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim((trans.attribute_14_desc):: text,('0' :: character varying):: text):: text)) END 
                         WHEN (upper((trans.attribute_15):: text) = ('EAN' :: character varying):: text) 
-                        THEN CASE WHEN (position(ltrim((trans.attribute_15_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text) IS NULL) THEN ltrim((trans.attribute_15_desc):: text, ('0' :: character varying):: text) 
-                                ELSE left(ltrim((trans.attribute_15_desc):: text,('0' :: character varying):: text),position(ltrim((trans.attribute_15_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text)) END 
+                        THEN CASE WHEN (position((' ' :: character varying),ltrim((trans.attribute_15_desc):: text,('0' :: character varying):: text):: text) IS NULL) THEN ltrim((trans.attribute_15_desc):: text, ('0' :: character varying):: text) 
+                                ELSE left(ltrim((trans.attribute_15_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim((trans.attribute_15_desc):: text,('0' :: character varying):: text):: text)) END 
                         WHEN (upper((trans.attribute_16):: text) = ('EAN' :: character varying):: text) 
-                        THEN CASE WHEN (position(ltrim((trans.attribute_16_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text) IS NULL) THEN ltrim((trans.attribute_16_desc):: text, ('0' :: character varying):: text) 
-                                ELSE left(ltrim((trans.attribute_16_desc):: text,('0' :: character varying):: text),position(ltrim((trans.attribute_16_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text)) END 
+                        THEN CASE WHEN (position((' ' :: character varying),ltrim((trans.attribute_16_desc):: text,('0' :: character varying):: text):: text) IS NULL) THEN ltrim((trans.attribute_16_desc):: text, ('0' :: character varying):: text) 
+                                ELSE left(ltrim((trans.attribute_16_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim((trans.attribute_16_desc):: text,('0' :: character varying):: text):: text)) END 
                         WHEN (upper((trans.attribute_17):: text) = ('EAN' :: character varying):: text) 
-                        THEN CASE WHEN (position(ltrim((trans.attribute_17_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text) IS NULL) THEN ltrim((trans.attribute_17_desc):: text, ('0' :: character varying):: text) 
-                                ELSE left(ltrim((trans.attribute_17_desc):: text,('0' :: character varying):: text),position(ltrim((trans.attribute_17_desc):: text,('0' :: character varying):: text),(' ' :: character varying):: text)) END ELSE ltrim((("map".ean):: character varying):: text, ('0' :: character varying):: text) END) AS ean_upc, 
+                        THEN CASE WHEN (position((' ' :: character varying),ltrim((trans.attribute_17_desc):: text,('0' :: character varying):: text):: text) IS NULL) THEN ltrim((trans.attribute_17_desc):: text, ('0' :: character varying):: text) 
+                                ELSE left(ltrim((trans.attribute_17_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim((trans.attribute_17_desc):: text,('0' :: character varying):: text):: text)) END ELSE ltrim((("map".ean):: character varying):: text, ('0' :: character varying):: text) END)) AS ean_upc, 
                 trans.utag, 
                 trans.product, 
                 CASE WHEN (sum(trans.sku_unit_sales) <> (0):: double precision) THEN (sum(trans.sku_value_sales_lc) / sum(trans.sku_unit_sales)) ELSE NULL :: double precision END AS asp_lcy, 
@@ -1498,7 +1502,7 @@ final as
     'Offline Customer' AS sub_store_2,
     mkt_mirror.report_date,
     calendar.cal_wk AS cal_week,
-    ((((calendar.cal_yr)::character varying)::text + ('0'::character varying)::text) + right((calendar.fisc_per)::character varying::text, 2))::integer AS fisc_yr_per,
+    ((((calendar.cal_yr)::character varying)::text || ('0'::character varying)::text) || right((calendar.fisc_per)::character varying::text, 2))::integer AS fisc_yr_per,
     mkt_mirror.source_prod_hier_l1,
     mkt_mirror.source_prod_hier_l2,
     mkt_mirror.source_prod_hier_l3,
@@ -1647,7 +1651,7 @@ final as
     cn_digital_shelf.substore_name_en AS sub_store_2, 
     cn_digital_shelf.report_date, 
     calendar.cal_wk AS cal_week, 
-    ((((calendar.cal_yr)::character varying::text + ('0'::character varying)::text) + right(((calendar.cal_mo_1)::character varying)::text, 2)))::integer AS fisc_yr_per, 
+    ((((calendar.cal_yr)::character varying::text || ('0'::character varying)::text) || right(((calendar.cal_mo_1)::character varying)::text, 2)))::integer AS fisc_yr_per, 
     cn_digital_shelf.category AS source_prod_hier_l1, 
     cn_digital_shelf.subcat1 AS source_prod_hier_l2, 
     cn_digital_shelf.subcat2 AS source_prod_hier_l3, 

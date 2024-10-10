@@ -23,7 +23,7 @@ itg_vn_mt_sellin_dksh_history as (
 select * from {{ ref('vnmitg_integration__itg_vn_mt_sellin_dksh_history') }}
 ),
 itg_query_parameters as (
-select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
+select * from {{ source('sgpitg_integration', 'itg_query_parameters') }}
 ),
 edw_vw_vn_mt_dist_products as (
 select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_dist_products') }}

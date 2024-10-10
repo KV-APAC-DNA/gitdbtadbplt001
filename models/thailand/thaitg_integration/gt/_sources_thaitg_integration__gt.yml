@@ -19,6 +19,7 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
+              severity: error
         - test_duplicate:
             group_by_columns: ["distributorid","re_code","period"]
             select_columns: ["distributorid","re_code","period"]
@@ -26,6 +27,7 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
+              severity: error
 
     - name: sdl_mds_th_gt_productive_call_target
       tags: ["th_non_tesco","ingestion"]
@@ -37,6 +39,7 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
+              severity: error
 
         - test_duplicate:
             group_by_columns: ["saleunit","saleid","month","year"]
@@ -45,6 +48,7 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
+              severity: error
 
         - test_format:
             where_clause: "SUBSTRING(UPPER(TRIM(SALEID)),1,3) <>UPPER(TRIM(SALEUNIT))"
@@ -54,6 +58,7 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
+              severity: error
 
         - test_lookup:
                 select_columns: ["year","month","saleunit","saleid"]
@@ -65,6 +70,7 @@ sources:
                 config:
                   store_failures: true
                   schema: thawks_integration
+                  severity: error
 
     - name: sdl_la_gt_visit
       tags: ["laos_file_ingestion","ingestion"]
@@ -344,6 +350,7 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+                severity: error
         - test_duplicate:
             group_by_columns: ["year","kpi_code","kpi_desc","re_code"]
             select_columns: ["year","kpi_code","kpi_desc"]
@@ -352,6 +359,7 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
+              severity: error
         - test_lookup:
             select_columns: ["year","kpi_code","kpi_desc"]
             column: "year" 
@@ -362,6 +370,7 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
+              severity: error
 
     - name: sdl_mym_gt_sales_report_fact
       tags: ["myanmar_file_ingestion","ingestion"]
@@ -423,6 +432,7 @@ sources:
               store_failures: true
               schema: thawks_integration
     - name: sdl_th_gt_route
+      tags: ["th_gt_files","ingestion"]
       tests:
         - test_null:
               not_null_columns: ["filename","saleunit","routeid","routesale","last_updated_date"]
@@ -459,6 +469,7 @@ sources:
                 store_failures: true
                 schema: thawks_integration
     - name: sdl_th_gt_route_detail
+      tags: ["th_gt_files","ingestion"]
       tests:
         - test_null:
               not_null_columns: ["filename","routeid","routeno","saleunit","customerid","created_date"]
@@ -495,6 +506,7 @@ sources:
                 store_failures: true
                 schema: thawks_integration
     - name: sdl_th_gt_sales_order
+      tags: ["th_gt_files","ingestion"]
       tests:
         - test_null:
               not_null_columns: ["filename","saleunit","orderid","customer_id","productid","sales_order_line_no"]
@@ -530,6 +542,7 @@ sources:
                 store_failures: true
                 schema: thawks_integration
     - name: sdl_cbd_gt_sales_report_fact
+      tags: ["cambodia_file_ingestion","ingestion"]
       tests:
         - test_null:
               not_null_columns: ["filename","billing_date","order_no","sales_rep_no","customer_code","product_code","batch_no"]
@@ -563,6 +576,7 @@ sources:
               store_failures: true
               schema: thawks_integration
     - name: sdl_la_gt_sales_order_fact
+      tags: ["laos_file_ingestion","ingestion"]
       tests:
         - test_null:
               not_null_columns: ["filename","orderid","orderdate","saleunit","customer_id","productid","no"]
@@ -628,6 +642,7 @@ sources:
               store_failures: true
               schema: thawks_integration
     - name: sdl_la_gt_route_header
+      tags: ["laos_file_ingestion","ingestion"]
       tests:
         - test_null:
               not_null_columns: ["filename","route_id","routesale","saleunit","last_updated_date"]

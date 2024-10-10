@@ -14,7 +14,8 @@
         and nvl(a.yearmonth,'') = nvl(b.yearmonth,'')
         and nvl(a.target_type,'') = nvl(b.target_type,'')
         and a.year= b.year
-        and nvl(a.quarter,9999) = nvl(b.quarter,9999);
+        and nvl(a.quarter,9999) = nvl(b.quarter,9999)
+        and replace(a.filename,'_'||split_part(a.filename,'_',4)) = replace(b.filename,'_'||split_part(b.filename,'_',4));
         {% endif %}"
     )
 }}

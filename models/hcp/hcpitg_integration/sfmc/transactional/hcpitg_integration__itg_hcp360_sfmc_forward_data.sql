@@ -14,7 +14,9 @@
     )
 }}
 with sdl_hcp360_in_sfmc_forward_data as (
-    select * from {{ source('hcpsdl_raw','sdl_hcp360_in_sfmc_forward_data') }}
+    select *, dense_rank() over(partition by job_id,batch_id,subscriber_id,subscriber_key,event_date,email_id order by file_name desc) as rnk 
+    from {{ source('hcpsdl_raw','sdl_hcp360_in_sfmc_forward_data') }}
+    qualify rnk =1
 ),
 final as 
 (
@@ -35,7 +37,8 @@ final as
 	email_id::varchar(20) as email_id,
 	transactiontime::timestamp_ntz(9) as transactiontime,
 	crt_dttm::timestamp_ntz(9) as crt_dttm,
-	current_timestamp()::timestamp_ntz(9) as updt_dttm
+	current_timestamp()::timestamp_ntz(9) as updt_dttm,
+    file_name::varchar(255) as file_name
     from sdl_hcp360_in_sfmc_forward_data
 )
 select * from final

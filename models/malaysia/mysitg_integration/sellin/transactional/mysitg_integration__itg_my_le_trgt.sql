@@ -1,5 +1,7 @@
 with sdl_my_le_trgt as (
-    select * from {{ source('myssdl_raw','sdl_my_le_trgt') }}
+    select * from {{ source('myssdl_raw','sdl_my_le_trgt') }}  where file_name not in
+    ( select distinct file_name from {{ source('myswks_integration', 'TRATBL_sdl_my_le_trgt__lookup_test') }}
+    )
 ),
 edw_vw_os_time_dim as (
     select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
@@ -42,7 +44,8 @@ final as (
         a.wk5::number(20,6) as wk5,
         a.cdl_dttm::varchar(20) as cdl_dttm,
         current_timestamp()::timestamp_ntz(9) as crtd_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        a.file_name::varchar(255) as file_name
     from sdl_my_le_trgt as a, b
     where
         a.jj_year = b.jj_year and upper(a.mnth_nm) = b.mnth_shrt

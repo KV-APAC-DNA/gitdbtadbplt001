@@ -73,6 +73,10 @@ edw_rpt_th_perfect_store as (
 v_rpt_vn_perfect_store as (
     select * from {{ ref('vnmedw_integration__v_rpt_vn_perfect_store') }}
 ),
+edw_cn_perfect_store as (
+    select * from {{ ref('chnedw_integration__edw_cn_perfect_store') }}
+),
+
 rex as (
     SELECT UPPER(derived_table1.dataset)::CHARACTER VARYING AS dataset,
     derived_table1.merchandisingresponseid,
@@ -848,8 +852,8 @@ tha_1 as (
     response,
     response_score,
     acc_rej_reason,
-    NULL AS actual,
-    NULL AS "target",
+    actual_value AS actual,
+    ref_value AS "target",
     'Y' AS priority_store_flag,
     NULL AS photo_url,
     NULL AS website_url,
@@ -1574,7 +1578,7 @@ FROM (
                                 pka.gcph_variant AS prod_hier_l6,
                                 NULL AS prod_hier_l7,
                                 NULL AS prod_hier_l8,
-                                msl.product_name AS prod_hier_l9,
+                                rtrim(msl.product_name) AS prod_hier_l9,
                                 wt.weight::DOUBLE precision AS kpi_chnl_wt,
                                 NULL AS ms_flag,
                                 NULL AS hit_ms_flag,
@@ -1719,7 +1723,7 @@ FROM (
                                 pka.gcph_brand,
                                 pka.gcph_subbrand,
                                 pka.gcph_variant,
-                                msl.product_name,
+                                rtrim(msl.product_name),
                                 wt.weight::DOUBLE precision,
                                 CASE
                                     WHEN UPPER(msl.priority_store::TEXT) = 'YES'::CHARACTER VARYING::TEXT THEN 'Y'::CHARACTER VARYING
@@ -2253,28 +2257,28 @@ FROM (
                 )::CHARACTER VARYING AS rej_reason,
                 prmc.photopath AS photo_url
             FROM (
-                    SELECT itg_in_perfectstore_promo.store_code,
-                        itg_in_perfectstore_promo.store_name,
-                        itg_in_perfectstore_promo.isp_code,
-                        itg_in_perfectstore_promo.isp_name,
-                        ITG_IN_PERFECTSTORE_PROMO.region,
-                        ITG_IN_PERFECTSTORE_PROMO.chain,
-                        ITG_IN_PERFECTSTORE_PROMO.format,
-                        itg_in_perfectstore_promo.product_category,
-                        itg_in_perfectstore_promo.product_brand,
+                    SELECT trim(itg_in_perfectstore_promo.store_code) as store_code,
+                        trim(itg_in_perfectstore_promo.store_name) as store_name,
+                        trim(itg_in_perfectstore_promo.isp_code) as isp_code,
+                        trim(itg_in_perfectstore_promo.isp_name) as isp_name,
+                        trim(ITG_IN_PERFECTSTORE_PROMO.region) as region,
+                        trim(ITG_IN_PERFECTSTORE_PROMO.chain) as chain,
+                        trim(ITG_IN_PERFECTSTORE_PROMO.format) as format,
+                        trim(itg_in_perfectstore_promo.product_category) as product_category,
+                        trim(itg_in_perfectstore_promo.product_brand) as product_brand,
                         "max"(
                             to_date(itg_in_perfectstore_promo.visit_datetime)
                         ) AS visit_datetime
-                    FROM itg_in_perfectstore_promo
+                    FROM inditg_integration.itg_in_perfectstore_promo
                     GROUP BY itg_in_perfectstore_promo.store_code,
-                        itg_in_perfectstore_promo.store_name,
-                        itg_in_perfectstore_promo.isp_code,
-                        itg_in_perfectstore_promo.isp_name,
-                        ITG_IN_PERFECTSTORE_PROMO.region,
-                        ITG_IN_PERFECTSTORE_PROMO.chain,
-                        ITG_IN_PERFECTSTORE_PROMO.format,
-                        itg_in_perfectstore_promo.product_category,
-                        itg_in_perfectstore_promo.product_brand
+                        trim(itg_in_perfectstore_promo.store_name),
+                        trim(itg_in_perfectstore_promo.isp_code),
+                        trim(itg_in_perfectstore_promo.isp_name),
+                        trim(ITG_IN_PERFECTSTORE_PROMO.region),
+                        trim(ITG_IN_PERFECTSTORE_PROMO.chain),
+                        trim(ITG_IN_PERFECTSTORE_PROMO.format),
+                        trim(itg_in_perfectstore_promo.product_category),
+                        trim(itg_in_perfectstore_promo.product_brand)
                 ) prm,
                 itg_in_perfectstore_promo prmc,
                 (
@@ -2290,15 +2294,15 @@ FROM (
                 ) wt
             WHERE trim(UPPER(wt.retail_environment::TEXT)) = trim(UPPER(PRM.format::TEXT))
                 AND to_date(prm.visit_datetime::TIMESTAMP WITHOUT TIME ZONE)::TIMESTAMP WITHOUT TIME ZONE = prmc.visit_datetime
-                AND prm.store_code::TEXT = prmc.store_code::TEXT
-                AND prm.store_name::TEXT = prmc.store_name::TEXT
-                AND prm.isp_code::TEXT = prmc.isp_code::TEXT
-                AND prm.isp_name::TEXT = prmc.isp_name::TEXT
-                AND PRM.region::TEXT = PRMC.region::TEXT
-                AND PRM.chain::TEXT = PRMC.chain::TEXT
-                AND PRM.format::TEXT = PRMC.format::TEXT
-                AND prm.product_category::TEXT = prmc.product_category::TEXT
-                AND prm.product_brand::TEXT = prmc.product_brand::TEXT
+                AND trim(prm.store_code::TEXT) = trim(prmc.store_code::TEXT)
+                AND trim(prm.store_name)::TEXT = trim(prmc.store_name)::TEXT
+                AND trim(prm.isp_code::TEXT) = trim(prmc.isp_code::TEXT)
+                AND trim(prm.isp_name::TEXT) = trim(prmc.isp_name::TEXT)
+                AND trim(PRM.region::TEXT) = trim(PRMC.region::TEXT)
+                AND trim(PRM.chain::TEXT) = trim(PRMC.chain::TEXT)
+                AND trim(PRM.format::TEXT) = trim(PRMC.format::TEXT)
+                AND trim(prm.product_category::TEXT) = trim(prmc.product_category::TEXT)
+                AND trim(prm.product_brand::TEXT) = trim(prmc.product_brand::TEXT)
                 AND date_part(
                     year,
                     TO_DATE(
@@ -2639,6 +2643,86 @@ vnm as (
     NULL AS store_grade
 FROM v_rpt_vn_perfect_store
 ),
+
+chn as (
+SELECT UPPER(edw_cn_perfect_store.dataset::TEXT)::CHARACTER VARYING AS dataset,
+       NULL AS merchandisingresponseid,
+       NULL AS surveyresponseid,
+       edw_cn_perfect_store.customerid,
+       edw_cn_perfect_store.salespersonid,
+       NULL AS visitid,
+       edw_cn_perfect_store.mrch_resp_startdt::DATE AS mrch_resp_startdt,
+       edw_cn_perfect_store.mrch_resp_enddt::DATE AS mrch_resp_enddt,
+       NULL AS mrch_resp_status,
+       NULL AS mastersurveyid,
+       NULL AS survey_status,
+       edw_cn_perfect_store.survey_enddate,
+       NULL AS questionkey,
+       edw_cn_perfect_store.questiontext,
+       NULL AS valuekey,
+       edw_cn_perfect_store.value,
+       NULL AS productid,
+       UPPER(edw_cn_perfect_store.mustcarryitem::TEXT)::CHARACTER VARYING AS mustcarryitem,
+       NULL AS answerscore,
+       UPPER(edw_cn_perfect_store.presence::TEXT)::CHARACTER VARYING AS presence,
+       edw_cn_perfect_store.outofstock,
+       NULL AS mastersurveyname,
+       UPPER(edw_cn_perfect_store.kpi::TEXT)::CHARACTER VARYING AS kpi,
+       edw_cn_perfect_store.category,
+       edw_cn_perfect_store.segment,
+       NULL AS vst_visitid,
+       edw_cn_perfect_store.scheduleddate,
+       NULL AS scheduledtime,
+       NULL AS duration,
+       UPPER(edw_cn_perfect_store.vst_status::TEXT)::CHARACTER VARYING AS vst_status,
+       edw_cn_perfect_store.fisc_yr,
+       edw_cn_perfect_store.fisc_per,
+       edw_cn_perfect_store.firstname,
+       edw_cn_perfect_store.lastname,
+       NULL AS cust_remotekey,
+       edw_cn_perfect_store.customername,
+       edw_cn_perfect_store.country,
+       edw_cn_perfect_store.state,
+       NULL AS county,
+       NULL AS district,
+       NULL AS city,
+       edw_cn_perfect_store.storereference,
+       edw_cn_perfect_store.storetype,
+       edw_cn_perfect_store.channel,
+       edw_cn_perfect_store.salesgroup,
+       edw_cn_perfect_store.bu,
+       NULL AS soldtoparty,
+       NULL AS brand,
+       edw_cn_perfect_store.productname,
+       edw_cn_perfect_store.eannumber,
+       NULL AS matl_num,
+       edw_cn_perfect_store.prod_hier_l1,
+       NULL AS prod_hier_l2,
+       NULL AS prod_hier_l3,
+       edw_cn_perfect_store.prod_hier_l4,
+       edw_cn_perfect_store.prod_hier_l5,
+       edw_cn_perfect_store.prod_hier_l6,
+       NULL AS prod_hier_l7,
+       NULL AS prod_hier_l8,
+       edw_cn_perfect_store.prod_hier_l9,
+       edw_cn_perfect_store.kpi_chnl_wt,
+       edw_cn_perfect_store.mkt_share,
+       UPPER(edw_cn_perfect_store.ques_desc::TEXT)::CHARACTER VARYING AS ques_desc,
+       edw_cn_perfect_store."y/n_flag",
+       NULL AS posm_execution_flag,
+       '' AS rej_reason,
+       NULL AS response,
+       NULL AS response_score,
+       '' AS acc_rej_reason,
+       edw_cn_perfect_store.actual,
+       edw_cn_perfect_store.target,
+       'Y' AS priority_store_flag,
+       NULL AS photo_url,
+       NULL AS website_url,
+       NULL AS store_grade
+FROM edw_cn_perfect_store
+WHERE UPPER(edw_cn_perfect_store.storetype::TEXT) <> 'CASH&CARRY'::CHARACTER VARYING::TEXT
+),
 final as (
     select * from sgp
     union all
@@ -2667,5 +2751,7 @@ final as (
     select * from ind_2
     union all
     select * from vnm
+    union all
+    select * from chn
 )
 select * from final
