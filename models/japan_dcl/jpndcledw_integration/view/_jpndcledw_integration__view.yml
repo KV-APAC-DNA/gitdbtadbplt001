@@ -169,7 +169,8 @@ models:
 
   - name: jpndcledw_integration__wqwt17
     config:
-      alias: '"wqwt17戦略商品別売上"'
+      alias: wqwt17戦略商品別売上
+      quote: true
       tags: ["japan_dcl_views","inactive"]
 
   - name: jpndcledw_integration__wqwt36
@@ -189,7 +190,8 @@ models:
 
   - name: jpndcledw_integration__wqwt74_p
     config:
-      alias: '"wqwt74戦略商品別売上ｐ"'
+      alias: wqwt74戦略商品別売上ｐ
+      quote: true
       tags: ["japan_dcl_views","inactive"]
 
   - name: jpndcledw_integration__wt34aspacdt
