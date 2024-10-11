@@ -805,10 +805,10 @@ models:
     config:
       alias: tbecorder_log
       tags: ["m_dcl_edw_job1","transformation"]
-  - name: jpndcledw_integration__tbecorder_rireki_log
-    config:
-      alias: tbecorder_rireki_log
-      tags: ["m_dcl_edw_job1","transformation"]
+  # - name: jpndcledw_integration__tbecorder_rireki_log
+  #   config:
+  #     alias: tbecorder_rireki_log
+  #     tags: ["m_dcl_edw_job1","transformation"]
   - name: jpndcledw_integration__cim01kokya
     config:
       alias: cim01kokya
