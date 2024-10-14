@@ -1,0 +1,48 @@
+with source as(
+    select * from {{ ref('hcposeedw_integration__vw_rep_call_activity') }}
+),
+final as(
+    select 
+        jnj_year as "jnj_year",
+        jnj_month as "jnj_month",
+        jnj_quarter as "jnj_quarter",
+        date_year as "date_year",
+        date_month as "date_month",
+        date_quarter as "date_quarter",
+        my_year as "my_year",
+        my_month as "my_month",
+        my_quarter as "my_quarter",
+        country as "country",
+        sector as "sector",
+        l3_wwid as "l3_wwid",
+        l3_username as "l3_username",
+        l3_manager_name as "l3_manager_name",
+        l2_wwid as "l2_wwid",
+        l2_username as "l2_username",
+        l2_manager_name as "l2_manager_name",
+        l1_wwid as "l1_wwid",
+        l1_username as "l1_username",
+        l1_manager_name as "l1_manager_name",
+        organization_l1_name as "organization_l1_name",
+        organization_l2_name as "organization_l2_name",
+        organization_l3_name as "organization_l3_name",
+        organization_l4_name as "organization_l4_name",
+        organization_l5_name as "organization_l5_name",
+        sales_rep as "sales_rep",
+        working_days as "working_days",
+        total_cnt_call as "total_cnt_call",
+        total_cnt_edetailing_calls as "total_cnt_edetailing_calls",
+        total_cnt_call_delay as "total_cnt_call_delay",
+        sales_rep_ntid as "sales_rep_ntid",
+        total_cnt_call_delay_sub as "total_cnt_call_delay_sub",
+        total_cnt_clm_flg as "total_cnt_clm_flg",
+        total_prnt_cnt_clm_flg as "total_prnt_cnt_clm_flg",
+        total_cnt_submitted_calls as "total_cnt_submitted_calls",
+        cnt_total_time_on as "cnt_total_time_on",
+        cnt_total_time_off as "cnt_total_time_off",
+        total_active as "total_active",
+        detailed_products as "detailed_products",
+        total_sbmtd_calls_key_message as "total_sbmtd_calls_key_message" 
+    from source
+)
+select * from final

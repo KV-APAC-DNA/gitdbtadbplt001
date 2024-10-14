@@ -1,9 +1,9 @@
 {% macro build_procedure_tbecorder_rireki_log() %}
     {% set tablename %}
     {% if target.name=='prod' %}
-                jpdcledw_integration.tbecorder_rireki_log_tmp
+                jpdcledw_integration.tbecorder_rireki_log
             {% else %}
-                {{schema}}.jpndcledw_integration__tbecorder_rireki_log_tmp
+                {{schema}}.jpndcledw_integration__tbecorder_rireki_log
     {% endif %}
     {% endset %}
     {% set query %}
@@ -22,12 +22,6 @@
                 UPDATED_DATE TIMESTAMP_NTZ(9),
                 UPDATED_BY VARCHAR(100)       
             );
-        create or replace table {{tablename}} clone
-        {% if target.name=='prod' %}
-            jpdcledw_integration.tbecorder_rireki_log
-        {% else %}
-            {{schema}}.jpndcledw_integration__tbecorder_rireki_log
-        {% endif %};
         UPDATE {{tablename}}
         SET T_KBN = 'T',
             updated_date = GETDATE(),
@@ -35,7 +29,7 @@
         FROM (
             SELECT DIORDERHISTID,
                     DIORDERID
-            FROM {{ref('jpndclitg_integration__c_tbecorderhistory_1')}} C_TBECORDERHISTORY
+            FROM {{ env_var('DBT_ENV_CORE_DB') }}.JPDCLITG_INTEGRATION.C_TBECORDERHISTORY_1 C_TBECORDERHISTORY
             WHERE C_DSUKETSUKETELCOMPANYCD = 'DCL'
                     AND C_DSTEMPOCODE IS NOT NULL
             ) LIST
@@ -53,7 +47,7 @@
         FROM (
             SELECT DIORDERHISTID,
                     DIORDERID
-            FROM {{ref('jpndclitg_integration__c_tbecorderhistory_1')}} C_TBECORDERHISTORY
+            FROM {{ env_var('DBT_ENV_CORE_DB') }}.JPDCLITG_INTEGRATION.C_TBECORDERHISTORY_1 C_TBECORDERHISTORY
             WHERE C_DSUKETSUKETELCOMPANYCD = 'DCL'
                     AND C_DSTEMPOCODE IS NOT NULL
             ) LIST
@@ -62,7 +56,7 @@
         WHERE LIST.DIORDERID IS NULL
             AND LIST.DIORDERHISTID IS NULL;
 
-        UPDATE {{ref('jpndclitg_integration__c_tbecorderhistory_1')}}
+        UPDATE {{ env_var('DBT_ENV_CORE_DB') }}.JPDCLITG_INTEGRATION.C_TBECORDERHISTORY_1
         SET C_DSUKETSUKETELCOMPANYCD = 'TNP',
             updated_date = GETDATE(),
             updated_by = 'ETL_Batch'
@@ -76,7 +70,7 @@
         FROM (
             SELECT DIORDERHISTID,
                     DIORDERID
-            FROM {{ref('jpndclitg_integration__c_tbecorderhistory_1')}} C_TBECORDERHISTORY
+            FROM {{ env_var('DBT_ENV_CORE_DB') }}.JPDCLITG_INTEGRATION.C_TBECORDERHISTORY_1 C_TBECORDERHISTORY
             WHERE C_DSUKETSUKETELCOMPANYCD = 'DCL'
                     AND dirouteid = '5'
             ) LIST
@@ -94,7 +88,7 @@
         FROM (
             SELECT DIORDERHISTID,
                     DIORDERID
-            FROM {{ref('jpndclitg_integration__c_tbecorderhistory_1')}} C_TBECORDERHISTORY
+            FROM {{ env_var('DBT_ENV_CORE_DB') }}.JPDCLITG_INTEGRATION.C_TBECORDERHISTORY_1 C_TBECORDERHISTORY
             WHERE C_DSUKETSUKETELCOMPANYCD = 'DCL'
                     AND dirouteid = '5'
             ) LIST
@@ -103,7 +97,7 @@
         WHERE LIST.DIORDERID IS NULL
             AND LIST.DIORDERHISTID IS NULL;
 
-        UPDATE {{ref('jpndclitg_integration__c_tbecorderhistory_1')}}
+        UPDATE {{ env_var('DBT_ENV_CORE_DB') }}.JPDCLITG_INTEGRATION.C_TBECORDERHISTORY_1
         SET C_DSUKETSUKETELCOMPANYCD = 'WEB',
             updated_date = GETDATE(),
             updated_by = 'ETL_Batch'
@@ -117,7 +111,7 @@
         FROM (
             SELECT DIORDERHISTID,
                     DIORDERID
-            FROM {{ref('jpndclitg_integration__c_tbecorderhistory_1')}} C_TBECORDERHISTORY
+            FROM {{ env_var('DBT_ENV_CORE_DB') }}.JPDCLITG_INTEGRATION.C_TBECORDERHISTORY_1 C_TBECORDERHISTORY
             WHERE C_DSUKETSUKETELCOMPANYCD = 'DCL'
                     AND dirouteid = '3'
             ) LIST
@@ -135,7 +129,7 @@
         FROM (
             SELECT DIORDERHISTID,
                     DIORDERID
-            FROM {{ref('jpndclitg_integration__c_tbecorderhistory_1')}} C_TBECORDERHISTORY
+            FROM {{ env_var('DBT_ENV_CORE_DB') }}.JPDCLITG_INTEGRATION.C_TBECORDERHISTORY_1 C_TBECORDERHISTORY
             WHERE C_DSUKETSUKETELCOMPANYCD = 'DCL'
                     AND dirouteid = '3'
             ) LIST
@@ -144,7 +138,7 @@
         WHERE LIST.DIORDERID IS NULL
             AND LIST.DIORDERHISTID IS NULL;
 
-        UPDATE {{ref('jpndclitg_integration__c_tbecorderhistory_1')}}
+        UPDATE {{ env_var('DBT_ENV_CORE_DB') }}.JPDCLITG_INTEGRATION.C_TBECORDERHISTORY_1
         SET C_DSUKETSUKETELCOMPANYCD = 'FAX',
             updated_date = GETDATE(),
             updated_by = 'ETL_Batch'
@@ -158,7 +152,7 @@
         FROM (
             SELECT DIORDERHISTID,
                     DIORDERID
-            FROM {{ref('jpndclitg_integration__c_tbecorderhistory_1')}} C_TBECORDERHISTORY
+            FROM {{ env_var('DBT_ENV_CORE_DB') }}.JPDCLITG_INTEGRATION.C_TBECORDERHISTORY_1 C_TBECORDERHISTORY
             WHERE C_DSUKETSUKETELCOMPANYCD = 'DCL'
                     AND dirouteid = '4'
             ) LIST
@@ -176,7 +170,7 @@
         FROM (
             SELECT DIORDERHISTID,
                     DIORDERID
-            FROM {{ref('jpndclitg_integration__c_tbecorderhistory_1')}} C_TBECORDERHISTORY
+            FROM {{ env_var('DBT_ENV_CORE_DB') }}.JPDCLITG_INTEGRATION.C_TBECORDERHISTORY_1 C_TBECORDERHISTORY
             WHERE C_DSUKETSUKETELCOMPANYCD = 'DCL'
                     AND dirouteid = '4'
             ) LIST
@@ -185,7 +179,7 @@
         WHERE LIST.DIORDERID IS NULL
             AND LIST.DIORDERHISTID IS NULL;
 
-        UPDATE {{ref('jpndclitg_integration__c_tbecorderhistory_1')}}
+        UPDATE {{ env_var('DBT_ENV_CORE_DB') }}.JPDCLITG_INTEGRATION.C_TBECORDERHISTORY_1
         SET C_DSUKETSUKETELCOMPANYCD = 'MAL',
             updated_date = GETDATE(),
             updated_by = 'ETL_Batch'
@@ -199,21 +193,20 @@
         FROM (
             SELECT DIORDERHISTID,
                     DIORDERID
-            FROM {{ref('jpndclitg_integration__c_tbecorderhistory_1')}} C_TBECORDERHISTORY
+            FROM {{ env_var('DBT_ENV_CORE_DB') }}.JPDCLITG_INTEGRATION.C_TBECORDERHISTORY_1 C_TBECORDERHISTORY
             WHERE C_DSUKETSUKETELCOMPANYCD = 'DCL'
                     AND dirouteid = '6'
             ) LIST
         WHERE {{tablename}}.DIORDERID = LIST.DIORDERID
             AND {{tablename}}.DIORDERHISTID = LIST.DIORDERHISTID;
-        
-        INSERT INTO 
-                {% if target.name=='prod' %}
-                    jpdcledw_integration.tbecorder_rireki_log
-                {% else %}
-                    {{schema}}.jpndcledw_integration__tbecorder_rireki_log
-                {% endif %}
-        select * from  {{tablename}};
-                           
+
+        UPDATE {{ env_var('DBT_ENV_CORE_DB') }}.JPDCLITG_INTEGRATION.C_TBECORDERHISTORY_1
+        SET C_DSUKETSUKETELCOMPANYCD = 'SHN',
+            updated_date = GETDATE(), 
+            updated_by = 'ETL_Batch'
+        WHERE C_DSUKETSUKETELCOMPANYCD = 'DCL' AND  
+            dirouteid = '6';
+
     {% endset %}
 
     {% do run_query(query) %}

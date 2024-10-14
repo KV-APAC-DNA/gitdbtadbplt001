@@ -1,6 +1,7 @@
 --import cte
 with itg_re_msl_input_definition as (
-    select * from  {{ source('aspitg_integration', 'itg_re_msl_input_definition') }}
+    --select * from  {{ source('aspitg_integration', 'itg_re_msl_input_definition') }}
+    select * from {{ ref('aspitg_integration__itg_re_msl_input_definition') }}
 ),
 
 edw_time_dim as(
