@@ -1,6 +1,6 @@
 with rpt_regional_scorecard as 
 (
-    select * from aspedw_integration.rpt_regional_scorecard
+    select * from {{ ref('aspedw_integration__rpt_regional_scorecard') }}
 ),
 edw_vw_greenlight_skus as 
 (

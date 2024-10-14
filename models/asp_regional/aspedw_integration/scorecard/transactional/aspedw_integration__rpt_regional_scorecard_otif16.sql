@@ -89,11 +89,11 @@ null:: NUMBER(38,15) as CIW_GTS_LCY_PREV_YR_MNTH,
 null:: NUMBER(38,15) as CIW_LCY_PREV_YR_MNTH,
 null:: NUMBER(38,15) as GROWTH_CIW_GTS,
 null:: NUMBER(38,15) as GROWTH_CIW,
-base.kpi as KPI
-, base."numerator" 
-, base."denominator"
-, prev_yr."numerator" as prev_yr_numerator
-, prev_yr."denominator" as prev_yr_denominator,
+base.kpi as KPI,
+null::NUMBER(38,15) as MSL_COMPLAINCE_NUMERATOR,
+null::NUMBER(38,15) as MSL_COMPLAINCE_DENOMINATOR,
+null::NUMBER(38,15) as MSL_COMPLAINCE_DENOMINATOR_WT,
+null::NUMBER(38,15) as OSA_COMPLAINCE_NUMERATOR,
 null::NUMBER(38,15) as OSA_COMPLAINCE_DENOMINATOR, 
 null::NUMBER(38,15) as OSA_COMPLAINCE_DENOMINATOR_WT,
 null::NUMBER(38,15) as PROMO_COMPLAINCE_NUMERATOR,
