@@ -4,7 +4,7 @@
                     materialized = "incremental", 
                     incremental_strategy = "append", 
                     pre_hook ="{% if is_incremental() %} 
-                                delete from {{this}} WHERE to_date(createddate) = 
+                                delete from {{this}} WHERE to_date(createddate) in 
                                 (SELECT DISTINCT (to_date(createddate)) as createddate
                                 FROM {{ source('indsdl_raw', 'sdl_csl_productwisestock') }}
                                 WHERE to_date(createddate) > (SELECT to_date(MAX(createddate))
