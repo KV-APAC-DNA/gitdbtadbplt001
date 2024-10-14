@@ -1,3 +1,8 @@
+{{
+    config(
+        materialized='view'
+    )
+}}
 with edw_material_dim as 
 (
     select * from {{ ref('aspedw_integration__edw_material_dim') }}
