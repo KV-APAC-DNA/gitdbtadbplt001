@@ -11,12 +11,9 @@ hcp_store_master as
 ),
 hce_customer_master as 
 (
-    select 1 
+    select * from {{ ref('phlitg_integration__itg_ph_mds_hce_customer_master') }} 
 ),
-hce_customer_master as 
-(
-    select 1
-)
+
 transformed as 
 (
      
@@ -44,8 +41,8 @@ transformed as
 
     from acommerce_sellout_target hce
     inner join hce_product_master prod on (hce.item_sku=prod.code)
-    -- inner join hce_customer_master 
-    --inner hcp_store_master store 
+    inner join hce_customer_master  cust on (prod.code=cust.code)
+    inner hcp_store_master store store on (cust.territory_code_code=territory_code_code)
 ),
 final as
 (
