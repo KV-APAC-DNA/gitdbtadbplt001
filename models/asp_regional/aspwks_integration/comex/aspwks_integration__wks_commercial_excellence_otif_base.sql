@@ -42,7 +42,7 @@ final AS
          country_name::VARCHAR(40) AS market,
          "cluster"::VARCHAR(100) AS "cluster",
          'OTIF'::VARCHAR(100) AS kpi,
-         segment_information,
+         IFNULL(segment_information, 'NA') AS segment_information,
          numerator::NUMERIC(38,5) AS otif_numerator,
          denominator::NUMERIC(38,5) AS otif_denominator,
          otif::NUMERIC(38,5) AS otif,
@@ -70,6 +70,9 @@ final AS
                  5,
                  6,
                  7)
+    WHERE "cluster" IS NOT NULL
+    AND market IS NOT NULL
+    AND month_id <= to_char(current_date(), 'YYYYMM')
 )
 SELECT *
 FROM final
