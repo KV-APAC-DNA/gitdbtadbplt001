@@ -17,3 +17,5 @@ sources:
     - name : sdl_mds_ph_hce_product_master
     - name : sdl_hcp_acommerce_load
 
+    - name : sdl_mds_ph_hce_customer_master
+
