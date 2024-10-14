@@ -33,6 +33,10 @@ final as (
 	,l12m_weeks_avg_sales_usd :: DOUBLE as "l12m_weeks_avg_sales_usd"
 	,ytd_dso_gts :: DOUBLE as "ytd_dso_gts"
 	,ytd_dso_gross_account_receivable :: DOUBLE as "ytd_dso_gross_account_receivable"
+    ,otif_numerator :: DOUBLE as "otif_numerator"
+	,otif_denominator :: DOUBLE as "otif_denominator"
+	,otif_val :: DOUBLE as "otif_val"
+	,otif_ytd :: DOUBLE as "otif_ytd"
     FROM rpt_regional_commercial_excellence_scorecard
 )
 select * from final 
