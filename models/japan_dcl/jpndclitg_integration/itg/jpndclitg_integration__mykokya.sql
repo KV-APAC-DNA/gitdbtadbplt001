@@ -20,16 +20,16 @@ transform AS (
         b.file_id,
         a.customer_no,
         a.filename,
-        NULL
+        a.source_file_date
     FROM (
         SELECT
             customer_no,
-            NULL,
             (
                 SELECT max(filename)
                 FROM mykokya
                 WHERE filename IS NOT NULL
-            ) AS filename
+            ) AS filename,
+            source_file_date
         FROM mykokya
     ) AS a
     INNER JOIN (
@@ -46,7 +46,7 @@ final AS (
         file_id::NUMBER(18, 0) AS file_id,
         customer_no::VARCHAR(20) AS customer_no,
         filename::VARCHAR(100) AS filename,
-        NULL::VARCHAR(30) AS source_file_date,
+        source_file_date::VARCHAR(30) AS source_file_date,
         to_char(to_date(current_timestamp()::TIMESTAMP_NTZ(9)),'MM-DD-YYYY')::varchar(10) AS upload_dt,
         to_char(current_timestamp()::TIMESTAMP_NTZ(9),'HH:MI:ss')::varchar(8) AS upload_time
         

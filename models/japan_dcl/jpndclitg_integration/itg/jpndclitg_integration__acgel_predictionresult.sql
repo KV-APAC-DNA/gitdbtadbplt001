@@ -15,7 +15,7 @@ with acgel_predictionresult as (
 transformed as (
 SELECT NVL(LPAD(customer_id, 10, '0'), '0000000000') as customer_id,
     acgelpropensity,
-    'Src_File_Dt' as source_file_date
+    source_file_date as source_file_date
 FROM acgel_predictionresult   
 ),
 final as (
