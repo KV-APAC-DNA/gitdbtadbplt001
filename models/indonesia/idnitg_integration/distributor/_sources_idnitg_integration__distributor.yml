@@ -150,7 +150,7 @@ sources:
                 schema: idnwks_integration
                 severity: error
 
-    - name: sdl_distributor_customer_dim
+    - name: sdl_distributor_customer_dim_adftemp
       tags: ["id_cd_server_data","ingestion"]
       # tests:
       #   - test_null:
