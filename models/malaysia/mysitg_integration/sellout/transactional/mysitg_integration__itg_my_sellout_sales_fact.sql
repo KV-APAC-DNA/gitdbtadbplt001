@@ -27,7 +27,7 @@ itg_my_material_map as (
     select  * from {{ ref('mysitg_integration__itg_my_material_map') }}
 )
 
-{% if var("cte_to_execute") == 'my_joint_monthly' %}
+{% if var("my_cte_to_execute") == 'my_joint_monthly' %}
 ,
 union1 as (
     select
@@ -67,7 +67,7 @@ union1 as (
 
 select * from union1
 
-{% elif var("cte_to_execute") == 'my_sellout_sales' %}
+{% elif var("my_cte_to_execute") == 'my_sellout_sales' %}
 ,
 union2 as (
    select
