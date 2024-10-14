@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: hcposeedw_access__rep_level_kpi
+    config:
+        alias: rep_level_kpi
+        tags: ["hcpose_views","transformation"]
+  - name: hcposeedw_access__vw_rep_call_activity
+    config:
+        alias: vw_rep_call_activity
+        tags: ["hcpose_views","transformation"]
+  - name: hcposeedw_access__vw_rep_cycle_plan
+    config:
+        alias: vw_rep_cycle_plan
+        tags: ["hcpose_views","transformation"]
+  - name: hcposeedw_access__vw_rep_cycle_plan_product
+    config:
+        alias: vw_rep_cycle_plan_product
+        tags: ["hcpose_views","transformation"]
+  - name: hcposeedw_access__vw_rep_time_on_off_territory
+    config:
+        alias: vw_rep_time_on_off_territory
+        tags: ["hcpose_views","transformation"]
+  - name: hcposeedw_access__vw_user_dashboard
+    config:
+        alias: vw_user_dashboard
+        tags: ["hcpose_views","transformation"]
