@@ -20,16 +20,16 @@ transform AS (
         b.file_id,
         a.customer_no,
         a.filename,
-        NULL
+        a.source_file_date
     FROM (
         SELECT
             customer_no,
-            NULL,
             (
                 SELECT max(filename)
                 FROM mykokya
                 WHERE filename IS NOT NULL
-            ) AS filename
+            ) AS filename,
+            source_file_date
         FROM mykokya
     ) AS a
     INNER JOIN (
