@@ -160,7 +160,8 @@ select 'SELL-OUT' as data_src,
        nvl(prd.barcode,'NA') as msl_product_code,
        --so_fact.product as msl_product_desc,
        cust.retail_environment as retail_env,
-       cust.retail_environment as channel 
+       --cust.retail_environment as channel 
+       'GT' as channel
   from (
 		select productid, product, custcode, customer, channel, sellin_sub_channel, province, region, cust_group, invoice_date, qty_exclude_foc, net_amount_wo_vat, gross_amount_wo_vat
 		   from ( select dense_rank()
