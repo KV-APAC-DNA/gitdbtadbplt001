@@ -31,7 +31,17 @@ final as (
         current_timestamp()::timestamp_ntz(9) AS updt_dttm,
         effective_from::VARCHAR(10) as effective_from,
         effective_to::VARCHAR(10) as effective_to,
-        null::VARCHAR(255) as filename
+        null::VARCHAR(255) as filename,
+        ADDITIONAL_INFORMATION_1_CODE	,
+        ADDITIONAL_INFORMATION_1_NAME	,
+        ADDITIONAL_INFORMATION_2_CODE	,
+        ADDITIONAL_INFORMATION_2_NAME	,
+        ADDITIONAL_INFORMATION_3_CODE	,
+        ADDITIONAL_INFORMATION_3_NAME	,
+        ADDITIONAL_INFORMATION_4_CODE	,
+        ADDITIONAL_INFORMATION_4_NAME	,
+        ADDITIONAL_INFORMATION_5_CODE	,
+        ADDITIONAL_INFORMATION_5_NAME	
     from source 
     where effective_to = '999912'
 )

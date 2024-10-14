@@ -1,6 +1,6 @@
 with source as 
 (
-    select * from {{ source('idnsdl_raw', 'sdl_mds_id_distributor_customer_update') }}
+    select * from {{ source('idnsdl_raw', 'sdl_mds_id_distributor_customer_update_adftemp') }}
 ),
 final as 
 (
@@ -26,7 +26,18 @@ final as
 	convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) as crtd_dttm,
 	convert_timezone('UTC',current_timestamp())::TIMESTAMP_NTZ(9) as UPDT_DTTM,
 	nvl(effective_from,'200001')::varchar(10) as effective_from,
-    nvl(effective_to,'999912')::varchar(10) as effective_to 
+    nvl(effective_to,'999912')::varchar(10) as effective_to ,
+    ADDITIONAL_INFORMATION_1_CODE	,
+    ADDITIONAL_INFORMATION_1_NAME	,
+    ADDITIONAL_INFORMATION_2_CODE	,
+    ADDITIONAL_INFORMATION_2_NAME	,
+    ADDITIONAL_INFORMATION_3_CODE	,
+    ADDITIONAL_INFORMATION_3_NAME	,
+    ADDITIONAL_INFORMATION_4_CODE	,
+    ADDITIONAL_INFORMATION_4_NAME	,
+    ADDITIONAL_INFORMATION_5_CODE	,
+    ADDITIONAL_INFORMATION_5_NAME	
+
     from source
 )
 select * from final
