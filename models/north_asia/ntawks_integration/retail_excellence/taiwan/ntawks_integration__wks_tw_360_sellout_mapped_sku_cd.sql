@@ -14,7 +14,8 @@ select ean_num,sku_code,sku_description from (SELECT DISTINCT ltrim(msl_product_
        ROW_NUMBER() OVER (PARTITION BY ltrim(msl_product_code,0) ORDER BY cal_date DESC, LENGTH(LTRIM(sku_code,'0')) DESC) AS rno
 FROM EDW_RPT_REGIONAL_SELLOUT_OFFTAKE
 WHERE COUNTRY_CODE = 'TW'
-AND   data_source = 'POS' and  MNTH_ID >= (select last_28mnths from edw_vw_cal_Retail_excellence_Dim)::numeric
+AND   data_source in ('SELL-OUT', 'POS')
+and  MNTH_ID >= (select last_28mnths from edw_vw_cal_Retail_excellence_Dim)::numeric
 	  and mnth_id <= (select last_2mnths from edw_vw_cal_Retail_excellence_Dim)::numeric) WHERE rno = 1
 	  ),
 

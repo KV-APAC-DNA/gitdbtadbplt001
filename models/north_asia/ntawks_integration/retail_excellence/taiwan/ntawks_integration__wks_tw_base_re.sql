@@ -107,7 +107,7 @@ FROM (SELECT country_code AS CNTRY_CD,
              SELLOUT_SALES_QUANTITY AS SO_SLS_QTY,
              SELLOUT_SALES_VALUE AS SO_SLS_VALUE
       from  edw_rpt_regional_sellout_offtake base LEFT JOIN WKS_TW_360_SELLOUT_MAPPED_SKU_CD MSCD ON LTRIM (base.EAN,'0') = LTRIM (MSCD.EAN_NUM,'0')
-	  WHERE COUNTRY_CODE in  ('TW') and data_source='POS'  
+	  WHERE COUNTRY_CODE = 'TW' and data_source in ('SELL-OUT', 'POS') 
 	  and MNTH_ID >= (select last_28mnths from edw_vw_cal_Retail_excellence_Dim)::numeric
 	  and mnth_id <= (select last_2mnths from edw_vw_cal_Retail_excellence_Dim)::numeric
 	  and SELLOUT_SALES_VALUE is not NULL 
