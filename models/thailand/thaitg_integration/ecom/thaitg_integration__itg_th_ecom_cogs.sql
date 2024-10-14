@@ -1,6 +1,15 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy="append",
+        unique_keys=['MATERIAL_NO'],
+        pre_hook = "delete from {{this}} where COST_RELEASE_DT||VENDOR_NO in (
+        select distinct COST_RELEASE_DT||VENDOR_NO from {{ source('thasdl_raw', 'sdl_ecom_cogs') }} );"
+    )
+}}
 with source as
 (
-    select * from {{ source('thasdl_raw', 'SDL_ECOM_COGS') }}
+    select * from {{ source('thasdl_raw', 'sdl_ecom_cogs') }}
 ),
 final as
 (
@@ -29,13 +38,11 @@ final as
 		MATERIAL_DESC::VARCHAR(255) as MATERIAL_DESC,
 		UOM::VARCHAR(50) as UOM,
 		BOM_QTY::NUMBER(20,4) as BOM_QTY,
-		UOM_1::VARCHAR(50) as UOM_1,
 		SCRAP::NUMBER(20,4) as SCRAP,
 		STD_COST::NUMBER(20,4),
 		UNIT::NUMBER(20,4) as STD_COST,
 		CUR::VARCHAR(50) as CUR,
 		COST_SIZE::NUMBER(20,4) as COST_SIZE,
-		UOM_2::VARCHAR(50) as UOM_2,
 		TOTAL_COST::NUMBER(20,4) as TOTAL_COST,
 		RAW_PACK::NUMBER(20,4) as RAW_PACK,
 		PACKAGING::NUMBER(20,4) as PACKAGING,

@@ -1,6 +1,14 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy="append",
+        pre_hook = "delete from {{this}} where DATE||SHOP in (
+        select distinct DATE||SHOP from {{ source('thasdl_raw', 'sdl_ecom_cpas') }} );"
+    )
+}}
 with source as
 (
-    select * from {{ source('thasdl_raw', 'SDL_ECOM_CPAS') }}
+    select * from {{ source('thasdl_raw', 'sdl_ecom_cpas') }}
 ),
 final as
 (

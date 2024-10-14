@@ -1,3 +1,12 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy="append",
+        unique_keys=['ORDERSN'],
+        pre_hook = "delete from {{this}} where ORDERSN||SHOP_ID in (
+        select distinct ORDERSN||SHOP_ID from {{ source('thasdl_raw', 'sdl_ecom_backmargin') }} );"
+    )
+}}
 with source as
 (
     select * from {{ source('thasdl_raw', 'sdl_ecom_backmargin') }}

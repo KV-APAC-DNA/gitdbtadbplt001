@@ -1,3 +1,12 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy="append",
+        unique_keys=['ORDER_NO'],
+        pre_hook = "delete from {{this}} where SCM_BARCODE||ORDER_NO in (
+        select distinct SCM_BARCODE||ORDER_NO from {{ source('thasdl_raw', 'sdl_ecom_shopee_compensation') }} );"
+    )
+}} 
 with source as
 (
     select * from {{ source('thasdl_raw', 'sdl_ecom_shopee_compensation') }}

@@ -1,6 +1,15 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy="append",
+        unique_keys=['ORDER_ID','ITEM_ID'],
+        pre_hook = "delete from {{this}} where ORDER_ID in (
+        select distinct ORDER_ID from {{ source('thasdl_raw', 'sdl_ecom_ams') }} );"
+    )
+}} 
 with source as
 (
-    select * from {{ source('thasdl_raw', 'SDL_ECOM_AMS') }}
+    select * from {{ source('thasdl_raw', 'sdl_ecom_ams') }}
 ),
 final as
 (
@@ -23,7 +32,7 @@ SELECT
 	L3_GLOBAL_CATEGORY::VARCHAR(255) as L3_GLOBAL_CATEGORY,
 	ATTRI_COMMI_ID::VARCHAR(100) as ATTRI_COMMI_ID,
 	CHANNEL::VARCHAR(100) as CHANNEL,
-	COMMI_RATE::VARCHAR(100) as COMMI_RATE,
+	REPLACE(COMMI_RATE,'%','')::NUMBER(38,0) as COMMI_RATE,
 	EXPENSE::VARCHAR(100) as EXPENSE,
 	DEDUCTION_STATUS::VARCHAR(100) as DEDUCTION_STATUS,
 	DEDUCTION_METHOD::VARCHAR(100) as DEDUCTION_METHOD,
@@ -34,4 +43,4 @@ SELECT
 	current_timestamp()::timestamp_ntz(9) as updt_dttm
 from source
 )
-select * from final;
+select * from final

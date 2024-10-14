@@ -1,3 +1,11 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy="append",
+        pre_hook = "delete from {{this}} where DATE||REGION||TERMINAL||SHOP_NAME in (
+        select distinct DATE||REGION||TERMINAL||SHOP_NAME from {{ source('thasdl_raw', 'sdl_ecom_search_ads_by_date') }} );"
+    )
+}}
 with source as
 (
     select * from {{ source('thasdl_raw', 'sdl_ecom_search_ads_by_date') }}

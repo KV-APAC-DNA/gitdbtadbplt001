@@ -1,3 +1,4 @@
+version: 2
 sources:
   - name: thasdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
@@ -9,18 +10,19 @@ sources:
     tables:
       - name: sdl_ecom_shopee_compensation
         tags: ["th_ecom_performance","ingestion"]      
-      - name : sdl_ecom_search_ads_by_channel
+      - name: sdl_ecom_search_ads_by_channel
         tags: ["th_ecom_performance","ingestion"]
-      - name : sdl_ecom_search_ads_by_date
+      - name: sdl_ecom_search_ads_by_date
         tags: ["th_ecom_performance","ingestion"]
-      - name : sdl_ecom_backmargin
+      - name: sdl_ecom_backmargin
         tags: ["th_ecom_performance","ingestion"]
-      - name : sdl_ecom_cogs
+      - name: sdl_ecom_cogs
         tags: ["th_ecom_performance","ingestion"]
-      - name : sdl_ecom_cpas
+      - name: sdl_ecom_cpas 
+        tags: ["th_ecom_performance","ingestion"]     
+      - name: sdl_ecom_ams
         tags: ["th_ecom_performance","ingestion"]
-      - name : sdl_ecom_ams
-        tags: ["th_ecom_performance","ingestion"]
+
         
 
 

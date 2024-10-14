@@ -1,3 +1,11 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy="append",
+        pre_hook = "delete from {{this}} where TIME_PERIOD||CHANNEL||REGION||TERMINAL||SHOP_NAME in (
+        select distinct TIME_PERIOD||CHANNEL||REGION||TERMINAL||SHOP_NAME from {{ source('thasdl_raw', 'sdl_ecom_search_ads_by_channel') }} );"
+    )
+}}
 with source as
 (
     select * from {{ source('thasdl_raw', 'sdl_ecom_search_ads_by_channel') }}
@@ -23,7 +31,7 @@ final as
 		BUYERS::integer as BUYERS,
 		NEW_BUYERS::integer as NEW_BUYERS,
 		ITEM_CONVERSION_RATE::NUMBER(38,5) as ITEM_CONVERSION_RATE,
-		FILE_NAME::VARCHAR(255) as filename,
+		FILENAME::VARCHAR(255) as filename,
 		CRTD_DTTM :: TIMESTAMP_NTZ(9) as crtd_dttm,	
 		current_timestamp()::timestamp_ntz(9) as updt_dttm
 	from source
