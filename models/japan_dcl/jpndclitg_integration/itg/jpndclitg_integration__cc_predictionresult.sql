@@ -19,7 +19,7 @@ transformed as (
 SELECT
 customer_id,
     ccpropensity,
-    'Src_File_Dt' as source_file_date
+    source_file_date as source_file_date
 FROM cc_predictionresult 
 ),
 final as (
