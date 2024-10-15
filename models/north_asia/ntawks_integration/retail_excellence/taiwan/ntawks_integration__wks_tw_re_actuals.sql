@@ -29,10 +29,15 @@ SELECT RE_BASE_DIM.CNTRY_CD,
        RE_BASE_DIM.DISTRIBUTOR_NAME,
        RE_BASE_DIM.STORE_CODE,
        RE_BASE_DIM.EAN,
-       STORE_NAME,
-       RETAIL_ENVIRONMENT,
-	   store_type,store_grade,list_price,msl_product_desc,sku_code,
-	   Region,zone_or_area,
+       RE_BASE_DIM.STORE_NAME,
+       RE_BASE_DIM.RETAIL_ENVIRONMENT,
+	   RE_BASE_DIM.store_type,
+       RE_BASE_DIM.store_grade,
+       RE_BASE_DIM.list_price,
+       RE_BASE_DIM.msl_product_desc,
+       RE_BASE_DIM.sku_code,
+	   RE_BASE_DIM.Region,
+       RE_BASE_DIM.zone_or_area,
        CHANNEL_NAME,
        SAP_PARENT_CUSTOMER_KEY,
        SAP_PARENT_CUSTOMER_DESCRIPTION,
@@ -101,27 +106,32 @@ SELECT RE_BASE_DIM.CNTRY_CD,
        SYSDATE() AS CRT_DTTM
 FROM (SELECT DISTINCT CNTRY_CD,
              sellout_dim_key,
+             data_src,
              MONTH
       FROM (SELECT CNTRY_CD,
                    sellout_dim_key,
+                   data_src,
                    MONTH
             FROM WKS_TW_RE_ACT_LM
             WHERE LM_SALES IS NOT NULL
             UNION ALL
             SELECT CNTRY_CD,
                    sellout_dim_key,
+                   data_src,
                    MONTH
             FROM WKS_TW_RE_ACT_L3M
             WHERE L3M_SALES IS NOT NULL
             UNION ALL
             SELECT CNTRY_CD,
                    sellout_dim_key,
+                   data_src,
                    MONTH
             FROM WKS_TW_RE_ACT_L6M
             WHERE L6M_SALES IS NOT NULL
             UNION ALL
             SELECT CNTRY_CD,
                    sellout_dim_key,
+                   data_src,
                    MONTH
             FROM WKS_TW_RE_ACT_L12M
             WHERE L12M_SALES IS NOT NULL)) BASE_DIM
@@ -136,8 +146,13 @@ FROM (SELECT DISTINCT CNTRY_CD,
                     EAN,
                     STORE_NAME,
                     RETAIL_ENVIRONMENT,
-					store_type,store_grade,list_price,msl_product_desc,sku_code,
-					Region,zone_or_area,
+					store_type,
+                    store_grade,
+                    list_price,
+                    msl_product_desc,
+                    sku_code,
+					Region,
+                    zone_or_area,
                     CHANNEL_NAME,
                     SAP_PARENT_CUSTOMER_KEY,
                     SAP_PARENT_CUSTOMER_DESCRIPTION,
@@ -167,8 +182,10 @@ FROM (SELECT DISTINCT CNTRY_CD,
              FROM WKS_TW_BASE_RE) RE_BASE_DIM
          ON RE_BASE_DIM.cntry_cd = BASE_DIM.cntry_cd
         AND RE_BASE_DIM.sellout_dim_key = BASE_DIM.sellout_dim_key
+        AND RE_BASE_DIM.DATA_SRC = BASE_DIM.DATA_SRC
   LEFT OUTER JOIN (SELECT DISTINCT CNTRY_CD,
                           sellout_dim_key,
+                          data_src,
                           mnth_id,
                           so_sls_qty,
                           so_sls_value,
@@ -178,36 +195,37 @@ FROM (SELECT DISTINCT CNTRY_CD,
                ON BASE_DIM.CNTRY_CD = CM.CNTRY_CD
               AND BASE_DIM.Month = CM.mnth_id
               AND BASE_DIM.sellout_dim_key = CM.sellout_dim_key
+              AND BASE_DIM.DATA_SRC = CM.DATA_SRC
   LEFT OUTER JOIN
 --Last Month
 WKS_TW_RE_ACT_LM LM
                ON BASE_DIM.CNTRY_CD = LM.CNTRY_CD
               AND BASE_DIM.month = LM.MONTH
               AND BASE_DIM.sellout_dim_key = LM.sellout_dim_key
+              AND BASE_DIM.DATA_SRC = LM.DATA_SRC
   LEFT OUTER JOIN
 --L3M
 WKS_TW_RE_ACT_L3M L3M
                ON BASE_DIM.CNTRY_CD = L3M.CNTRY_CD
               AND BASE_DIM.month = L3M.MONTH
               AND BASE_DIM.sellout_dim_key = L3M.sellout_dim_key
+              AND BASE_DIM.DATA_SRC = L3M.DATA_SRC
   LEFT OUTER JOIN
 --L6M
 WKS_TW_RE_ACT_L6M L6M
                ON BASE_DIM.CNTRY_CD = L6M.CNTRY_CD
               AND BASE_DIM.month = L6M.MONTH
               AND BASE_DIM.sellout_dim_key = L6M.sellout_dim_key
+              AND BASE_DIM.DATA_SRC = L6M.DATA_SRC
   LEFT OUTER JOIN
 --L12M
 WKS_TW_RE_ACT_L12M L12M
                ON BASE_DIM.CNTRY_CD = L12M.CNTRY_CD
               AND BASE_DIM.month = L12M.MONTH
               AND BASE_DIM.sellout_dim_key = L12M.sellout_dim_key
-			  
+              AND BASE_DIM.DATA_SRC = L12M.DATA_SRC
 where BASE_DIM.month >= (select last_17mnths from edw_vw_cal_Retail_excellence_Dim)::numeric
   and BASE_DIM.month <= (select last_2mnths from edw_vw_cal_Retail_excellence_Dim)::numeric 
---WHERE BASE_DIM.month > TO_CHAR(add_months((SELECT to_date(MAX(mnth_id),'YYYYMM') FROM rg_edw.edw_rpt_regional_sellout_offtake where country_code='ID' and data_source='SELL-OUT'  ),-18),'YYYYMM')
---and  mnth_id='202307'
---AND   BASE_DIM.month <= (SELECT MAX(mnth_id) FROM NA_WKS.WKS_TW_BASE_RE)
 ),
 final as
 (

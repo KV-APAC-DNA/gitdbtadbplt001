@@ -13,6 +13,7 @@ edw_vw_os_time_dim as (
 tw_re_allmonths	  as (
 SELECT all_months.cntry_cd,
        all_months.sellout_dim_key,
+       all_months.data_src,
        all_months.month,
        base.SO_SLS_QTY::NUMERIC(38,6) AS SO_SLS_QTY,
        base.SO_SLS_VALUE::NUMERIC(38,6) AS SO_SLS_VALUE,
@@ -20,9 +21,11 @@ SELECT all_months.cntry_cd,
        BASE.SALES_VALUE_LIST_PRICE
 FROM (SELECT DISTINCT cntry_cd,
              sellout_dim_key,
+             data_src,
              MONTH
       FROM (SELECT DISTINCT cntry_cd,
-                   sellout_dim_key
+                   sellout_dim_key,
+                   data_src
             FROM WKS_TW_BASE_RE) a,
            (SELECT DISTINCT "year",
                    mnth_id AS MONTH
@@ -41,6 +44,7 @@ final as (
     select
 cntry_cd::varchar(2) as cntry_cd ,
 sellout_dim_key::varchar(32) as sellout_dim_key ,
+data_src :: varchar(14) as data_src,
 month::varchar(27) as month ,
 so_sls_qty::numeric(38,6) as so_sls_qty ,
 so_sls_value::numeric(38,6) as so_sls_value ,

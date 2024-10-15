@@ -15,9 +15,7 @@ edw_vw_pop6_products as (
     --select * from {{ source('ntaedw_integration', 'edw_vw_pop6_products') }}
     select * from {{ ref('aspedw_integration__edw_vw_pop6_products') }}
 ),
-edw_vw_cal_retail_excellence_dim as (
-    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
-),
+
 --Final CTE
 
 TW_re_msl_list
@@ -25,6 +23,7 @@ AS
 (SELECT DISTINCT jj_year,
        jj_mnth_id,
        soldto_code,
+       data_src,
        distributor_code,
        distributor_name,
        store_code,
@@ -46,13 +45,15 @@ AS
        prod_hier_l8,
        prod_hier_l9,
        sku_code,
-       MAX(msl_product_desc) OVER (PARTITION BY LTRIM(ean,0) ORDER BY LENGTH(msl_product_desc) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS msl_product_desc,
+       --MAX(msl_product_desc) OVER (PARTITION BY LTRIM(ean,0) ORDER BY LENGTH(msl_product_desc) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS msl_product_desc,
+       msl_product_desc,
        region,
        zone_or_area
 FROM (SELECT DISTINCT SUBSTRING(base.jj_mnth_id,1,4) AS jj_year,
              base.jj_mnth_id,
              noo.soldto_code,
-             distributor_code,
+             noo.data_src,
+             noo.distributor_code,
              noo.distributor_name,
              noo.distributor_name_new,
              noo.store_code,
@@ -98,7 +99,8 @@ FROM (SELECT DISTINCT SUBSTRING(base.jj_mnth_id,1,4) AS jj_year,
             WHERE UPPER(msl.market) = 'TAIWAN'
             --in ('Taiwan')	 and msl.retail_environment='MT'
             ) base
-        LEFT JOIN (SELECT DISTINCT distributor_code,
+        LEFT JOIN (SELECT DISTINCT data_src,
+                          distributor_code,
                           distributor_name,
                           CASE
                             WHEN distributor_name LIKE '%Carrefour%' THEN 'Carrefour'
@@ -123,8 +125,8 @@ FROM (SELECT DISTINCT SUBSTRING(base.jj_mnth_id,1,4) AS jj_year,
                    --WHERE CNTRY_CD in  ('TW') and data_src='POS' and RETAIL_ENVIRONMENT='MT'
                    ) NOO
                ON UPPER (base.channel) = UPPER (noo.channel)
-              AND base.customer_name = noo.distributor_name_new
-              AND base.cntry_cd = noo.CNTRY_CD
+              AND UPPER(base.customer_name) = UPPER(noo.distributor_name_new)
+              AND UPPER(base.cntry_cd) = UPPER(noo.CNTRY_CD)
               AND TRIM (base.sku_unique_identifier) = TRIM (noo.EAN)
         LEFT JOIN (SELECT DISTINCT prd.country_l1 AS prod_hier_l1,
                           prd.regional_franchise_l2 AS prod_hier_l2,
@@ -140,6 +142,8 @@ FROM (SELECT DISTINCT SUBSTRING(base.jj_mnth_id,1,4) AS jj_year,
                    WHERE cntry_cd = 'TW') epd ON UPPER (TRIM (base.sku_unique_identifier)) = UPPER (TRIM (epd.barcode))
       -- and row_no=1
     )
+    WHERE STORE_CODE IS NOT NULL
+    AND   DISTRIBUTOR_CODE IS NOT NULL
 ),
 
 --final select
@@ -148,6 +152,7 @@ final as (
 jj_year::varchar(16) as jj_year ,
 jj_mnth_id::varchar(22) as jj_mnth_id ,
 soldto_code::varchar(255) as soldto_code ,
+data_src::varchar(20) as data_src,
 distributor_code::varchar(32) as distributor_code ,
 distributor_name::varchar(255) as distributor_name ,
 store_code::varchar(100) as store_code ,
