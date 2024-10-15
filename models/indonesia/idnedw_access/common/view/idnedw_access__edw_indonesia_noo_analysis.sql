@@ -92,5 +92,15 @@ select
 	latest_chnl_grp2 as "latest_chnl_grp2",
 	latest_distributor_group as "latest_distributor_group",
 	latest_dstrbtr_grp_cd as "latest_dstrbtr_grp_cd",
-	usd_conversion_rate as "usd_conversion_rate"
+	usd_conversion_rate as "usd_conversion_rate",
+    ADDITIONAL_INFORMATION_1_CODE as "additional_information_1_code",
+    ADDITIONAL_INFORMATION_1_NAME as "additional_information_1_name",
+    ADDITIONAL_INFORMATION_2_CODE as "additional_information_2_code",
+    ADDITIONAL_INFORMATION_2_NAME as "additional_information_2_name",
+    ADDITIONAL_INFORMATION_3_CODE as "additional_information_3_code",
+    ADDITIONAL_INFORMATION_3_NAME as "additional_information_3_name",
+    ADDITIONAL_INFORMATION_4_CODE as "additional_information_4_code",
+    ADDITIONAL_INFORMATION_4_NAME as "additional_information_4_name",
+    ADDITIONAL_INFORMATION_5_CODE as "additional_information_5_code",
+    ADDITIONAL_INFORMATION_5_NAME as "additional_information_5_name"
 from source
