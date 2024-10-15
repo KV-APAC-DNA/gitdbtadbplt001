@@ -203,7 +203,7 @@ sources:
     - name: sdl_ph_non_ise_landmark_sm_test
       tags: ["ph_non_pos","ingestion"]
       tests:
-      - test_null:
+      - test_null_ph_non_ise:
                     select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
                     not_null_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
                     name: TRATBL_sdl_ph_non_ise_landmark_sm__null_test
