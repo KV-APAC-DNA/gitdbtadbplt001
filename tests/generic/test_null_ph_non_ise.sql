@@ -1,4 +1,4 @@
-{% test test_null(model,not_null_columns=None,select_columns=None,filter=none,condition="OR")%}
+{% test test_null_ph_non_ise(model,not_null_columns=None,select_columns=None,filter=none,condition="OR")%}
 {% if not_null_columns!=None %}
     select
                     {% set file_name_columns = [
