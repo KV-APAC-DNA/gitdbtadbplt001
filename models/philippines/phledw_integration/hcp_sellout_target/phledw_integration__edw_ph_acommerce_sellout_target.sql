@@ -18,8 +18,9 @@ transformed as
 (
      
    select 
-   'acommerce' as data_source,
-   hce.mnth_id,
+   'acommerce' as data_src,
+   hce.jj_mnth_id ,
+   hce.jj_year,
     hce.prefix,
     hce.month,
     hce.month_no,
@@ -35,20 +36,22 @@ transformed as
     hce.jj_srp,
     hce.quantity,
     hce.gmv,
+    hce.customer_email,
     prod.GROUP_VARIANT_CODE,
     prod.team_code,
-    prod.sap_item_code
-
+    prod.sap_item_code,
+    store.store_code,
+    store.territory_code_code,
+    store.DISTRICT_CODE
     from acommerce_sellout_target hce
     inner join hce_product_master prod on (hce.item_sku=prod.code)
-    inner join hce_customer_master  cust on (prod.code=cust.code)
-    inner hcp_store_master store store on (cust.territory_code_code=territory_code_code)
+    inner join hce_customer_master  cust on (hce.customer_email=cust.name)
+    inner join hcp_store_master store  on (cust.territory_code_code=store.territory_code_code)
 ),
 final as
 (
     select 
     *
-
     from transformed
 )
 
