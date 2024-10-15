@@ -7,7 +7,7 @@
         delete from {{this}}
     where (upper(trim(distributorcode)), upper(trim(outletcode))) 
     in (select distinct upper(trim(distributorcode)) as distributorcode, upper(trim(outletcode)) as outletcode
-    from {{source ('idnsdl_raw', 'sdl_distributor_ivy_outlet_master')}}
+    from {{source ('idnsdl_raw', 'sdl_distributor_ivy_outlet_master_adftemp')}}
     where file_name not in (
             select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_outlet_master__null_test') }}
             union all
@@ -20,7 +20,7 @@
 with sdl_distributor_ivy_outlet_master as 
 (
     select *, dense_rank() over(partition by upper(trim(distributorcode)), upper(trim(outletcode)) order by file_name desc) as rnk 
-    from {{source ('idnsdl_raw', 'sdl_distributor_ivy_outlet_master')}}
+    from {{source ('idnsdl_raw', 'sdl_distributor_ivy_outlet_master_adftemp')}}
     where file_name not in (
             select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_outlet_master__null_test') }}
             union all
@@ -53,7 +53,7 @@ itg_distributor_ivy_outlet_master as (
         contactperson,
         credit_limit,
         invoice_limit,
-        credit_period,
+        substring(credit_period,1,2) as credit_period,
         trim(tin) as tin,
         trim(is_diamond_store) as is_diamond_store,
         trim(id_no) as id_no,

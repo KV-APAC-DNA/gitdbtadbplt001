@@ -1,5 +1,5 @@
 with source as (
-    select * from   {{ source('idnsdl_raw', 'sdl_distributor_customer_dim') }} 
+    select * from   {{ source('idnsdl_raw', 'sdl_distributor_customer_dim_adftemp') }} 
 ),
 final as
 (
