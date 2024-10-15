@@ -8,7 +8,7 @@ edw_vw_cal_retail_excellence_dim as (
 --Final CTE
 TW_360_SELLOUT_MAPPED_SKU_CD as (
 
-select ean_num,sku_code,sku_description from (SELECT DISTINCT ltrim(msl_product_code,'0') AS ean_num,
+select ean_num,sku_code,msl_product_desc from (SELECT DISTINCT ltrim(msl_product_code,'0') AS ean_num,
        LTRIM(sku_code,'0') AS sku_code,
 	   msl_product_desc as msl_product_desc, 
        ROW_NUMBER() OVER (PARTITION BY ltrim(msl_product_code,0) ORDER BY cal_date DESC, LENGTH(LTRIM(sku_code,'0')) DESC) AS rno
