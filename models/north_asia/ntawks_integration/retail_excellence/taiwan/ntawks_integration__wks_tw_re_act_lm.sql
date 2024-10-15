@@ -7,6 +7,7 @@ TW_RE_ACT_LM as (
 
 SELECT SO.CNTRY_CD,
        SO.sellout_dim_key,
+       SO.data_src,
        MONTH,
        so_sls_value,
        SUM(SO_SLS_QTY) OVER (PARTITION BY cntry_cd,sellout_dim_key ORDER BY month ROWS BETWEEN 1 PRECEDING AND 1 PRECEDING) AS LM_SALES_QTY,
@@ -17,12 +18,14 @@ FROM WKS_TW_RE_ALLMONTHS SO
 --WHERE sellout_dim_key in ( 'b526ba0ea750a03d6ea7818ca70a60f2')
 ORDER BY SO.CNTRY_CD,
          SO.sellout_dim_key,
+         SO.data_src,
          MONTH
 ),
 final as (
 select 
 cntry_cd::varchar(2) AS cntry_cd,
 sellout_dim_key::varchar(32) AS sellout_dim_key,
+data_src :: varchar(14) as data_src,
 month::varchar(23) AS month,
 so_sls_value::numeric(38,6) AS so_sls_value,
 lm_sales_qty::numeric(38,6) AS lm_sales_qty,

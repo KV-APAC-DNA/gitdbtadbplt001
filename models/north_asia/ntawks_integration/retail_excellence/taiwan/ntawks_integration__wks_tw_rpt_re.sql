@@ -8,7 +8,6 @@ wks_tw_re_actuals as (
 customer_heirarchy as (
     select * from {{ ref('aspedw_integration__edw_generic_customer_hierarchy') }}
 ),
-
 product_heirarchy as (
     select * from {{ ref('aspedw_integration__edw_generic_product_hierarchy') }}
 ),
@@ -20,14 +19,13 @@ edw_vw_pop6_products as (
     select * from {{ ref('aspedw_integration__edw_vw_pop6_products') }}
 ),
 
-TW_RPT_RE_mdp  as (
- 
+TW_RPT_RE_mdp AS (
 SELECT distinct Q.*,
        COM.*
 FROM (SELECT TARGET.jj_year,
-             TARGET.jj_mnth_id,
-             --COM.CLUSTER,			 
-             TARGET.market AS MARKET,
+             TARGET.jj_mnth_id,		 
+             --TARGET.market AS MARKET,
+             COALESCE(ACTUAL.CNTRY_NM, TARGET.MARKET) AS MARKET,
              COALESCE(ACTUAL.CHANNEL_NAME,TARGET.Sell_Out_Channel,'NA') as CHANNEL_NAME,
              COALESCE(ACTUAL.SOLDTO_CODE, TARGET.SOLDTO_CODE) AS SOLDTO_CODE,
              COALESCE(actual.DISTRIBUTOR_CODE,TARGET.DISTRIBUTOR_CODE,'NA') as DISTRIBUTOR_CODE,
@@ -38,7 +36,7 @@ FROM (SELECT TARGET.jj_year,
              NULL AS STORE_CATEGORY,
              COALESCE(actual.store_code,TARGET.STORE_CODE,'NA') AS STORE_CODE,
              COALESCE(actual.store_name,TARGET.STORE_NAME,'NA') as STORE_NAME,
-             TARGET.STORE_GRADE,
+             COALESCE(TARGET.STORE_GRADE, 'NA') AS STORE_GRADE,
              'NA' as STORE_SIZE,
              nvl(actual.REGION,TARGET.REGION) as REGION,
              nvl(actual.ZONE_OR_AREA,TARGET.zone_or_area) as ZONE_NAME,
@@ -47,7 +45,7 @@ FROM (SELECT TARGET.jj_year,
              NULL AS RTRLONGITUDE,
              nvl(actual.RETAIL_ENVIRONMENT,TARGET.retail_environment) AS Sell_Out_RE,
              nvl(actual.EAN,TARGET.EAN) AS PRODUCT_CODE,
-             COALESCE(target.msl_product_desc,product.SAP_MAT_DESC,'NA') AS PRODUCT_NAME,
+             COALESCE(actual.msl_product_desc, target.msl_product_desc,'NA') AS PRODUCT_NAME,
              TARGET.PROD_HIER_L1 AS PROD_HIER_L1,
              TARGET.PROD_HIER_L2 AS PROD_HIER_L2,
              TARGET.PROD_HIER_L3 AS PROD_HIER_L3,
@@ -60,7 +58,8 @@ FROM (SELECT TARGET.jj_year,
              TARGET.PROD_HIER_L9 AS PROD_HIER_L9,
              target.sku_code AS MAPPED_SKU_CD,
 			 actual.list_price,
-             'POS' as data_src,
+             --'POS' as data_src,
+             COALESCE(ACTUAL.DATA_SRC, TARGET.DATA_SRC) AS DATA_SRC,
              COALESCE(ACTUAL.CUSTOMER_SEGMENT_KEY,CUSTOMER.CUST_SEGMT_KEY,'NA') AS CUSTOMER_SEGMENT_KEY,
              COALESCE(ACTUAL.CUSTOMER_SEGMENT_DESCRIPTION,CUSTOMER.CUST_SEGMENT_DESC,'NA') AS CUSTOMER_SEGMENT_DESCRIPTION,
              COALESCE(ACTUAL.RETAIL_ENVIRONMENT,target.retail_environment,'NA') AS RETAIL_ENVIRONMENT,
@@ -108,7 +107,7 @@ FROM (SELECT TARGET.jj_year,
              COALESCE(ACTUAL.GLOBAL_PUT_UP_DESCRIPTION,PRODUCT.GPH_PROD_PUT_UP_DESC) AS GLOBAL_PUT_UP_DESCRIPTION,
              --TRIM(NVL (NULLIF(PRODUCT.EAN,''),'NA')) AS EAN,
              --TRIM(NVL (NULLIF(PRODUCT.SAP_MATL_NUM,''),'NA'))AS SKU_CODE,
-             --TRIM(NVL (NULLIF(PRODUCT.SAP_MAT_DESC,''),'NA'))AS SKU_DESCRIPTION,
+             TRIM(NVL (NULLIF(PRODUCT.SAP_MAT_DESC,''),'NA'))AS SKU_DESCRIPTION,
              TRIM(NVL (NULLIF(PRODUCT.PKA_FRANCHISE_DESC,''),'NA')) AS PKA_FRANCHISE_DESC,
              TRIM(NVL (NULLIF(PRODUCT.PKA_BRAND_DESC,''),'NA')) AS PKA_BRAND_DESC,
              TRIM(NVL (NULLIF(PRODUCT.PKA_SUB_BRAND_DESC,''),'NA')) AS PKA_SUB_BRAND_DESC,
@@ -148,12 +147,13 @@ FROM (SELECT TARGET.jj_year,
       FROM wks_tw_re_msl_list TARGET
         LEFT JOIN (SELECT * FROM WKS_TW_RE_ACTUALS) ACTUAL
                ON TARGET.jj_mnth_id = ACTUAL.MNTH_ID
-              AND TARGET.DISTRIBUTOR_NAME = ACTUAL.DISTRIBUTOR_NAME
+              --AND TARGET.DISTRIBUTOR_NAME = ACTUAL.DISTRIBUTOR_NAME
+              AND UPPER(LTRIM(TARGET.DISTRIBUTOR_CODE,'0')) = UPPER(LTRIM(ACTUAL.DISTRIBUTOR_CODE,'0'))
               AND ltrim(TARGET.STORE_CODE,0) = ltrim(ACTUAL.STORE_CODE,0)
               AND UPPER (TRIM (TARGET.EAN)) = UPPER (TRIM (ACTUAL.EAN))
 			  and UPPER (target.retail_environment) = UPPER (actual.retail_environment) 
               and UPPER (target.Sell_Out_Channel) = UPPER (actual.CHANNEL_NAME) 
-			  and target.market=actual.CNTRY_NM
+			  and UPPER(target.market) = UPPER(actual.CNTRY_NM)
      
       ----------------customer hierarchy------------------------------          
       
@@ -178,15 +178,14 @@ TW_RPT_RE_non_mdp  as (
 SELECT distinct Q.*,
        COM.*
 FROM (SELECT LEFT (ACTUAL.MNTH_ID,4) AS YEAR,
-             ACTUAL.MNTH_ID AS MNTH_ID,--CAST(ACTUAL.MNTH_ID AS INTEGER) AS MNTH_ID,
-             -- COM.CLUSTER,			 			
+             ACTUAL.MNTH_ID AS MNTH_ID,			 			
              ACTUAL.CNTRY_NM AS MARKET,
              nvl(actual.channel_name,'NA') AS CHANNEL,
              ACTUAL.soldto_code,
              ACTUAL.DISTRIBUTOR_CODE,
              ACTUAL.DISTRIBUTOR_NAME,
              nvl(actual.channel_name,'NA') AS SELL_OUT_CHANNEL,
-             actual.STORE_TYPE,
+             COALESCE(actual.STORE_TYPE, 'NA') AS STORE_TYPE,
              NULL AS PRIORITIZATION_SEGMENTATION,
              NULL AS STORE_CATEGORY,
              COALESCE(ACTUAL.STORE_CODE,'NA') AS STORE_CODE,
@@ -200,7 +199,7 @@ FROM (SELECT LEFT (ACTUAL.MNTH_ID,4) AS YEAR,
              NULL AS RTRLONGITUDE,
              ACTUAL.retail_environment AS sell_out_RE,
              ACTUAL.EAN AS PRODUCT_CODE,
-             COALESCE(actual.msl_product_desc,product.SAP_MAT_DESC,'NA') AS PRODUCT_NAME,
+             COALESCE(actual.msl_product_desc,'NA') AS PRODUCT_NAME,
              epd.prod_hier_l1  AS prod_hier_l1,
              epd.prod_hier_l2 AS prod_hier_l2,
              epd.prod_hier_l3 AS prod_hier_l3,
@@ -214,7 +213,8 @@ FROM (SELECT LEFT (ACTUAL.MNTH_ID,4) AS YEAR,
              epd.prod_hier_l9 as  prod_hier_l9,
              actual.sku_code AS MAPPED_SKU_CD,
 			 actual.list_price,
-             actual.data_src,
+             --actual.data_src,
+             ACTUAL.DATA_SRC AS DATA_SRC
              COALESCE(ACTUAL.CUSTOMER_SEGMENT_KEY,CUSTOMER.CUST_SEGMT_KEY) AS CUSTOMER_SEGMENT_KEY,
              COALESCE(ACTUAL.CUSTOMER_SEGMENT_DESCRIPTION,CUSTOMER.CUST_SEGMENT_DESC) AS CUSTOMER_SEGMENT_DESCRIPTION,
              COALESCE(ACTUAL.RETAIL_ENVIRONMENT,'NA') AS RETAIL_ENVIRONMENT,
@@ -262,7 +262,7 @@ FROM (SELECT LEFT (ACTUAL.MNTH_ID,4) AS YEAR,
              COALESCE(ACTUAL.GLOBAL_PUT_UP_DESCRIPTION,PRODUCT.GPH_PROD_PUT_UP_DESC) AS GLOBAL_PUT_UP_DESCRIPTION,
              --TRIM(NVL (NULLIF(PRODUCT.EAN,''),'NA')) AS EAN,
              --TRIM(NVL (NULLIF(PRODUCT.SAP_MATL_NUM,''),'NA'))AS SKU_CODE,
-             --TRIM(NVL (NULLIF(PRODUCT.SAP_MAT_DESC,''),'NA'))AS SKU_DESCRIPTION,
+             TRIM(NVL (NULLIF(PRODUCT.SAP_MAT_DESC,''),'NA'))AS SKU_DESCRIPTION,
              TRIM(NVL (NULLIF(PRODUCT.PKA_FRANCHISE_DESC,''),'NA')) AS PKA_FRANCHISE_DESC,
              TRIM(NVL (NULLIF(PRODUCT.PKA_BRAND_DESC,''),'NA')) AS PKA_BRAND_DESC,
              TRIM(NVL (NULLIF(PRODUCT.PKA_SUB_BRAND_DESC,''),'NA')) AS PKA_SUB_BRAND_DESC,
@@ -299,23 +299,31 @@ FROM (SELECT LEFT (ACTUAL.MNTH_ID,4) AS YEAR,
              ACTUAL.P12M_SALES_FLAG,
              'N' AS MDP_FLAG,
              1 AS TARGET_COMPLAINCE
-      FROM (SELECT *
-            FROM WKS_TW_RE_ACTUALS A
+      FROM (SELECT * FROM WKS_TW_RE_ACTUALS A
             WHERE NOT EXISTS (SELECT 1
                               FROM wks_tw_re_msl_list T
                               WHERE T.jj_mnth_id = A.MNTH_ID
-              AND T.DISTRIBUTOR_NAME = A.DISTRIBUTOR_NAME
+              --AND T.DISTRIBUTOR_NAME = A.DISTRIBUTOR_NAME
+              AND UPPER(LTRIM(TARGET.DISTRIBUTOR_CODE,'0')) = UPPER(LTRIM(ACTUAL.DISTRIBUTOR_CODE,'0'))
               AND ltrim(T.STORE_CODE,0) = ltrim(A.STORE_CODE,0)
               AND UPPER (TRIM (T.EAN)) = UPPER (TRIM (A.EAN))
               and UPPER (T.retail_environment) = UPPER (A.retail_environment) 
               and UPPER (T.Sell_Out_Channel) = UPPER (A.CHANNEL_NAME) 
-			  and T.market=A.CNTRY_NM 
-							  )) ACTUAL
-left join (
-select distinct prd.country_l1 AS prod_hier_l1, prd.regional_franchise_l2 AS prod_hier_l2, prd.franchise_l3 AS prod_hier_l3, prd.brand_l4 AS prod_hier_l4, 
-prd.sub_category_l5 AS prod_hier_l5, prd.platform_l6 AS prod_hier_l6, prd.variance_l7 AS prod_hier_l7, prd.pack_size_l8 AS prod_hier_l8, NULL AS prod_hier_l9,prd.barcode 
-from edw_vw_pop6_products prd where cntry_cd='TW')epd
- on UPPER (TRIM (actual.ean)) = UPPER (TRIM (epd.barcode))
+			  and UPPER(T.market) = UPPER(A.CNTRY_NM)
+			)) ACTUAL
+        left join (SELECT DISTINCT prd.country_l1 AS prod_hier_l1,
+            prd.regional_franchise_l2 AS prod_hier_l2,
+            prd.franchise_l3 AS prod_hier_l3,
+            prd.brand_l4 AS prod_hier_l4,
+            prd.sub_category_l5 AS prod_hier_l5,
+            prd.platform_l6 AS prod_hier_l6,
+            prd.variance_l7 AS prod_hier_l7,
+            prd.pack_size_l8 AS prod_hier_l8,
+            NULL AS prod_hier_l9,
+            prd.barcode
+        FROM edw_vw_pop6_products prd
+        WHERE cntry_cd = 'TW') epd
+        ON UPPER (TRIM (actual.ean)) = UPPER (TRIM (epd.barcode))
 
       ----------------customer hierarchy------------------------------          
       
@@ -343,8 +351,8 @@ select * from TW_RPT_RE_non_mdp
 
 final as (
 select
-jj_year::varchar(16) as jj_year ,
-jj_mnth_id::varchar(22) as jj_mnth_id ,
+jj_year::numeric(18,0) as jj_year ,
+jj_mnth_id::numeric(18,0) as jj_mnth_id ,
 market::varchar(50) as market ,
 channel_name::varchar(150) as channel_name ,
 soldto_code::varchar(255) as soldto_code ,
@@ -421,6 +429,7 @@ global_product_subsegment::varchar(100) as global_product_subsegment ,
 global_product_category::varchar(50) as global_product_category ,
 global_product_subcategory::varchar(50) as global_product_subcategory ,
 global_put_up_description::varchar(100) as global_put_up_description ,
+sku_description :: varchar(150) as sku_description,
 pka_franchise_desc::varchar(30) as pka_franchise_desc ,
 pka_brand_desc::varchar(30) as pka_brand_desc ,
 pka_sub_brand_desc::varchar(30) as pka_sub_brand_desc ,
@@ -456,7 +465,7 @@ p3m_sales_flag::varchar(1) as p3m_sales_flag ,
 p6m_sales_flag::varchar(1) as p6m_sales_flag ,
 p12m_sales_flag::varchar(1) as p12m_sales_flag ,
 mdp_flag::varchar(1) as mdp_flag ,
-target_complaince::integer as target_complaince ,
+target_complaince:: numeric(18,0) as target_complaince ,
 "cluster"::varchar(100) as "cluster" 
 
 from TW_RPT_RE

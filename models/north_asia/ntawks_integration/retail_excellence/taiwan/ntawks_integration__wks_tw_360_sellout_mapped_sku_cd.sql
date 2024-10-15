@@ -10,7 +10,7 @@ TW_360_SELLOUT_MAPPED_SKU_CD as (
 
 select ean_num,sku_code,sku_description from (SELECT DISTINCT ltrim(msl_product_code,'0') AS ean_num,
        LTRIM(sku_code,'0') AS sku_code,
-	   msl_product_desc as sku_description, 
+	   msl_product_desc as msl_product_desc, 
        ROW_NUMBER() OVER (PARTITION BY ltrim(msl_product_code,0) ORDER BY cal_date DESC, LENGTH(LTRIM(sku_code,'0')) DESC) AS rno
 FROM EDW_RPT_REGIONAL_SELLOUT_OFFTAKE
 WHERE COUNTRY_CODE = 'TW'
@@ -23,7 +23,7 @@ final as(
     select
 ean_num::VARCHAR(100) as ean_num,
 sku_code::VARCHAR(100) AS sku_code,
-sku_description::VARCHAR(100) as sku_description
+msl_product_desc::VARCHAR(500) as msl_product_desc
 from TW_360_SELLOUT_MAPPED_SKU_CD
 )				
 
