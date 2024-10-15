@@ -851,7 +851,7 @@ updated_noo as (
         left join EDW_DISTRIBUTOR_DIM EDD ON TRIM(UPPER(filtered_noo.JJ_SAP_DSTRBTR_ID)) = trim(upper(edd.jj_sap_dstrbtr_id))
         left join EDW_PRODUCT_DIM_rnk AS EDP on TRIM(UPPER(filtered_noo.JJ_SAP_PROD_ID)) = trim(upper(edp.jj_sap_prod_id))
 ),
-transformed_noo as (
+transformed_noo as ( 
     select updated_noo.jj_year as jj_year,
         updated_noo.jj_qrtr as jj_qrtr,
         updated_noo.jj_mnth as jj_mnth,
