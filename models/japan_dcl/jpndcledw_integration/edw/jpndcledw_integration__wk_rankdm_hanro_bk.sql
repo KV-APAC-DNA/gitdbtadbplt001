@@ -27,7 +27,6 @@
 with WK_RANKDM_HANRO as (
 select * from {{ ref('jpndcledw_integration__wk_rankdm_hanro') }}
 ),
-------add reference from sourav's model 
 final as (
 SELECT 
 *

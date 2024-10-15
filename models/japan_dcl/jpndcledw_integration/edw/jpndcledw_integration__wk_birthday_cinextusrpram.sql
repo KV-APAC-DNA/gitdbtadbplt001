@@ -128,9 +128,9 @@ AS (
 final as
 (
     select * from t1
-    WHERE NOT EXISTS (SELECT 'X'
-                        FROM {{this}}
-                       WHERE DIUSRID = t1.DIUSRID)
+    -- WHERE NOT EXISTS (SELECT 'X'
+    --                     FROM {{this}}
+    --                    WHERE DIUSRID = t1.DIUSRID)
 )
 SELECT *
 FROM FINAL
