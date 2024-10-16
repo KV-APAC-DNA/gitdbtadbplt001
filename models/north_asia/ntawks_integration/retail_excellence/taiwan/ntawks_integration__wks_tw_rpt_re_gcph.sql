@@ -348,8 +348,8 @@ FROM (SELECT MAIN.jj_year,
 
 final as (
     select 
-jj_year::varchar(16) as jj_year ,
-jj_mnth_id::varchar(22) as jj_mnth_id ,
+jj_year:: numeric(18,0) as jj_year ,
+jj_mnth_id:: numeric(18,0) as jj_mnth_id ,
 "cluster"::varchar(100) as "cluster" ,
 market::varchar(50) as market ,
 data_src::varchar(14) as data_src ,
