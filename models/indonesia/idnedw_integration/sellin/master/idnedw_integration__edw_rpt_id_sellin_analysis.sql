@@ -91,7 +91,7 @@ select to_date(eadlf.bill_dt) as bill_dt,
        sum(eadlf.sellin_qty)::NUMBER(18,4) as sellin_qty,
        sum(eadlf.sellin_val)::NUMBER(18,4) as sellin_val,
        sum(eadlf.gross_sellin_val)::NUMBER(18,4) as gross_sellin_val,
-	  (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(15,5) AS usd_conversion_rate
+	  (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(28,10) AS usd_conversion_rate
 from edw_id_sellin_fact_temp as eadlf,
      edw_distributor_dim as edd,
      edw_product_dim as epd,

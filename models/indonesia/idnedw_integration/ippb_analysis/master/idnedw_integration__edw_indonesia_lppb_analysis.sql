@@ -121,7 +121,7 @@ SELECT ETD.JJ_YEAR,
              0 AS P3M_GROSS_SELLOUT_VAL,
              0 AS P6M_SELLOUT_VAL,
              0 AS P6M_GROSS_SELLOUT_VAL,
-			 (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(15,5) AS usd_conversion_rate
+			 (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(28,10) AS usd_conversion_rate
       FROM (SELECT REC_KEY,
                    CUST_PROD_CD,
                    JJ_MNTH_ID,
@@ -254,7 +254,7 @@ union2 as(
              0 AS P3M_GROSS_SELLOUT_VAL,
              0 AS P6M_SELLOUT_VAL,
              0 AS P6M_GROSS_SELLOUT_VAL,
-			 (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(15,5) AS usd_conversion_rate
+			 (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(28,10) AS usd_conversion_rate
       FROM itg_target_bp_s_op ITBSP,
            (SELECT DISTINCT JJ_YEAR,
                    JJ_QRTR_NO,
@@ -348,7 +348,7 @@ SELECT CAST(YEAR AS INTEGER) AS JJ_YEAR,
              0 AS P3M_GROSS_SELLOUT_VAL,
              0 AS P6M_SELLOUT_VAL,
              0 AS P6M_GROSS_SELLOUT_VAL,
-			 (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(15,5) AS usd_conversion_rate
+			 (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(28,10) AS usd_conversion_rate
       FROM (select T1.*,ETD.JJ_QRTR,ETD.JJ_MNTH_ID,ETD.JJ_MNTH,ETD.JJ_MNTH_DESC,ETD.JJ_MNTH_NO from itg_target_dist_brand_channel T1 LEFT JOIN (SELECT DISTINCT JJ_YEAR,
                           
                           JJ_QRTR,
@@ -438,7 +438,7 @@ union4 as(
              0 AS P3M_GROSS_SELLOUT_VAL,
              0 AS P6M_SELLOUT_VAL,
              0 AS P6M_GROSS_SELLOUT_VAL,
-			 (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(15,5) AS usd_conversion_rate
+			 (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(28,10) AS usd_conversion_rate
       FROM (SELECT CAL.JJ_YEAR,
                    CAL.JJ_QRTR,
                    CAL.JJ_MNTH_ID,
@@ -597,7 +597,7 @@ union5 as(
              P3M_SELLOUT.P3M_GROSS_SELLOUT_VAL,
              0 AS P6M_SELLOUT_VAL,
              0 AS P6M_GROSS_SELLOUT_VAL,
-			 (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(15,5) AS usd_conversion_rate
+			 (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(28,10) AS usd_conversion_rate
       FROM (SELECT CAL.JJ_YEAR,
                    CAL.JJ_QRTR,
                    CAL.JJ_MNTH_ID,
@@ -755,7 +755,7 @@ union6 as(
              0 AS P3M_GROSS_SELLOUT_VAL,
              P6M_SELLOUT.P6M_SELLOUT_VAL,
              P6M_SELLOUT.P6M_GROSS_SELLOUT_VAL,
-			 (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(15,5) AS usd_conversion_rate
+			 (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(28,10) AS usd_conversion_rate
       FROM (SELECT CAL.JJ_YEAR,
                    CAL.JJ_QRTR,
                    CAL.JJ_MNTH_ID,
@@ -1035,7 +1035,7 @@ final as(
         p3m_gross_sellout_val::number(18,4) as p3m_gross_sellout_val,
         p6m_sellout_val::number(18,4) as p6m_sellout_val,
         p6m_gross_sellout_val::number(18,4) as p6m_gross_sellout_val,
-		usd_conversion_rate::NUMERIC(15,5) as usd_conversion_rate
+		usd_conversion_rate::NUMERIC(28,10) as usd_conversion_rate
     from transformed
 )
 select * from final
