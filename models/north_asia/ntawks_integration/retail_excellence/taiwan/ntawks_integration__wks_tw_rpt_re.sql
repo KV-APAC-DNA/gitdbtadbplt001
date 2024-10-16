@@ -56,7 +56,8 @@ FROM (SELECT TARGET.jj_year,
              TARGET.PROD_HIER_L8 AS PROD_HIER_L8,
 			 --NULL AS PROD_HIER_L9,
              TARGET.PROD_HIER_L9 AS PROD_HIER_L9,
-             target.sku_code AS MAPPED_SKU_CD,
+             --target.sku_code AS MAPPED_SKU_CD,
+             COALESCE(actual.sku_code, target.sku_code) AS MAPPED_SKU_CD,
 			 actual.list_price,
              --'POS' as data_src,
              COALESCE(ACTUAL.DATA_SRC, TARGET.DATA_SRC) AS DATA_SRC,
@@ -214,7 +215,7 @@ FROM (SELECT LEFT (ACTUAL.MNTH_ID,4) AS YEAR,
              actual.sku_code AS MAPPED_SKU_CD,
 			 actual.list_price,
              --actual.data_src,
-             ACTUAL.DATA_SRC AS DATA_SRC
+             ACTUAL.DATA_SRC AS DATA_SRC,
              COALESCE(ACTUAL.CUSTOMER_SEGMENT_KEY,CUSTOMER.CUST_SEGMT_KEY) AS CUSTOMER_SEGMENT_KEY,
              COALESCE(ACTUAL.CUSTOMER_SEGMENT_DESCRIPTION,CUSTOMER.CUST_SEGMENT_DESC) AS CUSTOMER_SEGMENT_DESCRIPTION,
              COALESCE(ACTUAL.RETAIL_ENVIRONMENT,'NA') AS RETAIL_ENVIRONMENT,
@@ -304,7 +305,7 @@ FROM (SELECT LEFT (ACTUAL.MNTH_ID,4) AS YEAR,
                               FROM wks_tw_re_msl_list T
                               WHERE T.jj_mnth_id = A.MNTH_ID
               --AND T.DISTRIBUTOR_NAME = A.DISTRIBUTOR_NAME
-              AND UPPER(LTRIM(TARGET.DISTRIBUTOR_CODE,'0')) = UPPER(LTRIM(ACTUAL.DISTRIBUTOR_CODE,'0'))
+              AND UPPER(LTRIM(T.DISTRIBUTOR_CODE,'0')) = UPPER(LTRIM(A.DISTRIBUTOR_CODE,'0'))
               AND ltrim(T.STORE_CODE,0) = ltrim(A.STORE_CODE,0)
               AND UPPER (TRIM (T.EAN)) = UPPER (TRIM (A.EAN))
               and UPPER (T.retail_environment) = UPPER (A.retail_environment) 

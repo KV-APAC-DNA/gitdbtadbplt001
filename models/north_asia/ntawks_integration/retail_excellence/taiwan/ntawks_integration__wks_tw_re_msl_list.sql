@@ -126,6 +126,7 @@ FROM (SELECT DISTINCT SUBSTRING(base.jj_mnth_id,1,4) AS jj_year,
                    ) NOO
                ON UPPER (base.channel) = UPPER (noo.channel)
               AND UPPER(base.customer_name) = UPPER(noo.distributor_name_new)
+              AND UPPER(base.Retail_Environment) = UPPER(noo.Retail_Environment)
               AND UPPER(base.cntry_cd) = UPPER(noo.CNTRY_CD)
               AND TRIM (base.sku_unique_identifier) = TRIM (noo.EAN)
         LEFT JOIN (SELECT DISTINCT prd.country_l1 AS prod_hier_l1,
