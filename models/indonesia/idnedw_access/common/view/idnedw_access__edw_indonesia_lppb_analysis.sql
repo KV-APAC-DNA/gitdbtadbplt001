@@ -71,5 +71,6 @@ select jj_year as "jj_year",
     p3m_sellout_val as "p3m_sellout_val",
     p3m_gross_sellout_val as "p3m_gross_sellout_val",
     p6m_sellout_val as "p6m_sellout_val",
-    p6m_gross_sellout_val as "p6m_gross_sellout_val"
+    p6m_gross_sellout_val as "p6m_gross_sellout_val",
+	usd_conversion_rate as "usd_conversion_rate"
 from source

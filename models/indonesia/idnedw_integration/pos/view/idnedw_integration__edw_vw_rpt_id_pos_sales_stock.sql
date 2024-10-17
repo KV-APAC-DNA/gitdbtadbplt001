@@ -7,6 +7,19 @@ edw_vw_id_pos_sellout as
 (
 	select * from {{ ref('idnedw_integration__edw_vw_id_pos_sellout') }}
 ),
+vw_edw_reg_exch_rate as
+(
+    select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
+),
+
+ex_rt as 
+(
+	SELECT *
+		FROM vw_edw_reg_exch_rate
+		WHERE cntry_key = 'ID'
+		AND   TO_CCY = 'USD'
+		AND   JJ_MNTH_ID = (SELECT MAX(JJ_MNTH_ID) FROM vw_edw_reg_exch_rate)
+),
 final as 
 (
 SELECT edw_vw_id_pos_sellout.sap_cntry_cd
@@ -42,8 +55,11 @@ SELECT edw_vw_id_pos_sellout.sap_cntry_cd
 	,NULL AS branch_stock_value
 	,NULL AS stock_uom
 	,NULL AS stock_days
-	,edw_vw_id_pos_sellout.crtd_dttm
+	,edw_vw_id_pos_sellout.crtd_dttm,
+	(ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(28,10) AS usd_conversion_rate
 FROM edw_vw_id_pos_sellout
+LEFT JOIN ex_rt 
+ON   UPPER(edw_vw_id_pos_sellout.sap_cntry_nm) = UPPER(ex_rt.CNTRY_NM) where ex_rt.from_ccy = 'IDR'
 
 UNION ALL
 
@@ -80,7 +96,10 @@ SELECT edw_vw_id_pos_stock.sap_cntry_cd
 	,edw_vw_id_pos_stock.branch_stock_value
 	,edw_vw_id_pos_stock.stock_uom
 	,edw_vw_id_pos_stock.stock_days
-	,edw_vw_id_pos_stock.crtd_dttm
+	,edw_vw_id_pos_stock.crtd_dttm,
+	(ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(28,10) AS usd_conversion_rate
 FROM edw_vw_id_pos_stock
+LEFT JOIN ex_rt 
+ON   UPPER(edw_vw_id_pos_stock.sap_cntry_nm) = UPPER(ex_rt.CNTRY_NM) where ex_rt.from_ccy = 'IDR'
 )
 select * from final

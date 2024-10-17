@@ -16,6 +16,18 @@ edw_product_dim as(
 itg_target_bp_s_op as(
 	select * from {{ ref('idnitg_integration__itg_target_bp_s_op') }}
 ),
+vw_edw_reg_exch_rate as
+(
+    select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
+),
+ex_rt as 
+(
+	SELECT *
+		FROM vw_edw_reg_exch_rate
+		WHERE cntry_key = 'ID'
+		AND   TO_CCY = 'USD'
+		AND   JJ_MNTH_ID = (SELECT MAX(JJ_MNTH_ID) FROM vw_edw_reg_exch_rate)
+),
 
 union1 as(
 SELECT ETD.JJ_YEAR,
@@ -108,7 +120,8 @@ SELECT ETD.JJ_YEAR,
              0 AS P3M_SELLOUT_VAL,
              0 AS P3M_GROSS_SELLOUT_VAL,
              0 AS P6M_SELLOUT_VAL,
-             0 AS P6M_GROSS_SELLOUT_VAL
+             0 AS P6M_GROSS_SELLOUT_VAL,
+			 (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(28,10) AS usd_conversion_rate
       FROM (SELECT REC_KEY,
                    CUST_PROD_CD,
                    JJ_MNTH_ID,
@@ -155,7 +168,8 @@ SELECT ETD.JJ_YEAR,
               JJ_MNTH_NO,
               JJ_MNTH_SHRT,
               JJ_MNTH_LONG
-       FROM EDW_TIME_DIM) AS ETD
+       FROM EDW_TIME_DIM) AS ETD,
+	   ex_rt
       WHERE
       --TRIM(UPPER(EDGD.DSTRBTR_GRP_CD (+)))=TRIM(UPPER(EDD.DSTRBTR_GRP_CD)) AND
       TRIM(UPPER(EDD.JJ_SAP_DSTRBTR_ID(+))) = TRIM(UPPER(T1.JJ_SAP_DSTRBTR_ID))
@@ -168,6 +182,7 @@ SELECT ETD.JJ_YEAR,
       AND   TRIM(UPPER(EDD.DSTRBTR_GRP_CD)) != 'SPLD'
       AND   TRIM(UPPER(EDD.DSTRBTR_GRP_CD)) != 'JYM'
       AND   TRIM(UPPER(T1.JJ_SAP_PROD_ID)) != 'DAOG20'
+	  and 	ex_rt.from_ccy = 'IDR' 
 ),
 union2 as(
 	 SELECT CAST(YEAR AS INTEGER) AS JJ_YEAR,
@@ -238,7 +253,8 @@ union2 as(
              0 AS P3M_SELLOUT_VAL,
              0 AS P3M_GROSS_SELLOUT_VAL,
              0 AS P6M_SELLOUT_VAL,
-             0 AS P6M_GROSS_SELLOUT_VAL
+             0 AS P6M_GROSS_SELLOUT_VAL,
+			 (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(28,10) AS usd_conversion_rate
       FROM itg_target_bp_s_op ITBSP,
            (SELECT DISTINCT JJ_YEAR,
                    JJ_QRTR_NO,
@@ -250,11 +266,13 @@ union2 as(
                    JJ_MNTH_SHRT,
                    JJ_MNTH_LONG
             FROM EDW_TIME_DIM) AS ETD,
-           (SELECT DISTINCT brand, franchise FROM edw_product_dim) EPD
+           (SELECT DISTINCT brand, franchise FROM edw_product_dim) EPD,
+		   ex_rt
       WHERE TRIM(UPPER(EPD.brand(+))) = TRIM(UPPER(ITBSP.brand))
       AND   TRIM(UPPER(EPD.franchise(+))) = TRIM(UPPER(ITBSP.franchise))
       AND   ETD.jj_mnth_long(+) = ITBSP.jj_mnth_long
       AND   ETD.jj_year(+) = ITBSP.year
+	  and 	ex_rt.from_ccy = 'IDR'
 
 ),
 union3 as(
@@ -329,7 +347,8 @@ SELECT CAST(YEAR AS INTEGER) AS JJ_YEAR,
              0 AS P3M_SELLOUT_VAL,
              0 AS P3M_GROSS_SELLOUT_VAL,
              0 AS P6M_SELLOUT_VAL,
-             0 AS P6M_GROSS_SELLOUT_VAL
+             0 AS P6M_GROSS_SELLOUT_VAL,
+			 (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(28,10) AS usd_conversion_rate
       FROM (select T1.*,ETD.JJ_QRTR,ETD.JJ_MNTH_ID,ETD.JJ_MNTH,ETD.JJ_MNTH_DESC,ETD.JJ_MNTH_NO from itg_target_dist_brand_channel T1 LEFT JOIN (SELECT DISTINCT JJ_YEAR,
                           
                           JJ_QRTR,
@@ -347,6 +366,7 @@ SELECT CAST(YEAR AS INTEGER) AS JJ_YEAR,
 LEFT JOIN (SELECT DISTINCT brand, franchise,effective_from,effective_to FROM edw_product_dim) EPD ON
 		               CASE WHEN ITDBC.brand IS NOT NULL
               and UPPER (TRIM (ITDBC.brand)) = UPPER (TRIM (EPD.brand)) and ITDBC.jj_mnth_id between EPD.effective_from and EPD.effective_to  THEN 1 END = 1
+			  LEFT JOIN ex_rt WHERE ex_rt.from_ccy = 'IDR'
 ),
 union4 as(
 	      SELECT P2M_SELLOUT.JJ_YEAR,
@@ -417,7 +437,8 @@ union4 as(
              0 AS P3M_SELLOUT_VAL,
              0 AS P3M_GROSS_SELLOUT_VAL,
              0 AS P6M_SELLOUT_VAL,
-             0 AS P6M_GROSS_SELLOUT_VAL
+             0 AS P6M_GROSS_SELLOUT_VAL,
+			 (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(28,10) AS usd_conversion_rate
       FROM (SELECT CAL.JJ_YEAR,
                    CAL.JJ_QRTR,
                    CAL.JJ_MNTH_ID,
@@ -490,7 +511,8 @@ union4 as(
                      T1.JJ_SAP_DSTRBTR_ID,
                      T1.JJ_SAP_PROD_ID) P2M_SELLOUT,
            EDW_DISTRIBUTOR_DIM AS EDD,
-           EDW_PRODUCT_DIM AS EPD
+           EDW_PRODUCT_DIM AS EPD,
+		   ex_rt
       WHERE TRIM(UPPER(EDD.JJ_SAP_DSTRBTR_ID(+))) = TRIM(UPPER(P2M_SELLOUT.JJ_SAP_DSTRBTR_ID))
 	  and   P2M_SELLOUT.jj_mnth_id between EDD.effective_from(+) and EDD.effective_to(+)
       AND   TRIM(UPPER(EPD.JJ_SAP_PROD_ID(+))) = TRIM(UPPER(P2M_SELLOUT.JJ_SAP_PROD_ID))
@@ -500,6 +522,7 @@ union4 as(
       AND   TRIM(UPPER(EDD.DSTRBTR_GRP_CD)) != 'SPLD'
       AND   TRIM(UPPER(EDD.DSTRBTR_GRP_CD)) != 'JYM'
       AND   TRIM(UPPER(P2M_SELLOUT.JJ_SAP_PROD_ID)) != 'DAOG20'
+	  and 	ex_rt.from_ccy = 'IDR' 
       AND   P2M_SELLOUT.JJ_MNTH_ID <= (SELECT DISTINCT JJ_MNTH_ID
                                        FROM EDW_TIME_DIM
                                        WHERE to_date(CAL_DATE) = to_date(current_timestamp()::timestamp_ntz(9)))
@@ -573,7 +596,8 @@ union5 as(
              P3M_SELLOUT.P3M_SELLOUT_VAL,
              P3M_SELLOUT.P3M_GROSS_SELLOUT_VAL,
              0 AS P6M_SELLOUT_VAL,
-             0 AS P6M_GROSS_SELLOUT_VAL
+             0 AS P6M_GROSS_SELLOUT_VAL,
+			 (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(28,10) AS usd_conversion_rate
       FROM (SELECT CAL.JJ_YEAR,
                    CAL.JJ_QRTR,
                    CAL.JJ_MNTH_ID,
@@ -645,7 +669,8 @@ union5 as(
                      T1.JJ_SAP_DSTRBTR_ID,
                      T1.JJ_SAP_PROD_ID) P3M_SELLOUT,
            EDW_DISTRIBUTOR_DIM AS EDD,
-           EDW_PRODUCT_DIM AS EPD
+           EDW_PRODUCT_DIM AS EPD,
+		   ex_rt
       WHERE TRIM(UPPER(EDD.JJ_SAP_DSTRBTR_ID(+))) = TRIM(UPPER(P3M_SELLOUT.JJ_SAP_DSTRBTR_ID))
 	  and   P3M_SELLOUT.jj_mnth_id between EDD.effective_from(+) and EDD.effective_to(+)
       AND   TRIM(UPPER(EPD.JJ_SAP_PROD_ID(+))) = TRIM(UPPER(P3M_SELLOUT.JJ_SAP_PROD_ID))
@@ -655,6 +680,7 @@ union5 as(
       AND   TRIM(UPPER(EDD.DSTRBTR_GRP_CD)) != 'SPLD'
       AND   TRIM(UPPER(EDD.DSTRBTR_GRP_CD)) != 'JYM'
       AND   TRIM(UPPER(P3M_SELLOUT.JJ_SAP_PROD_ID)) != 'DAOG20'
+	  and 	ex_rt.from_ccy = 'IDR'
       AND   P3M_SELLOUT.JJ_MNTH_ID <= (SELECT DISTINCT jj_mnth_id
                                        FROM edw_time_dim
                                        WHERE to_date(cal_date) = to_date(current_timestamp()::timestamp_ntz(9)))
@@ -728,7 +754,8 @@ union6 as(
              0 AS P3M_SELLOUT_VAL,
              0 AS P3M_GROSS_SELLOUT_VAL,
              P6M_SELLOUT.P6M_SELLOUT_VAL,
-             P6M_SELLOUT.P6M_GROSS_SELLOUT_VAL
+             P6M_SELLOUT.P6M_GROSS_SELLOUT_VAL,
+			 (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(28,10) AS usd_conversion_rate
       FROM (SELECT CAL.JJ_YEAR,
                    CAL.JJ_QRTR,
                    CAL.JJ_MNTH_ID,
@@ -800,7 +827,8 @@ union6 as(
                      T1.JJ_SAP_DSTRBTR_ID,
                      T1.JJ_SAP_PROD_ID) P6M_SELLOUT,
            EDW_DISTRIBUTOR_DIM AS EDD,
-           EDW_PRODUCT_DIM AS EPD
+           EDW_PRODUCT_DIM AS EPD,
+		   ex_rt
       WHERE TRIM(UPPER(EDD.JJ_SAP_DSTRBTR_ID(+))) = TRIM(UPPER(P6M_SELLOUT.JJ_SAP_DSTRBTR_ID))
 	  and   P6M_SELLOUT.jj_mnth_id between EDD.effective_from(+) and EDD.effective_to(+)
       AND   TRIM(UPPER(EPD.JJ_SAP_PROD_ID(+))) = TRIM(UPPER(P6M_SELLOUT.JJ_SAP_PROD_ID))
@@ -810,6 +838,7 @@ union6 as(
       AND   TRIM(UPPER(EDD.DSTRBTR_GRP_CD)) != 'SPLD'
       AND   TRIM(UPPER(EDD.DSTRBTR_GRP_CD)) != 'JYM'
       AND   TRIM(UPPER(P6M_SELLOUT.JJ_SAP_PROD_ID)) != 'DAOG20'
+	  and 	ex_rt.from_ccy = 'IDR'
       AND   P6M_SELLOUT.JJ_MNTH_ID <= (SELECT DISTINCT jj_mnth_id
                                        FROM edw_time_dim
                                        WHERE to_date(cal_date) = to_date(current_timestamp()::timestamp_ntz(9)))
@@ -883,7 +912,8 @@ transformed as(
        SUM(P3M_SELLOUT_VAL) AS P3M_SELLOUT_VAL,
        SUM(P3M_GROSS_SELLOUT_VAL) AS P3M_GROSS_SELLOUT_VAL,
        SUM(P6M_SELLOUT_VAL) AS P6M_SELLOUT_VAL,
-       SUM(P6M_GROSS_SELLOUT_VAL) AS P6M_GROSS_SELLOUT_VAL
+       SUM(P6M_GROSS_SELLOUT_VAL) AS P6M_GROSS_SELLOUT_VAL,
+	   usd_conversion_rate
 FROM (
 	select * from union1
 	union all
@@ -931,7 +961,8 @@ GROUP BY JJ_YEAR,
          VARIANT,
          JJ_MNTH_LONG,
          TRGT_BP_S_OP_FLAG,
-         TRGT_DIST_BRND_CHNL_FLAG
+         TRGT_DIST_BRND_CHNL_FLAG,
+		 usd_conversion_rate
 ),
 final as(
     select 
@@ -1003,7 +1034,8 @@ final as(
         p3m_sellout_val::number(18,4) as p3m_sellout_val,
         p3m_gross_sellout_val::number(18,4) as p3m_gross_sellout_val,
         p6m_sellout_val::number(18,4) as p6m_sellout_val,
-        p6m_gross_sellout_val::number(18,4) as p6m_gross_sellout_val
+        p6m_gross_sellout_val::number(18,4) as p6m_gross_sellout_val,
+		usd_conversion_rate::NUMERIC(28,10) as usd_conversion_rate
     from transformed
 )
 select * from final
