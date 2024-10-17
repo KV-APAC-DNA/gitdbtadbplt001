@@ -16,6 +16,7 @@ edw_ph_hce_sellout_targets as
  (
   select * from {{ ref('phledw_integration__edw_ph_hce_sellout_targets') }}
  ),
+ 
 transformed as 
 (
     select 
@@ -67,6 +68,23 @@ select
     acommerce_sellout_target
    group by all
 
+   union all 
+
+select 
+    data_src :: varchar(50) as data_src,
+    jj_mnth_id ,
+    JJ_YEAR,
+    store_code,
+    item_sku as sku,
+    GROUP_VARIANT_CODE,
+    territory_code_code,
+    team_code,
+    DISTRICT_CODE,
+    null as sellout_target,
+     sum(gmv) as sellout
+    from 
+    edw_ph_hce_sellout_targets
+   group by all
 ),
 
 final as 

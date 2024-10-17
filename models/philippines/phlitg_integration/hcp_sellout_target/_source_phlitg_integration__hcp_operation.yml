@@ -12,7 +12,7 @@ sources:
     - name:  sdl_mds_ph_hcp_product_master
     - name: sdl_mds_ph_hcp_store_master
     - name : sdl_mds_ph_hcp_sellout_target
-    - name : sdl_mds_ph_hce_portal_target
+    - name : sdl_mds_ph_hce_portal_target_new
 
     - name : sdl_mds_ph_hce_product_master
     - name : sdl_hcp_acommerce_load
