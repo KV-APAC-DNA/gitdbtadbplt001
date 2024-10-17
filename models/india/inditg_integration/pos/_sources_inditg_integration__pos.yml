@@ -15,7 +15,6 @@ sources:
       tags: ["in_key_acct_offtake","transformation"]
     - name: sdl_pos_category_mapping
       tags: ["in_key_acct_offtake","transformation"]
-
     - name: sdl_pos_tesco
       tags: ["in_key_acct_offtake","transformation"]
     - name: sdl_pos_dmart
