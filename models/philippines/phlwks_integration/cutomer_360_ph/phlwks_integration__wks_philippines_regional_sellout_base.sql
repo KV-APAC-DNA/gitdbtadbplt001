@@ -225,7 +225,8 @@ final as
         from edw_ph_pos_analysis_v2 sls_v2
 		left join (select distinct jj_sold_to,
                          UPPER(store_mtrx) AS channel,
-						 UPPER(chnl_sub_grp_cd) AS retail_env from ITG_MDS_PH_POS_CUSTOMERS WHERE UPPER(active) = 'Y' and store_mtrx <> ' ') mds_pos_cust ON ltrim(sls_v2.sold_to,'0') = ltrim(mds_pos_cust.jj_sold_to,'0')
+						 UPPER(chnl_sub_grp_cd) AS retail_env, brnch_cd from ITG_MDS_PH_POS_CUSTOMERS WHERE UPPER(active) = 'Y' and store_mtrx <> ' ') mds_pos_cust ON ltrim(sls_v2.sold_to,'0') = ltrim(mds_pos_cust.jj_sold_to,'0')
+                         AND LTRIM(sls_v2.cust_brnch_cd,'0') = LTRIM(mds_pos_cust.brnch_cd,'0') 
     
 	--left join (SELECT distinct cust_id, channel_cd, channel_desc FROM itg_mds_ph_lav_customer WHERE UPPER(active) = 'Y') mds_cust on ltrim(mds_cust.cust_id,'0') = ltrim(sls_v2.sold_to,'0')
 
