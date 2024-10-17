@@ -142,5 +142,7 @@ select
     udc_hsacounterq42023 as "udc_hsacounterq42023",
     udc_hsacounterq12024 as "udc_hsacounterq12024",
     udc_q124bssprogram as "udc_q124bssprogram",
-    udc_specialtyprofessional2024 as "udc_specialtyprofessional2024"
+    udc_specialtyprofessional2024 as "udc_specialtyprofessional2024",
+    udc_hsacounterq22024 as "udc_hsacounterq22024",
+	udc_dispensingdrs2024 as "udc_dispensingdrs2024"
 from source
