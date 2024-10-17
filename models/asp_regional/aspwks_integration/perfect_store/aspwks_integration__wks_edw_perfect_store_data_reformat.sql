@@ -525,7 +525,7 @@ final as (
             DATE_PART(
                 'year',
                 convert_timezone('UTC', current_timestamp())
-            ) -1
+            ) -2
         )
 )
 select * from final
