@@ -313,7 +313,7 @@ SELECT sf.customer_code
 	,udc.udc_samriddhi
 	,udc.udc_sssprogramq12021
 	,udc.udc_platinumq12021
-	,udc.udc_orslcac2021
+	,udc.udc_cac
 	,udc.udc_bhagidariq12021
 	,udc.udc_daudq12021
 	,udc.udc_directorclubq12021
@@ -357,6 +357,8 @@ SELECT sf.customer_code
 	,udc.udc_hsacounterq12024
 	,udc.udc_q124bssprogram
 	,udc.udc_specialtyprofessional2024
+    ,udc.udc_hsacounterq22024
+	,udc.udc_dispensingdrs2024
 	,rd.retailer_category_cd
 	,rd.retailer_category_name
 	,rd.csrtrcode
