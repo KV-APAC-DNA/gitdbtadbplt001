@@ -1,0 +1,67 @@
+version: 2
+
+sources:
+  - name: hcposesdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: hcposesdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+
+    - name: sdl_hcp_osea_survey
+      tags: ["iconnect_data_ingestion","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["survey_id"]
+          not_null_columns: ["survey_id"]
+          name: TRATBL_sdl_hcp_osea_survey__null_test
+          config:
+            store_failures: true
+            schema: hcposewks_integration
+      - test_duplicate:
+          select_columns: ["survey_id"]
+          group_by_columns: ["survey_id"]
+          name: TRATBL_sdl_hcp_osea_survey__duplicate_test
+          config:
+            store_failures: true
+            schema: hcposewks_integration
+
+            
+    - name: sdl_hcp_osea_survey_question
+      tags: ["iconnect_data_ingestion","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["survey_question_id"]
+          not_null_columns: ["survey_question_id"]
+          name: TRATBL_sdl_hcp_osea_survey_question__null_test
+          config:
+            store_failures: true
+            schema: hcposewks_integration
+      - test_duplicate:
+          select_columns: ["survey_question_id"]
+          group_by_columns: ["survey_question_id"]
+          name: TRATBL_sdl_hcp_osea_survey_question__duplicate_test
+          config:
+            store_failures: true
+            schema: hcposewks_integration
+
+                      
+    - name: sdl_hcp_osea_survey_target
+      tags: ["iconnect_data_ingestion","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["survey_target_id"]
+          not_null_columns: ["survey_target_id"]
+          name: TRATBL_sdl_hcp_osea_survey_target__null_test
+          config:
+            store_failures: true
+            schema: hcposewks_integration
+      - test_duplicate:
+          select_columns: ["survey_target_id"]
+          group_by_columns: ["survey_target_id"]
+          name: TRATBL_sdl_hcp_osea_survey_target__duplicate_test
+          config:
+            store_failures: true
+            schema: hcposewks_integration
