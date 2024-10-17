@@ -1,5 +1,5 @@
 with EDW_RPT_REGIONAL_SELLOUT_OFFTAKE as(
-    select * from {{ ref('aspedw_integration__edw_rpt_regional_sellout_offtake_dbt') }}
+    select * from {{ ref('aspedw_integration__edw_rpt_regional_sellout_offtake') }}
 ),
 
 transformation as (

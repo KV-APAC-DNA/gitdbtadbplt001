@@ -13,7 +13,7 @@ with cluster_predictionresult as (
 transformed as (
 select NVL(LPAD(customer_id,10,'0'),'0000000000') as customer_id,
 Cluster5_cd,
-'Src_File_Dt' as source_file_date 
+source_file_date as source_file_date 
 from cluster_predictionresult    
 ),
 final as (
