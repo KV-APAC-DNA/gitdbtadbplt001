@@ -399,7 +399,7 @@ SELECT 'general' as data_type,
                             PARTITION BY visit_id,
                             audit_form_id,
                             section_id,
-                            response
+                            field_id
                             ORDER BY run_id DESC
                         ) rn
                     from itg_pop6_general_audits general
