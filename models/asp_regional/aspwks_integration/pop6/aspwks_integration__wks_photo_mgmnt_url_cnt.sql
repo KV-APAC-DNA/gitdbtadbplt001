@@ -80,6 +80,7 @@ general_audits as (
     FROM itg_pop6_general_audits
     WHERE UPPER(field_type) LIKE 'PHOTO%' 
         AND regexp_count(response, '[jpg]{3}') > 0
+        
     union all --Added RIR for IR response for TH
     select distinct photo_key || '_' || rn as photo_key ,
              response,
