@@ -1006,7 +1006,8 @@ FROM (
               LEFT JOIN edw_company_reporting_dim AS cmp
                 ON ((cast((copa.co_cd) AS TEXT) = cast((cmp.co_cd) AS TEXT))
                 ) and (case when trim(mat.mega_brnd_desc)='Dr Ci Labo' then 'Dr Ci Labo' 
-   when nvl(trim(mat.mega_brnd_desc),'NA') <> 'Dr Ci Labo' then 'NA' end )=cmp.mega_brnd_desc
+                when trim(mat.mega_brnd_desc)='Jupiter (PH to CH)' then 'Jupiter (PH to CH)'
+                else 'NA' end )=cmp.mega_brnd_desc
             )
             
           LEFT JOIN v_intrm_reg_crncy_exch_fiscper AS exch_rate
