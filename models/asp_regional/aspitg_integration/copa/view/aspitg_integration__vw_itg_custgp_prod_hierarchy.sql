@@ -276,5 +276,35 @@ final as
                     COALESCE(NULLIF(pka_product_key_description,''),'Not Available'::CHARACTER VARYING) AS loc_prod10
                     from edw_material_dim mat
                     LEFT JOIN edw_gch_producthierarchy gph ON LTRIM (matl_num,'0') = LTRIM (gph.materialnumber,'0')
+    union all 
+    Select distinct 'Australia' as ctry_nm,
+                    ltrim(matl_num,'0') as  matl_num,
+                    COALESCE(NULLIF(gph.gcph_franchise,''),'Not Available'::CHARACTER VARYING) AS loc_prod1,
+                    COALESCE(NULLIF(mat.prodh3_txtmd,''),'Not Available'::CHARACTER VARYING) AS loc_prod2,
+                    COALESCE(NULLIF(mat.mega_brnd_desc,''),'Not Available'::CHARACTER VARYING) AS loc_prod3,
+                    COALESCE(NULLIF(mat.brnd_desc,''),'Not Available'::CHARACTER VARYING) AS loc_prod4,
+                    COALESCE(NULLIF(mat.pka_sub_brand_desc,''),'Not Available'::CHARACTER VARYING) AS loc_prod5,
+                    COALESCE(NULLIF(mat.prodh5_txtmd,''),'Not Available'::CHARACTER VARYING) AS loc_prod6,
+                    COALESCE(NULLIF(mat.varnt_desc,''),'Not Available'::CHARACTER VARYING) AS loc_prod7,
+                    COALESCE(NULLIF(mat.pka_size_desc,''),'Not Available'::CHARACTER VARYING) AS loc_prod8,
+                    COALESCE(NULLIF(pka_package_desc,''),'Not Available'::CHARACTER VARYING) AS loc_prod9,
+                    COALESCE(NULLIF(pka_product_key_description,''),'Not Available'::CHARACTER VARYING) AS loc_prod10
+                    from edw_material_dim mat
+                    LEFT JOIN edw_gch_producthierarchy gph ON LTRIM (matl_num,'0') = LTRIM (gph.materialnumber,'0')
+    union all 
+    Select distinct 'New Zealand' as ctry_nm,
+                    ltrim(matl_num,'0') as  matl_num,
+                    COALESCE(NULLIF(gph.gcph_franchise,''),'Not Available'::CHARACTER VARYING) AS loc_prod1,
+                    COALESCE(NULLIF(mat.prodh3_txtmd,''),'Not Available'::CHARACTER VARYING) AS loc_prod2,
+                    COALESCE(NULLIF(mat.mega_brnd_desc,''),'Not Available'::CHARACTER VARYING) AS loc_prod3,
+                    COALESCE(NULLIF(mat.brnd_desc,''),'Not Available'::CHARACTER VARYING) AS loc_prod4,
+                    COALESCE(NULLIF(mat.pka_sub_brand_desc,''),'Not Available'::CHARACTER VARYING) AS loc_prod5,
+                    COALESCE(NULLIF(mat.prodh5_txtmd,''),'Not Available'::CHARACTER VARYING) AS loc_prod6,
+                    COALESCE(NULLIF(mat.varnt_desc,''),'Not Available'::CHARACTER VARYING) AS loc_prod7,
+                    COALESCE(NULLIF(mat.pka_size_desc,''),'Not Available'::CHARACTER VARYING) AS loc_prod8,
+                    COALESCE(NULLIF(pka_package_desc,''),'Not Available'::CHARACTER VARYING) AS loc_prod9,
+                    COALESCE(NULLIF(pka_product_key_description,''),'Not Available'::CHARACTER VARYING) AS loc_prod10
+                    from edw_material_dim mat
+                    LEFT JOIN edw_gch_producthierarchy gph ON LTRIM (matl_num,'0') = LTRIM (gph.materialnumber,'0')
 )
 select * from final
