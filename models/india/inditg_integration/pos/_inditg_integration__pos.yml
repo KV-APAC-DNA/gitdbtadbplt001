@@ -81,6 +81,6 @@ models:
       tags: ["in_key_acct_offtake","transformation"]
   - name: inditg_integration__itg_pos_mt_tp_spends
     config:
-      alias: sdl_raw_pos_apollo
+      alias: itg_pos_mt_tp_spends
       tags: ["in_mt_tp_spends","transformation"]
   
