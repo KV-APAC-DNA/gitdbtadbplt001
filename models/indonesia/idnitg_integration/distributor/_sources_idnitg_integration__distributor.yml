@@ -30,14 +30,14 @@ sources:
       tags: ["id_mds_itg_load","ingestion"]
       tests:
           - test_null__ff:
-              not_null_columns: ["customer_id"]
+              not_null_columns: ["code"]
               name: TRATBL_sdl_mds_id_lav_customer_hierarchy__null_test
               config:
                 store_failures: true
                 schema: idnwks_integration
                 severity: error
           - test_duplicate__ff:
-              group_by_columns: ["customer_id","effective_from"]
+              group_by_columns: ["code","effective_from"]
               name: TRATBL_sdl_mds_id_lav_customer_hierarchy__duplicate_test
               config:
                 store_failures: true
