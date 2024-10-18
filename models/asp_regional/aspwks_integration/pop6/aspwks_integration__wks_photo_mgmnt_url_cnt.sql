@@ -89,7 +89,8 @@ general_audits as (
         ROW_NUMBER() OVER (
             PARTITION BY visit_id,
             audit_form_id,
-            section_id
+            section_id,
+            field_id
             ORDER BY run_id DESC
         ) rn
     FROM itg_pop6_general_audits
