@@ -28,7 +28,7 @@ final as
         orderdate::varchar(19) as orderdate,
         webid::varchar(8) as webid,
         null::varchar(10) as status,
-        'Src_File_Dt'::varchar(18) as source_file_date,
+        SOURCE_FILE_DATE::varchar(18) as source_file_date,
         current_timestamp()::timestamp_ntz(9) as inserted_date,
         current_timestamp()::timestamp_ntz(9) as updated_date
     from source
