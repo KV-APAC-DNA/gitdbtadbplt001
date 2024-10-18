@@ -96,6 +96,32 @@ general_audits as (
     WHERE UPPER(field_type) LIKE 'RIR%' 
         AND regexp_count(response, '[jpg]{3}') > 0
 ),
+promotions as (
+    SELECT DISTINCT 'promotions' || '_' || promotion_plan_id AS PHOTO_KEY,
+        photo,
+        regexp_count(photo, '[jpg]{3}') url_cnt,
+        run_id,
+        ROW_NUMBER() OVER (
+            PARTITION BY promotion_plan_id
+            ORDER BY run_id DESC
+        ) rn
+    FROM itg_pop6_promotions
+    WHERE regexp_count(photo, '[jpg]{3}') > 0
+),
+audits as (
+    SELECT DISTINCT 'sku' || '_' || visit_id || '_' || audit_form_id || '_' || sku_id AS PHOTO_KEY,
+    response,
+        regexp_count(response, '[jpg]{3}') url_cnt,
+        run_id,
+        ROW_NUMBER() OVER (
+            PARTITION BY visit_id,
+            audit_form_id,
+            sku_id ORDER BY run_id DESC
+        ) rn
+        FROM itg_pop6_sku_audits
+    WHERE UPPER(field_type) LIKE 'PHOTO%'
+     AND regexp_count(response, '[jpg]{3}') > 0
+),
 src as (
     select * from displays
     union all
