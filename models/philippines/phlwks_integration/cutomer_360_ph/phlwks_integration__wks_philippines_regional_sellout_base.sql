@@ -271,4 +271,5 @@ final as
     AND BASE.mnth_id>= (case when (select param_value from itg_mds_ap_customer360_config where code='base_load_ph')='ALL' THEN '190001' ELSE to_char(add_months(to_date(convert_timezone('UTC',current_timestamp())), -((select param_value from itg_mds_ap_customer360_config where code='base_load_ph')::integer)), 'YYYYMM')
     END)
 )
+
 select * from final
