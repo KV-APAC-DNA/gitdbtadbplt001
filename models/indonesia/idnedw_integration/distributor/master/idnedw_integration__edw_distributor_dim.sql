@@ -35,6 +35,6 @@ from source as idd,
 itg_distributor_province_dim as idpd,
 itg_distributor_group_dim as idgd
 where idd.dstrbtr_grp_cd=idgd.dstrbtr_grp_cd(+)
-and idd.prvnce_id=idpd.prov_id(+)
+and idd.prvnce_id=idpd.code(+)
 )
 select * from final
