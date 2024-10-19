@@ -1,7 +1,7 @@
 with edw_ph_pos_sellout_target as 
 (
 
-    select * from {{ ref('phledw_integration__edw_ph_pos_sellout_targets') }}
+    select * from {{ ref('phledw_integration__edw_ph_pos_sellout_actuals') }}
 ),
 hcp_sellout_targets  as 
   (
@@ -10,7 +10,7 @@ hcp_sellout_targets  as
 
 acommerce_sellout_target as
 (
- select * from {{ ref('phledw_integration__edw_ph_acommerce_sellout_target') }}
+ select * from {{ ref('phledw_integration__edw_ph_acommerce_sellout_actuals') }}
 ),
 edw_ph_hce_sellout_targets as 
  (
@@ -23,14 +23,15 @@ transformed as
     data_src :: varchar(50) as data_src,
     JJ_MNTH_ID ,
     JJ_YEAR,
-    store_code,
+    store_code ,
     sku,
     GROUP_VARIANT_CODE,
     territory_code_code,
     team_code,
     DISTRICT_CODE,
     null as sellout_target,
-     POS_GTS as sell_out
+     POS_GTS as sell_out,
+     null as CUSTOMER_COUNT_TARGET
     from edw_ph_pos_sellout_target
   
   union all
@@ -46,7 +47,8 @@ TERRITORY_CODE_CODE,
 team_code,
 DISTRICT_CODE,
 sellout_target,
-null as sell_out
+null as sell_out,
+null as CUSTOMER_COUNT_TARGET
   from 
   hcp_sellout_targets
 
@@ -63,7 +65,8 @@ select
     team_code,
     DISTRICT_CODE,
     null as sellout_target,
-     sum(gmv) as sellout
+     sum(gmv) as sellout,
+     null as CUSTOMER_COUNT_TARGET
     from 
     acommerce_sellout_target
    group by all
@@ -74,14 +77,15 @@ select
     data_src :: varchar(50) as data_src,
     jj_mnth_id ,
     JJ_YEAR,
-    store_code,
-    item_sku as sku,
+    null as store_code,
+   sku,
     GROUP_VARIANT_CODE,
     territory_code_code,
     team_code,
     DISTRICT_CODE,
-    null as sellout_target,
-     sum(gmv) as sellout
+    sellout_target ,
+     null as sellout,
+     CUSTOMER_COUNT_TARGET as CUSTOMER_COUNT_TARGET
     from 
     edw_ph_hce_sellout_targets
    group by all
@@ -90,7 +94,18 @@ select
 final as 
 (
     select 
-    *
+    data_src,
+    JJ_MNTH_ID :: integer as JJ_MNTH_ID ,
+    JJ_YEAR :: integer as JJ_YEAR,
+    store_code :: integer as store_code,
+    sku :: varchar(100) as sku,
+    GROUP_VARIANT_CODE:: varchar(100) as GROUP_VARIANT_CODE,
+    territory_code_code :: varchar(100) as territory_code_code,
+    team_code :: varchar(100) as team_code,
+    DISTRICT_CODE :: varchar(100) as DISTRICT_CODE,
+    sellout_target:: decimal(38,6) as sellout_target,
+    sell_out :: decimal(38,6) as sell_out,
+    CUSTOMER_COUNT_TARGET :: integer as CUSTOMER_COUNT_TARGET
     from transformed
 )
 select * from final

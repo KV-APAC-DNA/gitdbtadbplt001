@@ -17,7 +17,7 @@ hce_customer_master as
 transformed as 
 (
      
-   select 
+   select distinct 
    'ACOMMERCE_ACTUALS' as data_src,
    hce.jj_mnth_id ,
    hce.jj_year,
@@ -41,12 +41,12 @@ transformed as
     prod.team_code,
     prod.sap_item_code,
     store.store_code,
-    store.territory_code_code,
+    store.territory_code_code  ,
     store.DISTRICT_CODE
     from acommerce_sellout_target hce
-    inner join hce_product_master prod on (hce.item_sku=prod.code)
-    inner join hce_customer_master  cust on (hce.customer_email=cust.name)
-    inner join hcp_store_master store  on (cust.territory_code_code=store.territory_code_code)
+    inner join (select distinct code,GROUP_VARIANT_CODE,team_code,sap_item_code from hce_product_master) prod on (hce.item_sku=prod.code)
+    inner join (select distinct name,territory_code_code from hce_customer_master ) cust on (hce.customer_email=cust.name)
+    inner join (select distinct territory_code_code,store_code,DISTRICT_CODE from hcp_store_master) store  on (cust.territory_code_code=store.territory_code_code)
 ),
 final as
 (

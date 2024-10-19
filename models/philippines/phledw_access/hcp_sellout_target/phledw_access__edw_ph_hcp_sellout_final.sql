@@ -15,7 +15,8 @@ territory_code_code as "territory_code_code",
 team_code as "team_code",
 district_code as "district_code",
 sellout_target  as "sellout_target",
-sell_out  as "sell_out"    
+sell_out  as "sell_out" ,
+customer_count_target as "customer_count_target"   
     from source
 )
 select * from final 
