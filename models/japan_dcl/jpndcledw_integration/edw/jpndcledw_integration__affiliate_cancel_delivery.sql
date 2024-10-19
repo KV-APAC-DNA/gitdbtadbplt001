@@ -1,3 +1,8 @@
+{{
+    config(
+        post_hook="update {{ ref('jpndclitg_integration__affiliate_cancel_receive') }} set status = 'processed' where status is null;"
+    )
+}}
 WITH affiliate_cancel_wk3
 AS (
   SELECT *
