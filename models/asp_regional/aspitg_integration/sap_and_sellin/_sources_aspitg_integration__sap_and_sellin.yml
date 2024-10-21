@@ -1357,6 +1357,9 @@ sources:
       schema: false
       identifier: false
     tables: 
+      - name: apc_a902
+      - name: apc_mvke
+      - name: apc_konp
       - name: apc_knvv
       - name: apc_knvp
       - name: apc_marm
@@ -1401,3 +1404,4 @@ sources:
       - name: mds_gcgh_geographyhierarchy
       - name: mds_gcch_gcgh_hierarchy
       - name: mds_gcph_category
+      
