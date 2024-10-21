@@ -33,23 +33,24 @@ final as
     select
     start_date :: varchar(50) as start_date,
     end_date :: varchar(50) as end_date,
-    market :: varchar(50) as market,
-    region :: varchar(20) as region,
-    zone :: varchar(20) as zone,
-    retail_environment :: varchar(50) as retail_environment,
-    channel :: varchar(50) as channel,
-    sub_channel :: varchar(50) as sub_channel,
-    customer :: varchar(50) as customer,
-    store_grade :: varchar(20) as store_grade,
-    unique_identifier_mapping :: varchar(50) as unique_identifier_mapping,
-    sku_unique_identifier :: varchar(100) as sku_unique_identifier,
+    market :: varchar(200) as market,
+    region :: varchar(200) as region,
+    zone :: varchar(200) as zone,
+    retail_environment :: varchar(500) as retail_environment,
+    channel :: varchar(500) as channel,
+    sub_channel :: varchar(500) as sub_channel,
+    customer :: varchar(200) as customer,
+    store_grade :: varchar(500) as store_grade,
+    unique_identifier_mapping :: varchar(500) as unique_identifier_mapping,
+    sku_unique_identifier :: varchar(200) as sku_unique_identifier,
     sku_description :: varchar(500) as sku_description,
-    sku_code :: varchar(50) as sku_code,
+    sku_code :: varchar(200) as sku_code,
     product_key :: varchar(500) as product_key,
-    msl_final :: varchar(200) as msl_final,
+    msl_final :: varchar(20) as msl_final,
     active_status_code :: varchar(20) as active_status_code,
-    sourceexistenceflag_code :: varchar(20) as sourceexistenceflag_code
+    sourceexistenceflag_code :: varchar(200) as sourceexistenceflag_code
     from itg_re_msl_input_definition
+
 )
 
 --Final select
