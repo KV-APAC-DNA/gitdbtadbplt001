@@ -24,7 +24,7 @@ POS as
     pos.CUST_BRNCH_CD as store_code,
     pos.sku,
     store.GROUP_VARIANT_CODE,
-    store.territory_code_code,
+    store.territory_code_code as territory_code,
     store.DISTRICT_CODE,
     prod.team_code,
     sum(pos.JJ_GTS) as POS_GTS
