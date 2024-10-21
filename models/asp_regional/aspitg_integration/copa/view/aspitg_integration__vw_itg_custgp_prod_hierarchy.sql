@@ -128,7 +128,7 @@ final as
                         mat.mega_brnd_desc AS loc_prod3,
                         hk_prod.hk_brand_code AS loc_prod4,
                         hk_prod.hk_base_product_code AS loc_prod5,
-                        mat.matl_num AS loc_prod6,
+                        ltrim(mat.matl_num,'0') AS loc_prod6,
                         mat.pka_size_desc AS loc_prod7,
                         mat.pka_package_desc AS loc_prod8,
                         mat.pka_product_key_description AS loc_prod9  ,
