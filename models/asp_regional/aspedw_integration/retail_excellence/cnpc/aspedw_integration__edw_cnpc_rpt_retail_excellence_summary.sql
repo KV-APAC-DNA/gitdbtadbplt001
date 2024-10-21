@@ -165,7 +165,7 @@ final as
     region	::	varchar(255)	as	region	,
     zone_name	::	varchar(510)	as	zone_name	,
     city	::	varchar(255)	as	city	,
-    retail_environment	::	varchar(200)	as	retail_environment	,
+    retail_environment	::	varchar(500)	as	retail_environment	,
     prod_hier_l1	::	varchar(100)	as	prod_hier_l1	,
     prod_hier_l2	::	varchar(100)	as	prod_hier_l2	,
     prod_hier_l3	::	varchar(255)	as	prod_hier_l3	,
