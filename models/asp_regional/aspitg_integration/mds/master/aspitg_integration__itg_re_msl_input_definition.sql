@@ -50,7 +50,6 @@ final as
     active_status_code :: varchar(20) as active_status_code,
     sourceexistenceflag_code :: varchar(200) as sourceexistenceflag_code
     from itg_re_msl_input_definition
-
 )
 
 --Final select
