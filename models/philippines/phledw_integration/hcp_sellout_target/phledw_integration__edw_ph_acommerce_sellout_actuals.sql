@@ -42,7 +42,9 @@ transformed as
     prod.sap_item_code,
     store.store_code,
     store.territory_code_code  as territory_code_code,
-    store.DISTRICT_CODE
+    store.DISTRICT_CODE,
+    cust.name,
+    
     from acommerce_sellout_actuals hce
     inner join (select distinct code,GROUP_VARIANT_CODE,team_code,sap_item_code from hce_product_master) prod on (hce.item_sku=prod.code)
     inner join (select distinct name,territory_code_code from hce_customer_master ) cust on (hce.customer_email=cust.name)
