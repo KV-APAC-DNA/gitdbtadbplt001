@@ -5,37 +5,37 @@ with edw_rpt_regional_sellout_offtake as (
 edw_vw_cal_retail_excellence_dim as (
     select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
-wks_philippines_regional_sellout_mapped_sku_cd as (
-    select * from {{ ref('phlwks_integration__wks_philippines_regional_sellout_mapped_sku_cd') }}
+wks_hk_regional_sellout_mapped_sku_cd as (
+    select * from {{ ref('ntawks_integration__wks_hk_regional_sellout_mapped_sku_cd') }}
 ),
 
 --final cte
-philippines_base_retail_excellence as 
+hk_base_retail_excellence as 
 (
-SELECT COUNTRY_CODE AS CNTRY_CD,
+    SELECT COUNTRY_CODE AS CNTRY_CD,
        COUNTRY_NAME AS CNTRY_NM,
        DATA_SOURCE,
-       MD5(NVL (DISTRIBUTOR_CODE,'DC') ||NVL (DISTRIBUTOR_NAME,'DN') ||NVL (SOLDTO_CODE,'STC') ||NVL (STORE_CODE,'SC') ||
-	   NVL (STORE_NAME,'SN') || NVL (STORE_TYPE,'ST') || NVL (CHANNEL,'CH') ||
-	   NVL (SAP_PARENT_CUSTOMER_KEY,'SPCK') ||NVL (SAP_PARENT_CUSTOMER_DESCRIPTION,'SPSCD') || NVL (SAP_CUSTOMER_CHANNEL_KEY,'SCCK') ||
-	   NVL (SAP_CUSTOMER_CHANNEL_DESCRIPTION,'SCCD') ||NVL (SAP_CUSTOMER_SUB_CHANNEL_KEY,'SCSCK') ||NVL (SAP_SUB_CHANNEL_DESCRIPTION,'SSCD') ||
-	   NVL (CUSTOMER_SEGMENT_KEY,'CSK') ||NVL (CUSTOMER_SEGMENT_DESCRIPTION,'CSD') || NVL (SAP_GO_TO_MDL_KEY,'SGMK') ||
-	   NVL (SAP_GO_TO_MDL_DESCRIPTION,'SGMD') ||NVL (SAP_BANNER_KEY,'SBK') ||NVL (SAP_BANNER_DESCRIPTION,'SBD') ||
-	   NVL (SAP_BANNER_FORMAT_KEY,'SBFK') ||NVL (SAP_BANNER_FORMAT_DESCRIPTION,'SBFD') ||NVL (RETAIL_ENVIRONMENT,'RE') ||
-	   NVL (GLOBAL_PRODUCT_FRANCHISE,'GPF') ||NVL (GLOBAL_PRODUCT_BRAND,'GPB') ||NVL (GLOBAL_PRODUCT_SUB_BRAND,'GPSB') ||
-	   NVL (GLOBAL_PRODUCT_VARIANT,'GPV') ||NVL (GLOBAL_PRODUCT_SEGMENT,'GPS') ||NVL (GLOBAL_PRODUCT_SUBSEGMENT,'GPSS') ||
-	   NVL (GLOBAL_PRODUCT_CATEGORY,'GPC') ||NVL (GLOBAL_PRODUCT_SUBCATEGORY,'GPSC') ||NVL (GLOBAL_PUT_UP_DESCRIPTION,'GPUD') ||
-	   NVL (PKA_PRODUCT_KEY,'PK') ||NVL (PKA_PRODUCT_KEY_DESCRIPTION,'PKD') ||NVL (REGION,'REG') ||NVL (ZONE_OR_AREA,'ZN') ||
-	   NVL (MSL_PRODUCT_CODE,'MPC') || NVL (MSL_PRODUCT_DESC, 'MPD') || NVL (MAPPED_SKU_CD,'MSC')) AS DIM_KEY,
+       MD5(NVL (DISTRIBUTOR_CODE,'DC') ||NVL (DISTRIBUTOR_NAME,'DN') ||NVL (SOLDTO_CODE,'STC') || NVL (STORE_CODE,'SC') ||
+       NVL (STORE_NAME,'SN') || NVL (EAN,'EAN') || NVL (CHANNEL,'CHN') || NVL (STORE_GRADE,'SG') || NVL (SKU_CODE,'SKU') ||
+       NVL (SKU_DESCRIPTION,'SKUD') || NVL (STORE_TYPE,'ST') ||NVL (SAP_PARENT_CUSTOMER_KEY,'SPCK') ||NVL (SAP_PARENT_CUSTOMER_DESCRIPTION,'SPSCD') ||
+       NVL (SAP_CUSTOMER_CHANNEL_KEY,'SCCK') ||NVL (SAP_CUSTOMER_CHANNEL_DESCRIPTION,'SCCD') || NVL (SAP_CUSTOMER_SUB_CHANNEL_KEY,'SCSCK') ||
+       NVL (SAP_SUB_CHANNEL_DESCRIPTION,'SSCD') || NVL (CUSTOMER_SEGMENT_KEY,'CSK') ||NVL (CUSTOMER_SEGMENT_DESCRIPTION,'CSD') ||
+       NVL (SAP_GO_TO_MDL_KEY,'SGMK') || NVL (SAP_GO_TO_MDL_DESCRIPTION,'SGMD') ||NVL (SAP_BANNER_KEY,'SBK') ||NVL (SAP_BANNER_DESCRIPTION,'SBD') ||
+       NVL (SAP_BANNER_FORMAT_KEY,'SBFK') ||NVL (SAP_BANNER_FORMAT_DESCRIPTION,'SBFD') ||NVL (RETAIL_ENV,'RE') ||
+       NVL (GLOBAL_PRODUCT_FRANCHISE,'GPF') ||NVL (GLOBAL_PRODUCT_BRAND,'GPB') ||NVL (GLOBAL_PRODUCT_SUB_BRAND,'GPSB') ||
+       NVL (GLOBAL_PRODUCT_VARIANT,'GPV') ||NVL (GLOBAL_PRODUCT_SEGMENT,'GPS') ||NVL (GLOBAL_PRODUCT_SUBSEGMENT,'GPSS') ||
+       NVL (GLOBAL_PRODUCT_CATEGORY,'GPC') ||NVL (GLOBAL_PRODUCT_SUBCATEGORY,'GPSC') ||NVL (GLOBAL_PUT_UP_DESCRIPTION,'GPUD') ||
+       NVL (PKA_PRODUCT_KEY,'PK') ||NVL (PKA_PRODUCT_KEY_DESCRIPTION,'PKD') ||NVL (REGION,'REG') ||NVL (ZONE_OR_AREA,'ZN')) AS DIM_KEY,
        YEAR,
        MNTH_ID,
-       LTRIM(SOLDTO_CODE,'0') AS SOLDTO_CODE,
-	   DISTRIBUTOR_CODE,
-	   DISTRIBUTOR_NAME|| '#' ||ltrim(DISTRIBUTOR_CODE,'0') AS DISTRIBUTOR_NAME,
-       STORE_CODE,
-       STORE_NAME|| '#' ||ltrim(STORE_CODE,'0') AS STORE_NAME,
+       SOLDTO_CODE,
+       DISTRIBUTOR_CODE,
+       UPPER(DISTRIBUTOR_NAME) AS DISTRIBUTOR_NAME,
+       UPPER(STORE_CODE) AS STORE_CODE,
+       UPPER(STORE_NAME) AS STORE_NAME,
+	   LIST_PRICE,
        STORE_TYPE,
-	   CHANNEL,
+       CHANNEL,
        SAP_PARENT_CUSTOMER_KEY,
        SAP_PARENT_CUSTOMER_DESCRIPTION,
        SAP_CUSTOMER_CHANNEL_KEY,
@@ -48,7 +48,7 @@ SELECT COUNTRY_CODE AS CNTRY_CD,
        SAP_BANNER_DESCRIPTION,
        SAP_BANNER_FORMAT_KEY,
        SAP_BANNER_FORMAT_DESCRIPTION,
-       RETAIL_ENVIRONMENT,
+       UPPER(RETAIL_ENV) AS RETAIL_ENVIRONMENT,
        REGION,
        ZONE_OR_AREA,
        CUSTOMER_SEGMENT_KEY,
@@ -62,28 +62,30 @@ SELECT COUNTRY_CODE AS CNTRY_CD,
        GLOBAL_PRODUCT_CATEGORY,
        GLOBAL_PRODUCT_SUBCATEGORY,
        GLOBAL_PUT_UP_DESCRIPTION,
-	   MSL_PRODUCT_CODE AS MASTER_CODE,
-       MSCD.MSL_PRODUCT_DESC AS MSL_PRODUCT_DESC,
-       MSCD.MAPPED_SKU_CD AS MAPPED_SKU_CD,
+       EAN,
+       SKU_CODE,
+       SKU_DESCRIPTION,
+       STORE_GRADE,
        PKA_PRODUCT_KEY,
        PKA_PRODUCT_KEY_DESCRIPTION,
        SUM(SELLOUT_SALES_QUANTITY) :: DECIMAL(38,6) AS SO_SLS_QTY,
        SUM(SELLOUT_SALES_VALUE) :: NUMERIC(38,6) AS SO_SLS_VALUE,
        AVG(SELLOUT_SALES_QUANTITY) :: DECIMAL(38,6) AS SO_AVG_QTY,
        SUM(SALES_VALUE_LIST_PRICE) AS SALES_VALUE_LIST_PRICE,
-	   SYSDATE() AS CRT_DTTM
+       SYSDATE() AS CRT_DTTM
 FROM (SELECT COUNTRY_CODE,
              COUNTRY_NAME,
              DATA_SOURCE,
              YEAR,
              MNTH_ID,
-			 MAX(SOLDTO_CODE) OVER (PARTITION BY LTRIM(DISTRIBUTOR_CODE,'0') ORDER BY cal_date DESC ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS SOLDTO_CODE,
-             LTRIM(DISTRIBUTOR_CODE,'0') AS DISTRIBUTOR_CODE,
-             MAX(DISTRIBUTOR_NAME) OVER (PARTITION BY LTRIM(DISTRIBUTOR_CODE,'0') ORDER BY cal_date DESC ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS DISTRIBUTOR_NAME,
-             LTRIM(STORE_CODE,'0') AS STORE_CODE,
-             MAX(STORE_NAME) OVER (PARTITION BY LTRIM(STORE_CODE,'0') ORDER BY cal_date DESC ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS STORE_NAME,
-             STORE_TYPE,
-			 CHANNEL,
+             LTRIM(SOLDTO_CODE,'0') AS SOLDTO_CODE,
+             UPPER(DISTRIBUTOR_CODE) AS DISTRIBUTOR_CODE,
+			 DISTRIBUTOR_NAME|| '#' ||LTRIM(DISTRIBUTOR_CODE,'0') AS DISTRIBUTOR_NAME,
+             STORE_CODE,
+			 STORE_NAME|| '#' ||LTRIM(STORE_CODE,'0') AS STORE_NAME,
+			 LIST_PRICE,
+             UPPER(STORE_TYPE) AS STORE_TYPE,
+             UPPER(CHANNEL) AS CHANNEL,
              SAP_PARENT_CUSTOMER_KEY,
              SAP_PARENT_CUSTOMER_DESCRIPTION,
              SAP_CUSTOMER_CHANNEL_KEY,
@@ -96,7 +98,7 @@ FROM (SELECT COUNTRY_CODE,
              SAP_BANNER_DESCRIPTION,
              SAP_BANNER_FORMAT_KEY,
              SAP_BANNER_FORMAT_DESCRIPTION,
-             RETAIL_ENV AS RETAIL_ENVIRONMENT,
+             RETAIL_ENV,
              REGION,
              ZONE_OR_AREA,
              CUSTOMER_SEGMENT_KEY,
@@ -110,20 +112,71 @@ FROM (SELECT COUNTRY_CODE,
              GLOBAL_PRODUCT_CATEGORY,
              GLOBAL_PRODUCT_SUBCATEGORY,
              GLOBAL_PUT_UP_DESCRIPTION,
-			 LTRIM(msl_product_code,'0') AS MSL_PRODUCT_CODE,
+             MSCD.EAN_NUM AS EAN,
+             MSCD.SKU_CODE,
+             MSCD.SKU_DESCRIPTION,
+             STORE_GRADE,
              PKA_PRODUCT_KEY,
              PKA_PRODUCT_KEY_DESCRIPTION,
              SELLOUT_SALES_QUANTITY,
              SELLOUT_SALES_VALUE,
-             sellout_value_list_price AS SALES_VALUE_LIST_PRICE
-FROM edw_rpt_regional_sellout_offtake
-WHERE COUNTRY_CODE = 'PH'
-AND   DATA_SOURCE IN ('SELL-OUT','POS')
-AND   MNTH_ID >= (SELECT last_27mnths
+             SALES_VALUE_LIST_PRICE
+      FROM (SELECT COUNTRY_CODE,
+                   COUNTRY_NAME,
+                   DATA_SOURCE,
+                   YEAR,
+                   MNTH_ID,
+                   MAX(SOLDTO_CODE) OVER (PARTITION BY LTRIM(DISTRIBUTOR_CODE,'0') ORDER BY cal_date DESC ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS SOLDTO_CODE,
+                   LTRIM(DISTRIBUTOR_CODE,'0') AS DISTRIBUTOR_CODE,
+                   MAX(DISTRIBUTOR_NAME) OVER (PARTITION BY LTRIM(DISTRIBUTOR_CODE,'0') ORDER BY cal_date DESC ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS DISTRIBUTOR_NAME,
+                   LTRIM(STORE_CODE,'0') AS STORE_CODE,
+                   MAX(STORE_NAME) OVER (PARTITION BY LTRIM(STORE_CODE,'0') ORDER BY cal_date DESC ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS STORE_NAME,
+				   MAX(LIST_PRICE) OVER (PARTITION BY ltrim(msl_product_code,0) ORDER BY LENGTH(SKU_CODE) DESC, cal_date DESC, SKU_CODE DESC ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING ) AS LIST_PRICE,
+                   STORE_TYPE,
+                   CHANNEL,
+                   SAP_PARENT_CUSTOMER_KEY,
+                   SAP_PARENT_CUSTOMER_DESCRIPTION,
+                   SAP_CUSTOMER_CHANNEL_KEY,
+                   SAP_CUSTOMER_CHANNEL_DESCRIPTION,
+                   SAP_CUSTOMER_SUB_CHANNEL_KEY,
+                   SAP_SUB_CHANNEL_DESCRIPTION,
+                   SAP_GO_TO_MDL_KEY,
+                   SAP_GO_TO_MDL_DESCRIPTION,
+                   SAP_BANNER_KEY,
+                   SAP_BANNER_DESCRIPTION,
+                   SAP_BANNER_FORMAT_KEY,
+                   SAP_BANNER_FORMAT_DESCRIPTION,
+                   RETAIL_ENV,
+                   REGION,
+                   ZONE_OR_AREA,
+                   CUSTOMER_SEGMENT_KEY,
+                   CUSTOMER_SEGMENT_DESCRIPTION,
+                   GLOBAL_PRODUCT_FRANCHISE,
+                   GLOBAL_PRODUCT_BRAND,
+                   GLOBAL_PRODUCT_SUB_BRAND,
+                   GLOBAL_PRODUCT_VARIANT,
+                   GLOBAL_PRODUCT_SEGMENT,
+                   GLOBAL_PRODUCT_SUBSEGMENT,
+                   GLOBAL_PRODUCT_CATEGORY,
+                   GLOBAL_PRODUCT_SUBCATEGORY,
+                   GLOBAL_PUT_UP_DESCRIPTION,
+                   LTRIM(msl_product_code,'0') AS EAN,
+				   LTRIM(SKU_CODE,'0') AS SKU_CODE,
+                   STORE_GRADE,
+                   PKA_PRODUCT_KEY,
+                   PKA_PRODUCT_KEY_DESCRIPTION,
+                   SELLOUT_SALES_QUANTITY,
+                   SELLOUT_SALES_VALUE,
+                   SELLOUT_VALUE_LIST_PRICE AS SALES_VALUE_LIST_PRICE
+            FROM EDW_RPT_REGIONAL_SELLOUT_OFFTAKE
+            WHERE COUNTRY_CODE = 'HK'
+            AND   DATA_SOURCE = 'SELL-OUT'
+            AND   MNTH_ID >= (SELECT last_27mnths
                   FROM edw_vw_cal_retail_excellence_dim)::NUMERIC
-AND   MNTH_ID <= (SELECT prev_mnth FROM edw_vw_cal_retail_excellence_dim)::NUMERIC
-) MAIN
-LEFT JOIN wks_philippines_regional_sellout_mapped_sku_cd MSCD ON LTRIM (MAIN.MSL_PRODUCT_CODE,'0') = LTRIM (MSCD.MASTER_CODE,'0')
+            AND   MNTH_ID <= (SELECT prev_mnth FROM edw_vw_cal_retail_excellence_dim)::NUMERIC
+			) MAIN
+        LEFT JOIN WKS_HK_REGIONAL_SELLOUT_MAPPED_SKU_CD MSCD ON LTRIM (MAIN.EAN,'0') = LTRIM (MSCD.EAN_NUM,'0')
+		)
 GROUP BY COUNTRY_CODE,
          COUNTRY_NAME,
          DATA_SOURCE,
@@ -134,8 +187,9 @@ GROUP BY COUNTRY_CODE,
          DISTRIBUTOR_NAME,
          STORE_CODE,
          STORE_NAME,
+		 LIST_PRICE,
          STORE_TYPE,
-		 CHANNEL,
+         CHANNEL,
          SAP_PARENT_CUSTOMER_KEY,
          SAP_PARENT_CUSTOMER_DESCRIPTION,
          SAP_CUSTOMER_CHANNEL_KEY,
@@ -148,7 +202,7 @@ GROUP BY COUNTRY_CODE,
          SAP_BANNER_DESCRIPTION,
          SAP_BANNER_FORMAT_KEY,
          SAP_BANNER_FORMAT_DESCRIPTION,
-         RETAIL_ENVIRONMENT,
+         RETAIL_ENV,
          REGION,
          ZONE_OR_AREA,
          CUSTOMER_SEGMENT_KEY,
@@ -162,29 +216,30 @@ GROUP BY COUNTRY_CODE,
          GLOBAL_PRODUCT_CATEGORY,
          GLOBAL_PRODUCT_SUBCATEGORY,
          GLOBAL_PUT_UP_DESCRIPTION,
-		 MSL_PRODUCT_CODE,
-         MAPPED_SKU_CD,
-         MSL_PRODUCT_DESC,
+         EAN,
+         SKU_CODE,
+         SKU_DESCRIPTION,
+         STORE_GRADE,
          PKA_PRODUCT_KEY,
          PKA_PRODUCT_KEY_DESCRIPTION
 ),
 
 final as 
 (
-    select
-    cntry_cd :: varchar(2) as cntry_cd,
+    select cntry_cd :: varchar(2) as cntry_cd,
     cntry_nm :: varchar(30) as cntry_nm,
     data_source :: varchar(14) as data_source,
     dim_key :: varchar(32) as dim_key,
     year :: numeric(18,0) as year,
     mnth_id :: varchar(23) as mnth_id,
     soldto_code :: varchar(255) as soldto_code,
-    distributor_code :: varchar(100) as distributor_code,
-    distributor_name :: varchar(356) as distributor_name,
-    store_code :: varchar(100) as store_code,
-    store_name :: varchar(601) as store_name,
-    store_type :: varchar(255) as store_type,
-    channel :: varchar(150) as channel,
+    distributor_code :: varchar(150) as distributor_code,
+    distributor_name :: varchar(534) as distributor_name,
+    store_code :: varchar(150) as store_code,
+    store_name :: varchar(901) as store_name,
+    list_price :: numeric(38,6) as list_price,
+    store_type :: varchar(382) as store_type,
+    channel :: varchar(225) as channel,
     sap_parent_customer_key :: varchar(12) as sap_parent_customer_key,
     sap_parent_customer_description :: varchar(75) as sap_parent_customer_description,
     sap_customer_channel_key :: varchar(12) as sap_customer_channel_key,
@@ -197,7 +252,7 @@ final as
     sap_banner_description :: varchar(75) as sap_banner_description,
     sap_banner_format_key :: varchar(12) as sap_banner_format_key,
     sap_banner_format_description :: varchar(75) as sap_banner_format_description,
-    retail_environment :: varchar(50) as retail_environment,
+    retail_environment :: varchar(225) as retail_environment,
     region :: varchar(150) as region,
     zone_or_area :: varchar(150) as zone_or_area,
     customer_segment_key :: varchar(12) as customer_segment_key,
@@ -211,9 +266,10 @@ final as
     global_product_category :: varchar(50) as global_product_category,
     global_product_subcategory :: varchar(50) as global_product_subcategory,
     global_put_up_description :: varchar(100) as global_put_up_description,
-    master_code :: varchar(150) as master_code,
-    msl_product_desc :: varchar(300) as msl_product_desc,
-    mapped_sku_cd :: varchar(40) as mapped_sku_cd,
+    ean :: varchar(150) as ean,
+    sku_code :: varchar(40) as sku_code,
+    sku_description :: varchar(300) as sku_description,
+    store_grade :: varchar(150) as store_grade,
     pka_product_key :: varchar(68) as pka_product_key,
     pka_product_key_description :: varchar(255) as pka_product_key_description,
     so_sls_qty :: numeric(38,6) as so_sls_qty,
@@ -221,7 +277,7 @@ final as
     so_avg_qty :: numeric(38,6) as so_avg_qty,
     sales_value_list_price :: numeric(38,12) as sales_value_list_price,
     crt_dttm :: timestamp without time zone as crt_dttm
-    from philippines_base_retail_excellence
+    from hk_base_retail_excellence
 )
 
 --final select

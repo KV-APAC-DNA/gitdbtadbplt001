@@ -128,8 +128,8 @@ left join (SELECT DISTINCT dstr_cd, "replace"("replace"("replace"("replace"(dstr
              --WHERE cntry_cd = 'HK' AND   UPPER(sales_group_name) IN --('GENERAL TRADE','GENERAL TRADE B/C')) 
 			 --(select parameter_value from itg_query_parameters where country_code='HK' and parameter_name='sales_group_name')) pop 
 	 --ON LTRIM(SUBSTRING (pop.pop_code,3),0) = LTRIM(sls.cust_cd,0) 
-  LEFT JOIN (SELECT DISTINCT sales_group_name_code AS store_grade,
-                    "retail environment (ps)_code" AS retail_env, channel_code AS channel,
+  LEFT JOIN (SELECT DISTINCT sales_group_name_name AS store_grade,
+                    "retail environment (ps)_name" AS retail_env, channel_code AS channel,
                     distributor_customer_number
              FROM SDL_MDS_HK_Store_master where retail_env IS NOT NULL) str_mstr ON LTRIM (str_mstr.distributor_customer_number,'0') = LTRIM (sls.cust_cd,'0')
 where ctry_cd = 'HK' and crncy_cd = 'HKD'  and not (sls.prod_cd like '1U%' OR sls.prod_cd like 'COUNTER TOP%' OR sls.prod_cd like 'DUMPBIN%' OR sls.prod_cd IS NULL OR sls.prod_cd = '') 

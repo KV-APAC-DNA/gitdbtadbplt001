@@ -87,6 +87,7 @@ final as
         msl_product_code,
         msl_product_desc,
         channel,
+        retail_env,
         crtd_dttm,
         updt_dttm   
     FROM wks_philippines_regional_sellout_npd
