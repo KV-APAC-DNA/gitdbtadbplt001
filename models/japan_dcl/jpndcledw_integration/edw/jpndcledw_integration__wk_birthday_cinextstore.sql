@@ -36,8 +36,8 @@ final as
     FROM WK
    INNER JOIN UP
       ON UP.DIUSRID = WK.diEcUsrID
-   WHERE NOT EXISTS (SELECT 'X'
-                       FROM {{this}}
-                      WHERE DIUSRID = UP.DIUSRID)
+--    WHERE NOT EXISTS (SELECT 'X'
+--                        FROM {{this}}
+--                       WHERE DIUSRID = UP.DIUSRID)
 )
 select * from final
