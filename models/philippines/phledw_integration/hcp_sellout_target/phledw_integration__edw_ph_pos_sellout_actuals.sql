@@ -30,7 +30,7 @@ POS as
     sum(pos.JJ_GTS) as POS_GTS
     from edw_ph_pos_analysis pos
      inner join (select distinct code,team_code,GROUP_VARIANT_CODE from hcp_product_master) prod  on (pos.sku=prod.code)
-     inner join (select distinct store_code,GROUP_VARIANT_CODE,territory_code_code,district_code from  hcp_store_master )store on (pos.CUST_BRNCH_CD=store.store_code and store.GROUP_VARIANT_CODE=prod.GROUP_VARIANT_CODE)
+     inner join (select distinct store_code,GROUP_VARIANT_CODE,territory_code_code,customer_code , district_code from  hcp_store_master )store on (pos.CUST_BRNCH_CD=store.store_code and store.GROUP_VARIANT_CODE=prod.GROUP_VARIANT_CODE and pos.cust_cd = store.customer_code)
      group by all
 ),
 RKA as 

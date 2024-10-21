@@ -1,4 +1,4 @@
-with  acommerce_sellout_target as (
+with  acommerce_sellout_actuals as (
     select * from {{ ref('phlitg_integration__itg_ph_acommerce_sellout_data') }}
 ),
 hce_product_master as 
@@ -43,7 +43,7 @@ transformed as
     store.store_code,
     store.territory_code_code  ,
     store.DISTRICT_CODE
-    from acommerce_sellout_target hce
+    from acommerce_sellout_actuals hce
     inner join (select distinct code,GROUP_VARIANT_CODE,team_code,sap_item_code from hce_product_master) prod on (hce.item_sku=prod.code)
     inner join (select distinct name,territory_code_code from hce_customer_master ) cust on (hce.customer_email=cust.name)
     inner join (select distinct territory_code_code,store_code,DISTRICT_CODE from hcp_store_master) store  on (cust.territory_code_code=store.territory_code_code)
