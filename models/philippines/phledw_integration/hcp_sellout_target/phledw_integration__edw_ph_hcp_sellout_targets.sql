@@ -15,7 +15,7 @@ select distinct
 'HCP_SELLOUT_TARGET' as data_src,
 substr(SELLOUT_TARGET.year_month,1,4) as jj_year,
 SELLOUT_TARGET.year_month as jj_month,
-SELLOUT_TARGET.TERRITORY_CODE_CODE,
+SELLOUT_TARGET.TERRITORY_CODE_CODE as TERRITORY_CODE,
 SELLOUT_TARGET.GROUP_VARIANT_CODE,
 SELLOUT_TARGET.sellout_target,
 prod_master.team_code,

@@ -16,7 +16,7 @@ select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
      'HCE_TARGETS' as data_src,
      target.year_month as jj_mnth_id,
      cal.cal_year as jj_year,
-     target.territory_code_code,
+     target.territory_code_code as territory_code_code,
      target.GROUP_VARIANT_CODE,
      target.gmv_target as sellout_target,
     target.CUSTOMER_COUNT_TARGET as CUSTOMER_COUNT_TARGET,
