@@ -1,10 +1,4 @@
-{{
-    config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized= "incremental",
-        incremental_strategy= "append"
-    )
-}}
+
 
 with apc_a902 AS
 (
@@ -62,7 +56,7 @@ india_records AS
          UNIT,
          PRICE_UNIT,
          FROM base_join
-  WHERE RTRIM(SLS_ORG) IN (SELECT RTRIM(sls_org)
+  WHERE TRIM(SLS_ORG) IN (SELECT TRIM(sls_org)
                            FROM EDW_SALES_ORG_DIM
                            WHERE ctry_key = 'IN')
 ),
@@ -79,8 +73,8 @@ other_country_records AS
          UNIT,
          PRICE_UNIT
   FROM base_join
-  WHERE RTRIM(SLS_ORG) IN (SELECT RTRIM(sls_org)
-                           FROM prod_dna_core.aspedw_integration.EDW_SALES_ORG_DIM
+  WHERE TRIM(SLS_ORG) IN (SELECT TRIM(sls_org)
+                           FROM EDW_SALES_ORG_DIM
                            WHERE ctry_key NOT IN ('IN'))
 ),
 all_records AS
@@ -94,11 +88,11 @@ all_records AS
 mvke_join AS
 (
   SELECT all_records.*,
-         b.pmatn
-  FROM all_records
-    LEFT JOIN (SELECT * FROM PROD_CDL_APACOBS.APC_ACCESS.APC_MVKE) b
+         b.pmatn FROM
+  (SELECT * FROM all_records where valid_to<>'00000000' or dt_from<>'00000000')all_records
+     LEFT JOIN (SELECT distinct matnr, pmatn,VKORG FROM APC_MVKE) b
            ON all_records.material = B.MATNR
-          AND B.PMATN <> ''
+           AND all_records.sls_org=b.vkorg
 ),
 final AS
 (
@@ -122,7 +116,7 @@ final AS
          CURRENT_TIMESTAMP()::timestamp_ntz(9) AS crtd_dttm,
          CURRENT_TIMESTAMP()::timestamp_ntz(9) AS updt_dttm,
          NULL AS file_name
-  FROM mvke_join 
+  FROM mvke_join
         {% if is_incremental() %}
   -- this filter will only be applied on an incremental run
         LEFT JOIN {{this}} AS itg
