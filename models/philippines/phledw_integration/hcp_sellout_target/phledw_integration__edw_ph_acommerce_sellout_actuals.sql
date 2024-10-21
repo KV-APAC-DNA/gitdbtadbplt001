@@ -18,7 +18,7 @@ transformed as
 (
      
    select distinct 
-   'ACOMMERCE_ACTUALS' as data_src,
+   'HCE_ACTUALS' as data_src,
    hce.jj_mnth_id ,
    hce.jj_year,
     hce.prefix,
