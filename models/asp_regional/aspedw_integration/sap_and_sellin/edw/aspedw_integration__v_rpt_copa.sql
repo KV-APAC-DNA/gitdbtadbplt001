@@ -1421,8 +1421,9 @@ FROM (
     )
     JOIN edw_company_reporting_dim AS company
       ON ((cast((main.co_cd ) AS TEXT) = cast((company.co_cd) AS TEXT))
-      ) and  (case when trim(mat.mega_brnd_desc)='Dr Ci Labo' then 'Dr Ci Labo' 
-   when nvl(trim(mat.mega_brnd_desc),'NA') <> 'Dr Ci Labo' then 'NA' end )=company.mega_brnd_desc
+      ) and (case when trim(mat.mega_brnd_desc)='Dr Ci Labo' then 'Dr Ci Labo' 
+                when trim(mat.mega_brnd_desc)='Jupiter (PH to CH)' then 'Jupiter (PH to CH)'
+                else 'NA' end )=company.mega_brnd_desc
   )
   LEFT JOIN v_edw_customer_sales_dim AS cus_sales_extn
     ON (
