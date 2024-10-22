@@ -19,7 +19,7 @@ select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
      target.territory_code_code as territory_code,
      target.GROUP_VARIANT_CODE,
      target.gmv_target as sellout_target,
-    target.CUSTOMER_COUNT_TARGET as CUSTOMER_COUNT_TARGET,
+     target.CUSTOMER_COUNT_TARGET as CUSTOMER_COUNT_TARGET,
      target.district_code,
      prod.team_code,
      prod.sap_item_code,
