@@ -1,4 +1,10 @@
-
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy= "append",
+        unique_key=  ['jj_mnth_id','order_id, item_sku']
+         )
+}}
 with hcp_acommerce_load as 
 (
     select * from {{source('phlsdl_raw','sdl_hcp_acommerce_load')}}
