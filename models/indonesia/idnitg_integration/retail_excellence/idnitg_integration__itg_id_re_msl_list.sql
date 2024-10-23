@@ -145,14 +145,14 @@ final as (
     store_category::varchar(1) as store_category,
     store_code::varchar(100) as store_code,
     store_name::varchar(601) as store_name,
-    store_grade::varchar(20) as store_grade,
+    store_grade::varchar(500) as store_grade,
     store_size::varchar(1) as store_size,
     region::varchar(150) as region,
     zone_name::varchar(150) as zone_name,
     city::varchar(200) as city,
     rtrlatitude::varchar(100) as rtrlatitude,
     rtrlongitude::varchar(100) as rtrlongitude,
-    put_up::varchar(100) as put_up,
+    put_up::varchar(200) as put_up,
     prod_hier_l1::varchar(50) as prod_hier_l1,
     prod_hier_l2::varchar(100) as prod_hier_l2,
     prod_hier_l3::varchar(50) as prod_hier_l3,
@@ -164,8 +164,8 @@ final as (
     prod_hier_l9::varchar(100) as prod_hier_l9,
     customer_type::varchar(200) as customer_type,
     channel_type::varchar(200) as channel_type,
-    store_type::varchar(150) as store_type,
-    sub_channel::varchar(50) as sub_channel,
+    store_type::varchar(500) as store_type,
+    sub_channel::varchar(500) as sub_channel,
     mapped_sku_cd::varchar(50) as mapped_sku_cd
     from itg_id_re_msl_list
 )

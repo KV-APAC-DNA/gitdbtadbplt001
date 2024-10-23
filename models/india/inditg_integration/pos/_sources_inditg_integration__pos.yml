@@ -15,7 +15,6 @@ sources:
       tags: ["in_key_acct_offtake","transformation"]
     - name: sdl_pos_category_mapping
       tags: ["in_key_acct_offtake","transformation"]
-
     - name: sdl_pos_tesco
       tags: ["in_key_acct_offtake","transformation"]
     - name: sdl_pos_dmart
@@ -38,3 +37,13 @@ sources:
       tags: ["in_key_acct_offtake","transformation"]
     - name: sdl_pos_apollo
       tags: ["in_key_acct_offtake","transformation"]
+    - name: sdl_mt_tp_spends
+      tags: ["in_mt_tp_spends","transformation"]
+      tests:
+        - test_duplicate:
+            group_by_columns: ["account_name","year","mthmm","article_code"]
+            select_columns: ["account_name","year","mthmm","article_code"]
+            name: TRATBL_sdl_mt_tp_spends__duplicate_test
+            config:
+              store_failures: true
+              schema: indwks_integration
