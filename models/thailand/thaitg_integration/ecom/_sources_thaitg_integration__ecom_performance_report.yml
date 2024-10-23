@@ -1,7 +1,8 @@
 version: 2
 sources:
   - name: thasdl_raw
-    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    # database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    database: DEV_DNA_LOAD
     schema: thasdl_raw
     quoting:
       database: false
