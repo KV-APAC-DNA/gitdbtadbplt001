@@ -73,7 +73,3 @@ models:
     config:
       alias: sdl_raw_kr_daiso_gt_sellout
       tags: ["kr_gt_sellout","ingestion"]
-
-
-
-      
