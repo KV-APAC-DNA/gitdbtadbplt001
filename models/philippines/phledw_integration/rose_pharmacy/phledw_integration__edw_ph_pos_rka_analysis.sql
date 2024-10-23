@@ -196,7 +196,10 @@ select
      left  join (select distinct mnth_id,qrtr_no from EDW_VW_OS_TIME_DIM group by 1,2) time_dim on (pos.jj_month_id=time_dim.mnth_id)
      left   join ph_rosepharma_products prod on (pos.sku=prod.item_cd and pos.jj_month_id=prod.mnth_id)
      left  join ph_rosepharma_customers cust on (pos.branch_code=cust.brnch_cd)
-     left   join ( select  item_cd,active,max(Lst_Price_Unit) as Lst_Price_Unit, max(jj_mnth_id ) as jj_mnth_id from  price_list group by 1,2) price on ( prod.sap_item_cd=price.item_cd and price.jj_mnth_id <= pos.jj_month_id and price.active='Y') 
+     left   join ( select  item_cd,active,max(Lst_Price_Unit) as Lst_Price_Unit, max(jj_mnth_id ) as jj_mnth_id1 from  price_list 
+     
+     where jj_mnth_id1 <= (select max(jj_month_id) from ph_pos_rka_rose_pharma)
+      group by 1,2) price on ( prod.sap_item_cd=price.item_cd and price.jj_mnth_id1 <= pos.jj_month_id and price.active='Y') 
      left join veomd on  (upper(ltrim(veomd.sap_matl_num, 0)) = upper(ltrim(prod.sap_item_cd,0)))
      left join epmad on (upper(trim(epmad.item_cd)) = upper(ltrim(prod.sap_item_cd,0)))
     
