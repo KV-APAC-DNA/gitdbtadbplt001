@@ -198,7 +198,7 @@ select
      left  join ph_rosepharma_customers cust on (pos.branch_code=cust.brnch_cd)
      left   join ( select  item_cd,active,max(Lst_Price_Unit) as Lst_Price_Unit, max(jj_mnth_id ) as jj_mnth_id1 from  price_list 
      
-     where jj_mnth_id1 <= (select max(jj_month_id) from ph_pos_rka_rose_pharma)
+     where jj_mnth_id <= (select max(jj_month_id) from ph_pos_rka_rose_pharma)
       group by 1,2) price on ( prod.sap_item_cd=price.item_cd and price.jj_mnth_id1 <= pos.jj_month_id and price.active='Y') 
      left join veomd on  (upper(ltrim(veomd.sap_matl_num, 0)) = upper(ltrim(prod.sap_item_cd,0)))
      left join epmad on (upper(trim(epmad.item_cd)) = upper(ltrim(prod.sap_item_cd,0)))
