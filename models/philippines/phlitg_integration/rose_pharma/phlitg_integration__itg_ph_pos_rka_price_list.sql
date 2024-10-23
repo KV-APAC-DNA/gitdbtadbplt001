@@ -11,7 +11,10 @@ edw_vw_os_time_dim as (
 ),
 transformed as
 (
-select jj_mnth_id,item_cd, Lst_Price_Unit from price_list
+select jj_mnth_id,
+item_cd,
+ Lst_Price_Unit
+  from price_list
 where  active='Y'
 group by all
 
@@ -26,7 +29,13 @@ cross join
 (select  item_cd,max(Lst_Price_Unit) as Lst_Price_Unit,max(jj_mnth_id) as jj_mnth_id from price_list
 where  active='Y'
 group by all) b where  (a.mnth_id > b.jj_mnth_id)
+),
+final as
+(
+    select * from transformed
 )
+
+select * from final 
 
 
 
