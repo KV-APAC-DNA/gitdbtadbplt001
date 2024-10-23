@@ -24,7 +24,7 @@ distinct
 a.mnth_id,
 b.item_cd,
 b.Lst_Price_Unit
-from (select distinct mnth_id from  edw_vw_os_time_dim where mnth_id <=(select max(jj_mnth_id) from ph_pos_rka_rose_pharma)) a
+from (select distinct mnth_id from  edw_vw_os_time_dim where mnth_id <=(select max(jj_month_id) from ph_pos_rka_rose_pharma)) a
 cross join 
 (select  item_cd,max(Lst_Price_Unit) as Lst_Price_Unit,max(jj_mnth_id) as jj_mnth_id from price_list
 where  active='Y'
