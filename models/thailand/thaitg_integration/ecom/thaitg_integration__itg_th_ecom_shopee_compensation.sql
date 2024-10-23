@@ -2,9 +2,9 @@
     config(
         materialized="incremental",
         incremental_strategy="append",
-        unique_keys=['ORDER_NO'],
-        pre_hook = "delete from {{this}} where SCM_BARCODE||ORDER_NO in (
-        select distinct SCM_BARCODE||ORDER_NO from {{ source('thasdl_raw', 'sdl_ecom_shopee_compensation') }} );"
+        unique_keys=['scm_barcode','order_no'],
+        pre_hook = "delete from {{this}} where filename in (
+        select distinct filename from {{ source('thasdl_raw', 'sdl_ecom_shopee_compensation') }} );"
     )
 }} 
 with source as
@@ -14,24 +14,24 @@ with source as
 final as
 ( 
 	select 
-		PO_CMPT_MNTH::VARCHAR(50) as PO_CMPT_MNTH,
-		TYPE::VARCHAR(100) as type,
-		SCM_BARCODE::VARCHAR(100) as SCM_BARCODE,
-		PRODUCT_NAME::VARCHAR(255) as PRODUCT_NAME,
-		ORDER_NO::VARCHAR(255) as ORDER_NO,
-		STATUS::VARCHAR(50) as STATUS,
-		CRT_TM::VARCHAR(100) as CRT_TM,
-		DLVRY_TM::VARCHAR(100) as DLVRY_TM,
-		SUM_OF_QTY::integer as QTY,
-		SUM_OF_RSPxQTY::integer as RSP_QTY,
-		SUM_OF_TOTAL_NET_SELLING_PRICE::integer as total_net_selling_price,
-		SUM_OF_DIS_SHOPEE::integer as dis_shopee,
-		SUM_OF_LTPxQTY::integer as ltp_qty,
-		SUM_OF_FRONT_MARGIN::integer as front_margin,
-		SUM_OF_ENABLER_MARGIN::integer as enabler_margin,
-		SUM_OF_COMPENSATION::integer as compensation,
-		FILENAME::VARCHAR(255) as filename,
-		CRTD_DTTM :: TIMESTAMP_NTZ(9) as crtd_dttm,
+		po_cmpt_mnth::varchar(50) as po_cmpt_mnth,
+		type::varchar(100) as type,
+		scm_barcode::varchar(100) as scm_barcode,
+		product_name::varchar(255) as product_name,
+		order_no::varchar(255) as order_no,
+		status::varchar(50) as status,
+		crt_tm::varchar(100) as crt_tm,
+		dlvry_tm::varchar(100) as dlvry_tm,
+		sum_of_qty::integer as qty,
+		sum_of_rspxqty::integer as rsp_qty,
+		sum_of_total_net_selling_price::integer as total_net_selling_price,
+		sum_of_dis_shopee::integer as dis_shopee,
+		sum_of_ltpxqty::integer as ltp_qty,
+		sum_of_front_margin::integer as front_margin,
+		sum_of_enabler_margin::integer as enabler_margin,
+		sum_of_compensation::integer as compensation,
+		filename::varchar(255) as filename,
+		crtd_dttm :: timestamp_ntz(9) as crtd_dttm,
 		current_timestamp()::timestamp_ntz(9) as updt_dttm
 	from source
 )
