@@ -804,7 +804,8 @@ FROM SDL_KR_OTC_SELLOUT SNG
 	ON V2.PHARMACY_NAME = SNG.ACCOUNT_NAME and V2.SAP_CUSTOMER_CODE = SNG.CUSTOMER_CODE and V2.outlet_code = SNG.pcode
 WHERE SNG.QUANTITY not like '%.%'
 ),
-Daiso as (SELECT TO_DATE(SDG.Year||SDG.Month||'15','YYYYMMDD') AS IMS_TXN_DT,
+Daiso as (
+    SELECT TO_DATE(SDG.Year||SDG.Month||'15','YYYYMMDD') AS IMS_TXN_DT,
        'NA' AS DSTR_CD,
        UPPER(SDG.DSTR_NM) AS DSTR_NM,
        SDG.CUST_CD,
@@ -841,7 +842,8 @@ FROM SDL_KR_DAISO_GT_SELLOUT SDG
                       ON PP.BARCODE = PA.EAN
                      AND UPPER (PP.CNTRY_CD) = UPPER (PA.CNTRY)
              WHERE UPPER(PP.CNTRY_CD) = 'KR'
-             AND   UPPER(PP.ACTIVE) = 'Y') RPT ON SDG.EAN = RPT.EANNUMBER),
+             AND   UPPER(PP.ACTIVE) = 'Y') RPT ON SDG.EAN = RPT.EANNUMBER
+),
 final as (
 
 select * from hyundai
