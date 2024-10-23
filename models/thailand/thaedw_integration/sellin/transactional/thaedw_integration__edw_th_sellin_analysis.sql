@@ -8,6 +8,7 @@ final as(
         year_month_jnj::varchar(23) as year_month_jnj,
         month_number_jnj::number(18,0) as month_number_jnj,
         week_number::varchar(23) as week_number,
+        copa_sellin_mnth_id::varchar(23) as copa_sellin_mnth_id,
         customer_id::varchar(10) as customer_id,
         sap_customer_name::varchar(100) as sap_customer_name,
         sap_sales_org::varchar(4) as sap_sales_org,

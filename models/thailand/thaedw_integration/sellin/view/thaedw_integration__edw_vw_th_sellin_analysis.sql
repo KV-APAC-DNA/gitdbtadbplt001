@@ -320,6 +320,7 @@ transformed as(
     time.mnth_id AS year_month_jnj, 
     time.mnth_no AS month_number_jnj, 
     time.mnth_wk_no as week_number,
+    sellin_fact.jj_mnth_id as copa_sellin_mnth_id,
     sellin_fact.cust_id AS customer_id, 
     cust.sap_cust_nm AS sap_customer_name, 
     sellin_fact.sls_org AS sap_sales_org, 
