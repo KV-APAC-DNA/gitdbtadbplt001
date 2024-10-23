@@ -125,7 +125,3 @@ models:
     config:
       alias: wks_sdl_kr_daiso_gt_sellout
       tags: ["kr_gt_sellout","ingestion"]
-
-
-
-      
