@@ -19,8 +19,8 @@ sources:
                 store_failures: true
                 schema: vnmwks_integration
           - test_duplicate:
-              group_by_columns: ["dstrbtr_id"]
-              select_columns: ["dstrbtr_id"]
+              group_by_columns: ["dstrbtr_id","mapped_spk"]
+              select_columns: ["dstrbtr_id","mapped_spk"]
               name: TRATBL_sdl_vn_dms_distributor_dim__duplicate_test
               config:
                 store_failures: true
