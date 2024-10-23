@@ -19,15 +19,15 @@ SELLOUT_TARGET.TERRITORY_CODE_CODE as TERRITORY_CODE,
 SELLOUT_TARGET.GROUP_VARIANT_CODE,
 SELLOUT_TARGET.sellout_target,
 prod_master.team_code,
-store_master.store_code,
-store_master.customer_code,
-store_master.sales_allocated,
+null as store_code,
+null as customer_code,
 store_master.DISTRICT_CODE
 
-from PH_HCP_SELLOUT_TARGET SELLOUT_TARGET 
+from (select distinct year_month ,TERRITORY_CODE_CODE,GROUP_VARIANT_CODE,sellout_target from  PH_HCP_SELLOUT_TARGET) SELLOUT_TARGET 
   inner join (select distinct GROUP_VARIANT_CODE, team_code from HCP_PRODUCT_MASTER ) prod_master on (SELLOUT_TARGET.GROUP_VARIANT_CODE=
-prod_master.GROUP_VARIANT_CODE)
-  inner join (select distinct GROUP_VARIANT_CODE,store_code,customer_code,TERRITORY_CODE_CODE,DISTRICT_CODE,sales_allocated
+prod_master.GROUP_VARIANT_CODE )
+
+  inner join (select distinct GROUP_VARIANT_CODE,TERRITORY_CODE_CODE,DISTRICT_CODE
   from HCP_store_MASTER ) store_master on (sellout_target.TERRITORY_CODE_CODE=store_master.TERRITORY_CODE_CODE and  SELLOUT_TARGET.GROUP_VARIANT_CODE=
 store_master.GROUP_VARIANT_CODE)
 
