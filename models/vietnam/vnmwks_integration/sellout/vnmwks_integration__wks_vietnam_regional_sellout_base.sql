@@ -197,7 +197,8 @@ SELECT 'POS' AS DATA_SRC,
     shopname AS STORE_NAME,
      channelname AS store_type,
     nvl(pos.barcode,'NA') AS EAN,
-    nvl(vtdp.jnj_sap_code,matsls.matl_num) AS MATL_NUM,
+    --nvl(vtdp.jnj_sap_code,matsls.matl_num) AS MATL_NUM,
+    coalesce(vtdp.jnj_sap_code,matsls.matl_num, matdim.matl_num) AS MATL_NUM,
      productname AS Customer_Product_Desc,
      stt AS region,
      area AS zone_or_area,
@@ -217,6 +218,10 @@ SELECT 'POS' AS DATA_SRC,
             (select distinct co_cd from edw_company_dim where crncy_key = 'VND' and ctry_key = 'VN' and ctry_group = 'Vietnam'))
       and (ean_num != 'N/A' and nullif(ean_num,'') is not null)) where rn = 1) matsls 
       ON LTRIM(matsls.matsls_ean,'0') = LTRIM(pos.barcode,'0')
+    LEFT JOIN (select prmry_upc_cd as matdim_ean, matl_num from (select ltrim(prmry_upc_cd,'0') as prmry_upc_cd, 
+        ltrim(matl_num,'0') as matl_num, row_number() over (partition by ltrim(prmry_upc_cd,'0') order by crt_dttm desc) as rn 
+        from EDW_MATERIAL_DIM where (nullif(prmry_upc_cd,'') is not null and prmry_upc_cd != 'N/A' and lower(prmry_upc_cd) != 'na' and lower(prmry_upc_cd) != 'null' and (prmry_upc_cd is not null and trim(prmry_upc_cd) != ''))) where rn = 1) matdim 
+    ON  LTRIM(matdim.matdim_ean,'0') = LTRIM(pos.barcode,'0')
     LEFT JOIN edw_vw_os_time_dim time_dim on TO_DATE(pos.year||lpad(pos.month,2,'00')|| '01','YYYYMMDD') = time_dim.cal_date
 	  )base
 where NOT (nvl(base.so_sls_value, 0) = 0 and nvl(base.so_sls_qty, 0) = 0) AND base.day > (select to_date(param_value,'YYYY-MM-DD') from itg_mds_ap_customer360_config where code='min_date') 
