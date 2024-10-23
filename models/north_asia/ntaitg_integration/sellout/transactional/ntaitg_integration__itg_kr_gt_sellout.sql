@@ -845,7 +845,6 @@ FROM SDL_KR_DAISO_GT_SELLOUT SDG
              AND   UPPER(PP.ACTIVE) = 'Y') RPT ON SDG.EAN = RPT.EANNUMBER
 ),
 final as (
-
 select * from hyundai
 union all
 select * from lotte
