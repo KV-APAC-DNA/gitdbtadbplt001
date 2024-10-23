@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: phledw_integration__edw_ph_pos_rka_analysis
+    config:
+      alias: edw_ph_pos_rka_analysis
+      tags: ["ph_pos_rka_analysis","transformation"]
+
+  - name: phlitg_integration__itg_ph_pos_rka_mds_customers
+    config:
+      alias: ph_pos_rka_mds_customers
+      tags: ["ph_pos_rka_analysis","transformation"]
+
+  - name: phlitg_integration__itg_ph_pos_rka_mds_product_mapping
+    config:
+      alias: ph_pos_rka_mds_product_mapping
+      tags: ["ph_pos_rka_analysis","transformation"]
+
+  - name: phlitg_integration__itg_ph_pos_rka_rose_pharma
+    config:
+      alias: ph_pos_rka_rose_pharma
+      tags: ["ph_pos_rka_analysis","transformation"]
+
