@@ -1,12 +1,3 @@
-{{
-    config(
-        materialized="incremental",
-        incremental_strategy="append",
-        unique_keys=['order_id'],
-        pre_hook = "delete from {{this}} where filename in (
-        select distinct filename from {{ source('thasdl_raw', 'sdl_ecom_ams') }} );"
-    )
-}} 
 with source as
 (
     select * from {{ source('thasdl_raw', 'sdl_ecom_ams') }}

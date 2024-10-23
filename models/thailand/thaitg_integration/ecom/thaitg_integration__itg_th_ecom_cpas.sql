@@ -1,12 +1,3 @@
-{{
-    config(
-        materialized="incremental",
-        incremental_strategy="append",
-        unique_keys=['date','shop'],
-        pre_hook = "delete from {{this}} where filename in (
-        select distinct filename from {{ source('thasdl_raw', 'sdl_ecom_cpas') }} );"
-    )
-}}
 with source as
 (
     select * from {{ source('thasdl_raw', 'sdl_ecom_cpas') }}
