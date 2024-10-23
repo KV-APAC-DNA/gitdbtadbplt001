@@ -11,6 +11,8 @@ with sdl_kr_daiso_gt_sellout as (
         select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_daiso_gt_sellout__null_test') }}
         union all
         select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_daiso_gt_sellout__lookup_test') }}
+        union all
+        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_daiso_gt_sellout__lookup_test2') }}
     )
 ),
 final as (

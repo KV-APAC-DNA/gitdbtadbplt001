@@ -395,6 +395,7 @@ sources:
       - name: TRATBL_sdl_th_mt_tops__duplicate_test
       - name: TRATBL_sdl_kr_daiso_gt_sellout__null_test
       - name: TRATBL_sdl_kr_daiso_gt_sellout__lookup_test
+      - name: TRATBL_sdl_kr_daiso_gt_sellout__lookup_test2
  
 
  
