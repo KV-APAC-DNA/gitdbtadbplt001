@@ -140,6 +140,15 @@ WHERE (IMS_TXN_DT,UPPER(DSTR_CD),EAN_NUM,cust_cd) IN (SELECT CASE WHEN (SNG.IMS_
                             FROM {{ ref('aspedw_integration__edw_calendar_dim') }}
                             WHERE WKDAY = '7'
                             GROUP BY FISC_PER) CAL ON SPLIT_PART(SPLIT_PART(SNG.FILE_NAME,'_',3),'.',1) = SUBSTRING (CAL.FISC_PER,1,4) ||SUBSTRING (CAL.FISC_PER,6,7) )
+             {% endif %}",
+             "{% if is_incremental() %}
+            DELETE
+            FROM {{this}}
+            WHERE (IMS_TXN_DT,UPPER(DSTR_NM),CUST_CD,EAN_NUM) IN (SELECT DISTINCT TO_DATE(Year||Month||'15','YYYYMMDD') AS IMS_TXN_DT,
+                                                                                        UPPER(DSTR_NM),
+                                                                                        CUST_CD,
+                                                                                        EAN
+                                                                                    FROM {{ ref('ntawks_integration__wks_sdl_kr_daiso_gt_sellout')}})        
              {% endif %}"  ]
     )
 }}
@@ -155,6 +164,9 @@ select * from {{ ref('ntawks_integration__wks_sdl_kr_ju_hj_life_gt_sellout') }}
 ),
 sdl_kr_jungseok_gt_sellout as (
 select * from {{ ref('ntawks_integration__wks_sdl_kr_jungseok_gt_sellout') }}
+),
+sdl_kr_daiso_gt_sellout as (
+select * from {{ ref('ntawks_integration__wks_sdl_kr_daiso_gt_sellout') }}
 ),
 sdl_kr_nacf_gt_sellout as (
 select * from {{ ref('ntawks_integration__wks_sdl_kr_nacf_gt_sellout') }}
@@ -792,6 +804,44 @@ FROM SDL_KR_OTC_SELLOUT SNG
 	ON V2.PHARMACY_NAME = SNG.ACCOUNT_NAME and V2.SAP_CUSTOMER_CODE = SNG.CUSTOMER_CODE and V2.outlet_code = SNG.pcode
 WHERE SNG.QUANTITY not like '%.%'
 ),
+Daiso as (SELECT TO_DATE(SDG.Year||SDG.Month||'15','YYYYMMDD') AS IMS_TXN_DT,
+       'NA' AS DSTR_CD,
+       UPPER(SDG.DSTR_NM) AS DSTR_NM,
+       SDG.CUST_CD,
+       RCT.CUST_NM,
+       RPT.MATERIALNUMBER AS PROD_CD,
+       RPT.PRODUCTNAME AS PROD_NM,
+       SDG.EAN AS EAN_NUM,
+       IDP.UNIT_PRICE AS UNIT_PRC,
+       (IDP.UNIT_PRICE*CAST(SDG.QTY AS NUMERIC(21,5))) AS SLS_AMT,
+       CAST(SDG.QTY AS INTEGER) SLS_QTY,
+       LCD.SUB_CUSTOMER_CODE,
+       SDG.SUB_CUSTOMER_NAME,
+       'KR' AS CTRY_CD,
+       'KRW' AS CRNCY_CD,
+       sysdate() AS CRT_DTTM,
+       sysdate() AS UPDT_DTTM,
+       null as SALES_PRIORITY,
+       null as sales_stores,
+       null as sales_rate
+FROM SDL_KR_DAISO_GT_SELLOUT SDG
+  LEFT JOIN ITG_KR_GT_DAISO_PRICE IDP ON SDG.EAN = IDP.EAN
+  LEFT JOIN ITG_KR_GT_DPT_DAISO LCD
+         ON SDG.CUST_CD = LCD.CUSTOMER_CODE
+        AND SDG.SUB_CUSTOMER_NAME = LCD.SUB_CUSTOMER_NAME
+  LEFT JOIN (SELECT DISTINCT CUST_NUM AS CUST_CD,
+                    CUST_NM
+             FROM EDW_CUSTOMER_BASE_DIM) RCT ON SDG.CUST_CD = LTRIM (RCT.CUST_CD,0)
+  LEFT JOIN (SELECT DISTINCT PP.CNTRY_CD,
+                    PP.BARCODE AS EANNUMBER,
+                    PA.SAP_MATL_NUM AS MATERIALNUMBER,
+                    PP.SKU_ENGLISH AS PRODUCTNAME
+             FROM ITG_POP6_PRODUCTS PP
+               LEFT JOIN EDW_PRODUCT_ATTR_DIM PA
+                      ON PP.BARCODE = PA.EAN
+                     AND UPPER (PP.CNTRY_CD) = UPPER (PA.CNTRY)
+             WHERE UPPER(PP.CNTRY_CD) = 'KR'
+             AND   UPPER(PP.ACTIVE) = 'Y') RPT ON SDG.EAN = RPT.EANNUMBER),
 final as (
 
 select * from hyundai
@@ -821,5 +871,7 @@ union all
 select * from otc
 union all
 select * from ju_hj_life
+union all
+select * from daiso
 )
 select * from final
