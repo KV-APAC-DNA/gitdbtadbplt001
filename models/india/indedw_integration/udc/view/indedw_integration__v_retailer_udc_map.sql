@@ -420,7 +420,7 @@ SELECT derived_table1.distcode AS customer_code_udc
 				ELSE NULL::CHARACTER VARYING
 				END
 			)::TEXT
-		) AS udc_orslcac2021
+		) AS udc_cac
 	,"max" (
 		(
 			CASE 
@@ -808,6 +808,24 @@ SELECT derived_table1.distcode AS customer_code_udc
 				END
 			)::TEXT
 		) AS udc_specialtyprofessional2024
+        ,"max" (
+		(
+			CASE 
+				WHEN ((derived_table1.columnname)::TEXT = ('HSA Counter Q2 2024'::CHARACTER VARYING)::TEXT)
+					THEN (derived_table1.columnvalue)::CHARACTER VARYING
+				ELSE NULL::CHARACTER VARYING
+				END
+			)::TEXT
+		) AS udc_hsacounterq22024
+		,"max" (
+		(
+			CASE 
+				WHEN ((derived_table1.columnname)::TEXT = ('Dispensing Drs 2024'::CHARACTER VARYING)::TEXT)
+					THEN (derived_table1.columnvalue)::CHARACTER VARYING
+				ELSE NULL::CHARACTER VARYING
+				END
+			)::TEXT
+		) AS udc_dispensingdrs2024
 	,convert_timezone('UTC', current_timestamp()) AS crt_dttm
 	,convert_timezone('UTC', current_timestamp()) AS updt_dttm
 FROM (
