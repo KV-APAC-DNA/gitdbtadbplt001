@@ -24,3 +24,7 @@ models:
     config:
       alias: sdl_raw_winculum_salesreturn
       tags: ["in_sdlitg_daily","transformation"]
+  - name: inditg_integration__itg_salescube_weekly_archival_bkp
+    config:
+      alias: itg_salescube_weekly_archival_bkp
+      tags: ["in_sdlitg_weekly_archival","transformation"]
