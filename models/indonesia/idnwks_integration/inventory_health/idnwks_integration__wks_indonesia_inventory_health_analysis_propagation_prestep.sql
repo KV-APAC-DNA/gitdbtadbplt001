@@ -232,17 +232,29 @@ from (
                         SELECT *
                         FROM wks_Indonesia_siso_propagate_final
                     ) AS A
+                    --bug fix
+                    
                     LEFT JOIN (
+                            (SELECT JJ_MNTH_ID,
+                            DSTRBTR_GRP_CD,
+                            JJ_SAP_CD_MP_PROD_ID,
+                            JJ_SAP_CD_MP_PROD_DESC
+                        FROM (
                         SELECT DISTINCT JJ_MNTH_ID,
                             DSTRBTR_GRP_CD,
                             JJ_SAP_CD_MP_PROD_ID,
                             JJ_SAP_CD_MP_PROD_DESC,
-                            DSTRBTR_GRP_NM
+                            row_number() over (partition by jj_mnth_id,DSTRBTR_GRP_CD,JJ_SAP_CD_MP_PROD_ID  order by  JJ_SAP_CD_MP_PROD_DESC ) rn
+                            --DSTRBTR_GRP_NM
                         FROM EDW_INDONESIA_LPPB_ANALYSIS
                         WHERE JJ_SAP_CD_MP_PROD_ID != '33514660'
-                    ) details ON A.month = details.jj_mnth_id 
+                            )
+                        WHERE rn = 1
+                        ) details
+                    ON A.month = details.jj_mnth_id
                     AND A.sap_parent_customer_key = details.DSTRBTR_GRP_CD  
                     AND A.matl_num = details.JJ_SAP_CD_MP_PROD_ID 
+
                     LEFT JOIN (
                         SELECT DISTINCT "year" as year,
                             QRTR_NO,
