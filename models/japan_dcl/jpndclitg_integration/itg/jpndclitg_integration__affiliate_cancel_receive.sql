@@ -2,7 +2,7 @@
     config
     (
         materialized='incremental',
-        incremental_strategy= 'delete+insert',
+        incremental_strategy= 'append',
         unique_key= ['unique_id']
     )
 }}
