@@ -122,6 +122,36 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+      - name: sdl_kr_daiso_gt_sellout
+        tags: ["kr_gt_sellout", "ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["year", "dstr_nm", "sub_customer_name", "ean", "cust_cd"]
+              not_null_columns: ["ean"]
+              name: TRATBL_sdl_kr_daiso_gt_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_lookup:
+              select_columns: ["year", "dstr_nm", "sub_customer_name", "ean", "cust_cd"]
+              column: "trim(cust_cd),trim(sub_customer_name)"
+              lookup_column: "trim(customer_code) customer_code, trim(sub_customer_name) sub_customer_name"
+              lookup_table: "{{ ref('ntaitg_integration__itg_kr_gt_dpt_daiso') }}"                                                                      
+              failure_reason: "'missing customer information data compared with master file: ims_txn_dt, cust_cd, sub_customer_name'"
+              name: TRATBL_sdl_kr_daiso_gt_sellout__lookup_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_lookup:
+              select_columns: ["year", "dstr_nm", "sub_customer_name", "ean", "cust_cd"]
+              column: "trim(ean)"
+              lookup_column: "trim(ean) ean"
+              lookup_table: "{{ ref('ntaitg_integration__itg_kr_gt_daiso_price') }}"                                                                      
+              failure_reason: "'missing ean records compared with price master file'"
+              name: TRATBL_sdl_kr_daiso_gt_sellout__lookup_test2
+              config:
+                store_failures: true
+                schema: ntawks_integration
       - name: sdl_kr_lotte_logistics_yang_ju_gt_sellout
         tags: ["gt_sellout_lotte_logistics_yang_ju", "ingestion"]
         tests:
