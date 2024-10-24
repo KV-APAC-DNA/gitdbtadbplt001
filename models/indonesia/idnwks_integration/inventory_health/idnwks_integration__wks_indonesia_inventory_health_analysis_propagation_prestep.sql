@@ -233,7 +233,7 @@ from (
                         FROM wks_Indonesia_siso_propagate_final
                     ) AS A
                     --bug fix
-                    
+
                     LEFT JOIN (
                             (SELECT JJ_MNTH_ID,
                             DSTRBTR_GRP_CD,
@@ -250,7 +250,7 @@ from (
                         WHERE JJ_SAP_CD_MP_PROD_ID != '33514660'
                             )
                         WHERE rn = 1
-                        ) details
+                        )) details
                     ON A.month = details.jj_mnth_id
                     AND A.sap_parent_customer_key = details.DSTRBTR_GRP_CD  
                     AND A.matl_num = details.JJ_SAP_CD_MP_PROD_ID 
