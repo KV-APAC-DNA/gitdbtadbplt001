@@ -1,3 +1,7 @@
+{{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 --import cte
 with itg_hk_re_msl_list as (
     select * from {{ ref('ntaitg_integration__itg_hk_re_msl_list') }}
@@ -531,12 +535,12 @@ final as
     fisc_per :: numeric(18,0) as fisc_per,
     market :: varchar(30) as market,
     data_src :: varchar(14) as data_src,
-    channel_name :: varchar(337) as channel_name,
+    channel_name :: varchar(500) as channel_name,
     sold_to_code :: varchar(382) as sold_to_code,
     distributor_code :: varchar(225) as distributor_code,
     distributor_name :: varchar(801) as distributor_name,
-    sell_out_channel :: varchar(337) as sell_out_channel,
-    retail_environment :: varchar(337) as retail_environment,
+    sell_out_channel :: varchar(500) as sell_out_channel,
+    retail_environment :: varchar(500) as retail_environment,
     store_code :: varchar(225) as store_code,
     store_name :: varchar(1351) as store_name,
     list_price :: numeric(38,6) as list_price,

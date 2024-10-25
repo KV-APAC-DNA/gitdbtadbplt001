@@ -1,3 +1,7 @@
+{{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 --import cte
 with itg_vn_re_msl_list as (
     select * from {{ ref('vnmitg_integration__itg_vn_re_msl_list') }}
@@ -514,11 +518,11 @@ final as
     fisc_per :: numeric(18,0) as fisc_per,
     market :: varchar(50) as market,
     data_src :: varchar(14) as data_src,
-    channel_name :: varchar(337) as channel_name,
+    channel_name :: varchar(500) as channel_name,
     soldto_code :: varchar(255) as soldto_code,
     distributor_code :: varchar(225) as distributor_code,
     distributor_name :: varchar(534) as distributor_name,
-    sell_out_channel :: varchar(337) as sell_out_channel,
+    sell_out_channel :: varchar(500) as sell_out_channel,
     store_type :: varchar(573) as store_type,
     prioritization_segmentation :: varchar(1) as prioritization_segmentation,
     store_category :: varchar(1) as store_category,
@@ -531,8 +535,8 @@ final as
     city :: varchar(2) as city,
     rtrlatitude :: varchar(1) as rtrlatitude,
     rtrlongitude :: varchar(1) as rtrlongitude,
-    sell_out_re :: varchar(225) as sell_out_re,
-    product_code :: varchar(150) as product_code,
+    sell_out_re :: varchar(500) as sell_out_re,
+    product_code :: varchar(200) as product_code,
     product_name :: varchar(300) as product_name,
     prod_hier_l1 :: varchar(30) as prod_hier_l1,
     prod_hier_l2 :: varchar(50) as prod_hier_l2,
@@ -547,7 +551,7 @@ final as
     list_price :: numeric(38,6) as list_price,
     customer_segment_key :: varchar(12) as customer_segment_key,
     customer_segment_description :: varchar(50) as customer_segment_description,
-    retail_environment :: varchar(150) as retail_environment,
+    retail_environment :: varchar(500) as retail_environment,
     sap_customer_channel_key :: varchar(12) as sap_customer_channel_key,
     sap_customer_channel_description :: varchar(75) as sap_customer_channel_description,
     sap_customer_sub_channel_key :: varchar(12) as sap_customer_sub_channel_key,

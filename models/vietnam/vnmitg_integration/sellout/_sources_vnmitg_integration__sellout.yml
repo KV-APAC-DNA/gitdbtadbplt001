@@ -119,4 +119,4 @@ sources:
                   store_failures: true
                   schema: vnmwks_integration   
       
-      - name: sdl_mds_vn_store_retail_environment_mapping_adftemp            
+      - name: sdl_mds_vn_store_retail_environment_mapping            

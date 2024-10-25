@@ -1,3 +1,7 @@
+{{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 --import cte
 with wks_vn_base_retail_excellence as (
     select * from {{ ref('vnmwks_integration__wks_vn_base_retail_excellence')}}

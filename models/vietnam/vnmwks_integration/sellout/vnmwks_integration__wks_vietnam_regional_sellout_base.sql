@@ -11,7 +11,7 @@ itg_vn_dms_customer_dim as (
 select * from {{ ref('vnmitg_integration__itg_vn_dms_customer_dim') }}
 ),
 sdl_mds_vn_store_retail_environment_mapping as (
-select * from {{ source('vnmsdl_raw', 'sdl_mds_vn_store_retail_environment_mapping_adftemp') }}
+select * from {{ source('vnmsdl_raw', 'sdl_mds_vn_store_retail_environment_mapping') }}
 ),
 edw_vw_os_time_dim as (
 select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
