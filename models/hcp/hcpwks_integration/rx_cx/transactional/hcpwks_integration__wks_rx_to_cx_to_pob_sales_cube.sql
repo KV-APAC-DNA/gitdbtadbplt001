@@ -40,6 +40,6 @@ final as
             ecd.customer_code=ersd.latest_customer_code
       WHERE rtruniquecode IN (SELECT DISTINCT urc::TEXT
                               FROM wks_rx_to_cx_to_pob_base_rtl))
-WHERE rn = 1 limit 10
+WHERE rn = 1 
 )
 select * from final
