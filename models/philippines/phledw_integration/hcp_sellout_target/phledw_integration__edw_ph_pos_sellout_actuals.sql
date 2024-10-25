@@ -12,7 +12,7 @@ hcp_store_master as
 ),
 rose_pharma_sellout_data as 
 (
-  select 1 -- place holder for rose pharma data 
+  select * from prod_dna_core.phledw_integration.edw_ph_pos_rka_analysis_test
 ),
 POS as 
 (
