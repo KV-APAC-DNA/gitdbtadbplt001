@@ -15,7 +15,7 @@ with source as
 ),
 final as 
 (
-    select
+    select 
     trim(code)::varchar(10) as prov_id,
 	trim(name)::varchar(50) as prov_nm,
 	convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) as crtd_dttm,
