@@ -30,7 +30,9 @@ final as
 	dstrbtr_grp_nm::varchar(255) as dstrbtr_grp_nm,
 	prov_nm::varchar(255) as prov_nm,
 	effective_from::varchar(10) as effective_from,
-	effective_to::varchar(10) as effective_to
+	effective_to::varchar(10) as effective_to,
+    CUSTOMER_SEGMENTATION_LEVEL_1::varchar(500) as CUSTOMER_SEGMENTATION_LEVEL_1,
+    CUSTOMER_SEGMENTATION_LEVEL_2::varchar(500) as CUSTOMER_SEGMENTATION_LEVEL_2 
 from source as idd,
 itg_distributor_province_dim as idpd,
 itg_distributor_group_dim as idgd
