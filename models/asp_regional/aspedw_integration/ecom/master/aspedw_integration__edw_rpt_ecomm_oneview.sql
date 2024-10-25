@@ -346,12 +346,12 @@ insert2 as(
 				"substring" (
 					copa.fisc_yr_per::CHARACTER VARYING::TEXT,
 					6,
-					6
+					8
 					) || '01'::CHARACTER VARYING::TEXT
 				) || "substring" (
 				copa.fisc_yr_per::CHARACTER VARYING::TEXT,
 				1,
-				2
+				4
 				), 'MMDDYYYY'::CHARACTER VARYING::TEXT) AS fisc_day,
 		NULL AS cal_day,
 		copa.fisc_yr_per,
