@@ -22,7 +22,7 @@ left join
 		WHEN market = 'Pacific' THEN 'Australia'
         ELSE market END as market,
         cluster as "cluster",
-		left(fisc_yr_per, 4)||right(fisc_yr_per, 2) as month_id,
+		left(fisc_yr_per::integer, 4)||right(fisc_yr_per::integer, 2) as month_id,
 		value_usd, value_lcy, kpi
         from edw_rpt_ecomm_oneview where kpi = 'NTS') base
 on base_dist.market = base.market AND base_dist."cluster" = base."cluster" AND base_dist.month_id = base.month_id
