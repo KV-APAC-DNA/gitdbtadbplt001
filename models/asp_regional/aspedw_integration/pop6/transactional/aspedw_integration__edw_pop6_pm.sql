@@ -399,7 +399,7 @@ SELECT 'general' as data_type,
                             PARTITION BY visit_id,
                             audit_form_id,
                             section_id,
-                            response
+                            field_id
                             ORDER BY run_id DESC
                         ) rn
                     from itg_pop6_general_audits general
@@ -426,7 +426,7 @@ SELECT 'general' as data_type,
         edw_vw_pop6_store store,
         edw_vw_pop6_salesperson rep
     WHERE SPLIT_PART(filename, '_', 1) = 'general'
-        AND visit_id || audit_form_id || section_id = SPLIT_PART(filename, '_', 3) || SPLIT_PART(filename, '_', 4) || SPLIT_PART(filename, '_', 5)
+        AND visit_id || audit_form_id || section_id || field_id = SPLIT_PART(filename, '_', 3) || SPLIT_PART(filename, '_', 4) || SPLIT_PART(filename, '_', 5) || SPLIT_PART(filename, '_', 6) 
         AND general.pop_code = store.pop_code(+)
         AND general.username = rep.username(+)
 ),
