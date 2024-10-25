@@ -15,7 +15,7 @@ sum(base.value_usd) :: numeric(38,5) as mtd_usd, sum(base.value_lcy) :: numeric(
         ELSE market END as market,
 	cluster as "cluster" from edw_rpt_ecomm_oneview where kpi = 'NTS')t cross join
 (select distinct
-		left(fisc_yr_per, 4)||right(fisc_yr_per, 2) as month_id
+		left(fisc_yr_per::integer, 4)||right(fisc_yr_per::integer, 2) as month_id
 	from edw_rpt_ecomm_oneview where kpi = 'NTS') u ) base_dist
 left join
 	(select CASE WHEN market like '%Japan%' THEN 'Japan'
