@@ -1,3 +1,7 @@
+{{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 --import cte
 with itg_vn_re_msl_list as (
     select * from {{ ref('vnmitg_integration__itg_vn_re_msl_list') }}
