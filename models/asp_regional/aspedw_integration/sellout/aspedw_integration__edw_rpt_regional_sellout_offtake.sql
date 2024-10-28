@@ -1,5 +1,6 @@
 {{
     config(
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";",
         materialized="incremental",
         incremental_strategy = "append",
         pre_hook="{% if is_incremental() %}
