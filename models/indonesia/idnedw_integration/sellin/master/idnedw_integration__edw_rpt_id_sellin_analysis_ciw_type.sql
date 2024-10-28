@@ -7,6 +7,7 @@ edw_copa_trans_fact_temp as (
        pstng_per,
        MATL_NUM,
        CUST_NUM,
+       obj_crncy_co_obj,
        ACCT_HIER_DESC,
        amt_obj_crncy
     from edw_copa_trans_fact
@@ -73,8 +74,8 @@ select null as bill_dt,
        null as sellin_qty,
        null as sellin_val,
        null as gross_sellin_val,
-	   copa.ACCT_HIER_DESC as ciw_type ,
-	   sum(copa.amt_obj_crncy) as amount 
+	   copa.ACCT_HIER_DESC::VARCHAR(200) as ciw_type ,
+	   sum(copa.amt_obj_crncy)::NUMBER(18,4)  as amount 
 
 from edw_copa_trans_fact_temp  copa,
      edw_distributor_dim edd,
