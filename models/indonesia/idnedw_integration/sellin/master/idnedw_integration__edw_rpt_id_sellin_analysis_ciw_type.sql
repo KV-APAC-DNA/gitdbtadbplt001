@@ -17,7 +17,7 @@ edw_distributor_dim as (
 edw_product_dim as (
     select * from {{ ref('idnedw_integration__edw_product_dim') }}
 ),
-etd as (
+edw_time_dim as (
     select distinct jj_year,
         jj_qrtr_no,
         jj_qrtr,
