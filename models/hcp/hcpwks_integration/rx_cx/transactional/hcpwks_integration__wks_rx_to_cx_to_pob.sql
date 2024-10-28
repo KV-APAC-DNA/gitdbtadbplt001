@@ -123,7 +123,7 @@ final as
        pob.pob_units,
        hcprtl.v_custid_dr AS hcp_id,
        rxrtl.rx_units AS rx_factorized,
-       rxrtl.rx_units * 4 AS rx_units,
+       CASE WHEN UPPER(mapp.prod_vent) LIKE 'ORSL%' THEN rxrtl.rx_units * 4 ELSE rxrtl.rx_units END AS rx_units,
        NVL(rd.retailer_name,sd.retailer_name) AS urc_name,
        NVL(rd.customer_code,sd.latest_customer_code) AS distributor_code,
        NVL(rd.customer_name,sd.customer_name) AS distributor_name,
