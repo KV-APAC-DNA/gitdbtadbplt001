@@ -171,6 +171,7 @@ FROM (SELECT COUNTRY_CODE,
             FROM EDW_RPT_REGIONAL_SELLOUT_OFFTAKE
             WHERE COUNTRY_CODE = 'HK'
             AND   DATA_SOURCE = 'SELL-OUT'
+            AND   LTRIM(DISTRIBUTOR_CODE, '0') = '110256'
             AND   MNTH_ID >= (SELECT last_27mnths
                   FROM edw_vw_cal_retail_excellence_dim)::NUMERIC
             AND   MNTH_ID <= (SELECT prev_mnth FROM edw_vw_cal_retail_excellence_dim)::NUMERIC
