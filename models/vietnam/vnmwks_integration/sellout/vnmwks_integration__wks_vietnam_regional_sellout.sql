@@ -182,8 +182,10 @@ from
 		sum(so_sls_qty) sellout_sales_quantity,
 		sum(so_sls_value) as sellout_sales_value,
 		sum(so_sls_value*((c.exch_rate/(c.from_ratio*c.to_ratio))::numeric(15,5)))::numeric(38,11) sellout_sales_value_usd,
-        CASE WHEN SELLOUT.DATA_SRC='POS' THEN TRIM(NVL (NULLIF(SELLOUT.msl_product_code,''),'NA'))
-         ELSE TRIM(NVL (NULLIF(PRODUCT.SAP_MATL_NUM,''),'NA')) END AS msl_product_code,
+        /*CASE WHEN SELLOUT.DATA_SRC='POS' THEN TRIM(NVL (NULLIF(SELLOUT.msl_product_code,''),'NA'))
+         ELSE TRIM(NVL (NULLIF(PRODUCT.SAP_MATL_NUM,''),'NA')) END AS msl_product_code,*/
+
+        TRIM(NVL (NULLIF(SELLOUT.msl_product_code,''),'NA')) AS msl_product_code,
         CASE WHEN (UPPER(PRODUCT.PKA_PACKAGE) IN ('MIX PACK', 'ASSORTED PACK') OR PRODUCT.PKA_PACKAGE IS NULL) THEN UPPER(TRIM(NVL (NULLIF(PRODUCT.SAP_MAT_DESC,''),'NA')))
         ELSE (CASE WHEN TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA'))
             WHEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productkey,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productdesc,''),'NA'))
