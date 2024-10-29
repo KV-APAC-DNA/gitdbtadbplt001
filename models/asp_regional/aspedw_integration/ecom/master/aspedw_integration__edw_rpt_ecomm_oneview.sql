@@ -198,7 +198,9 @@ insert1 as(
         'na' AS ciw_bucket,
         'na' AS csw_desc,
         'na' AS "Additional_Information",
-        NULL as ppm_role  
+        NULL as ppm_role,
+        0 as totalnts_usd_value,
+        0 as totalnts_lcy_value        
             
     FROM edw_copa_trans_fact copa
     LEFT JOIN edw_material_dim mat ON copa.matl_num::TEXT = mat.matl_num::TEXT
@@ -402,7 +404,9 @@ insert2 as(
 		'na' AS ciw_bucket,
 		'na' AS csw_desc,
 		'na' AS "Additional_Information",
-		NULL AS ppm_role
+		NULL AS ppm_role,
+        0 as totalnts_usd_value,
+        0 as totalnts_lcy_value  
 	FROM edw_copa_trans_fact copa
 	LEFT JOIN edw_material_dim mat ON copa.matl_num::TEXT = mat.matl_num::TEXT
 	LEFT JOIN edw_profit_center_franchise_mapping prod_map ON LTRIM(copa.prft_ctr::TEXT, '0'::CHARACTER VARYING::TEXT) = LTRIM(prod_map.profit_center::TEXT, '0'::CHARACTER VARYING::TEXT)
@@ -553,7 +557,9 @@ SELECT 'Act'::CHARACTER VARYING AS data_type,
        'na' AS ciw_bucket,
        'na' AS csw_desc,
        'na' AS "Additional_Information"	,
-       NULL as ppm_role    
+       NULL as ppm_role,
+        0 as totalnts_usd_value,
+        0 as totalnts_lcy_value         
     
 FROM  wks_india_ecom in_sales
   LEFT JOIN  mat ON LTRIM (in_sales.product_code::TEXT,'0') = LTRIM (mat.matl_num::TEXT,'0')
@@ -664,7 +670,9 @@ insert4 as(
 		'na' AS ciw_bucket,
 		'na' AS csw_desc,
 		'na' AS "Additional_Information"	,
-		NULL as ppm_role     
+		NULL as ppm_role,
+        0 as totalnts_usd_value,
+        0 as totalnts_lcy_value          
 		
 
 	FROM  wks_india_ecom in_sales
@@ -804,7 +812,9 @@ union1 as(
 		key_figure_nm_knj AS account_description_l2,
 		key_figure_nm_dsp AS account_description_l3,
 		NULL AS additional_information,
-		NULL AS ppm_role
+		NULL AS ppm_role,
+        0 as totalnts_usd_value,
+        0 as totalnts_lcy_value  
 	FROM dm_integration_dly a -- Transaction
 	LEFT JOIN edi_chn_m b -- Retailer Master
 		ON a.jcp_chn_cd::TEXT = b.chn_cd::TEXT
@@ -1017,7 +1027,9 @@ SELECT h.jcp_plan_type AS data_type,
 		NULL AS account_description_l2,
 		NULL AS account_description_l3,
 		NULL AS additional_information,
-		NULL AS ppm_role
+		NULL AS ppm_role,
+        0 as totalnts_usd_value,
+        0 as totalnts_lcy_value  
 	FROM dm_integration_dly h -- Transactions
 	JOIN mt_cld e -- Calendar Dimension
 		ON to_date(h.jcp_date)::TIMESTAMP WITHOUT TIME ZONE = e.ymd_dt
@@ -1216,7 +1228,9 @@ SELECT derived_table.data_type,
 	derived_table.account_description_l2,
 	derived_table.account_description_l3,
 	derived_table.additional_information,
-	derived_table.ppm_role
+	derived_table.ppm_role,
+    derived_table.totalnts_usd_value,
+    derived_table.totalnts_lcy_value  
 FROM derived_table
 WHERE fisc_year >= EXTRACT(YEAR FROM GETDATE()) - 2 -- Limit to latest 3 years of data
 	--fisc_year = 2021 AND fisc_month IN (1,2,3,4,5,6)
@@ -1363,7 +1377,9 @@ SELECT h.jcp_plan_type AS data_type,
 	key_figure_nm_knj AS account_description_l2,
 	key_figure_nm_dsp AS account_description_l3,
 	NULL AS additional_information,
-	NULL AS ppm_role
+	NULL AS ppm_role,
+    0 as totalnts_usd_value,
+    0 as totalnts_lcy_value   
 FROM dm_integration_dly h -- Transactions
 JOIN mt_cld e -- Calendar Dimension
 	ON to_date(h.jcp_date)::TIMESTAMP WITHOUT TIME ZONE = e.ymd_dt
@@ -1595,7 +1611,9 @@ SELECT a.jcp_plan_type AS data_type,
 	key_figure_nm_knj AS account_description_l2,
 	key_figure_nm_dsp AS account_description_l3,
 	NULL AS additional_information,
-	NULL AS ppm_role
+	NULL AS ppm_role,
+    0 as totalnts_usd_value,
+    0 as totalnts_lcy_value  
 FROM dm_integration_dly a -- Transaction
 LEFT JOIN edi_chn_m b -- Retailer Master
 	ON a.jcp_chn_cd::TEXT = b.chn_cd::TEXT
@@ -1820,7 +1838,9 @@ insert7 as(
 	key_figure_nm_knj AS account_description_l2,
 	key_figure_nm_dsp AS account_description_l3,
 	NULL AS additional_information,
-	NULL AS ppm_role
+	NULL AS ppm_role,
+    0 as totalnts_usd_value,
+    0 as totalnts_lcy_value  
 FROM dm_integration_dly a -- Transaction
 LEFT JOIN edi_chn_m b -- Retailer Master
 	ON a.jcp_chn_cd::TEXT = b.chn_cd::TEXT
@@ -2039,7 +2059,9 @@ insert8_union1 as(
        'na' AS ciw_bucket,
        'na' AS csw_desc,
        'na' AS "Additional_Information"	,
-       NULL as ppm_role   
+       NULL as ppm_role,
+       0 as totalnts_usd_value,
+       0 as totalnts_lcy_value         
 	FROM edw_ecommerce_nts_regional apac_ecomm_nts
 	LEFT JOIN itg_query_parameters iqp ON UPPER (apac_ecomm_nts.country::TEXT) = iqp.parameter_name::TEXT
 	LEFT JOIN v_intrm_reg_crncy_exch_fiscper exch_rate
@@ -2118,7 +2140,9 @@ insert8_union2 as(
        'na' AS ciw_bucket,
        'na' AS csw_desc,
        'na' AS "Additional_Information"	,
-       NULL as ppm_role   
+       NULL as ppm_role,
+       0 as totalnts_usd_value,
+       0 as totalnts_lcy_value         
 	FROM edw_ap_ecomm_nts_manual_adjustment ecomm_nts_manual_adj
 	LEFT JOIN v_intrm_reg_crncy_exch_fiscper exch_rate
 			ON ecomm_nts_manual_adj.from_crncy::TEXT = exch_rate.from_crncy::TEXT
@@ -2191,7 +2215,9 @@ insert8_union3 as(
 		'na' AS ciw_bucket,
 		'na' AS csw_desc,
 		ecomm.type  AS "Additional_Information",
-		NULL as ppm_role  
+		NULL as ppm_role,
+        0 as totalnts_usd_value,
+        0 as totalnts_lcy_value          
 	FROM edw_ecomm_plan ecomm
 ),
 insert8 as(
@@ -2261,7 +2287,9 @@ insert9 as(
 	'na' AS ciw_bucket,
 	'na' AS csw_desc,
 	'na' AS "Additional_Information",
-	NULL AS ppm_role
+	NULL AS ppm_role,
+    0 as totalnts_usd_value,
+    0 as totalnts_lcy_value  
 	FROM v_rpt_pos_offtake_daily
 	WHERE ctry_nm = 'South Korea'
 		AND (
@@ -2369,7 +2397,9 @@ insert10_union1 as(
 		NULL AS ciw_bucket,
 		NULL AS csw_desc,
 		NULL AS "Additional_Information",
-		NULL AS ppm_role
+		NULL AS ppm_role,
+        0 as totalnts_usd_value,
+        0 as totalnts_lcy_value  
 	FROM edw_ecommerce_offtake ecomm_offtake
 	LEFT JOIN edw_calendar_dim cal ON ecomm_offtake.transaction_date::TEXT = cal.cal_day::CHARACTER VARYING::TEXT
 	LEFT JOIN v_intrm_reg_crncy_exch_fiscper exch_rate ON ecomm_offtake.transaction_currency::TEXT = exch_rate.from_crncy::TEXT
@@ -2556,7 +2586,9 @@ insert10_union2 as(
 		NULL AS ciw_bucket,
 		NULL AS csw_desc,
 		NULL AS "Additional_Information",
-		NULL AS ppm_role
+		NULL AS ppm_role,
+        0 as totalnts_usd_value,
+        0 as totalnts_lcy_value  
 	FROM (
 		SELECT INITCAP(edw_ecommerce_offtake.country::TEXT) AS country,
 			edw_ecommerce_offtake.retailer_name,
@@ -2783,7 +2815,9 @@ insert10_union3 as(
 		NULL AS ciw_bucket,
 		NULL AS csw_desc,
 		NULL AS "Additional_Information",
-		NULL AS ppm_role
+		NULL AS ppm_role,
+        0 as totalnts_usd_value,
+        0 as totalnts_lcy_value  
 	FROM (
 		SELECT 'Korea'::CHARACTER VARYING AS country,
 			edw_ims_fact.dstr_nm AS retailer_name,
@@ -2966,7 +3000,9 @@ insert10_union4 as(
 		NULL AS ciw_bucket,
 		NULL AS csw_desc,
 		NULL AS "Additional_Information",
-		NULL AS ppm_role
+		NULL AS ppm_role,
+        0 as totalnts_usd_value,
+        0 as totalnts_lcy_value  
 	FROM edw_ph_ecommerce_offtake ph_ecomm_offtake
 	WHERE upper(ph_ecomm_offtake.delivery_status) <> 'CANCELLED'
 		AND upper(ph_ecomm_offtake.delivery_status) <> 'REJECTED'
@@ -3056,7 +3092,9 @@ insert10_union5 as
         null AS ciw_bucket,
         null AS csw_desc,
         null AS "Additional_Information"	,
-        NULL as ppm_role           
+        NULL as ppm_role,
+        0 as totalnts_usd_value,
+        0 as totalnts_lcy_value          
     FROM (SELECT INITCAP(edw_ecom_oms.country::TEXT) AS country,
                 edw_ecom_oms.platform,
                 edw_ecom_oms.retailer_name,
@@ -3181,7 +3219,9 @@ insert11 as(
 		'na' AS ciw_bucket,
 		'na' AS csw_desc,
 		'na' AS "Additional_Information",
-		NULL AS ppm_role
+		NULL AS ppm_role,
+        0 as totalnts_usd_value,
+        0 as totalnts_lcy_value  
 	FROM (
 		SELECT edw_sg_sellin_analysis.year,
 			edw_sg_sellin_analysis.mnth_no,
@@ -3298,7 +3338,9 @@ insert12 as(
 		'na' AS ciw_bucket,
 		'na' AS csw_desc,
 		'na' AS "Additional_Information",
-		NULL AS ppm_role
+		NULL AS ppm_role,
+        0 as totalnts_usd_value,
+        0 as totalnts_lcy_value  
 	FROM (
 		SELECT edw_sg_sellin_analysis.year,
 			edw_sg_sellin_analysis.mnth_no,
@@ -3463,7 +3505,9 @@ insert13 as(
 		ciw.ciw_bucket,
 		csw.csw_desc,
 		'na' AS "Additional_Information",
-		NULL AS ppm_role
+		NULL AS ppm_role,'
+        0 as totalnts_usd_value,
+        0 as totalnts_lcy_value  
 	FROM (
 		SELECT copa.fisc_yr,
 			copa.fisc_yr_per,
@@ -3764,7 +3808,10 @@ insert14 as(
 		NULL AS account_description_l2,
 		NULL AS account_description_l3,
 		database_date AS "Additional_Information",
-		country_strategic_role
+		country_strategic_role,
+        0 as totalnts_usd_value,
+        0 as totalnts_lcy_value  
+      
 	FROM (
 		SELECT period_date,
 			'Market Share' AS "kpi",
@@ -3904,7 +3951,9 @@ insert15 as(
 		NULL AS "account_description_l2",
 		NULL AS "account_description_l3",
 		NULL AS "additional_information",
-		NULL AS "ppm_role"
+		NULL AS "ppm_role",
+        0 as totalnts_usd_value,
+        0 as totalnts_lcy_value  
 	FROM edw_pharmacy_ecommerce_analysis a
 	LEFT JOIN edw_calendar_dim cal ON cal.cal_day = a.week_end_dt
 	LEFT JOIN (
@@ -3922,6 +3971,123 @@ insert15 as(
 		) b ON LTRIM(a.prod_sapbw_code, '0') = b."matl_num"
 	WHERE OWNER = 'J&J'
 ),
+insert16 as(
+    SELECT 'Act'::CHARACTER VARYING AS data_type,
+        'COPA' as Datasource,
+        'SKU' as Data_level,
+            copa.acct_hier_shrt_desc as KPI,	   
+        'Monthly' as Period_type,
+        copa.fisc_yr::CHARACTER VARYING AS fisc_year,
+            null as cal_year,
+        LTRIM("substring" (copa.fisc_yr_per::CHARACTER VARYING::TEXT,5,3),'0'::CHARACTER VARYING::TEXT)::CHARACTER VARYING AS fisc_month,
+            null as cal_month,
+        TO_DATE(("substring" (copa.fisc_yr_per::CHARACTER VARYING::TEXT,6,8) || '01'::CHARACTER VARYING::TEXT) || "substring" (copa.fisc_yr_per::CHARACTER VARYING::TEXT,1,4),'MMDDYYYY'::CHARACTER VARYING::TEXT) AS fisc_day,
+            null as cal_day,
+        copa.fisc_yr_per,
+        filter_params."cluster",	   
+        filter_params.ctry_group AS ctry_nm,
+        filter_params.ctry_group AS sub_country,             
+        cus_sales_extn.channel,
+        cus_sales_extn."sub channel",
+        cus_sales_extn.retail_env,       
+        cus_sales_extn."go to model",
+        LTRIM(copa.prft_ctr::TEXT,'0'::CHARACTER VARYING::TEXT)::CHARACTER VARYING AS profit_center,   
+        filter_params.co_cd AS company_code,    
+        copa.cust_num AS customer_code,       
+        cus_sales_extn."parent customer",
+        cus_sales_extn.banner,
+        cus_sales_extn."banner format",
+        null as platform_name,
+        null as retailer_name,
+        null as retailer_name_english,
+        'Johnson & Johnson' as manufacturer_name,
+        'Y' as jj_manufacturer_flag,
+        prod_map.franchise_l1 as prod_hier_l1,	   
+        prod_map.need_state as prod_hier_l2,	
+        'na' as prod_hier_l3,
+        'na' as prod_hier_l4,
+        mat.mega_brnd_desc AS prod_hier_l5,
+        mat.brnd_desc AS prod_hier_l6, 
+        mat.varnt_desc AS prod_hier_l7,
+        mat.put_up_desc AS prod_hier_l8,	   
+        mat.matl_desc AS prod_hier_l9,
+        mat.prodh5 AS product_minor_code,
+        prod_map.prod_minor AS product_minor_name,
+        LTRIM(copa.matl_num::TEXT,'0'::CHARACTER VARYING::TEXT)::CHARACTER VARYING AS material_number,	   
+        null as ean,
+        null as reailer_sku_code,
+        mat.pka_product_key,
+        mat.pka_product_key_description,  
+        0 AS target_ori,
+        0 AS value,	  
+        0 as usd_value,
+        0 as lcy_value,
+        0 AS salesweight,
+        exch_rate.from_crncy,
+        exch_rate.to_crncy,
+        'na' AS acct_nm,
+        'na' AS acct_num,
+        'na' AS ciw_desc,
+        'na' AS ciw_bucket,
+        'na' AS csw_desc,
+        'na' AS "Additional_Information",
+        NULL as ppm_role,
+        SUM(copa.amt_obj_crncy*exch_rate.ex_rt) as totalnts_usd_value,
+        SUM(copa.amt_obj_crncy) as totalnts_lcy_value,
+            
+    FROM edw_copa_trans_fact copa
+    LEFT JOIN edw_material_dim mat ON copa.matl_num::TEXT = mat.matl_num::TEXT
+    LEFT JOIN edw_profit_center_franchise_mapping prod_map ON TRIM (copa.prft_ctr::TEXT,'0'::CHARACTER VARYING::TEXT) = TRIM (prod_map.profit_center::TEXT,'0'::CHARACTER VARYING::TEXT)
+    LEFT JOIN cus_sales_extn 
+            ON copa.sls_org  =   cus_sales_extn.sls_org 
+            AND copa.dstr_chnl  = cus_sales_extn.dstr_chnl 
+            AND copa.div       =  cus_sales_extn.div 
+            AND copa.cust_num  =  cus_sales_extn.cust_num 
+    JOIN  (select distinct ctry_key, ctry_group, "cluster", co_cd, gts, nts, min_year, cust_filter from wks_filter_params) filter_params --wks_filter_params 
+        ON copa.co_cd  = filter_params.co_cd  
+        AND (copa.acct_hier_shrt_desc = filter_params.gts OR copa.acct_hier_shrt_desc = filter_params.nts )
+        AND copa.fisc_yr >=  filter_params.min_year 
+        AND copa.cust_num = nvl(filter_params.cust_filter, copa.cust_num)
+        --AND filter_params.ctry_key = 'JP'     
+    LEFT JOIN v_intrm_reg_crncy_exch_fiscper exch_rate
+            ON copa.obj_crncy_co_obj  = exch_rate.from_crncy 
+            AND exch_rate.to_crncy  = 'USD' 
+            AND copa.fisc_yr_per = exch_rate.fisc_per    
+    --JOIN (select distinct ctry_key, retail_env from wks_filter_params) fp
+    --ON copa.ctry_key =  fp.ctry_ke
+    --    AND cus_sales_extn.retail_env = nvl(fp.retail_env, cus_sales_extn.retail_env)y   
+                            
+    GROUP BY  copa.acct_hier_shrt_desc ,	   
+        copa.fisc_yr,
+        copa.fisc_yr_per,
+        filter_params."cluster",	   
+        filter_params.ctry_group ,
+        filter_params.ctry_group ,             
+        cus_sales_extn.channel,
+        cus_sales_extn."sub channel",
+        cus_sales_extn.retail_env,       
+        cus_sales_extn."go to model",
+        LTRIM(copa.prft_ctr::TEXT,'0'::CHARACTER VARYING::TEXT)::CHARACTER VARYING ,   
+        filter_params.co_cd ,    
+        copa.cust_num ,       
+        cus_sales_extn."parent customer",
+        cus_sales_extn.banner,
+        cus_sales_extn."banner format",
+        prod_map.franchise_l1 ,	   
+        prod_map.need_state ,	
+        mat.mega_brnd_desc  ,
+        mat.brnd_desc  , 
+        mat.varnt_desc  ,
+        mat.put_up_desc  ,	   
+        mat.matl_desc  ,
+        mat.prodh5  ,
+        prod_map.prod_minor  ,
+        LTRIM(copa.matl_num::TEXT,'0'::CHARACTER VARYING::TEXT)::CHARACTER VARYING ,	   
+        mat.pka_product_key,
+        mat.pka_product_key_description,  
+        exch_rate.from_crncy,
+        exch_rate.to_crncy 
+)
 transformed as(
 	select * from insert1
 	union all
@@ -3952,6 +4118,8 @@ transformed as(
 	select * from insert14
     union all
 	select * from insert15
+    union all 
+    select * from insert16
 ),
 final as(
     select
