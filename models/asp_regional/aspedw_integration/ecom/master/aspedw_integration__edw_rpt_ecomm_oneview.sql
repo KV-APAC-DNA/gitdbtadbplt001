@@ -3505,7 +3505,7 @@ insert13 as(
 		ciw.ciw_bucket,
 		csw.csw_desc,
 		'na' AS "Additional_Information",
-		NULL AS ppm_role,'
+		NULL AS ppm_role,
         0 as totalnts_usd_value,
         0 as totalnts_lcy_value  
 	FROM (
