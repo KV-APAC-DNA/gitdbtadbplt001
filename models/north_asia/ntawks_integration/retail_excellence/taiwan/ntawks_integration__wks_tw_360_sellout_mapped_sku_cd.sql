@@ -6,8 +6,8 @@ edw_vw_cal_retail_excellence_dim as (
     select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 --Final CTE
-TW_360_SELLOUT_MAPPED_SKU_CD as (
 
+TW_360_SELLOUT_MAPPED_SKU_CD as (
 select ean_num,sku_code,msl_product_desc from (SELECT DISTINCT ltrim(msl_product_code,'0') AS ean_num,
        LTRIM(sku_code,'0') AS sku_code,
 	   msl_product_desc as msl_product_desc, 
