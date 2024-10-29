@@ -1,6 +1,11 @@
 version: 2
 
 models:
+  - name: jpndclitg_integration__tbtrnshist
+    config:
+      alias: tbtrnshist
+      tags: ["jp_m_dcl_itg","transformation"]
+
   - name: jpndclitg_integration__rakutenorderdetail
     config:
       alias: rakutenorderdetail

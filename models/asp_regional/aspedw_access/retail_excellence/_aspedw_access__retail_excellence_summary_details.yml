@@ -56,6 +56,21 @@ models:
       alias: edw_cnpc_rpt_retail_excellence_summary
       tags: ["retail_excellence_access_datamart","transformation"]
 
+  - name: aspedw_access__edw_vn_rpt_retail_excellence_summary
+    config:
+      alias: edw_vn_rpt_retail_excellence_summary
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_tw_rpt_retail_excellence_summary
+    config:
+      alias: edw_tw_rpt_retail_excellence_summary
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_hk_rpt_retail_excellence_summary
+    config:
+      alias: edw_hk_rpt_retail_excellence_summary
+      tags: ["retail_excellence_access_datamart","transformation"]
+
   - name: aspedw_access__edw_id_rpt_retail_excellence_details
     config:
       alias: edw_id_rpt_retail_excellence_details
@@ -119,4 +134,19 @@ models:
   - name: aspedw_access__edw_rpt_retail_excellence_details
     config: 
       alias: edw_rpt_retail_excellence_details
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_vn_rpt_retail_excellence_details
+    config:
+      alias: edw_vn_rpt_retail_excellence_details
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_tw_rpt_retail_excellence_details
+    config:
+      alias: edw_tw_rpt_retail_excellence_details
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_hk_rpt_retail_excellence_details
+    config:
+      alias: edw_hk_rpt_retail_excellence_details
       tags: ["retail_excellence_access_datamart","transformation"]
