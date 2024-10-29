@@ -37,6 +37,10 @@ edw_cnpc_rpt_retail_excellence_details as
 (
   select * from   {{ ref('aspedw_integration__edw_cnpc_rpt_retail_excellence_details') }}
 ),
+edw_vn_rpt_retail_excellence_details as
+(
+  select * from   {{ ref('aspedw_integration__edw_vn_rpt_retail_excellence_details') }}
+),
 
 edw_rpt_retail_excellence_details as 
 (
@@ -50,6 +54,7 @@ edw_rpt_retail_excellence_details as
     SELECT * FROM edw_anz_rpt_retail_excellence_details UNION all
     SELECT * FROM edw_jp_rpt_retail_excellence_details UNION all
     SELECT * FROM edw_cnsc_rpt_retail_excellence_details UNION ALL
-    SELECT * FROM edw_cnpc_rpt_retail_excellence_details 
+    SELECT * FROM edw_cnpc_rpt_retail_excellence_details UNION ALL
+    SELECT * FROM edw_vn_rpt_retail_excellence_details
 )
 select * from edw_rpt_retail_excellence_details
