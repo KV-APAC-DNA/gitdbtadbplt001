@@ -92,7 +92,7 @@ select
     null as store_code,
     sku,
     GROUP_VARIANT_CODE,
-    null as brand,
+    brand as brand,
     territory_code,
     team_code,
     DISTRICT_CODE,
