@@ -116,6 +116,7 @@ final as
     store_code :: integer as store_code,
     sku :: varchar(100) as sku,
     GROUP_VARIANT_CODE:: varchar(100) as GROUP_VARIANT_CODE,
+    brand :: varchar(50) as brand,
     territory_code :: varchar(100) as territory_code,
     team_code :: varchar(100) as team_code,
     DISTRICT_CODE :: varchar(100) as DISTRICT_CODE,
