@@ -2,13 +2,20 @@
     config(
         materialized="incremental",
         incremental_strategy="delete+insert",
-        unique_key = ["business_unit","recording_date","stock_type","product_code","product_name","batch","plant_code "]
+        unique_key = ["business_unit","recording_date","stock_type","product_code","product_name","batch","plant_code"]
         )
 }}
 --Import CTE
 with source as 
 (
     select * from {{ source('vnmsdl_raw', 'sdl_vn_dksh_sdl_otc') }}
+      where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dksh_otc__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dksh_otc__duplicate_test')}}
+        union all 
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dksh_otc__test_date_format')}}
+        )
 ),  
 
 final as 

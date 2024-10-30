@@ -10,3 +10,25 @@ sources:
       identifier: false
     tables:
       - name: sdl_vn_dksh_sdl_otc
+        tags: ["vn_dksh_otc_inventory", "transformation"]
+        tests:
+          - test_null:
+              not_null_columns: ["business_unit","recording_date","stock_type","product_code","product_name","batch","plant_code"]
+              name: TRATBL_sdl_vn_dksh_otc__null_test
+              config:
+                  store_failures: true
+                  schema: vnmwks_integration          
+          - test_duplicate:
+              group_by_columns: ["business_unit","recording_date","stock_type","product_code","product_name","batch","plant_code"]
+              select_columns: ["business_unit","recording_date","stock_type","product_code","product_name","batch","plant_code"]
+              name: TRATBL_sdl_vn_dksh_otc__null_test
+              config:
+                  store_failures: true
+                  schema: vnmwks_integration
+          - test_date_format:       
+                date_column: "date"
+                select_columns: ["business_unit","recording_date","stock_type","product_code","product_name","batch","plant_code","file_name"]
+                name: TRATBL_sdl_vn_dksh_otc__test_date_format
+                config:
+                  store_failures: true
+                  schema: ntawks_integration      
