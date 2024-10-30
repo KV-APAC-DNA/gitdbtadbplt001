@@ -4124,7 +4124,7 @@ insert16 as(
         mat.pka_product_key_description,  
         exch_rate.from_crncy,
         exch_rate.to_crncy 
-)
+),
 transformed as(
 	select * from insert1
 	union all
@@ -4219,7 +4219,9 @@ final as(
         ciw_bucket::varchar(200) as account_description_l2,
         csw_desc::varchar(300) as account_description_l3,
         "Additional_Information"::varchar(1000) as additional_information,
-        ppm_role::varchar(100) as ppm_role
+        ppm_role::varchar(100) as ppm_role,
+        totalnts_lcy_value::numeric(38,18) as totalnts_lcy_value,
+        totalnts_usd_value::numeric(38,18) as totalnts_usd_value
     from transformed
 )
 select * from final
