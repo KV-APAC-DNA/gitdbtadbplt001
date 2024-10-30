@@ -10,6 +10,6 @@ sources:
       identifier: false
     tables:
 
-    - name: TRATBL_sdl_vn_dksh_otc__null_test
-    - name: TRATBL_sdl_vn_dksh_otc__duplicate_test
-    - name: TRATBL_sdl_vn_dksh_otc__date_format_test
+    - name: TRATBL_SDL_VN_DKSH_OTC__NULL_TEST
+    - name: TRATBL_SDL_VN_DKSH_OTC__DUPLICATE_TEST
+    - name: TRATBL_SDL_VN_DKSH_OTC__DATE_FORMAT_TEST
