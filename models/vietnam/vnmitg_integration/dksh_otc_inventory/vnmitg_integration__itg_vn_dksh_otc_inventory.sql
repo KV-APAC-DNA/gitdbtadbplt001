@@ -10,12 +10,13 @@ with source as
 (
     select * from {{ source('vnmsdl_raw', 'sdl_vn_dksh_sdl_otc') }}
       where file_name not in (
-        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dksh_otc__null_test')}}
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_SDL_VN_DKSH_OTC__NULL_TEST')}}
         union all
-        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dksh_otc__duplicate_test')}}
-        union all 
-        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dksh_otc__date_format_test')}}
-        )
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_SDL_VN_DKSH_OTC__DUPLICATE_TEST')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_SDL_VN_DKSH_OTC__DATE_FORMAT_TEST')}}
+
+      )
 ),  
 
 final as 

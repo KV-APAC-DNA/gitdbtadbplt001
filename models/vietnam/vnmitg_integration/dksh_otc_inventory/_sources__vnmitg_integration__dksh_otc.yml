@@ -13,22 +13,22 @@ sources:
         tags: ["vn_dksh_otc_inventory", "transformation"]
         tests:
           - test_null:
-              not_null_columns: ["business_unit","recording_date","stock_type","product_code","product_name","batch","plant_code"]
+              not_null_columns: ["business_unit","date","stock_type","product_code","product_name","batch","plant_code"]
               name: TRATBL_sdl_vn_dksh_otc__null_test
               config:
                   store_failures: true
                   schema: vnmwks_integration          
           - test_duplicate:
-              group_by_columns: ["business_unit","recording_date","stock_type","product_code","product_name","batch","plant_code"]
-              select_columns: ["business_unit","recording_date","stock_type","product_code","product_name","batch","plant_code"]
+              select_columns: ["business_unit","date","stock_type","product_code","product_name","batch","plant_code"]
+              group_by_columns: ["business_unit","date","stock_type","product_code","product_name","batch","plant_code"]
               name: TRATBL_sdl_vn_dksh_otc__duplicate_test
               config:
                   store_failures: true
                   schema: vnmwks_integration
-          - test_date_format:       
-                date_column: "date"
-                select_columns: ["business_unit","recording_date","stock_type","product_code","product_name","batch","plant_code","file_name"]
-                name: TRATBL_sdl_vn_dksh_otc__date_format_test
-                config:
+          - test_format:
+              where_clause: "not regexp_like (trim(date),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]')"
+              failure_reason: "'Invalid Recording Date'"
+              name: TRATBL_sdl_vn_dksh_otc__date_format_test
+              config:
                   store_failures: true
-                  schema: ntawks_integration      
+                  schema: thawks_integration  
