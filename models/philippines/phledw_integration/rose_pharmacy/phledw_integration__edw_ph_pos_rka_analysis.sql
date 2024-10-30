@@ -61,7 +61,7 @@ veocd as(
 
 transformed as 
 (
-select  distinct
+select  
     'PH' AS cntry_cd,
     'Philippines' AS cntry_nm,
     pos.jj_year as jj_year,
