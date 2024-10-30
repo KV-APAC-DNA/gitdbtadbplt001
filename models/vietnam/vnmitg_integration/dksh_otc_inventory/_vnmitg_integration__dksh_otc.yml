@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: vnmwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: "{{ target.schema if target.name in ('dev','default') else 'vnmwks_integration' }}"
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+
+    - name: TRATBL_sdl_vn_dksh_otc__null_test
+    - name: TRATBL_sdl_vn_dksh_otc__duplicate_test
+    - name: TRATBL_TRATBL_sdl_vn_dksh_otc__date_format_test
