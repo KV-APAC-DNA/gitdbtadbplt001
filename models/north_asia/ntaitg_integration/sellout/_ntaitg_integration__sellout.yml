@@ -69,3 +69,7 @@ models:
     config:
       alias: itg_kr_gt_nacf_cust_dim
       tags: ["kr_gt_sellout","inactive"]
+  - name: ntaitg_integration__sdl_raw_kr_daiso_gt_sellout
+    config:
+      alias: sdl_raw_kr_daiso_gt_sellout
+      tags: ["kr_gt_sellout","ingestion"]
