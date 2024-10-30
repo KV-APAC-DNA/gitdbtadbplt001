@@ -3984,9 +3984,50 @@ insert16 as(
         TO_DATE(("substring" (copa.fisc_yr_per::CHARACTER VARYING::TEXT,6,8) || '01'::CHARACTER VARYING::TEXT) || "substring" (copa.fisc_yr_per::CHARACTER VARYING::TEXT,1,4),'MMDDYYYY'::CHARACTER VARYING::TEXT) AS fisc_day,
             null as cal_day,
         copa.fisc_yr_per,
-        filter_params."cluster",	   
-        filter_params.ctry_group AS ctry_nm,
-        filter_params.ctry_group AS sub_country,             
+        --filter_params."cluster",	
+        CASE
+            WHEN (
+                    (
+                    LTRIM(cast(copa.cust_num AS TEXT), '0') IN ('134559', '134106', '134258', '134855')
+                    )    AND 
+                    LTRIM(cast(copa.acct_num AS TEXT), '0') <> '403185' AND 
+                    cast(mat.mega_brnd_desc AS TEXT) <> 'Vogue Int''l' AND 
+                    copa.fisc_yr = 2018
+                 ) 
+            THEN 'China' 
+            ELSE cmp."cluster" 
+        END AS "cluster",
+        CASE 
+          WHEN (
+                (
+                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134559' OR 
+                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134106' OR 
+                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134258' OR 
+                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134855'
+                ) AND 
+                LTRIM(cast(copa.acct_num AS TEXT), '0') <> '403185' AND 
+                cast(mat.mega_brnd_desc AS TEXT) <> 'Vogue Int''l' AND 
+                copa.fisc_yr = 2018
+                ) 
+                THEN 'China Selfcare' 
+                ELSE cmp.ctry_group 
+        END AS ctry_nm,
+        CASE 
+          WHEN (
+                (
+                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134559' OR 
+                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134106' OR 
+                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134258' OR 
+                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134855'
+                ) AND 
+                LTRIM(cast(copa.acct_num AS TEXT), '0') <> '403185' AND 
+                cast(mat.mega_brnd_desc AS TEXT) <> 'Vogue Int''l' AND 
+                copa.fisc_yr = 2018
+                ) 
+                THEN 'China Selfcare' 
+                ELSE cmp.ctry_group 
+        END AS sub_country,   
+        --filter_params.ctry_group AS sub_country,             
         cus_sales_extn.channel,
         cus_sales_extn."sub channel",
         cus_sales_extn.retail_env,       
@@ -4036,6 +4077,7 @@ insert16 as(
         SUM(copa.amt_obj_crncy) as totalnts_lcy_value,
             
     FROM edw_copa_trans_fact copa
+    LEFT JOIN edw_company_dim cmp on copa.co_cd = cmp.co_cd
     LEFT JOIN edw_material_dim mat ON copa.matl_num::TEXT = mat.matl_num::TEXT
     LEFT JOIN edw_profit_center_franchise_mapping prod_map ON TRIM (copa.prft_ctr::TEXT,'0'::CHARACTER VARYING::TEXT) = TRIM (prod_map.profit_center::TEXT,'0'::CHARACTER VARYING::TEXT)
     LEFT JOIN cus_sales_extn 
@@ -4043,11 +4085,6 @@ insert16 as(
             AND copa.dstr_chnl  = cus_sales_extn.dstr_chnl 
             AND copa.div       =  cus_sales_extn.div 
             AND copa.cust_num  =  cus_sales_extn.cust_num 
-    JOIN  (select distinct ctry_key, ctry_group, "cluster", co_cd, gts, nts, min_year, cust_filter from wks_filter_params) filter_params --wks_filter_params 
-        ON copa.co_cd  = filter_params.co_cd  
-        AND (copa.acct_hier_shrt_desc = filter_params.gts OR copa.acct_hier_shrt_desc = filter_params.nts )
-        AND copa.fisc_yr >=  filter_params.min_year 
-        AND copa.cust_num = nvl(filter_params.cust_filter, copa.cust_num)
         --AND filter_params.ctry_key = 'JP'     
     LEFT JOIN v_intrm_reg_crncy_exch_fiscper exch_rate
             ON copa.obj_crncy_co_obj  = exch_rate.from_crncy 
