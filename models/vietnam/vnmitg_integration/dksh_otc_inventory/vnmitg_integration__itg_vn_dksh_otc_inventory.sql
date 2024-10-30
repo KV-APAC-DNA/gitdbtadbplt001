@@ -14,7 +14,7 @@ with source as
         union all
         select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dksh_otc__duplicate_test')}}
         union all 
-        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dksh_otc__test_date_format')}}
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dksh_otc__date_format_test')}}
         )
 ),  
 
