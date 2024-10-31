@@ -4034,7 +4034,7 @@ insert16 as(
         cus_sales_extn."go to model",
         LTRIM(copa.prft_ctr::TEXT,'0'::CHARACTER VARYING::TEXT)::CHARACTER VARYING AS profit_center,   
         --filter_params.co_cd AS company_code,    
-        cmp.code as company_code,
+        cmp.co_cd as company_code,
         copa.cust_num AS customer_code,       
         cus_sales_extn."parent customer",
         cus_sales_extn.banner,
