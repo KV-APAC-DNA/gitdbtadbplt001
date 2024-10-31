@@ -20,7 +20,7 @@ final as (
                 then (trim(jj_sap_dstrbtr_id::varchar) ||trim (cust_id::varchar)) 
             else           	
                 trim(jjid::varchar) 
-        end::VARCHAR(100) as jjid,
+        end::VARCHAR(200) as jjid,
         pst_cd::varchar(100) as pst_cd,
         cust_id_map::varchar(100) as cust_id_map,
         cust_nm_map::varchar(100) as cust_nm_map,

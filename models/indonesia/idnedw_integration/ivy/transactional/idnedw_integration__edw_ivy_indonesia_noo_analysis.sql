@@ -451,7 +451,7 @@ final as (
         chnl::varchar(100) as chnl,
         outlet_type::varchar(100) as outlet_type,
         chnl_grp::varchar(100) as chnl_grp,
-        jjid::varchar(100) as jjid,
+        jjid::varchar(200) as jjid,
         chnl_grp2::varchar(100) as chnl_grp2,
         city::varchar(229) as city,
         cust_status::varchar(8) as cust_status,
