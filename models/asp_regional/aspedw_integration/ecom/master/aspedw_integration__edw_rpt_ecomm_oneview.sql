@@ -812,9 +812,7 @@ union1 as(
 		key_figure_nm_knj AS account_description_l2,
 		key_figure_nm_dsp AS account_description_l3,
 		NULL AS additional_information,
-		NULL AS ppm_role,
-        0 as totalnts_usd_value,
-        0 as totalnts_lcy_value  
+		NULL AS ppm_role  
 	FROM dm_integration_dly a -- Transaction
 	LEFT JOIN edi_chn_m b -- Retailer Master
 		ON a.jcp_chn_cd::TEXT = b.chn_cd::TEXT
@@ -1027,9 +1025,7 @@ SELECT h.jcp_plan_type AS data_type,
 		NULL AS account_description_l2,
 		NULL AS account_description_l3,
 		NULL AS additional_information,
-		NULL AS ppm_role,
-        0 as totalnts_usd_value,
-        0 as totalnts_lcy_value  
+		NULL AS ppm_role  
 	FROM dm_integration_dly h -- Transactions
 	JOIN mt_cld e -- Calendar Dimension
 		ON to_date(h.jcp_date)::TIMESTAMP WITHOUT TIME ZONE = e.ymd_dt
@@ -1229,8 +1225,8 @@ SELECT derived_table.data_type,
 	derived_table.account_description_l3,
 	derived_table.additional_information,
 	derived_table.ppm_role,
-    derived_table.totalnts_usd_value,
-    derived_table.totalnts_lcy_value  
+    0 as totalnts_usd_value,
+    0 as totalnts_lcy_value  
 FROM derived_table
 WHERE fisc_year >= EXTRACT(YEAR FROM GETDATE()) - 2 -- Limit to latest 3 years of data
 	--fisc_year = 2021 AND fisc_month IN (1,2,3,4,5,6)
