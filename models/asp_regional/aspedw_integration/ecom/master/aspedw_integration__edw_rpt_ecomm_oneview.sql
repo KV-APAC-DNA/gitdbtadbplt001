@@ -4062,7 +4062,14 @@ insert16 as(
         0 as usd_value,
         0 as lcy_value,
         0 AS salesweight,
-        exch_rate.from_crncy,
+        --exch_rate.from_crncy,
+        CASE cmp.ctry_group
+            WHEN 'India' THEN 'INR'
+            WHEN 'Philippines' THEN 'PHP'
+            WHEN 'China Selfcare' THEN 'RMB'
+            WHEN 'China Personal Care' THEN 'RMB'
+        ELSE exch_rate.from_crncy
+        END AS from_crncy,
         exch_rate.to_crncy,
         'na' AS acct_nm,
         'na' AS acct_num,
@@ -4084,14 +4091,28 @@ insert16 as(
             AND copa.div       =  cus_sales_extn.div 
             AND copa.cust_num  =  cus_sales_extn.cust_num 
         --AND filter_params.ctry_key = 'JP'     
-    LEFT JOIN v_intrm_reg_crncy_exch_fiscper exch_rate
-            ON copa.obj_crncy_co_obj  = exch_rate.from_crncy 
-            AND exch_rate.to_crncy  = 'USD' 
-            AND copa.fisc_yr_per = exch_rate.fisc_per    
+        LEFT JOIN v_intrm_reg_crncy_exch_fiscper AS exch_rate
+        ON (
+            copa.obj_crncy_co_obj = exch_rate.from_crncy
+            AND copa.fisc_yr_per = exch_rate.fisc_per
+            AND (
+            CASE
+                WHEN exch_rate.to_crncy != 'USD' THEN exch_rate.to_crncy
+                ELSE 'USD'
+            END = 
+            CASE cmp.ctry_group
+                WHEN 'India' THEN 'INR'
+                WHEN 'Philippines' THEN 'PHP'
+                WHEN 'China Selfcare' THEN 'RMB'
+                WHEN 'China Personal Care' THEN 'RMB'
+            ELSE copa.obj_crncy_co_obj
+            END
+    )
+)   
     --JOIN (select distinct ctry_key, retail_env from wks_filter_params) fp
     --ON copa.ctry_key =  fp.ctry_ke
     --    AND cus_sales_extn.retail_env = nvl(fp.retail_env, cus_sales_extn.retail_env)y   
-    WHERE COPA.FISC_YR >= 2022 and copa.acct_hier_shrt_desc = 'NTS'                       
+    WHERE  copa.fisc_yr_per >= CAST(CAST(DATE_PART(YEAR, CURRENT_DATE) - 2 AS VARCHAR) || '001' AS TEXT) and copa.acct_hier_shrt_desc = 'NTS'                       
     GROUP BY  copa.acct_hier_shrt_desc ,	   
         copa.fisc_yr,
         copa.fisc_yr_per,
@@ -4147,8 +4168,15 @@ insert16 as(
         prod_map.prod_minor  ,
         LTRIM(copa.matl_num::TEXT,'0'::CHARACTER VARYING::TEXT)::CHARACTER VARYING ,	   
         mat.pka_product_key,
-        mat.pka_product_key_description,  
-        exch_rate.from_crncy,
+        mat.pka_product_key_description, 
+        CASE cmp.ctry_group
+            WHEN 'India' THEN 'INR'
+            WHEN 'Philippines' THEN 'PHP'
+            WHEN 'China Selfcare' THEN 'RMB'
+            WHEN 'China Personal Care' THEN 'RMB'
+        ELSE exch_rate.from_crncy
+        END, 
+        --exch_rate.from_crncy,
         exch_rate.to_crncy 
 ),
 transformed as(
