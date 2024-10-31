@@ -4098,9 +4098,36 @@ insert16 as(
     GROUP BY  copa.acct_hier_shrt_desc ,	   
         copa.fisc_yr,
         copa.fisc_yr_per,
-        filter_params."cluster",	   
-        filter_params.ctry_group ,
-        filter_params.ctry_group ,             
+       -- filter_params."cluster",	   
+       -- filter_params.ctry_group ,
+       -- filter_params.ctry_group ,    
+        CASE
+            WHEN (
+                    (
+                    LTRIM(cast(copa.cust_num AS TEXT), '0') IN ('134559', '134106', '134258', '134855')
+                    )    AND 
+                    LTRIM(cast(copa.acct_num AS TEXT), '0') <> '403185' AND 
+                    cast(mat.mega_brnd_desc AS TEXT) <> 'Vogue Int''l' AND 
+                    copa.fisc_yr = 2018
+                 ) 
+            THEN 'China' 
+            ELSE cmp."cluster" 
+        END,
+        CASE 
+          WHEN (
+                (
+                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134559' OR 
+                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134106' OR 
+                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134258' OR 
+                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134855'
+                ) AND 
+                LTRIM(cast(copa.acct_num AS TEXT), '0') <> '403185' AND 
+                cast(mat.mega_brnd_desc AS TEXT) <> 'Vogue Int''l' AND 
+                copa.fisc_yr = 2018
+                ) 
+                THEN 'China Selfcare' 
+                ELSE cmp.ctry_group 
+        END,
         cus_sales_extn.channel,
         cus_sales_extn."sub channel",
         cus_sales_extn.retail_env,       
