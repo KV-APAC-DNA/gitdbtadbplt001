@@ -3967,6 +3967,7 @@ insert15 as(
 		) b ON LTRIM(a.prod_sapbw_code, '0') = b."matl_num"
 	WHERE OWNER = 'J&J'
 ),
+---Added insert16 to retrieve total NTS identical to Clear irrespective of Channel
 insert16 as(
     SELECT 'Act'::CHARACTER VARYING AS data_type,
         'COPA' as Datasource,
@@ -4090,7 +4091,7 @@ insert16 as(
     --JOIN (select distinct ctry_key, retail_env from wks_filter_params) fp
     --ON copa.ctry_key =  fp.ctry_ke
     --    AND cus_sales_extn.retail_env = nvl(fp.retail_env, cus_sales_extn.retail_env)y   
-    WHERE COPA.FISC_YR >= 2022                        
+    WHERE COPA.FISC_YR >= 2022 and copa.acct_hier_shrt_desc = 'NTS'                       
     GROUP BY  copa.acct_hier_shrt_desc ,	   
         copa.fisc_yr,
         copa.fisc_yr_per,
