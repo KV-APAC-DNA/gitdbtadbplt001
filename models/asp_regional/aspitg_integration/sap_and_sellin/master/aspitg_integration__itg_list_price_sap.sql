@@ -138,7 +138,7 @@ final AS
 )
 SELECT A.*, 
 B.unit as uom_unit,
-b.base_unit as uom_base_unit ,
+b.base_uom,
 b.uomz1d,
 b.uomn1d
 from final A 
