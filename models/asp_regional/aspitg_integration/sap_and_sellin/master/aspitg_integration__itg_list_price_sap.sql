@@ -92,7 +92,7 @@ mvke_join AS
 (
   SELECT all_records.*,
          b.pmatn
-  FROM all_records
+  FROM  (select * from all_records where valid_to<>'00000000' or dt_from<>'00000000')all_records
     LEFT JOIN (SELECT distinct matnr, pmatn,VKORG, VTWEG, row_number() over (partition by matnr,VKORG order by pmatn desc, vtweg desc) as rn 
     FROM                             
     APC_MVKE WHERE
