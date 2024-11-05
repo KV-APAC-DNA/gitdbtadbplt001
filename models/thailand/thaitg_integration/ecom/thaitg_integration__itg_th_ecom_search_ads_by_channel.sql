@@ -23,7 +23,7 @@ final as
 		buyers::integer as buyers,
 		new_buyers::integer as new_buyers,
 		item_conversion_rate::number(38,5) as item_conversion_rate,
-		file_name::varchar(255) as filename,
+		filename::varchar(255) as filename,
 		crtd_dttm :: timestamp_ntz(9) as crtd_dttm,	
 		current_timestamp()::timestamp_ntz(9) as updt_dttm
 	from source
