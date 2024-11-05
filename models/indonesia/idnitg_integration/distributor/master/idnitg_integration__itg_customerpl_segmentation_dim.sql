@@ -1,4 +1,4 @@
-/*{{
+{{
     config
     (
         materialized="incremental",
@@ -8,7 +8,7 @@
         delete from {{this}} where (trim(code)) in (select distinct trim(code) from {{ source('idnsdl_raw', 'sdl_mds_id_ref_customerpl_segmentation_adftemp') }});
         {% endif %}"
     )
-}}*/
+}}
 with source as 
 (
     select * from {{ source('idnsdl_raw', 'sdl_mds_id_ref_customerpl_segmentation_adftemp') }}
