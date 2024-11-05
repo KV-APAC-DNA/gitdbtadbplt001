@@ -5,13 +5,13 @@
         incremental_strategy= "append",
         unique_key= ["dstrbtr_grp_cd","dstrbtr_chnl_type_id"],
         pre_hook = " {% if is_incremental() %}
-        delete from {{this}} where (trim(dstrbtr_grp_cd)||trim(dstrbtr_chnl_type_id)) in (select distinct trim(dist_group)||trim(type_dist_id) from {{ source('idnsdl_raw', 'sdl_mds_id_ref_mapping_channel') }});
+        delete from {{this}} where (trim(dstrbtr_grp_cd)||trim(dstrbtr_chnl_type_id)) in (select distinct trim(dist_group)||trim(type_dist_id) from {{ source('idnsdl_raw', 'sdl_mds_id_ref_mapping_channel_adftemp') }});
         {% endif %}"
     )
 }}
 with source as 
 (
-    select * from {{ source('idnsdl_raw', 'sdl_mds_id_ref_mapping_channel') }}
+    select * from {{ source('idnsdl_raw', 'sdl_mds_id_ref_mapping_channel_adftemp') }}
 ),
 final as 
 (

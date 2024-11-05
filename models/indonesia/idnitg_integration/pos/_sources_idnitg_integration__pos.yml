@@ -329,7 +329,7 @@ sources:
                 store_failures: true
                 schema: idnwks_integration
                 severity: error
-    - name: sdl_mds_id_lav_mcs_list
+    - name: sdl_mds_id_lav_mcs_list_adftemp
       tags: ["id_mds_itg_load","transformation"]
     - name: sdl_mds_id_lav_npi_sku_list
       tags: ["id_mds_itg_load","ingestion"]

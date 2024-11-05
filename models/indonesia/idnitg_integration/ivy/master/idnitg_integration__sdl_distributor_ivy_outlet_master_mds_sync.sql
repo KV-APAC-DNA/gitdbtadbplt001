@@ -1,5 +1,5 @@
 with source as (
-    select * from idnitg_integration.itg_distributor_ivy_outlet_master
+    select * from {{ ref('idnitg_integration__itg_distributor_ivy_outlet_master') }} 
 ),
 EDW_DISTRIBUTOR_DIM as (
     select * from  {{ ref('idnedw_integration__edw_distributor_dim') }}
@@ -32,7 +32,7 @@ transformed as
         NULL::timestamp_ntz(9) as cust_crtd_dt,
         cust_grp2::varchar(100) as cust_grp2,
         convert_timezone('UTC', current_timestamp()) as crtd_dttm,
-        NULL::timestamp_ntz(9) as updt_dttm
+        NULL::timestamp_ntz(9) as updt_dttm 
     from source idiom
     join 
     (select jj_sap_dstrbtr_id,jj_sap_dstrbtr_nm,row_number() over (partition by jj_sap_dstrbtr_id,jj_sap_dstrbtr_nm order by effective_to desc) as rnk
