@@ -13,3 +13,11 @@ models:
     config:
       alias: wks_rpt_schemevssales_actuals
       tags: ["in_edw_schemevssales","transformation"]
+  - name: indwks_integration__wks_scheme_vs_sales_rtl_dim
+    config:
+      alias: wks_rpt_schemevssales_rtl_dim
+      tags: ["in_edw_schemevssales","transformation"]
+  - name: indwks_integration__wks_scheme_vs_sales_salescube_master
+    config:
+      alias: wks_rpt_schemevssales_salescube_master
+      tags: ["in_edw_schemevssales","transformation"]
