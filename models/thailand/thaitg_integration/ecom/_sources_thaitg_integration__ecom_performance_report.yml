@@ -23,6 +23,10 @@ sources:
         tags: ["th_ecom_performance","ingestion"]     
       - name: sdl_ecom_ams
         tags: ["th_ecom_performance","ingestion"]
+      - name: sdl_ecom_gmv_shopee
+        tags: ["th_ecom_performance","ingestion"]
+      - name: sdl_ecom_gmv_konvy
+        tags: ["th_ecom_performance","ingestion"]
 
         
 
