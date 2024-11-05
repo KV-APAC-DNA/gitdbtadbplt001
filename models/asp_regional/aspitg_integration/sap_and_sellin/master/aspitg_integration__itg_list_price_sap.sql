@@ -136,5 +136,11 @@ final AS
   WHERE itg.material IS NULL
    {% endif %}
 )
-SELECT A.*, B.* from final A LEFT JOIN EDW_MATERIAL_UOM b
+SELECT A.*, 
+B.unit as uom_unit,
+b.base_unit as uom_base_unit ,
+b.uomz1d,
+b.uomn1d
+from final A 
+LEFT JOIN EDW_MATERIAL_UOM b
 on rtrim(a.material)=rtrim(b.material) and a.unit = b.unit
