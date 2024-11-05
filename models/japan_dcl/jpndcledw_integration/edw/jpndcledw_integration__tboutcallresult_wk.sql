@@ -3,32 +3,7 @@ dm_mykokya as (
     select * from {{ ref('jpndcledw_integration__dm_mykokya') }}
 ),
 ocl_in_userlist_v as (
-    -- select * from {{ ref('jpndcledw_integration__ocl_in_userlist_v') }}
-    
-    SELECT 
-        dm_mykokya.file_id, 
-        dm_mykokya.filename, 
-        (dm_mykokya.kokyano)::bigint AS diusrid 
-    FROM 
-        dm_mykokya 
-    WHERE 
-        (
-            lower(dm_mykokya.purpose_type) = 'outcall'
-            AND dm_mykokya.file_id IN 
-            (
-                SELECT 
-                    DISTINCT dm_mykokya.file_id 
-                FROM 
-                    dm_mykokya, 
-                    (SELECT 
-                        max(try_to_timestamp(upload_dt||' '||upload_time,'MM-DD-YYYY HH:MI:SS')) AS max_time 
-                    FROM dm_mykokya) a 
-                WHERE (
-                        a.max_time = try_to_timestamp(upload_dt||' '||upload_time,'MM-DD-YYYY HH:MI:SS')
-                        AND lower(dm_mykokya.purpose_type) = 'outcall')
-            )
-        )
-        
+     select * from {{ ref('jpndcledw_integration__ocl_in_userlist_v') }}  
 ),
 c_tbmembunitrel as (
     select * from {{ ref('jpndclitg_integration__c_tbmembunitrel') }}
