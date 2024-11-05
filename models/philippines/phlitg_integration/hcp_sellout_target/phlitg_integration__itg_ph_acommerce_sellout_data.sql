@@ -35,8 +35,8 @@ transformed as
     quantity,
     gmv
     from hcp_acommerce_load hce
-    inner join (select distinct mnth_long,mnth_no,mnth_id,cal_year from edw_vw_os_time_dim where cal_year=(select distinct year(crt_dttm) from hcp_acommerce_load ) ) 
-    cal on (upper(hce.month)=upper(cal.mnth_long) and hce.month_no=cal.mnth_no)
+    inner join (select distinct mnth_long,mnth_no,mnth_id,cal_year,cal_date from edw_vw_os_time_dim  ) 
+    cal on (cal.cal_date=hce.order_date)
 ), 
 final as 
 (
