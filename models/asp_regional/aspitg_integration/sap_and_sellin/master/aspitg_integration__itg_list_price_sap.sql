@@ -20,6 +20,9 @@ EDW_SALES_ORG_DIM AS
     SELECT *
     FROM {{ ref('aspedw_integration__edw_sales_org_dim') }}
 ),
+EDW_MATERIAL_UOM AS (
+    SELECT * FROM {{ ref('aspedw_integration__edw_material_uom') }}
+),
 base_join AS
 (
   SELECT A.KNUMH AS COND_REC_NO,
@@ -88,11 +91,15 @@ all_records AS
 mvke_join AS
 (
   SELECT all_records.*,
-         b.pmatn FROM
-  (SELECT * FROM all_records where valid_to<>'00000000' or dt_from<>'00000000')all_records
-     LEFT JOIN (SELECT distinct matnr, pmatn,VKORG FROM APC_MVKE) b
+         b.pmatn
+  FROM all_records
+    LEFT JOIN (SELECT distinct matnr, pmatn,VKORG, VTWEG, row_number() over (partition by matnr,VKORG order by pmatn desc, vtweg desc) as rn 
+    FROM                             
+    APC_MVKE WHERE
+                PMATN IS NOT NULL AND PMATN <>''
+                AND VTWEG in (10,11,15) ) b
            ON all_records.material = B.MATNR
-           AND all_records.sls_org=b.vkorg
+           AND all_records.sls_org=b.vkorg AND b.rn=1
 ),
 final AS
 (
@@ -129,5 +136,5 @@ final AS
   WHERE itg.material IS NULL
    {% endif %}
 )
-SELECT *
-FROM final
+SELECT A.*, B.* from final A LEFT JOIN EDW_MATERIAL_UOM b
+on rtrim(a.material)=rtrim(b.material) and a.unit = b.unit
