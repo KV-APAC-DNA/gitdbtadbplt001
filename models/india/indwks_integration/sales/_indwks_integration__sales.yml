@@ -5,3 +5,11 @@ models:
     config: 
       alias: wks_ka_sales_fact
       tags: ["in_edw_kasales","transformation"]
+  - name: indwks_integration__wks_scheme_vs_sales_claimable
+    config:
+      alias: wks_rpt_schemevssales_claimable
+      tags: ["in_edw_schemevssales","transformation"]
+  - name: indwks_integration__wks_scheme_vs_sales_actuals
+    config:
+      alias: wks_rpt_schemevssales_actuals
+      tags: ["in_edw_schemevssales","transformation"]
