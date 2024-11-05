@@ -4078,8 +4078,26 @@ insert16 as(
         'na' AS csw_desc,
         'na' AS "Additional_Information",
         NULL as ppm_role,
-        SUM(copa.amt_obj_crncy*exch_rate.ex_rt) as totalnts_usd_value,
-        SUM(copa.amt_obj_crncy) as totalnts_lcy_value,
+        SUM(CASE
+            WHEN (
+                copa.acct_hier_shrt_desc = 'NTS'
+                AND exch_rate.to_crncy = 'USD'
+                 )
+            THEN SUM(copa.amt_obj_crncy * exch_rate.ex_rt)
+            ELSE 0
+            END) AS totalnts_usd_value,
+        SUM(CASE
+            WHEN copa.acct_hier_shrt_desc = 'NTS' AND exch_rate.to_crncy = 
+            CASE cmp.ctry_group
+              WHEN 'India' THEN 'INR'
+              WHEN 'Philippines' THEN 'PHP'
+              WHEN 'China Selfcare' THEN 'RMB'
+              WHEN 'China Personal Care' THEN 'RMB'
+              ELSE copa.obj_crncy_co_obj
+            END
+            THEN copa.amt_obj_crncy * exch_rate.ex_rt
+            ELSE 0::NUMERIC(18,0)
+        END) AS totalnts_lcy_value,
             
     FROM edw_copa_trans_fact copa
     LEFT JOIN edw_company_dim cmp on copa.co_cd = cmp.co_cd
