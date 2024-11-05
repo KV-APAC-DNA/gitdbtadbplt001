@@ -69,7 +69,7 @@ base as(
 		CASE --WHEN MDS.NAME = 'Retailer Name' THEN MDS.NAME_ENG
 			WHEN MDS1.NAME = 'Store Type'
 				AND MDS1.NAME_ENG <> 'Others'
-				THEN ('Other' || ' ' || MDS1.NAME_ENG)
+				THEN MDS1.NAME_ENG
 			WHEN MDS1.NAME = 'Store Type'
 				AND MDS1.NAME_ENG = 'Others'
 				THEN MDS1.NAME_ENG
