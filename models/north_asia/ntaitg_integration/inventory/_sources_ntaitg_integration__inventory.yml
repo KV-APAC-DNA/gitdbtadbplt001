@@ -474,6 +474,7 @@ sources:
                 store_failures: true
                 schema: ntawks_integration
       - name: sdl_hk_ims_wingkeung_inv
+        tags: ["na_trxn_ims_inv","transformation"]
         tests:
           - test_null:
               select_columns: ["date","stk_code","prod_code"]

@@ -14,9 +14,9 @@ select * from {{ ref('ntaitg_integration__itg_ims_dstr_cust_attr') }}
 itg_mds_ap_customer360_config as (
 select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
 ),
-edw_vw_pop6_store as (
+/*edw_vw_pop6_store as (
 select * from {{ ref('aspedw_integration__edw_vw_pop6_store') }}
-),
+),*/
 itg_query_parameters as (
 select * from {{ source('ntaitg_integration', 'itg_query_parameters') }}
 ),
@@ -100,22 +100,24 @@ SELECT 'SELL-OUT' AS DATA_SRC,
 	   sls.ean_num as msl_product_code,
 		--prod_nm as msl_product_desc,
 		--'NA'as store_grade,
-		pop6.retail_environment_ps as retail_env,
-		pop6.channel as channel
+		--pop6.retail_environment_ps as retail_env,
+		--pop6.channel as channel
+        'DX' AS retail_env,
+        dc.store_type AS channel
 from edw_ims_fact sls LEFT JOIN edw_vw_os_time_dim time_dim
 on sls.ims_txn_dt = time_dim.cal_date
 left join (SELECT DISTINCT dstr_cd, "replace"("replace"("replace"("replace"(dstr_cust_cd::text, 'Indirect'::text, ''::text),
   'Direct'::text, ''::text), 'Indi'::text, ''::text), 'Dire'::text, ''::text) AS dstr_cust_cd, 
 store_type FROM itg_ims_dstr_cust_attr where ctry_cd = 'TW'
 ) dc on sls.dstr_cd = dc.dstr_cd and sls.cust_cd = dc.dstr_cust_cd
-left join (select * from
+/*left join (select * from
 	(select *,  row_number() OVER(PARTITION BY pop_code, customer order by retail_environment_ps, channel NULLS LAST) rnk  from 
 	(select distinct case when customer in ('Carrefour 家樂福','RT-Mart 大潤發','PX 全聯', 'Cosmed 康是美', 'Poya 寶雅') then ltrim(reverse(split_part(reverse(pop_code),'-',1)),'0')
 	  when customer in ('Watsons 屈臣氏') then ltrim(right(pop_code,3),'0') 
 	  else ltrim(pop_code,'0') end as pop_code, customer, retail_environment_ps, channel from edw_vw_pop6_store )
 	where NULLIF(pop_code,'') is not null) 
 	where rnk=1) pop6
-	on ltrim(sls.cust_cd,'0') = pop6.pop_code and sls.dstr_nm = pop6.customer
+	on ltrim(sls.cust_cd,'0') = pop6.pop_code and sls.dstr_nm = pop6.customer */
 where ctry_cd = 'TW' and crncy_cd = 'TWD'  and not (sls.prod_cd like '1U%' OR sls.prod_cd like 'COUNTER TOP%' OR sls.prod_cd like 'DUMPBIN%' OR sls.prod_cd IS NULL OR sls.prod_cd = '') 
 ),
 transformed as (
@@ -151,12 +153,11 @@ current_timestamp() AS updt_dttm
 FROM
 (
 --POS
-select * from pos
-	
-UNION ALL
-
-select * from sellout
-	  )BASE
+    select * from pos	
+    UNION ALL
+--SELL-OUT
+    select * from sellout
+)BASE
 WHERE NOT (nvl(BASE.so_sls_value, 0) = 0 and nvl(BASE.so_sls_qty, 0) = 0) AND BASE.day > (select to_date(param_value,'YYYY-MM-DD') from itg_mds_ap_customer360_config where code='min_date') 
 AND base.mnth_id>= (case when (select param_value from itg_mds_ap_customer360_config where code='base_load_tw')='ALL' then '190001' else to_char(add_months(to_date(current_date::varchar, 'YYYY-MM-DD'), -((select param_value from itg_mds_ap_customer360_config where code='base_load_tw')::integer)), 'YYYYMM')
 end)

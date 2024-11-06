@@ -19,6 +19,9 @@ wks_commercial_excellence_dso_summation_ytd as (
 wks_commercial_excellence_market_share_summation as (
     select * from {{ ref('aspwks_integration__wks_commercial_excellence_market_share_summation') }}
 ),
+wks_commercial_excellence_otif_base as (
+	select * from {{ ref('aspwks_integration__wks_commercial_excellence_otif_base') }}
+),
 final as (
     Select 
     market :: VARCHAR(200) as market       
@@ -51,6 +54,10 @@ final as (
 	,l12m_weeks_avg_sales_usd :: DOUBLE as l12m_weeks_avg_sales_usd
 	,ytd_dso_gts :: DOUBLE as ytd_dso_gts
 	,ytd_dso_gross_account_receivable :: DOUBLE as ytd_dso_gross_account_receivable
+	,otif_numerator :: DOUBLE as otif_numerator
+	,otif_denominator :: DOUBLE as otif_denominator
+	,otif_val :: DOUBLE as otif_val
+	,otif_ytd :: DOUBLE as otif_ytd
     FROM 
     (
         --START OF MARKET SHARE
@@ -84,6 +91,10 @@ final as (
         ,0 as l12m_weeks_avg_sales_usd
         ,0 as ytd_dso_gts
         ,0 as ytd_dso_gross_account_receivable
+		,0 as otif_numerator
+		,0 as otif_denominator
+		,0 as otif_val
+		,0 as otif_ytd
         from wks_commercial_excellence_market_share_summation
         where left(month_id,4)>=(select extract(year from CURRENT_TIMESTAMP())-2)
         --END OF MARKET SHARE
@@ -119,6 +130,10 @@ final as (
         ,0 as l12m_weeks_avg_sales_usd
         ,0 as ytd_dso_gts
         ,0 as ytd_dso_gross_account_receivable
+		,0 as otif_numerator
+		,0 as otif_denominator
+		,0 as otif_val
+		,0 as otif_ytd
         from wks_commercial_excellence_customer_segmentation_summation_ytd
         where left(month_id,4)>=(select extract(year from CURRENT_TIMESTAMP())-2)
         --END OF ALL NTS
@@ -154,6 +169,10 @@ final as (
         ,0 as l12m_weeks_avg_sales_usd
         ,0 as ytd_dso_gts
         ,0 as ytd_dso_gross_account_receivable
+		,0 as otif_numerator
+		,0 as otif_denominator
+		,0 as otif_val
+		,0 as otif_ytd
         from wks_commercial_excellence_gts_summation_ytd
         where left(month_id,4)>=(select extract(year from CURRENT_TIMESTAMP())-2)
         --END OF ALL GTS
@@ -189,6 +208,10 @@ final as (
         ,0 as l12m_weeks_avg_sales_usd
         ,0 as ytd_dso_gts
         ,0 as ytd_dso_gross_account_receivable
+		,0 as otif_numerator
+		,0 as otif_denominator
+		,0 as otif_val
+		,0 as otif_ytd
         from wks_commercial_excellence_gts_phasing_summation
         where left(month_id,4)>=(select extract(year from CURRENT_TIMESTAMP())-2)
         --END OF GTS PHASING
@@ -224,6 +247,10 @@ final as (
         ,l12m_weeks_avg_sales_usd
         ,0 as ytd_dso_gts
         ,0 as ytd_dso_gross_account_receivable
+		,0 as otif_numerator
+		,0 as otif_denominator
+		,0 as otif_val
+		,0 as otif_ytd
         from wks_commercial_excellence_inventory_base
         where left(month_id,4)>=(select extract(year from CURRENT_TIMESTAMP())-2)
         --END OF INVENTORY
@@ -259,6 +286,10 @@ final as (
         ,0 as l12m_weeks_avg_sales_usd
         ,0 as ytd_dso_gts
         ,0 as ytd_dso_gross_account_receivable
+		,0 as otif_numerator
+		,0 as otif_denominator
+		,0 as otif_val
+		,0 as otif_ytd
         from wks_commercial_excellence_ecomm_summation_ytd
         where left(month_id,4)>=(select extract(year from CURRENT_TIMESTAMP())-2)
         --END OF ECOM NTS
@@ -294,9 +325,52 @@ final as (
         ,0 as l12m_weeks_avg_sales_usd
         ,ytd_dso_gts
         ,ytd_dso_gross_account_receivable
+		,0 as otif_numerator
+		,0 as otif_denominator
+		,0 as otif_val
+		,0 as otif_ytd
         from wks_commercial_excellence_dso_summation_ytd
         where left(month_id,4)>=(select extract(year from CURRENT_TIMESTAMP())-2)
         --END OF DSO
+		UNION ALL
+        --START OF ALL OTIF
+        select market        
+        ,"cluster"           
+        ,'NA' as cust_seg           
+        ,'NA' as retail_env 
+        ,segment_information as mega_brand       
+        ,month_id  
+        ,0 as dso_kv_days
+        ,0 as ytd_week_passed
+        ,0 as week
+        ,kpi 
+        ,0 as val_lcy
+        ,0 as val_usd
+        ,0 as mtd_lcy       
+        ,0 as mtd_usd         
+        ,0 as ytd_lcy 
+        ,0 as ytd_usd
+        ,0 as kv_val_mat
+        ,0 as kv_val_mat_usd 
+        ,0 as kv_val_ytd
+        ,0 as kv_val_ytd_usd 
+        ,0 as mkt_cat_val_mat
+        ,0 as mkt_cat_val_mat_usd
+        ,0 as mkt_cat_val_ytd 
+        ,0 as mkt_cat_val_ytd_usd
+        ,0 as healthy_inventory_usd
+        ,0 as total_inventory_val
+        ,0 as total_inventory_val_usd
+        ,0 as l12m_weeks_avg_sales_usd
+        ,0 as ytd_dso_gts
+        ,0 as ytd_dso_gross_account_receivable
+		,otif_numerator
+		,otif_denominator
+		,otif as otif_val
+		,otif_ytd
+        from wks_commercial_excellence_otif_base
+        where left(month_id,4)>=(select extract(year from CURRENT_TIMESTAMP())-2)
+        --END OF ALL OTIF
     )
 )
 
