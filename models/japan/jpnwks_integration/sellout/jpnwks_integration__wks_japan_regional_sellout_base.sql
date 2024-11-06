@@ -1,3 +1,4 @@
+--import cte
 with dw_so_sell_out_dly as(
 	select * from {{ ref('jpnedw_integration__dw_so_sell_out_dly') }}
 ),
@@ -72,7 +73,7 @@ base as(
 				AND MDS1.NAME_ENG <> 'Others'
 				THEN MDS1.NAME_ENG
 			WHEN MDS1.NAME = 'Store Type'
-				AND MDS1.NAME_ENG = 'Others'
+				AND  MDS1.NAME_ENG = 'Others'
 				THEN MDS1.NAME_ENG
 			ELSE 'NA'
 			END AS retail_env,
