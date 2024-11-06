@@ -9,6 +9,7 @@ wks_korea_regional_sellout_mapped_sku_cd as (
     select * from {{ ref('ntawks_integration__wks_korea_regional_sellout_mapped_sku_cd') }}
 ),
 --final cte
+
 wks_korea_base_retail_excellence as 
 (
 SELECT COUNTRY_CODE AS CNTRY_CD,
