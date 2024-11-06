@@ -68,10 +68,10 @@ base as(
 		--SELLOUT.item_nm AS msl_product_desc,
 		CASE --WHEN MDS.NAME = 'Retailer Name' THEN MDS.NAME_ENG
 			WHEN MDS1.NAME = 'Store Type'
-				AND MDS1.NAME_ENG <> 'Others'
+				AND  MDS1.NAME_ENG <> 'Others'
 				THEN MDS1.NAME_ENG
 			WHEN MDS1.NAME = 'Store Type'
-				AND MDS1.NAME_ENG = 'Others'
+				AND  MDS1.NAME_ENG = 'Others'
 				THEN MDS1.NAME_ENG
 			ELSE 'NA'
 			END AS retail_env,
