@@ -9,7 +9,7 @@
         {% endif %}"
     )
 }}
-with source as 
+with source as  
 (
     select * from {{ source('idnsdl_raw', 'sdl_mds_id_ref_customerpl_segmentation_adftemp') }}
 ),
