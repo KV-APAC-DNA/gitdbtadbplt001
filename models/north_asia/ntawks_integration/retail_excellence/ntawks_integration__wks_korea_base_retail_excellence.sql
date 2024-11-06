@@ -172,9 +172,14 @@ FROM (SELECT COUNTRY_CODE,
             FROM EDW_RPT_REGIONAL_SELLOUT_OFFTAKE		--//             FROM RG_EDW.EDW_RPT_REGIONAL_SELLOUT_OFFTAKE
             WHERE COUNTRY_CODE = 'KR'
             AND   DATA_SOURCE IN ('SELL-OUT','POS')
-            /*AND   MNTH_ID >= (SELECT last_36mnths
-                              FROM RG_EDW.EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::NUMERIC		--//                               FROM rg_edw.edw_vw_cal_Retail_excellence_Dim)::NUMERIC
-            AND   MNTH_ID <= (SELECT prev_mnth FROM RG_EDW.EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::NUMERIC*/		--//             AND   MNTH_ID <= (SELECT prev_mnth FROM rg_edw.edw_vw_cal_Retail_excellence_Dim)::NUMERIC*/
+            -------logic to exclude POS Online data
+            AND (CASE WHEN DATA_SOURCE = 'SELL-OUT' THEN STORE_NAME
+                ELSE 
+                (CASE WHEN (UPPER(STORE_NAME) LIKE '%_ONLINE%' OR UPPER(STORE_NAME) LIKE '%온라인몰점%' OR UPPER(STORE_NAME) LIKE '%김포온라인센터%') THEN 'POS_ONLINE'
+                ELSE STORE_NAME END) END) <> 'POS_ONLINE' 
+            AND   MNTH_ID >= (SELECT last_27mnths
+                              FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::NUMERIC
+            AND   MNTH_ID <= (SELECT prev_mnth FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::NUMERIC
 			) MAIN
         LEFT JOIN WKS_KOREA_REGIONAL_SELLOUT_MAPPED_SKU_CD MSCD ON LTRIM (MAIN.EAN,'0') = LTRIM (MSCD.EAN_NUM,'0'))		--//         LEFT JOIN NA_WKS.WKS_KOREA_REGIONAL_SELLOUT_MAPPED_SKU_CD MSCD ON LTRIM (MAIN.EAN,'0') = LTRIM (MSCD.EAN_NUM,'0'))
 GROUP BY COUNTRY_CODE,
