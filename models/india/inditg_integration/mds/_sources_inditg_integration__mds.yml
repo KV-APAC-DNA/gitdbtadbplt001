@@ -171,7 +171,7 @@ sources:
                   schema: indwks_integration
                   severity: error
             - test_duplicate:
-                group_by_columns: ["name"]
+                group_by_columns: ["name", "kpi"]
                 select_columns: ["name", "channel", "kpi"] 
                 name: TRATBL_sdl_mds_in_ps_weights__duplicate_test
                 config:
