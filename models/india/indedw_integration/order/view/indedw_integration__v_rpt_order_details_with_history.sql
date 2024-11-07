@@ -56,7 +56,7 @@ SELECT
     d.variant_name, 
     d.product_category_name, 
     d.mothersku_name, 
-	--oti.invoice_date,
+	oti.invoice_date,
     COALESCE(oti.invoice_no,oti.invoice_no_invoiced,sio.SalInvNo) AS invoice_no,
     NVL(oti.order_date,sio.orderdate) AS orderdate,
     NVL(oti.order_no,sio.orderno) AS order_no,
@@ -103,7 +103,7 @@ SELECT
              b.ord_amt,
              a.customer_code AS customer_code_invoiced,
              a.invoice_no AS invoice_no_invoiced,
-			-- a.invoice_date,
+			 a.invoice_date,
              a.product_code AS product_code_invoiced,
              a.quantity,
              a.gross_amt,
@@ -122,7 +122,6 @@ SELECT
                     sum(edw_order_fact.ord_amt) AS ord_amt 
                     FROM edw_order_fact edw_order_fact 
                     WHERE EXTRACT(YEAR FROM order_date) >= 2024 
-                      --AND EXTRACT(MONTH FROM order_date) = 5     
                     GROUP BY 
                     edw_order_fact.customer_code, 
                     edw_order_fact.retailer_code, 
@@ -138,18 +137,19 @@ SELECT
                     SELECT 
                     edw_dailysales_fact.customer_code, 
                     edw_dailysales_fact.product_code, 
-                    edw_dailysales_fact.invoice_no, 
+                    edw_dailysales_fact.invoice_no,
+                    edw_dailysales_fact.invoice_date, 
                     sum(edw_dailysales_fact.quantity) AS quantity, 
                     sum(edw_dailysales_fact.gross_amt) AS gross_amt, 
                     sum(edw_dailysales_fact.tax_amt) AS tax_amt 
                     FROM 
                     edw_dailysales_fact edw_dailysales_fact 
-                    WHERE saleflag = 'D' AND LEFT(edw_dailysales_fact.invoice_date,4) >= '2024'           
-                         --AND SUBSTRING(invoice_date,5,2) IN ('05','06','07')            
+                    WHERE saleflag = 'D' AND LEFT(edw_dailysales_fact.invoice_date,4) >= '2024'                     
                     GROUP BY 
                     edw_dailysales_fact.customer_code, 
                     edw_dailysales_fact.product_code, 
-                    edw_dailysales_fact.invoice_no
+                    edw_dailysales_fact.invoice_no,
+                    edw_dailysales_fact.invoice_date
                 ) a 
                 ON ((((TRIM(b.customer_code):: text = (a.customer_code):: text) 
                     AND (TRIM(b.product_code):: text = (a.product_code):: text)) 
