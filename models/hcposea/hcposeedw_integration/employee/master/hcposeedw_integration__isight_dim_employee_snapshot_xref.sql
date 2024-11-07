@@ -10,8 +10,8 @@ with dim_employee_iconnect as (
 ),
 
 result as (
-SELECT extract(year FROM current_timestamp()) AS year,
-    extract(month FROM current_timestamp()) AS month,
+SELECT extract(year FROM convert_timezone('UTC', current_timestamp())) AS year,
+    extract(month FROM convert_timezone('UTC', current_timestamp())) AS month,
     employee_key,
     country_code,
     employee_source_id,

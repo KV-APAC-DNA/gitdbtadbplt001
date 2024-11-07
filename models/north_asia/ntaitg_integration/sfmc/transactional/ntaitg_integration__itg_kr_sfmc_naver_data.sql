@@ -3,13 +3,33 @@
         materialized="incremental",
         incremental_strategy="append",
         pre_hook="{% if is_incremental() %}
-        delete from {{this}} where cntry_cd='KR' and file_name in (select distinct file_name from {{ source('ntasdl_raw','sdl_kr_sfmc_naver_data') }});
+        delete from {{this}} where cntry_cd='KR' and file_name in (select distinct file_name 
+        from {{ source('ntasdl_raw','sdl_kr_sfmc_naver_data') }} 
+        where file_name not in
+        (   select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_sfmc_naver_data__duplicate_test') }}
+            union all
+            select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_sfmc_naver_data__null_test') }}
+        )
+        );
         {% endif %}",
-        post_hook="delete from {{this}} where naver_id not in (select naver_id from {{ source('ntasdl_raw','sdl_kr_sfmc_naver_data') }} where cntry_cd='KR' and file_name in(select distinct file_name from {{ source('ntasdl_raw','sdl_kr_sfmc_naver_data') }})) and cntry_cd='KR';"
+        post_hook="delete from {{this}} where naver_id not in 
+                        (select naver_id from {{ source('ntasdl_raw','sdl_kr_sfmc_naver_data') }} 
+                        where cntry_cd='KR' and 
+                        file_name in (select distinct file_name from {{ source('ntasdl_raw','sdl_kr_sfmc_naver_data') }} 
+                                    where file_name not in
+                                    (select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_sfmc_naver_data__duplicate_test') }}
+                                    union all
+                                    select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_sfmc_naver_data__null_test') }}
+                                    ))) and cntry_cd='KR';"
 )}}
 
 with source as (
-    select * from {{ source('ntasdl_raw','sdl_kr_sfmc_naver_data') }}
+    select * from {{ source('ntasdl_raw','sdl_kr_sfmc_naver_data') }} 
+    where file_name not in
+     (select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_sfmc_naver_data__duplicate_test') }}
+      union all
+      select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_sfmc_naver_data__null_test') }}
+     ) 
 ),
 final as (
     select

@@ -2,7 +2,7 @@ with source as(
     select * from {{ ref('vnmitg_integration__itg_vn_dksh_daily_sales') }} 
 ),
 itg_query_parameters as(
-    select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
+    select * from {{ source('sgpitg_integration', 'itg_query_parameters') }}
 ),
 final as(
     select

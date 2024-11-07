@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: indwks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: indwks_integration
+    schema: "{{ target.schema if target.name in ('dev','default') else 'indwks_integration' }}"
 
     quoting:
       database: false
@@ -49,6 +49,13 @@ sources:
     - name: TRATBL_sdl_in_salesman_route__duplicate_test
     - name: TRATBL_sdl_in_rretailergeoextension__null_test
     - name: TRATBL_sdl_in_rretailergeoextension__duplicate_test
+    - name: TRATBL_sdl_rrl_retailer_geocoordinates__null_test
+    - name: TRATBL_sdl_rrl_udcmaster__null_test
+    - name: TRATBL_sdl_rrl_rsdmaster__null_test
+    - name: TRATBL_sdl_rrl_ruralstoreorderdetail__null_test
+    - name: TRATBL_sdl_rrl_ruralstoreorderheader__null_test
+    - name: TRATBL_sdl_rrl_retailermaster__null_test
+    - name: TRATBL_sdl_rrl_udcmapping__null_test
 
       
      

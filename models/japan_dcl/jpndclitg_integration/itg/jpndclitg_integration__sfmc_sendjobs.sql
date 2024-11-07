@@ -1,17 +1,14 @@
 {{
     config(
         materialized= "incremental",
-        incremental_strategy= "append",
-        pre_hook = "{% if is_incremental() %}
-            delete from {{this}} where clientid in (select clientid from {{ source('jpdclsdl_raw', 'sfmc_sendjobs') }});
-                    {% endif %}"
+        incremental_strategy= "append"
     )
 }}
 
 with source as(
     select *, dense_rank() over(partition by clientid order by file_name desc) as rnk 
     from {{ source('jpdclsdl_raw', 'sfmc_sendjobs') }}
-    qualify rnk =1
+    --qualify rnk =1
 ),
 final as(
     select 

@@ -153,7 +153,7 @@ final as(
     ,flag_agg_dim_key::VARCHAR(50) as   flag_agg_dim_key    
     ,distributor_code::VARCHAR(500) as  distributor_code    
     ,distributor_name::VARCHAR(500) as  distributor_name    
-    ,sell_out_channel::VARCHAR(255) as  sell_out_channel    
+    ,sell_out_channel::VARCHAR(500) as  sell_out_channel    
     ,region::VARCHAR(255) as    region  
     ,zone_name::VARCHAR(510) as zone_name  
     ,city::VARCHAR(255)  as city    

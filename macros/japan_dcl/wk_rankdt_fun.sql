@@ -13,7 +13,7 @@
                         JPDCLEDW_INTEGRATION__KR_COMM_POINT_PARA
                     {% endset %}
         {% set target_table %}
-                        JPDCLEDW_INTEGRATION__WK_RANKDT_TMP_demo
+                        JPDCLEDW_INTEGRATION__WK_RANKDT_TMP
                     {% endset %}
     {% endif %}
 
@@ -21,7 +21,7 @@
     {% set month1 = 1 %}
 
     {% set year_query %} 
-        select extract(year from convert_timezone('UTC','Asia/Tokyo',current_timestamp()));
+        select extract(year from convert_timezone('Asia/Tokyo',current_timestamp()));
     {% endset %}
 
     {% set target_year_query %} 

@@ -1,5 +1,6 @@
 with ITG_RE_MSL_INPUT_DEFINITION as (
-    select * from {{ source('aspitg_integration', 'itg_re_msl_input_definition') }}
+    select * from {{ ref('aspitg_integration__itg_re_msl_input_definition') }}
+    --select * from {{ source('aspitg_integration', 'itg_re_msl_input_definition') }}
 ),
 WKS_CNSC_BASE_RETAIL_EXCELLENCE as (
     select * from {{ ref('chnwks_integration__wks_cnsc_base_retail_excellence') }}
@@ -8,7 +9,8 @@ edw_vw_cal_Retail_excellence_Dim as (
     select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 itg_mds_cn_otc_product_mapping as (
-    select * from {{ source('chnitg_integration', 'itg_mds_cn_otc_product_mapping') }}
+    select * from {{ ref('chnitg_integration__itg_mds_cn_otc_product_mapping') }}
+    --{{ source('chnitg_integration', 'itg_mds_cn_otc_product_mapping') }}
 ),
 edw_calendar_dim as (
     select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
@@ -96,15 +98,15 @@ fisc_yr::integer AS fisc_yr,
 fisc_per::varchar(22) AS fisc_per,
 distributor_code::varchar(100) AS distributor_code,
 distributor_name::varchar(356) AS distributor_name,
-sell_out_channel::varchar(50) AS sell_out_channel,
-sell_out_re::varchar(255) AS sell_out_re,
+sell_out_channel::varchar(500) AS sell_out_channel,
+sell_out_re::varchar(500) AS sell_out_re,
 store_code::varchar(100) AS store_code,
 store_name::varchar(601) AS store_name,
 region::varchar(150) AS region,
 zone_name::varchar(150) AS zone_name,
 product_code::varchar(150) AS product_code,
 product_name::varchar(300) AS product_name,
-store_type::varchar(255) AS store_type,
+store_type::varchar(500) AS store_type,
 product_brand::varchar(200) AS product_brand,
 prod_hier_l1::varchar(14) AS prod_hier_l1,
 from transformation

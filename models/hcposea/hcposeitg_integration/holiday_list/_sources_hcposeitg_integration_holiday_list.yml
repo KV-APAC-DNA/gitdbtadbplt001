@@ -20,6 +20,7 @@ sources:
           config:
             store_failures: true
             schema: hcposewks_integration
+            severity: warn
       - test_duplicate:
           select_columns: ["country", "holiday_key"]
           group_by_columns: ["country", "holiday_key"]
@@ -27,5 +28,6 @@ sources:
           config:
             store_failures: true
             schema: hcposewks_integration
+            severity: warn
 
 

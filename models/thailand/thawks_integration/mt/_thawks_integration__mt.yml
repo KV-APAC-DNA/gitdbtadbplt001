@@ -41,3 +41,8 @@ models:
     config:
       alias: wks_th_watsons_lastnmonths
       tags: ["tesco_mt_7_11_and_tops","transformation"]
+
+  - name: thawks_integration__wks_th_watsons
+    config:
+      alias: wks_th_watsons
+      tags: ["tesco_mt_7_11_and_tops","transformation"]

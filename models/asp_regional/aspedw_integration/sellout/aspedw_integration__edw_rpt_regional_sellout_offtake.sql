@@ -1,5 +1,6 @@
 {{
     config(
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";",
         materialized="incremental",
         incremental_strategy = "append",
         pre_hook="{% if is_incremental() %}
@@ -79,7 +80,7 @@ wks_taiwan_regional_sellout_offtake_npd as
 ),
 wks_vietnam_regional_sellout_offtake_npd as
 (
-    select * from {{ ref('vnwks_integration__wks_vietnam_regional_sellout_offtake_npd') }}
+    select * from {{ ref('vnmwks_integration__wks_vietnam_regional_sellout_offtake_npd') }}
 ),
 cn_wks_rpt_regional_sellout_offtake_npd as
 (
@@ -1021,7 +1022,7 @@ final as
         main.msl_product_code,
         main.msl_product_desc,
         'NA' AS store_grade,
-        'NA' AS retail_env,
+        main.retail_env,
         main.channel,
         main.crtd_dttm,
         main.updt_dttm,
@@ -1460,7 +1461,7 @@ select year::number(18,0) as year,
     customer_segment_key::varchar(12) as customer_segment_key,
     customer_segment_description::varchar(50) as customer_segment_description,
     global_product_franchise::varchar(30) as global_product_franchise,
-    global_product_brand::varchar(30) as global_product_brand,
+    global_product_brand::varchar(100) as global_product_brand,
     global_product_sub_brand::varchar(100) as global_product_sub_brand,
     global_product_variant::varchar(100) as global_product_variant,
     global_product_segment::varchar(50) as global_product_segment,

@@ -3,12 +3,14 @@ version: 2
 sources:
   - name: sgpwks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: sgpwks_integration
+    schema: "{{ target.schema if target.name in ('dev','default') else 'sgpwks_integration' }}"
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
+      - name: TRATBL_sdl_pop6_sg_tasks__null_test
+      - name: TRATBL_sdl_pop6_sg_tasks__duplicate_test
       - name: TRATBL_sdl_pop6_sg_sku_audits__null_test
       - name: TRATBL_sdl_pop6_sg_sku_audits__duplicate_test
       - name: TRATBL_sdl_sg_scan_data_marketplace__null_test

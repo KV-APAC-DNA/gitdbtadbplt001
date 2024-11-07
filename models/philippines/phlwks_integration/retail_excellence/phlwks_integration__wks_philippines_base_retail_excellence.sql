@@ -1,6 +1,6 @@
 --import cte
 with edw_rpt_regional_sellout_offtake as (
-    select * from {{ source('aspedw_integration', 'edw_rpt_regional_sellout_offtake') }}
+    select * from {{ ref('aspedw_integration__edw_rpt_regional_sellout_offtake') }}
 ),
 edw_vw_cal_retail_excellence_dim as (
     select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
@@ -96,7 +96,7 @@ FROM (SELECT COUNTRY_CODE,
              SAP_BANNER_DESCRIPTION,
              SAP_BANNER_FORMAT_KEY,
              SAP_BANNER_FORMAT_DESCRIPTION,
-             RETAIL_ENVIRONMENT,
+             RETAIL_ENV AS RETAIL_ENVIRONMENT,
              REGION,
              ZONE_OR_AREA,
              CUSTOMER_SEGMENT_KEY,

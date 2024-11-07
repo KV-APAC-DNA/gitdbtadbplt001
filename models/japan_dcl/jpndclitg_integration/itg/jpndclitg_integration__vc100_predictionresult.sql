@@ -14,7 +14,7 @@ with vc100_predictionresult as (
 transformed as (
 SELECT nvl(lpad(customer_id, 10, '0'), '0000000000') as customer_id,
     vc100propensity,
-    'Src_File_Dt' as source_file_date
+    source_file_date as source_file_date
 FROM vc100_predictionresult   
 ),
 final as (

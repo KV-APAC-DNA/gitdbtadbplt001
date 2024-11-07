@@ -31,25 +31,21 @@ on-run-end:
 
 vars:
   source_freshness_run_project_hooks: False
-# In this example config, we tell dbt to build all models in the example/ directory
-# as tables. These settings can be overridden in the individual model files
-# using the `{{ config(...) }}` macro.
-
+  pos_job_to_execute: hk_pos
+  sfmc_job_to_execute: th_sfmc_files
+  crm_job_to_execute: th_crm_files
+  cte_to_execute: sellin_integration_job
+  my_cte_to_execute: my_joint_monthly
+  ims_job_to_execute: kr_gt_sellout
+  invnt_job_to_execute: tw_ims_distributor_standard_stock
+  job_to_execute: j_kr_ecomm_offtake_product_master_load
 
 tests:
   DNA_CORE_ASP:
     philippines:
       +severity: warn
-      phlitg_integration:
-        sfmc:
-          +severity: error
     thailand:
       +severity: warn
-      thaitg_integration:
-        pop6: 
-          +severity: error
-        sfmc:
-          +severity: error
     malaysia:
       +severity: warn
     vietnam:
@@ -58,22 +54,20 @@ tests:
       +severity: warn
     singapore:
       +severity: warn
-      sgpitg_integration:
-        pop6: 
-          +severity: error
+    north_asia:
+      +severity: warn
     hcp:
       +severity: warn
     indonesia:
       +severity: warn
     japan:
       +severity: warn
-      jpnitg_integration:
-        pop6: 
-          +severity: error
-    japan_dcl:
-      +severity: warn    
     pacific:
       +severity: warn
+    asp_regional:
+      +severity: warn 
+# for hcposea test severity is configured at source yml file level
+
 
 models:
   dbt_artifacts:
@@ -83,18 +77,9 @@ models:
       +database: "{{ env_var('DBT_ENV_CORE_DB') }}" # optional, default is your target database
       +schema: CORE_INTEGRATION
   DNA_CORE_ASP:
-    access:
-      materialized: view
-      schema: CORE_ACCESS
-    integration:
-      materialized: table
-      schema: CORE_INTEGRATION
-      arsadpprd001_raw:
-        materialized: view
     asp_regional:
-      config:
-        +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      +enabled: true
+      +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
       aspedw_access:
         +materialized: view
         +schema: ASPEDW_ACCESS
@@ -137,12 +122,8 @@ models:
         +materialized: table
         +schema: ASPWKS_INTEGRATION
     singapore:
-      config:
-        +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
-      sgpedw_access:
-        +materialized: view
-        +schema: SGPEDW_ACCESS
+      +enabled: true
+      +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
       sgpedw_integration:
         +materialized: table
         +schema: SGPEDW_INTEGRATION
@@ -177,9 +158,8 @@ models:
         +materialized: table
         +schema: SGPWKS_INTEGRATION
     malaysia:
-      config:
-        +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      +enabled: true
+      +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
       mysitg_integration:
         +materialized: table
         +transient: false
@@ -231,9 +211,8 @@ models:
         +materialized: view
         +schema: MYSEDW_ACCESS
     vietnam:
-      config:
-        +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      +enabled: true
+      +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
       vnmitg_integration:
         +materialized: table
         +transient: false
@@ -282,9 +261,8 @@ models:
         +materialized: view
         +schema: VNMEDW_ACCESS
     thailand:
-      config:
-        +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      +enabled: true
+      +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
       thaitg_integration:
         +materialized: table
         +transient: false
@@ -342,9 +320,8 @@ models:
         +materialized: view
         +schema: THAEDW_ACCESS
     pacific:
-      config:
-        +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      +enabled: true
+      +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
       pcfedw_integration:
         +materialized: table
         +transient: false
@@ -390,9 +367,8 @@ models:
         +materialized: view
         +schema: PCFEDW_ACCESS
     philippines:
-      config:
-        +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      +enabled: true
+      +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
       phledw_integration:
         +materialized: table
         +transient: false
@@ -447,16 +423,12 @@ models:
         +materialized: view
         +schema: PHLEDW_ACCESS
     indonesia:
-      config:
-        +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      +enabled: true
+      +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
       idnedw_integration:
         +materialized: table
         +transient: false
         +schema: IDNEDW_INTEGRATION
-        common:
-          view:
-            +materialized: view
         ivy:
           view:
             +materialized: view
@@ -477,9 +449,8 @@ models:
         +materialized: view
         +schema: IDNEDW_ACCESS
     north_asia:
-      config:
-        +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      +enabled: true
+      +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
       ntaitg_integration:
         +materialized: table
         +transient: false
@@ -515,9 +486,6 @@ models:
         ecommerce:
           view:
             +materialized: view
-        forecast:
-          view:
-            +materialized: view
         ims:
           view:
             +materialized: view
@@ -530,22 +498,13 @@ models:
         perfect_store:
           view:
             +materialized: view
-        pop6:
-          view:
-            +materialized: view
         pos:
-          view:
-            +materialized: view
-        product:
           view:
             +materialized: view
         sales:
           view:
             +materialized: view
         salesrep:
-          view:
-            +materialized: view
-        sellout:
           view:
             +materialized: view
         sfmc:
@@ -561,9 +520,8 @@ models:
         +materialized: view
         +schema: NTAEDW_ACCESS
     india:
-      config:
-        +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Kolkata';"
+      +enabled: true
+      +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Kolkata';"
       indedw_integration:
         +materialized: table
         +transient: false
@@ -586,6 +544,9 @@ models:
         pos:
           view:
             +materialized: view
+        lidar:
+          view:
+            +materialized: view
       inditg_integration:
         +materialized: table
         +transient: false
@@ -597,9 +558,8 @@ models:
         +materialized: view
         +schema: INDEDW_ACCESS
     japan:
-      config:
-        +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Tokyo';"
+      +enabled: true
+      +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Tokyo';"
       jpnitg_integration:
         +materialized: table
         +transient: false
@@ -620,9 +580,8 @@ models:
         +schema: JPNEDW_ACCESS
 
     hcp:
-      config:
-        +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Kolkata';"
+      +enabled: true
+      +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Kolkata';"
       hcpedw_integration:
         +materialized: table
         +transient: false
@@ -642,16 +601,12 @@ models:
         +schema: HCPEDW_ACCESS
 
     hcposea:
-      config:
-        +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'UTC';"
+      +enabled: true
+      +sql_header: "ALTER SESSION SET TIMEZONE = 'UTC';"
       hcposeedw_integration:
         +materialized: table
         +transient: false
         +schema: HCPOSEEDW_INTEGRATION
-        call:
-          view:
-            +materialized: view
         cycle:
           view:
             +materialized: view
@@ -673,9 +628,8 @@ models:
         +schema: HCPOSEEDW_ACCESS
 
     japan_dcl:
-      config:
-        +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Tokyo';"
+      +enabled: true
+      +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Tokyo';"
       jpndcledw_integration:
         +materialized: table
         +transient: false
@@ -690,9 +644,8 @@ models:
         +materialized: view
         +schema: JPDCLEDW_ACCESS
     china:
-      config:
-        +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Shanghai';"
+      +enabled: true
+      +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Shanghai';"
       chnedw_integration:
         +materialized: table
         +transient: false
@@ -704,6 +657,3 @@ models:
       chnwks_integration:
         +materialized: table
         +schema: CHNWKS_INTEGRATION
-      chnedw_access:
-        +materialized: view
-        +schema: CHNEDW_ACCESS

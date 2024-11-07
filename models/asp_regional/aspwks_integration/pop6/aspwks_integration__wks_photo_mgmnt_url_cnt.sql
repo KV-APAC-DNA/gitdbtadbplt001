@@ -78,7 +78,23 @@ general_audits as (
             ORDER BY run_id DESC
         ) rn
     FROM itg_pop6_general_audits
-    WHERE UPPER(field_type) LIKE 'PHOTO%'
+    WHERE UPPER(field_type) LIKE 'PHOTO%' 
+        AND regexp_count(response, '[jpg]{3}') > 0
+
+    union all --Added RIR for IR response for TH
+    SELECT DISTINCT 'general_audit' || '_' || visit_id || '_' || audit_form_id || '_' || section_id || '_' || field_id AS PHOTO_KEY,
+        response,
+        regexp_count(response, '[jpg]{3}') url_cnt,
+        run_id,
+        ROW_NUMBER() OVER (
+            PARTITION BY visit_id,
+            audit_form_id,
+            section_id,
+            field_id
+            ORDER BY run_id DESC
+        ) rn
+    FROM itg_pop6_general_audits
+    WHERE UPPER(field_type) LIKE 'RIR%' 
         AND regexp_count(response, '[jpg]{3}') > 0
 ),
 promotions as (
@@ -95,18 +111,17 @@ promotions as (
 ),
 audits as (
     SELECT DISTINCT 'sku' || '_' || visit_id || '_' || audit_form_id || '_' || sku_id AS PHOTO_KEY,
-        response,
+    response,
         regexp_count(response, '[jpg]{3}') url_cnt,
         run_id,
         ROW_NUMBER() OVER (
             PARTITION BY visit_id,
             audit_form_id,
-            sku_id
-            ORDER BY run_id DESC
+            sku_id ORDER BY run_id DESC
         ) rn
-    FROM itg_pop6_sku_audits
+        FROM itg_pop6_sku_audits
     WHERE UPPER(field_type) LIKE 'PHOTO%'
-        AND regexp_count(response, '[jpg]{3}') > 0
+     AND regexp_count(response, '[jpg]{3}') > 0
 ),
 src as (
     select * from displays

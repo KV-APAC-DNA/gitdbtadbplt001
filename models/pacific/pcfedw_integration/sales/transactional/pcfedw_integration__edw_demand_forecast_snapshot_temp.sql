@@ -179,7 +179,7 @@ vdfaa as (
      SELECT
         PAC_SOURCE_TYPE,
         PAC_SUBSOURCE_TYPE,
-        convert_timezone('UTC', current_timestamp)::date as SNAP_SHOT_DT,
+        ((convert_timezone('UTC',current_timestamp)::TIMESTAMPNTZ) :: date) as SNAP_SHOT_DT,
         JJ_PERIOD,
         JJ_WEEK_NO,
         JJ_WK,
@@ -243,13 +243,13 @@ vdfaa as (
         PX_BASE_FRCST,
         PX_PROMO_FRCST
     FROM VW_DEMAND_FORECAST_ANALYSIS, 
-    (SELECT TO_NUMBER(TO_CHAR(DATEADD('month', -1, TO_DATE('202312'::STRING, 'YYYYMM')), 'YYYYMM')) 
+    (SELECT TO_NUMBER(TO_CHAR(DATEADD('month', -1, TO_DATE(T1.JJ_MNTH_ID::STRING, 'YYYYMM')), 'YYYYMM')) 
     AS PREV_JJ_PERIOD FROM EDW_TIME_DIM T1 WHERE CAL_DATE::date = left((convert_timezone('UTC', current_timestamp)::date+1),10)::date) PROJPRD
     WHERE PAC_SUBSOURCE_TYPE='SAPBW_ACTUAL'
 ),
 etdd as(
     SELECT
-        convert_timezone('UTC', current_timestamp)::date as SNAPSHOT_DATE,
+      ((convert_timezone('UTC',current_timestamp)::TIMESTAMPNTZ) :: date) as SNAPSHOT_DATE,
         ETD.JJ_WK AS SNAPSHOT_WEEK_NO,
         ETDW.ROW_NUMBER AS SNAPSHOT_MNTH_WEEK_NO,
         ETD.JJ_MNTH_SHRT AS SNAPSHOT_MNTH_SHRT,

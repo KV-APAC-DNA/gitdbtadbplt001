@@ -466,7 +466,7 @@ sellin_all as
                 AND copa.cust_num = cus_sales_extn.cust_num
             WHERE cmp.ctry_group = 'Taiwan'
                 and left(fisc_yr_per, 4) >= (DATE_PART(YEAR, convert_timezone('UTC', current_timestamp())) -2)
-                and copa.cust_num is not null
+                --and copa.cust_num is not null
                 and copa.acct_hier_shrt_desc = 'GTS'
                 and amt_obj_crncy > 0
             group by 1,

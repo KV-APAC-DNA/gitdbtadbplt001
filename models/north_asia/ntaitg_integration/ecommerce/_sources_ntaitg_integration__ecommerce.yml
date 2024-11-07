@@ -43,17 +43,17 @@ sources:
                 store_failures: true
                 schema: ntawks_integration
     - name: sdl_kr_ecom_naver_sellout_temp
-      tags: ["j_kr_tp_tracker_data_ingestion", "ingestion"]
+      tags: ["j_kr_ecommerce_sellout_ing", "ingestion"]
       tests:
           - test_null:
-              select_columns: ["transaction_date", "cust_nm", "ean_num", "year", "month", "week", "prod_desc", "sellout_qty", "sellout_amount"]
+              select_columns: ["transaction_date", "cust_nm", "ean", "year", "month", "week", "product_name", "sales_qty", "sales_amount"]
               not_null_columns: ["transaction_date"]
               name: TRATBL_sdl_kr_ecom_naver_sellout_temp__null_test
               config:
                 store_failures: true
                 schema: ntawks_integration
           - test_format:
-              select_columns: ["transaction_date", "cust_nm", "ean_num", "year", "month", "week", "prod_desc", "sellout_qty", "sellout_amount"]
+              select_columns: ["transaction_date", "cust_nm", "ean", "year", "month", "week", "product_name", "sales_qty", "sales_amount"]
               where_clause: "not regexp_like (transaction_date, '[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-9][0-9]') and not regexp_like (transaction_date, '[0-1][0-9]/[0-9][0-9]/[1-2][0-9][0-9][0-9]') and (transaction_date is not null and transaction_date != '')"              
               failure_reason: "'TRANSACTION DATE RECEIVED IS INVALID'"
               name: TRATBL_sdl_kr_ecom_naver_sellout_temp__format_test

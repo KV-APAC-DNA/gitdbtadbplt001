@@ -331,7 +331,7 @@ general as (
                         ) rn
                     from itg_pop6_executed_visits visit
                 ) visit
-            WHERE UPPER(general.field_type) LIKE 'PHOTO%'
+            WHERE  UPPER(general.field_type) LIKE 'PHOTO%'
                 AND visit.visit_id = general.visit_id
                 and general.rn = '1'
                 and visit.rn = '1'
@@ -345,6 +345,88 @@ general as (
         edw_vw_pop6_salesperson rep
     WHERE SPLIT_PART(filename, '_', 1) = 'general'
         AND visit_id || audit_form_id || section_id = SPLIT_PART(filename, '_', 3) || SPLIT_PART(filename, '_', 4) || SPLIT_PART(filename, '_', 5)
+        AND general.pop_code = store.pop_code(+)
+        AND general.username = rep.username(+)
+UNION ALL -- added for IR data 
+SELECT 'general' as data_type,
+        general.visit_id AS taskid,
+        photo.filename AS filename,
+        'http://itx-arm-conapdna-aspac-prod.s3.amazonaws.com/rex/cdl/img/' AS PATH,
+        NULL AS BRAND,
+        general.visit_date AS mrchr_visitdate,
+        store.pop_name AS customername,
+        store.sales_group_name AS salesgroup,
+        store.retail_environment_ps AS storetype,
+        store.channel AS dist_chnl,
+        store.country AS country,
+        general.audit_form AS salescyclename,
+        general.section AS salescampaignname,
+        general.field_code,
+        general.field_label,
+        rep.first_name AS salesperson_firstname,
+        rep.last_name AS salesperson_lastname,
+        general.popdb_id AS customerid,
+        general.pop_code AS remotekey,
+        NULL AS secondarytradecode,
+        NULL AS secondarytradename
+    FROM (
+            SELECT general.cntry_cd,
+                general.cntry_cd,
+                general.src_file_date,
+                general.visit_id,
+                general.audit_form_id,
+                general.audit_form,
+                general.section_id,
+                general.section,
+                general.subsection_id,
+                general.subsection,
+                general.field_id,
+                general.field_code,
+                general.field_label,
+                general.field_type,
+                general.dependent_on_field_id,
+                general.response,
+                visit.visit_date,
+                visit.check_in_datetime,
+                visit.check_out_datetime,
+                visit.popdb_id,
+                visit.pop_code,
+                visit.pop_name,
+                visit.username
+            FROM (
+                    select general.*,
+                        ROW_NUMBER() OVER (
+                            PARTITION BY visit_id,
+                            audit_form_id,
+                            section_id,
+                            field_id
+                            ORDER BY run_id DESC
+                        ) rn
+                    from itg_pop6_general_audits general
+                ) general,
+                (
+                    select visit.*,
+                        ROW_NUMBER() OVER (
+                            PARTITION BY visit_id,
+                            popdb_id
+                            ORDER BY run_id DESC
+                        ) rn
+                    from itg_pop6_executed_visits visit
+                ) visit
+            WHERE UPPER(general.field_type) LIKE 'RIR%'
+                AND visit.visit_id = general.visit_id
+                and general.rn = '1'
+                and visit.rn = '1'
+        ) general,
+        (
+            select distinct photo_key || '.png' as filename,
+                response
+            from itg_photo_mgmnt_url a
+        ) photo,
+        edw_vw_pop6_store store,
+        edw_vw_pop6_salesperson rep
+    WHERE SPLIT_PART(filename, '_', 1) = 'general'
+        AND visit_id || audit_form_id || section_id || field_id = SPLIT_PART(filename, '_', 3) || SPLIT_PART(filename, '_', 4) || SPLIT_PART(filename, '_', 5) || SPLIT_PART(filename, '_', 6) 
         AND general.pop_code = store.pop_code(+)
         AND general.username = rep.username(+)
 ),
