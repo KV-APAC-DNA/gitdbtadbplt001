@@ -26,7 +26,8 @@ final as
     v_rpt_order_details_with_history.brand_name, 
     v_rpt_order_details_with_history.variant_name, 
     v_rpt_order_details_with_history.product_category_name, 
-    v_rpt_order_details_with_history.mothersku_name, 
+    v_rpt_order_details_with_history.mothersku_name,
+    v_rpt_order_details_with_history.invoice_date, 
     v_rpt_order_details_with_history.invoice_no, 
     v_rpt_order_details_with_history.order_date, 
     v_rpt_order_details_with_history.order_no, 
@@ -38,6 +39,7 @@ final as
     v_rpt_order_details_with_history.invoice_tax_amount, 
     v_rpt_order_details_with_history.order_product_quantity, 
     v_rpt_order_details_with_history.order_product_nr_amount, 
+    v_rpt_order_details_with_history.product_code_invoiced,
     v_rpt_order_details_with_history.csrtrcode, 
     v_rpt_order_details_with_history.abi_ntid, 
     v_rpt_order_details_with_history.flm_ntid, 
@@ -47,7 +49,9 @@ final as
     v_rpt_order_details_with_history.retailer_category_name, 
     v_rpt_order_details_with_history.channel_name, 
     v_rpt_order_details_with_history.cfa, 
-    v_rpt_order_details_with_history.cfa_name 
+    v_rpt_order_details_with_history.cfa_name,
+    v_rpt_order_details_with_history.datasource,
+    v_rpt_order_details_with_history.desc_flag 
     FROM v_rpt_order_details_with_history 
     WHERE ((v_rpt_order_details_with_history.ord_dt_year):: double precision >= (date_part(year,convert_timezone('UTC',current_timestamp())::timestamp_ntz) - (1):: double precision))
 )

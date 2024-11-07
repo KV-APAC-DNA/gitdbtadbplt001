@@ -21,6 +21,7 @@ select
     variant_name as "variant_name",
     product_category_name as "product_category_name",
     mothersku_name as "mothersku_name",
+    invoice_date as "invoice_date"
     invoice_no as "invoice_no",
     order_date as "order_date",
     order_no as "order_no",
@@ -32,6 +33,7 @@ select
     invoice_tax_amount as "invoice_tax_amount",
     order_product_quantity as "order_product_quantity",
     order_product_nr_amount as "order_product_nr_amount",
+    product_code_invoiced as "product_code_invoiced",
     csrtrcode as "csrtrcode",
     abi_ntid as "abi_ntid",
     flm_ntid as "flm_ntid",
@@ -41,5 +43,7 @@ select
     retailer_category_name as "retailer_category_name",
     channel_name as "channel_name",
     cfa as "cfa",
-    cfa_name as "cfa_name"
+    cfa_name as "cfa_name",
+    datasource as "datasource",
+    desc_flag as "desc_flag"
 from source
