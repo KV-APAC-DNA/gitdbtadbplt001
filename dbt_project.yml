@@ -6,7 +6,7 @@ name: 'DNA_CORE_ASP'
 version: '1.0.0'
 config-version: 2
 flags:
-  state_modified_compare_more_unrendered_values: True
+  state_modified_compare_more_unrendered_values: False
 
 # This setting configures which "profile" dbt uses for this project.
 profile: 'default'
