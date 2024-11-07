@@ -20,6 +20,7 @@ final as
         uploadflag::varchar(10) as uploadflag,
         createddate::timestamp_ntz(9) as createddate,
         syncid::number(38,0) as syncid,
+        createddt::timestamp_ntz(9) as createddt,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm,
         file_name::varchar(255) as file_name
