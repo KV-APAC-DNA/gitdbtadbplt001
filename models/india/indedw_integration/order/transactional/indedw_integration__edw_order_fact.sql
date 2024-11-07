@@ -56,7 +56,7 @@ final as
     where si1.rn=1) SalesInvoiceOrders
     on OrderBooking.distcode=SalesInvoiceOrders.distcode
     and OrderBooking.orderno=SalesInvoiceOrders.orderno
-    and OrderBooking.orderdate=SalesInvoiceOrders.orderdate
+    and OrderBooking.orderdate=SalesInvoiceOrders.createddate
     left join 
     (Select * from
     (Select 
