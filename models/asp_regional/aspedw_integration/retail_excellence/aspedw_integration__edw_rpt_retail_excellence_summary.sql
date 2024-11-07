@@ -39,6 +39,12 @@ edw_cnpc_rpt_retail_excellence_summary as (
 edw_vn_rpt_retail_excellence_summary as (
     select * from {{ ref('aspedw_integration__edw_vn_rpt_retail_excellence_summary') }}
 ),
+edw_hk_rpt_retail_excellence_summary as (
+    select * from {{ ref('aspedw_integration__edw_hk_rpt_retail_excellence_summary') }}
+),
+edw_tw_rpt_retail_excellence_summary as (
+    select * from {{ ref('aspedw_integration__edw_tw_rpt_retail_excellence_summary') }}
+),
 
 edw_rpt_retail_excellence_summary as 
 (
@@ -53,6 +59,8 @@ SELECT * FROM edw_anz_rpt_retail_excellence_summary UNION
 SELECT * FROM edw_jp_rpt_retail_excellence_summary UNION
 SELECT * FROM edw_cnsc_rpt_retail_excellence_summary UNION  
 SELECT * FROM edw_cnpc_rpt_retail_excellence_summary UNION
-SELECT * FROM edw_vn_rpt_retail_excellence_summary
+SELECT * FROM edw_vn_rpt_retail_excellence_summary UNION
+SELECT * FROM edw_hk_rpt_retail_excellence_summary UNION
+SELECT * FROM edw_tw_rpt_retail_excellence_summary
 )
 select * from edw_rpt_retail_excellence_summary
