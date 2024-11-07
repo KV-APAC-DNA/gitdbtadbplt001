@@ -33,10 +33,14 @@ on-run-end:
 
 vars:
   source_freshness_run_project_hooks: False
-# In this example config, we tell dbt to build all models in the example/ directory
-# as tables. These settings can be overridden in the individual model files
-# using the `{{ config(...) }}` macro.
-
+  pos_job_to_execute: hk_pos
+  sfmc_job_to_execute: th_sfmc_files
+  crm_job_to_execute: th_crm_files
+  cte_to_execute: sellin_integration_job
+  my_cte_to_execute: my_joint_monthly
+  ims_job_to_execute: kr_gt_sellout
+  invnt_job_to_execute: tw_ims_distributor_standard_stock
+  job_to_execute: j_kr_ecomm_offtake_product_master_load
 
 tests:
   DNA_CORE_ASP:
