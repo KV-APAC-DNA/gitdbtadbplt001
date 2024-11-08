@@ -142,7 +142,7 @@ FINAL AS (
         CASE WHEN m.pmatn_flag = 'Y' THEN b.currency ELSE m.currency END::VARCHAR(20) AS currency,
         CASE WHEN m.pmatn_flag = 'Y' THEN b.unit ELSE m.unit END::VARCHAR(20) AS unit,
         CASE WHEN m.pmatn_flag = 'Y' THEN b.price_unit ELSE m.price_unit END::VARCHAR(50) AS price_unit,
-        CASE WHEN m.pmatn_flag = 'Y' THEN b.pmatn ELSE m.pmatn END AS pmatn,
+        -- CASE WHEN m.pmatn_flag = 'Y' THEN b.pmatn ELSE m.pmatn END AS pmatn,
         CURRENT_TIMESTAMP()::timestamp_ntz(9) AS crtd_dttm,
         CURRENT_TIMESTAMP()::timestamp_ntz(9) AS updt_dttm,
         m.pmatn_flag,
