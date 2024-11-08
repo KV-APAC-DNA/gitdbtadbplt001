@@ -86,7 +86,11 @@ wks_itg_pos_emart_evydy as (
 ),
 wks_kr_pos_emart_ecvan as (
       select * from {{ ref('ntawks_integration__wks_kr_pos_emart_ecvan') }}
+),
+itg_pos_amart_inventory_combined as (
+      select * from {{ ref('ntaitg_integration__itg_tw_pos_amart_inventory_combined') }}
 )
+
 {% if var('pos_job_to_execute') == 'tw_pos' %}
 ,
 final as 
@@ -197,6 +201,8 @@ final as
         select * from wks_itg_pos_rt_mart
         union all
         select * from wks_itg_pos_px_civila
+        union all
+        select * from itg_pos_amart_inventory_combined
     )a
 )
 select * from final
