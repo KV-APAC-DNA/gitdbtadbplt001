@@ -2,6 +2,7 @@ version: 2
 
 models:
   - name: aspedw_access__edw_acct_ciw_hier
+    description: This table contains mapping table For Customer Investment Waterfall.
     config:
       alias: edw_acct_ciw_hier
       tags: ["J_RG_Account_attr_CIW_Dim","transformation"]
