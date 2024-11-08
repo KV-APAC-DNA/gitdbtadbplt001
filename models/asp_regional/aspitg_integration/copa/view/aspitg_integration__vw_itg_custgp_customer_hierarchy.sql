@@ -56,6 +56,11 @@ dly_sls_cust_attrb_lkp as
 (
     select * from {{ ref('pcfedw_integration__dly_sls_cust_attrb_lkp') }}
 ),
+itg_customerpl_segmentation_dim as 
+(
+    select * from {{ ref('idnitg_integration__itg_customerpl_segmentation_dim') }}
+),
+
 
 final as
 (
@@ -299,5 +304,34 @@ final as
         from v_edw_customer_sales_dim where sls_org in (select distinct sls_org_code from dly_sls_cust_attrb_lkp))cust_sales 
                 LEFT JOIN dly_sls_cust_attrb_lkp cust_hier ON upper(cust_sales.sls_grp) = upper(cust_hier.sls_grp_code)  and upper(cust_hier.active_status_name) = 'YES'  and upper(cust_sales.sls_org) = upper(cust_hier.sls_org_code )
         where rn = 1 ) nz_cust
+    union all
+    select distinct 'Indonesia' as ctry_nm,
+            ltrim(id_cust.cust_num,'0') as cust_num,
+            id_cust.retail_env as loc_channel1,
+            id_cust."sub channel" as loc_channel2,
+                id_cust."go to model" as loc_channel3,
+                id_cust."parent customer" as loc_cust1,
+                id_cust.banner as loc_cust2,
+                id_cust."banner format" as loc_cust3,
+                cust_seg1 as customer_segmentation,
+                cust_seg1 as local_cust_segmentation,
+                cust_seg2 as local_cust_segmentation_2
+        from (SELECT ltrim(cust_sales.cust_num,'0') as cust_num,retail_env,"sub channel","go to model", "parent customer",banner,"banner format",
+            customer_segment_level1 as cust_seg1,
+            customer_segment_level2 as cust_seg2
+            from
+            (select sls_org,ltrim(cust_num,'0') as cust_num,
+                                    "parent customer",
+                                    banner,
+                                    "banner format",
+                                    channel,
+                                    "go to model",
+                                    "sub channel",
+                                    retail_env,
+                                    row_number() over( partition by sls_org,cust_num
+                                                                                                        order by prnt_cust_key desc) rn 
+            from v_edw_customer_sales_dim where sls_org in ('2000'))cust_sales 
+                    LEFT JOIN itg_customerpl_segmentation_dim cust_hier ON ltrim(cust_sales.cust_num,'0') = cust_hier.code 
+            where rn = 1)id_cust
 )
 select * from final
