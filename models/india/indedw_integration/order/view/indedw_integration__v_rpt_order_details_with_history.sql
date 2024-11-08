@@ -58,7 +58,7 @@ SELECT
     d.mothersku_name, 
 	oti.invoice_date,
     COALESCE(oti.invoice_no,oti.invoice_no_invoiced,sio.SalInvNo) AS invoice_no,
-    NVL(oti.order_date,sio.orderdate) AS orderdate,
+    NVL(oti.order_date,sio.orderdate) AS order_date,
     NVL(oti.order_no,sio.orderno) AS order_no,
     f.week AS ord_dt_week, 
     f.mth_mm AS ord_dt_month, 
