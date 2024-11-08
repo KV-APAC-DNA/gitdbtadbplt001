@@ -75,7 +75,7 @@ select null as bill_dt,
        null as sellin_val,
        null as gross_sellin_val,
 	   copa.ACCT_HIER_DESC::VARCHAR(200) as ciw_type ,
-	   sum(copa.amt_obj_crncy)::NUMBER(18,4)  as amount 
+	   sum(copa.amt_obj_crncy)::NUMBER(18,4)  as ciw_amount 
 
 from edw_copa_trans_fact_temp  copa,
      edw_distributor_dim edd,

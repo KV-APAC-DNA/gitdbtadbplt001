@@ -39,6 +39,9 @@ etd as (
 itg_query_parameters as (
     select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
 ),
+edw_rpt_id_sellin_analysis_ciw_type as (
+    select * from {{ ref('idnedw_integration__edw_rpt_id_sellin_analysis_ciw_type') }}
+),
 final as (
 select to_date(eadlf.bill_dt) as bill_dt,
        eadlf.bill_doc::varchar(100) as bill_doc,
@@ -75,7 +78,9 @@ select to_date(eadlf.bill_dt) as bill_dt,
        epd.status::VARCHAR(50) as prod_status,
        sum(eadlf.sellin_qty)::NUMBER(18,4) as sellin_qty,
        sum(eadlf.sellin_val)::NUMBER(18,4) as sellin_val,
-       sum(eadlf.gross_sellin_val)::NUMBER(18,4) as gross_sellin_val
+       sum(eadlf.gross_sellin_val)::NUMBER(18,4) as gross_sellin_val,
+       null as ciw_type,
+       null as ciw_amount
 from edw_id_sellin_fact_temp as eadlf,
      edw_distributor_dim as edd,
      edw_product_dim as epd,
@@ -123,5 +128,10 @@ group by eadlf.bill_dt,
          epd.variant3,
          epd.variant3 || ' ' || nvl(cast(epd.put_up as varchar),''),
          epd.status
+),
+final1 as (
+select * from final 
+union all
+select * from edw_rpt_id_sellin_analysis_ciw_type 
 )
-select * from final
+select * from final1
