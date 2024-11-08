@@ -4083,7 +4083,7 @@ insert16 as(
                 copa.acct_hier_shrt_desc = 'NTS'
                 AND exch_rate.to_crncy = 'USD'
                  )
-            THEN SUM(copa.amt_obj_crncy * exch_rate.ex_rt)
+            THEN copa.amt_obj_crncy * exch_rate.ex_rt
             ELSE 0
             END) AS totalnts_usd_value,
         SUM(CASE
