@@ -21,9 +21,17 @@ sources:
         tags: ["th_ecom_performance","ingestion"]
       - name: sdl_ecom_cpas 
         tags: ["th_ecom_performance","ingestion"]     
-      - name: sdl_ecom_ams
+      - name: sdl_ecom_ams_hb
         tags: ["th_ecom_performance","ingestion"]
-      - name: sdl_ecom_gmv_shopee
+      - name: sdl_ecom_ams_jb
+        tags: ["th_ecom_performance","ingestion"]
+      - name: sdl_ecom_ams_ltr
+        tags: ["th_ecom_performance","ingestion"]
+      - name: sdl_ecom_gmv_shopee_hb
+        tags: ["th_ecom_performance","ingestion"]
+      - name: sdl_ecom_gmv_shopee_jb
+        tags: ["th_ecom_performance","ingestion"]
+      - name: sdl_ecom_gmv_shopee_ltr
         tags: ["th_ecom_performance","ingestion"]
       - name: sdl_ecom_gmv_konvy
         tags: ["th_ecom_performance","ingestion"]
