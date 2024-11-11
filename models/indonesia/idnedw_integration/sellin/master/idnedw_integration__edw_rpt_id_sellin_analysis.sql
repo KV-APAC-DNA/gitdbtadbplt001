@@ -41,7 +41,7 @@ itg_query_parameters as (
 ),
 edw_rpt_id_sellin_analysis_ciw_type as (
     select * from {{ ref('idnedw_integration__edw_rpt_id_sellin_analysis_ciw_type') }}
-),
+), 
 final as (
 select to_date(eadlf.bill_dt) as bill_dt,
        eadlf.bill_doc::varchar(100) as bill_doc,
