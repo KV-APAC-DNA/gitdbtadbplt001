@@ -145,7 +145,7 @@ final as
 	custcode::varchar(20) as custcode,
     --Increase customer field length
 	--customer::varchar(100) as customer,
-    customer::varchar(500) as customer,
+    customer::varchar(1000) as customer,
 	address::varchar(100) as address,
 	district::varchar(100) as district,
 	province::varchar(50) as province,
