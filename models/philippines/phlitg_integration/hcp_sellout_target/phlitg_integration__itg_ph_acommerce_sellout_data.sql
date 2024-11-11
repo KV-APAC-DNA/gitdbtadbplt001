@@ -15,13 +15,14 @@ select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 transformed as 
 (
-    select 
+    select distinct 
    cal.mnth_id as jj_mnth_id,
    cal.cal_year as jj_year,
     prefix,
     month,
     month_no,
     order_id,
+    order_date,
     partner_order_id,
     territory_manager,
     item_sku,
@@ -36,7 +37,7 @@ transformed as
     gmv
     from hcp_acommerce_load hce
     inner join (select distinct mnth_long,mnth_no,mnth_id,cal_year,cal_date from edw_vw_os_time_dim  ) 
-    cal on (cal.cal_date=hce.order_date)
+    cal on (cal.cal_date=hce.order_date::date)
 ), 
 final as 
 (

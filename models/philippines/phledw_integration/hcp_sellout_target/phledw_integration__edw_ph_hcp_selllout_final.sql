@@ -74,14 +74,14 @@ select
     team_code,
     DISTRICT_CODE,
     null as sellout_target,
-     sum(gmv) as sellout,
+     gmv as sellout,
      null as CUSTOMER_COUNT_TARGET,
      cust_code as cust_code,
      cust_name  as cust_name ,
      cust_direct_manager_code as cust_direct_manager_code
     from 
     acommerce_sellout_actuals
-   group by all
+   
 
    union all 
 
