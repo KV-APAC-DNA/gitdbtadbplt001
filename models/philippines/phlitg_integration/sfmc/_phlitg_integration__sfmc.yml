@@ -30,3 +30,7 @@ models:
     config:
       alias: sdl_raw_ph_sfmc_bounce_data
       tags: ["ph_sfmc_files","ingestion"]
+  - name: phlitg_integration__sdl_raw_ph_sfmc_open_data
+    config:
+      alias: sdl_raw_ph_sfmc_open_data
+      tags: ["ph_sfmc_files","ingestion"]
