@@ -101,6 +101,7 @@
                 latest_chnl_grp2 varchar(200),
                 latest_distributor_group varchar(200),
                 latest_dstrbtr_grp_cd varchar(200),
+                usd_conversion_rate number(28,10),
                 ADDITIONAL_INFORMATION_1_CODE varchar(100),
                 ADDITIONAL_INFORMATION_1_NAME varchar(100),
                 ADDITIONAL_INFORMATION_2_CODE varchar(100),
