@@ -4,8 +4,8 @@ models:
   - name: aspedw_integration__edw_ecomm_plan
     config:
       alias: edw_ecomm_plan
-      tags: ["rg_mds_to_dna","transformation"] 
+      tags: ["rg_mds_to_dna","ingestion"] 
   - name: aspedw_integration__edw_profit_center_franchise_mapping
     config:
       alias: edw_profit_center_franchise_mapping
-      tags: ["rg_mds_to_dna","transformation"] 
+      tags: ["rg_mds_to_dna","ingestion"] 
