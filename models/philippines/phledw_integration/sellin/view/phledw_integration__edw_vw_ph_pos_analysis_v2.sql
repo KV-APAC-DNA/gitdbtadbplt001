@@ -42,6 +42,9 @@ itg_mds_ph_pos_pricelist as
 (
     select * from {{ ref('phlitg_integration__itg_mds_ph_pos_pricelist') }}
 ),
+edw_vw_ph_pos_sales_fact as (
+    select * from prod_dna_core.phledw_integration.edw_vw_ph_pos_sales_fact
+),
 final as
 (
 SELECT 
@@ -273,6 +276,25 @@ FROM (
                                                         itg_ph_pos_pg_sm_sales_fact.jj_vat_amt,
                                                         itg_ph_pos_pg_sm_sales_fact.jj_nts
                                                     FROM itg_ph_pos_pg_sm_sales_fact
+                                                    UNION ALL
+                                                    select 'PH'::character varying AS cntry_cd,
+                                                        'PHILIPPINES'::character varying AS cntry_nm,
+                                                        edw_vw_ph_pos_sales_fact.jj_mnth_id,
+                                                        edw_vw_ph_pos_sales_fact.cust_cd,
+                                                        edw_vw_ph_pos_sales_fact.item_cd,
+                                                        edw_vw_ph_pos_sales_fact.cust_brnch_cd,
+                                                        edw_vw_ph_pos_sales_fact.pos_qty,
+                                                        edw_vw_ph_pos_sales_fact.pos_gts,
+                                                        edw_vw_ph_pos_sales_fact.pos_item_prc,
+                                                        edw_vw_ph_pos_sales_fact.pos_tax,
+                                                        edw_vw_ph_pos_sales_fact.pos_nts,
+                                                        edw_vw_ph_pos_sales_fact.conv_factor,
+                                                        edw_vw_ph_pos_sales_fact.jj_qty_pc,
+                                                        edw_vw_ph_pos_sales_fact.jj_item_prc_per_pc,
+                                                        edw_vw_ph_pos_sales_fact.jj_gts,
+                                                        edw_vw_ph_pos_sales_fact.jj_vat_amt,
+                                                        edw_vw_ph_pos_sales_fact.jj_nts
+                                                    FROM edw_vw_ph_pos_sales_fact where cust_cd = 'MDC'
                                                 ) a
                                                 LEFT JOIN (
                                                     SELECT edw_vw_ph_pos_customer_dim.cntry_cd,

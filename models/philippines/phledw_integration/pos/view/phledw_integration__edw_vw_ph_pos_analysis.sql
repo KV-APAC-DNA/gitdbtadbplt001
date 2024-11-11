@@ -111,6 +111,7 @@ veposf as(
 			select *
 			from edw_vw_ph_pos_sales_fact
 			where cntry_cd = 'PH'
+            and cust_cd <> 'MDC'
 			) a,
 			(
 				select distinct "year",
