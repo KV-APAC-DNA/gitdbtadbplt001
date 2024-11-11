@@ -21,6 +21,7 @@ FROM
         {%- if not loop.last -%},
     {%- endif -%}
         {% endfor %}
+            ,FILE_NAME
 FROM (SELECT *
       FROM ( SELECT DISTINCT MNTH_ID,
                    ITEM_CD AS CUST_ITEM_CD,
@@ -37,7 +38,7 @@ FROM (SELECT *
                    ARTICLE_NUMBER AS POS_PROD_CD,
                    SITE_CODE AS STORE_CD,
                    RECEIVED_QTY AS QTY,
-                   FILE_NAME AS FILE_NM
+                   FILE_NAME
                   FROM {{model}}
                   ) SSM
       WHERE UPPER(TRIM(IPPPD.CUST_ITEM_CD (+))) = UPPER(TRIM(SSM.POS_PROD_CD))
