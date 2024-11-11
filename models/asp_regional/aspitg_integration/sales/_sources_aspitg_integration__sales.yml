@@ -35,12 +35,13 @@ sources:
               schema: aspwks_integration
 
 
-  - name: aspwks_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: aspwks_integration
+  - name: core_access
+    database: "{{ env_var('DBT_ENV_CBI_DB') }}"
+    schema: core_access
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-      - name: wks_market_mirror_fact
+      - name: v_l0_market_pulse_sku_complete_secure
+      - name: v_l1_market_pulse_sku_nts_vs_share_l2_value_units_onestream_live_secure
