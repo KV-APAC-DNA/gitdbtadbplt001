@@ -1,6 +1,9 @@
 {% test test_lookup_sm_goods(model,model_nm,model_nm_2,select_columns=None,filter=None)%}
 
-SELECT 'Product mapping CHECK' AS "error value",
+SELECT 
+
+file_name,
+'Product mapping CHECK' AS "error value",
 
        'Validation Column' as "validation column",
 
