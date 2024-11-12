@@ -29,5 +29,5 @@ models:
           failure_reason: "'missing product information data compared with master file: item_cd'"
           name: TRATBL_sdl_ph_pos_rosepharma_product__lookup_test
           config:
-            store_failures: true
+            store_failures: false
             schema: phlwks_integration                              
