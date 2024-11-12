@@ -4149,11 +4149,11 @@ insert16 as(
         LTRIM(copa.matl_num::TEXT,'0'::CHARACTER VARYING::TEXT)::CHARACTER VARYING ,	   
         mat.pka_product_key,
         mat.pka_product_key_description, 
-        CASE cmp.ctry_group
-            WHEN 'India' THEN 'INR'
-            WHEN 'Philippines' THEN 'PHP'
-            WHEN 'China Selfcare' THEN 'RMB'
-            WHEN 'China Personal Care' THEN 'RMB'
+        CASE 
+            WHEN cmp.ctry_group = 'India' THEN 'INR'
+            WHEN cmp.ctry_group = 'Philippines' THEN 'PHP'
+            WHEN cmp.ctry_group = 'China Selfcare' THEN 'RMB'
+            WHEN cmp.ctry_group = 'China Personal Care' THEN 'RMB'
         ELSE exch_rate.from_crncy
         END, 
         --exch_rate.from_crncy,
