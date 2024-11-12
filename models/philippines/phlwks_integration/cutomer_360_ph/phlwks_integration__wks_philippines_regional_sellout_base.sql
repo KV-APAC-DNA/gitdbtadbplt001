@@ -166,10 +166,11 @@ final as
         sls.mncplty_nm AS DSTRBTR_LVL3,
         jj_qty_pc as SO_SLS_QTY, 
         --COALESCE(pos_gts, jj_gts) as SO_SLS_VALUE,
-        case 
+        /*case 
             when sls.cust_cd = 'MDC' then COALESCE(pos_gts, jj_gts)
             else pos_gts
-        end as SO_SLS_VALUE,
+        end as SO_SLS_VALUE,*/
+        pos_gts as SO_SLS_VALUE,
         jj_item_prc_per_pc as SO_LIST_PRICE,
         jj_gts as SO_SELLOUT_VALUE_LIST_PRICE,
         --sku as msl_product_code,
@@ -212,7 +213,7 @@ final as
         jj_qty_pc as SO_SLS_QTY, 
         --COALESCE(pos_gts, jj_gts) as SO_SLS_VALUE,
         case 
-            when cust_cd in ('SM', 'PG') then COALESCE(pos_gts, jj_gts)
+            when cust_cd in ('SM', 'PG', 'MDC') then COALESCE(pos_gts, jj_gts)
             else pos_gts
         end as SO_SLS_VALUE,
         jj_item_prc_per_pc as SO_LIST_PRICE,
