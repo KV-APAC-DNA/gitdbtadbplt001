@@ -53,3 +53,10 @@ models:
     config:
       alias: itg_distributor_ivy_outlet_master
       tags: ["id_ivy","ingestion"]
+  - name: idnitg_integration__sdl_raw_distributor_ivy_inventory
+    config:
+      alias: sdl_raw_distributor_ivy_inventory
+      tags: ["id_ivy","ingestion"]
+
+
+      
