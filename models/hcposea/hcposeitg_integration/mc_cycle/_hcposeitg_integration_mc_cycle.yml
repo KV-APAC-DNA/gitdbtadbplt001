@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: hcposeitg_integration__itg_mc_cycle
+    config:
+      alias: itg_mc_cycle
+      tags: ["iconnect_data_ingestion","ingestion"]
+
+  - name: hcposeitg_integration__itg_mc_cycle_channel
+    config: 
+      alias: itg_mc_cycle_channel
+      tags: ["iconnect_data_ingestion","ingestion"]
+
+  - name: hcposeitg_integration__itg_mc_cycle_plan
+    config:
+      alias: itg_mc_cycle_plan
+      tags: ["iconnect_data_ingestion","ingestion"]
+
+  - name: hcposeitg_integration__itg_mc_cycle_plan_channel
+    config: 
+      alias: itg_mc_cycle_plan_channel
+      tags: ["iconnect_data_ingestion","ingestion"] 
+
+  - name: hcposeitg_integration__itg_mc_cycle_plan_product
+    config:
+      alias: itg_mc_cycle_plan_product
+      tags: ["iconnect_data_ingestion","ingestion"]
+
+  - name: hcposeitg_integration__itg_mc_cycle_plan_summary
+    config: 
+      alias: itg_mc_cycle_plan_summary
+      tags: ["iconnect_data_ingestion","ingestion"] 
+      
+  - name: hcposeitg_integration__itg_mc_cycle_plan_target
+    config:
+      alias: itg_mc_cycle_plan_target
+      tags: ["iconnect_data_ingestion","ingestion"]
+
+  - name: hcposeitg_integration__itg_mc_cycle_product
+    config: 
+      alias: itg_mc_cycle_product
+      tags: ["iconnect_data_ingestion","ingestion"]                  
+      
+
+  
