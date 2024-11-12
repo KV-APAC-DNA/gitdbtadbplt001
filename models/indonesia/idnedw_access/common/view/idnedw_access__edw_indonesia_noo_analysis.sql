@@ -91,5 +91,12 @@ select
 	latest_count_local_variant as "latest_count_local_variant",
 	latest_chnl_grp2 as "latest_chnl_grp2",
 	latest_distributor_group as "latest_distributor_group",
-	latest_dstrbtr_grp_cd as "latest_dstrbtr_grp_cd"
+	latest_dstrbtr_grp_cd as "latest_dstrbtr_grp_cd",
+	usd_conversion_rate as "usd_conversion_rate",
+    ADDITIONAL_INFORMATION_1 as "additional_information_1",
+    ADDITIONAL_INFORMATION_2 as "additional_information_2",
+    ADDITIONAL_INFORMATION_3 as "additional_information_3",
+    ADDITIONAL_INFORMATION_4 as "additional_information_4",
+    ADDITIONAL_INFORMATION_5 as "additional_information_5"
+    
 from source
