@@ -24,8 +24,8 @@ models:
       - test_lookup:
               select_columns: ["jj_month_id","sku","jj_year"]
               column: "sku,jj_month_id"
-              lookup_column: "item_cd , mnth_id"
-              #lookup_table: "{{ ref('phlitg_integration__itg_ph_pos_rka_mds_product_mapping') }}"     
+              lookup_column: "item_cd,mnth_id"
+              lookup_table: "{{ ref('phlitg_integration__itg_ph_pos_rka_mds_product_mapping') }}"     
               failure_reason: "'missing product information data compared with master file: item_cd'"
               name: TRATBL_sdl_ph_pos_rosepharma_product__lookup_test
               config:
