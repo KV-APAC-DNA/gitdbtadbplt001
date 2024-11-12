@@ -2,7 +2,7 @@
     config(
         materialized='incremental',
         incremental_strategy='append',
-        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";",
         post_hook="delete from 
                     {% if target.name=='prod' %}
                         pcfedw_integration.edw_demand_forecast_snapshot
