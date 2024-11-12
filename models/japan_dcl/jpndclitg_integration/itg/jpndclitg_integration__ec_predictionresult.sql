@@ -3,9 +3,12 @@
     (
         materialized="incremental",
         incremental_strategy= "append",
+        unique_key= ['customer_id'],
         pre_hook ="UPDATE {{ ref('jpndclitg_integration__ec_predictionresult_1') }}
                 SET customer_id = substring(customer_id, 1, length(customer_id) - 2)
-                WHERE customer_id LIKE '%99'"     
+                WHERE customer_id LIKE '%99';
+                UPDATE {{ ref('jpndclitg_integration__ec_predictionresult_1') }}
+                SET customer_id =  {{encryption_1('customer_id')}}; "  
                     )
                 }}
 
@@ -16,7 +19,7 @@ transformed as (
 SELECT
     customer_id,
     ECPropensity,
-    'Src_File_Dt' as source_file_date
+    source_file_date as source_file_date
 FROM ec_predictionresult 
 ),
 final as (

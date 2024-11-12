@@ -79,7 +79,7 @@ SELECT
 FROM sdl_csl_productwisestock prod,
   edw_customer_dim cust
 WHERE prod.distcode = cust.customer_code
-  AND to_date(createddate) = (
+  AND to_date(createddate) in (                              --------------- = changed to IN 
     SELECT DISTINCT (to_date(createddate)) as createddate
     FROM sdl_csl_productwisestock
     WHERE to_date(createddate) > (

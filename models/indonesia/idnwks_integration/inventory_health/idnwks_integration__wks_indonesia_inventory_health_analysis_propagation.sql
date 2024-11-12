@@ -236,16 +236,26 @@ from (
                         SELECT *
                         FROM wks_Indonesia_siso_propagate_final
                     ) AS A
+                    --bug fix
                     LEFT JOIN (
+                            (SELECT JJ_MNTH_ID,
+                            DSTRBTR_GRP_CD,
+                            JJ_SAP_CD_MP_PROD_ID,
+                            JJ_SAP_CD_MP_PROD_DESC
+                        FROM (
                         SELECT DISTINCT JJ_MNTH_ID,
                             DSTRBTR_GRP_CD,
                             JJ_SAP_CD_MP_PROD_ID,
                             JJ_SAP_CD_MP_PROD_DESC,
-                            DSTRBTR_GRP_NM
+                            row_number() over (partition by jj_mnth_id,DSTRBTR_GRP_CD,JJ_SAP_CD_MP_PROD_ID  order by  JJ_SAP_CD_MP_PROD_DESC ) rn
+                            --DSTRBTR_GRP_NM
                         FROM EDW_INDONESIA_LPPB_ANALYSIS
                         WHERE JJ_SAP_CD_MP_PROD_ID != '33514660'
-                    ) details ON A.month = details.jj_mnth_id 
-                    AND A.sap_parent_customer_key = details.DSTRBTR_GRP_CD 
+                            )
+                        WHERE rn = 1
+                        )) details
+                    ON A.month = details.jj_mnth_id
+                    AND A.sap_parent_customer_key = details.DSTRBTR_GRP_CD  
                     AND A.matl_num = details.JJ_SAP_CD_MP_PROD_ID 
                     LEFT JOIN (
                         SELECT DISTINCT "year" as year,
@@ -483,7 +493,7 @@ from (
                                         AND copa.cust_num = cus_sales_extn.cust_num
                                     WHERE cmp.ctry_group = 'Indonesia'
                                         and left(fisc_yr_per, 4) >= (DATE_PART(YEAR, current_timestamp()) -2)
-                                        and copa.cust_num is not null
+                                        --and copa.cust_num is not null
                                         and copa.acct_hier_shrt_desc = 'GTS'
                                         and amt_obj_crncy > 0
                                     group by 1,

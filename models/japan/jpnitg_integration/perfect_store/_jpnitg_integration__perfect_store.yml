@@ -5,3 +5,7 @@ models:
     config:
       alias: itg_mds_jp_ps_weights
       tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]
+  - name: jpnitg_integration__itg_mds_jp_ps_targets
+    config:
+      alias: itg_mds_jp_ps_targets
+      tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]

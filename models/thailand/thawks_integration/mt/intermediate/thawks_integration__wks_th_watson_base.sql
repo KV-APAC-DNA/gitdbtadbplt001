@@ -11,7 +11,7 @@ edw_list_price as(
   select * from {{ ref('aspedw_integration__edw_list_price') }}
 ),
 wks_th_watsons as(
-    select * from {{ source('thasdl_raw', 'sdl_th_mt_watsons') }}
+    select * from {{ ref('thawks_integration__wks_th_watsons') }}
 ),
 edw_billing_fact as(
   select * from {{ ref('aspedw_integration__edw_billing_fact') }}

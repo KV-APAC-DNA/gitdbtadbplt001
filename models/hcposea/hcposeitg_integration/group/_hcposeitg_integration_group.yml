@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: hcposeitg_integration__itg_group
+    config:
+      alias: itg_group
+      tags: ["iconnect_data_ingestion","ingestion"]
+
+  - name: hcposeitg_integration__itg_group_member
+    config: 
+      alias: itg_group_member
+      tags: ["iconnect_data_ingestion","ingestion"]

@@ -3,14 +3,14 @@
         materialized='incremental',
         incremental_strategy='append',
         pre_hook="{% if is_incremental() %}
-        delete from {{this}} where (SELECT COUNT(*) FROM {{ source('aspwks_integration', 'wks_market_mirror_fact') }}) != 0;
+        delete from {{this}} where (SELECT COUNT(*) FROM {{ source('core_access', 'v_l0_market_pulse_sku_complete_secure') }} where ggh_region='APAC') != 0;
         {% endif %}"
     )
 }}
 
 with source as 
 (
-    select * from {{ source('aspwks_integration', 'wks_market_mirror_fact') }}
+    select * from {{ source('core_access', 'v_l0_market_pulse_sku_complete_secure') }} where ggh_region='APAC'
 ),
 final as
 (

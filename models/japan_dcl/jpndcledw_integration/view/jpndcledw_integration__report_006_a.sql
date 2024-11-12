@@ -330,7 +330,7 @@ AS (
     UNION ALL
     
     SELECT *
-    FROM ct6
+    FROM ct7
     
     UNION ALL
     

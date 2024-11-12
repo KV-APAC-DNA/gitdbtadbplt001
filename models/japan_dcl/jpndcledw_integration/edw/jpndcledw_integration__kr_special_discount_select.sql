@@ -25,7 +25,7 @@ with
             end as patternid
         from kr_special_discount_work wrk
         inner join
-            kr_special_discount_file sdf on trim(wrk.dsitemid) = trim(sdf.dsitemid)
+            kr_special_discount_file sdf on wrk.dsitemid = sdf.dsitemid
     )
 ,
 final
@@ -52,6 +52,4 @@ diusrid::varchar(40) as diusrid,
 from transformed
 )
 
-select * from final 
-
-    
+select * from final

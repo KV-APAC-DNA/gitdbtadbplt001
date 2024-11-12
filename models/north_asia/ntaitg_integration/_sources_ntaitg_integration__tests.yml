@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: ntawks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: ntawks_integration
+    schema: "{{ target.schema if target.name in ('dev','default') else 'ntawks_integration' }}"
     quoting:
       database: false
       schema: false
@@ -393,6 +393,9 @@ sources:
       - name: TRATBL_sdl_tw_strategic_cust_hier__null_test
       - name: TRATBL_sdl_th_mt_tops__null_test
       - name: TRATBL_sdl_th_mt_tops__duplicate_test
+      - name: TRATBL_sdl_kr_daiso_gt_sellout__null_test
+      - name: TRATBL_sdl_kr_daiso_gt_sellout__lookup_test
+      - name: TRATBL_sdl_kr_daiso_gt_sellout__lookup_test2
  
 
  

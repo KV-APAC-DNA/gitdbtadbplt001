@@ -4,15 +4,15 @@
         materialized="incremental",
         incremental_strategy="append",
         pre_hook =  "{% if is_incremental() %}
-                        delete from {{this}} where account_name = 'Amazon' and Transaction_Date = (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_amazon') }}) ;
+                        delete from {{this}} where account_name = 'Amazon' and Transaction_Date in (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_amazon') }}) ;
                     
-                        delete from {{this}} where account_name = 'Bigbasket' and Transaction_Date = (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_bigbasket') }}) ;
+                        delete from {{this}} where account_name = 'Bigbasket' and Transaction_Date in (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_bigbasket') }}) ;
 
-                        delete from {{this}} where account_name = 'FirstCry' and Transaction_Date = (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_firstcry') }}) ;
+                        delete from {{this}} where account_name = 'FirstCry' and Transaction_Date in (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_firstcry') }}) ;
 
-                        delete from {{this}} where account_name = 'Grofers' and Transaction_Date = (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_grofers') }}) ;
+                        delete from {{this}} where account_name = 'Grofers' and Transaction_Date in (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_grofers') }}) ;
 
-                        delete from {{this}} where account_name = 'Nykaa' and Transaction_Date = (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_nykaa') }}) ;
+                        delete from {{this}} where account_name = 'Nykaa' and Transaction_Date in (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_nykaa') }}) ;
 
                         delete from {{this}} where account_name = 'Paytm' and Transaction_Date in (select date from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_paytm') }}) ;
                     
@@ -94,7 +94,7 @@ amazon as
     mapping.lakshya_sku_name as generic_product_code
     from itg_ecommerce_offtake_amazon itg_amazon left join itg_ecommerce_offtake_master_mapping mapping 
     on itg_amazon.rpc = mapping.account_sku_code 
-    where itg_amazon.month = (select max(month) from sdl_ecommerce_offtake_amazon)
+    where itg_amazon.month in (select distinct month from sdl_ecommerce_offtake_amazon)
 ),
 bigbasket as
 (
@@ -113,7 +113,7 @@ bigbasket as
     mapping.lakshya_sku_name as generic_product_code 
     from itg_ecommerce_offtake_bigbasket itg_bigbasket left join itg_ecommerce_offtake_master_mapping mapping 
     on itg_bigbasket.product_id = mapping.account_sku_code 
-    where itg_bigbasket.source_file_name = (select distinct source_file_name from sdl_ecommerce_offtake_bigbasket)
+    where itg_bigbasket.source_file_name in (select distinct source_file_name from sdl_ecommerce_offtake_bigbasket)
 ),
 firstcry as
 (
@@ -132,7 +132,7 @@ firstcry as
     mapping.lakshya_sku_name as generic_product_code
     from itg_ecommerce_offtake_firstcry itg_firstcry left join itg_ecommerce_offtake_master_mapping mapping 
     on itg_firstcry.product_id = mapping.account_sku_code 
-    where itg_firstcry.source_file_name = (select distinct source_file_name from sdl_ecommerce_offtake_firstcry)
+    where itg_firstcry.source_file_name in (select distinct source_file_name from sdl_ecommerce_offtake_firstcry)
 ),
 grofers as
 (
@@ -151,7 +151,7 @@ grofers as
     mapping.lakshya_sku_name as generic_product_code
     from itg_ecommerce_offtake_grofers itg_grofers left join itg_ecommerce_offtake_master_mapping mapping 
     on coalesce(itg_grofers.product_id,'') = coalesce(mapping.account_sku_code,'') 
-    where coalesce(l_cat,'') not like '%Total%' and coalesce(l1_cat,'') not like '%Total%' and itg_grofers.source_file_name = (select distinct source_file_name from sdl_ecommerce_offtake_grofers) 
+    where coalesce(l_cat,'') not like '%Total%' and coalesce(l1_cat,'') not like '%Total%' and itg_grofers.source_file_name in (select distinct source_file_name from sdl_ecommerce_offtake_grofers) 
 ),
 nykaa as
 (
@@ -170,7 +170,7 @@ nykaa as
     mapping.lakshya_sku_name as generic_product_code
     from itg_ecommerce_offtake_nykaa itg_nykaa left join itg_ecommerce_offtake_master_mapping mapping 
     on itg_nykaa.sku_code = mapping.account_sku_code 
-    where itg_nykaa.load_date = (select max(load_date) from sdl_ecommerce_offtake_nykaa)
+    where itg_nykaa.load_date in (select distinct load_date from sdl_ecommerce_offtake_nykaa)
 ),
 paytm as
 (
@@ -189,7 +189,7 @@ paytm as
     mapping.lakshya_sku_name as generic_product_code
     from itg_ecommerce_offtake_paytm itg_paytm left join itg_ecommerce_offtake_master_mapping mapping 
     on itg_paytm.product_id = mapping.account_sku_code 
-    where itg_paytm.load_date = (select max(load_date) from sdl_ecommerce_offtake_paytm) 
+    where itg_paytm.load_date in (select distinct load_date from sdl_ecommerce_offtake_paytm) 
 ),
 flipkart as
 (
