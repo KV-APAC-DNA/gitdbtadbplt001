@@ -138,6 +138,10 @@ cus_sales_extn as(
             cus_sales.retail_env
     from v_edw_customer_sales_dim cus_sales  
 ),
+---Added for ecomm oneview total NTS addition
+edw_company_reporting_dim as (
+ select * from {{ ref('aspedw_integration__edw_company_reporting_dim') }}
+),
 insert1 as(
     SELECT 'Act'::CHARACTER VARYING AS data_type,
         'COPA' as Datasource,
@@ -3983,46 +3987,25 @@ insert16 as(
         copa.fisc_yr_per,
         --filter_params."cluster",	
         CASE
-            WHEN (
-                    (
-                    LTRIM(cast(copa.cust_num AS TEXT), '0') IN ('134559', '134106', '134258', '134855')
-                    )    AND 
-                    LTRIM(cast(copa.acct_num AS TEXT), '0') <> '403185' AND 
-                    cast(mat.mega_brnd_desc AS TEXT) <> 'Vogue Int''l' AND 
-                    copa.fisc_yr = 2018
-                 ) 
-            THEN 'China' 
-            ELSE cmp."cluster" 
-        END AS "cluster",
-        CASE 
-          WHEN (
-                (
-                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134559' OR 
-                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134106' OR 
-                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134258' OR 
-                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134855'
-                ) AND 
-                LTRIM(cast(copa.acct_num AS TEXT), '0') <> '403185' AND 
-                cast(mat.mega_brnd_desc AS TEXT) <> 'Vogue Int''l' AND 
-                copa.fisc_yr = 2018
-                ) 
-                THEN 'China Selfcare' 
-                ELSE cmp.ctry_group 
+            WHEN LTRIM(CAST(copa.cust_num AS TEXT), '0') IN ('134559', '134106', '134258', '134855') 
+            AND LTRIM(CAST(copa.acct_num AS TEXT), '0') <> '403185'
+            AND CAST(mat.mega_brnd_desc AS TEXT) <> 'Vogue Int''l'
+            AND copa.fisc_yr = 2018 THEN 'China'
+            ELSE cmp.reporting_cluster
+        END AS cluster,
+        CASE
+            WHEN LTRIM(CAST(copa.cust_num AS TEXT), '0') IN ('134559', '134106', '134258', '134855') 
+            AND LTRIM(CAST(copa.acct_num AS TEXT), '0') <> '403185'
+            AND CAST(mat.mega_brnd_desc AS TEXT) <> 'Vogue Int''l'
+            AND copa.fisc_yr = 2018 THEN 'China Selfcare'
+        ELSE cmp.reporting_market
         END AS ctry_nm,
-        CASE 
-          WHEN (
-                (
-                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134559' OR 
-                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134106' OR 
-                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134258' OR 
-                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134855'
-                ) AND 
-                LTRIM(cast(copa.acct_num AS TEXT), '0') <> '403185' AND 
-                cast(mat.mega_brnd_desc AS TEXT) <> 'Vogue Int''l' AND 
-                copa.fisc_yr = 2018
-                ) 
-                THEN 'China Selfcare' 
-                ELSE cmp.ctry_group 
+        CASE
+            WHEN LTRIM(CAST(copa.cust_num AS TEXT), '0') IN ('134559', '134106', '134258', '134855') 
+            AND LTRIM(CAST(copa.acct_num AS TEXT), '0') <> '403185'
+            AND CAST(mat.mega_brnd_desc AS TEXT) <> 'Vogue Int''l'
+            AND copa.fisc_yr = 2018 THEN 'China Selfcare'
+        ELSE cmp.reporting_market
         END AS sub_country,   
         --filter_params.ctry_group AS sub_country,             
         cus_sales_extn.channel,
@@ -4063,12 +4046,11 @@ insert16 as(
         0 as lcy_value,
         0 AS salesweight,
         --exch_rate.from_crncy,
-        CASE cmp.ctry_group
-            WHEN 'India' THEN 'INR'
-            WHEN 'Philippines' THEN 'PHP'
-            WHEN 'China Selfcare' THEN 'RMB'
-            WHEN 'China Personal Care' THEN 'RMB'
-        ELSE exch_rate.from_crncy
+        CASE
+            WHEN cmp.ctry_group = 'India' THEN 'INR'
+            WHEN cmp.ctry_group = 'Philippines' THEN 'PHP'
+            WHEN cmp.ctry_group IN ('China Selfcare', 'China Personal Care') THEN 'RMB'
+            ELSE exch_rate.from_crncy
         END AS from_crncy,
         exch_rate.to_crncy,
         'na' AS acct_nm,
@@ -4078,29 +4060,25 @@ insert16 as(
         'na' AS csw_desc,
         'na' AS "Additional_Information",
         NULL as ppm_role,
-        SUM(CASE
-            WHEN (
-                copa.acct_hier_shrt_desc = 'NTS'
-                AND exch_rate.to_crncy = 'USD'
-                 )
-            THEN copa.amt_obj_crncy * exch_rate.ex_rt
+        CASE
+            WHEN copa.acct_hier_shrt_desc = 'NTS'
+            AND exch_rate.to_crncy = 'USD' THEN SUM(copa.amt_obj_crncy * exch_rate.ex_rt)
             ELSE 0
-            END) AS totalnts_usd_value,
-        SUM(CASE
-            WHEN copa.acct_hier_shrt_desc = 'NTS' AND exch_rate.to_crncy = 
-            CASE cmp.ctry_group
-              WHEN 'India' THEN 'INR'
-              WHEN 'Philippines' THEN 'PHP'
-              WHEN 'China Selfcare' THEN 'RMB'
-              WHEN 'China Personal Care' THEN 'RMB'
-              ELSE copa.obj_crncy_co_obj
-            END
-            THEN copa.amt_obj_crncy * exch_rate.ex_rt
-            ELSE 0::NUMERIC(18,0)
-        END) AS totalnts_lcy_value,
+        END AS totalnts_usd_value,
+        CASE
+            WHEN copa.acct_hier_shrt_desc = 'NTS'
+            AND exch_rate.to_crncy = CASE
+            WHEN cmp.ctry_group = 'India' THEN 'INR'
+            WHEN cmp.ctry_group = 'Philippines' THEN 'PHP'
+            WHEN cmp.ctry_group IN ('China Selfcare', 'China Personal Care') THEN 'RMB'
+            ELSE copa.obj_crncy_co_obj
+            END 
+            THEN SUM(copa.amt_obj_crncy * exch_rate.ex_rt)
+            ELSE 0
+         END AS totalnts_lcy_value
             
     FROM edw_copa_trans_fact copa
-    LEFT JOIN edw_company_dim cmp on copa.co_cd = cmp.co_cd
+    LEFT JOIN edw_company_reporting_dim cmp on copa.co_cd = cmp.co_cd
     LEFT JOIN edw_material_dim mat ON copa.matl_num::TEXT = mat.matl_num::TEXT
     LEFT JOIN edw_profit_center_franchise_mapping prod_map ON TRIM (copa.prft_ctr::TEXT,'0'::CHARACTER VARYING::TEXT) = TRIM (prod_map.profit_center::TEXT,'0'::CHARACTER VARYING::TEXT)
     LEFT JOIN cus_sales_extn 
@@ -4135,31 +4113,18 @@ insert16 as(
        -- filter_params.ctry_group ,
        -- filter_params.ctry_group ,    
         CASE
-            WHEN (
-                    (
-                    LTRIM(cast(copa.cust_num AS TEXT), '0') IN ('134559', '134106', '134258', '134855')
-                    )    AND 
-                    LTRIM(cast(copa.acct_num AS TEXT), '0') <> '403185' AND 
-                    cast(mat.mega_brnd_desc AS TEXT) <> 'Vogue Int''l' AND 
-                    copa.fisc_yr = 2018
-                 ) 
-            THEN 'China' 
-            ELSE cmp."cluster" 
+            WHEN LTRIM(CAST(copa.cust_num AS TEXT), '0') IN ('134559', '134106', '134258', '134855') 
+            AND LTRIM(CAST(copa.acct_num AS TEXT), '0') <> '403185'
+            AND CAST(mat.mega_brnd_desc AS TEXT) <> 'Vogue Int''l'
+            AND copa.fisc_yr = 2018 THEN 'China'
+            ELSE cmp.reporting_cluster
         END,
-        CASE 
-          WHEN (
-                (
-                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134559' OR 
-                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134106' OR 
-                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134258' OR 
-                    LTRIM(cast(copa.cust_num AS TEXT), '0') = '134855'
-                ) AND 
-                LTRIM(cast(copa.acct_num AS TEXT), '0') <> '403185' AND 
-                cast(mat.mega_brnd_desc AS TEXT) <> 'Vogue Int''l' AND 
-                copa.fisc_yr = 2018
-                ) 
-                THEN 'China Selfcare' 
-                ELSE cmp.ctry_group 
+        CASE
+            WHEN LTRIM(CAST(copa.cust_num AS TEXT), '0') IN ('134559', '134106', '134258', '134855') 
+            AND LTRIM(CAST(copa.acct_num AS TEXT), '0') <> '403185'
+            AND CAST(mat.mega_brnd_desc AS TEXT) <> 'Vogue Int''l'
+            AND copa.fisc_yr = 2018 THEN 'China Selfcare'
+        ELSE cmp.reporting_market
         END,
         cus_sales_extn.channel,
         cus_sales_extn."sub channel",
