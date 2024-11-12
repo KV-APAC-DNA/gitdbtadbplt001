@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: phledw_integration__edw_ph_pos_rka_analysis
+    config:
+      alias: edw_ph_pos_rka_analysis
+      tags: ["ph_pos_rka_analysis","transformation"]
+
+  - name: phlitg_integration__itg_ph_pos_rka_mds_customers
+    config:
+      alias: ph_pos_rka_mds_customers
+      tags: ["ph_pos_rka_analysis","transformation"]
+
+  - name: phlitg_integration__itg_ph_pos_rka_mds_product_mapping
+    config:
+      alias: ph_pos_rka_mds_product_mapping
+      tags: ["ph_pos_rka_analysis","transformation"]
+
+  - name: phlitg_integration__itg_ph_pos_rka_rose_pharma
+    config:
+      alias: ph_pos_rka_rose_pharma
+      tags: ["ph_pos_rka_analysis","transformation"]
+    tests:
+      - test_lookup:
+          select_columns: ["jj_month_id","sku","jj_year"]
+          column: "sku,jj_month_id"
+          lookup_column: "	ITEM_CD,mnth_id"
+          lookup_table: "{{ref('phlitg_integration__itg_ph_pos_rka_rose_pharma') }}"     
+          failure_reason: "'missing product information data compared with master file: item_cd'"
+          name: TRATBL_sdl_ph_pos_rosepharma_product__lookup_test
+          config:
+            store_failures: true
+            schema: phlwks_integration                              
