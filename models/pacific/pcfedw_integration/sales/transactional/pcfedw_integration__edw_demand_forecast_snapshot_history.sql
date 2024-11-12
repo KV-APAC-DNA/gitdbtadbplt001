@@ -2,13 +2,14 @@
     config(
         materialized='incremental',
         incremental_strategy='append',
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
         post_hook="delete from 
                     {% if target.name=='prod' %}
                         pcfedw_integration.edw_demand_forecast_snapshot
                     {% else %}
                         {{schema}}.pcfedw_integration__edw_demand_forecast_snapshot
                     {% endif %}
-                    where replace(left(snap_shot_dt,7),'-','') < replace(left(dateadd(month, -6, current_timestamp),7),'-','');
+                    where snap_shot_dt < dateadd(month, -6, DATE_TRUNC('month', current_timestamp))::date;
                     create or replace table 
                     {% if target.name=='prod' %}
                         pcfedw_integration.edw_demand_forecast_snapshot_temp
