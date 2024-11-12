@@ -1450,7 +1450,7 @@ union_10 as (
             'true' AS mustcarryitem,
             null as answerscore,
             'true' as presence,
-            case when oos.osa_flag = '0' then 'true' else 'false' end as outofstock,
+            case when oos.osa_flag = '0' then 'true' else '' end as outofstock,
             'OOS Compliance' AS kpi,
             oos.osa_check_date AS scheduleddate,
             'completed' AS vst_status,
