@@ -19,4 +19,15 @@ sources:
     tables:
     - name: mds_lkp_brand_hierarchy
     - name: mds_lkp_country_hierarchy
+
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: indsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_lidar_ff_other_paid_media
+    - name: sdl_lidar_ff_tv_spends
       
