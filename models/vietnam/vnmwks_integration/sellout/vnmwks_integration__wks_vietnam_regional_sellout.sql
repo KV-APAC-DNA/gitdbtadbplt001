@@ -182,8 +182,10 @@ from
 		sum(so_sls_qty) sellout_sales_quantity,
 		sum(so_sls_value) as sellout_sales_value,
 		sum(so_sls_value*((c.exch_rate/(c.from_ratio*c.to_ratio))::numeric(15,5)))::numeric(38,11) sellout_sales_value_usd,
-        CASE WHEN SELLOUT.DATA_SRC='POS' THEN TRIM(NVL (NULLIF(SELLOUT.msl_product_code,''),'NA'))
-         ELSE TRIM(NVL (NULLIF(PRODUCT.SAP_MATL_NUM,''),'NA')) END AS msl_product_code,
+        /*CASE WHEN SELLOUT.DATA_SRC='POS' THEN TRIM(NVL (NULLIF(SELLOUT.msl_product_code,''),'NA'))
+         ELSE TRIM(NVL (NULLIF(PRODUCT.SAP_MATL_NUM,''),'NA')) END AS msl_product_code,*/
+
+        TRIM(NVL (NULLIF(SELLOUT.msl_product_code,''),'NA')) AS msl_product_code,
         CASE WHEN (UPPER(PRODUCT.PKA_PACKAGE) IN ('MIX PACK', 'ASSORTED PACK') OR PRODUCT.PKA_PACKAGE IS NULL) THEN UPPER(TRIM(NVL (NULLIF(PRODUCT.SAP_MAT_DESC,''),'NA')))
         ELSE (CASE WHEN TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA'))
             WHEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productkey,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productdesc,''),'NA'))
@@ -479,7 +481,9 @@ soldto_code::varchar(300) as soldto_code,
 distributor_code::varchar(30) as distributor_code,
 distributor_name::varchar(750) as distributor_name,
 store_code::varchar(100) as store_code,
-store_name::varchar(100) as store_name,
+--Increase field length to 1000
+--store_name::varchar(100) as store_name,
+store_name::varchar(1000) as store_name,
 store_type::varchar(300) as store_type,
 distributor_additional_attribute1::varchar(2) as distributor_additional_attribute1,
 distributor_additional_attribute2::varchar(2) as distributor_additional_attribute2,

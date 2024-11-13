@@ -153,12 +153,11 @@ current_timestamp() AS updt_dttm
 FROM
 (
 --POS
-select * from pos
-	
-UNION ALL
-
-select * from sellout
-	  )BASE
+    select * from pos	
+    UNION ALL
+--SELL-OUT
+    select * from sellout
+)BASE
 WHERE NOT (nvl(BASE.so_sls_value, 0) = 0 and nvl(BASE.so_sls_qty, 0) = 0) AND BASE.day > (select to_date(param_value,'YYYY-MM-DD') from itg_mds_ap_customer360_config where code='min_date') 
 AND base.mnth_id>= (case when (select param_value from itg_mds_ap_customer360_config where code='base_load_tw')='ALL' then '190001' else to_char(add_months(to_date(current_date::varchar, 'YYYY-MM-DD'), -((select param_value from itg_mds_ap_customer360_config where code='base_load_tw')::integer)), 'YYYYMM')
 end)
