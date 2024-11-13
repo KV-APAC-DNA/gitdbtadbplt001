@@ -3,7 +3,7 @@ version: 2
 models:
   - name: phledw_integration__edw_vw_ph_pos_customer_dim
     config:
-      alias: 
+      alias: edw_vw_ph_pos_customer_dim
       tags: ["philippines_views","transformation"]
   - name: phledw_integration__edw_vw_ph_si_pos_analysis
     config:
