@@ -114,26 +114,45 @@ all_records AS (
 ),
 
 mvke_join AS (
-    SELECT A.*, B.*,CASE WHEN B.COND_REC_NO IS NULL AND B.AMOUNT IS NULL THEN 'Y' ELSE 'N' END AS pmatn_flag 
+    SELECT  A.*, 
+    B.SLS_ORG,
+        B.MATERIAL,
+        B.COND_REC_NO,
+        B.VALID_TO,
+        B.KNART,
+        B.DT_FROM,
+        B.AMOUNT,
+        B.CURRENCY,
+        B.UNIT,
+        B.PRICE_UNIT,
+    CASE 
+    WHEN B.COND_REC_NO IS NULL 
+    AND B.AMOUNT IS NULL 
+    AND A.PMATN IS NOT NULL 
+    AND A.PMATN <>'' 
+    THEN 'Y' 
+    ELSE 'N' 
+    END AS pmatn_flag 
     FROM (SELECT * FROM MATERIAL_JOIN) a
-    LEFT JOIN (
+     LEFT JOIN (
         SELECT * 
         FROM all_records 
         WHERE valid_to != '00000000' 
         OR dt_from != '00000000'
     ) b
         ON A.MATL_NUM = B.MATERIAL
-        AND A.VKORG = B.SLS_ORG
+       AND A.VKORG = B.SLS_ORG
     QUALIFY ROW_NUMBER() OVER (
-        PARTITION BY A.VKORG, A.MATL_NUM, B.COND_REC_NO 
+        PARTITION BY A.VKORG, A.MATL_NUM,B.VALID_TO, A.PMATN--, B.COND_REC_NO 
         ORDER BY A.VTWEG
     ) = 1
 ),
 
 FINAL AS (
-    SELECT m.MATL_NUM,M.PMATN,
+    SELECT m.MATL_NUM AS material,
+        M.PMATN,
         CASE WHEN m.pmatn_flag = 'Y' THEN b.sls_org ELSE m.sls_org END::VARCHAR(50) AS sls_org,
-        CASE WHEN m.pmatn_flag = 'Y' THEN b.material ELSE m.material END::VARCHAR(50) AS material,
+        -- CASE WHEN m.pmatn_flag = 'Y' THEN b.material ELSE m.material END::VARCHAR(50) AS material,
         CASE WHEN m.pmatn_flag = 'Y' THEN b.cond_rec_no ELSE m.cond_rec_no END::VARCHAR(100) AS cond_rec_no,
         CASE WHEN m.pmatn_flag = 'Y' THEN b.valid_to ELSE m.valid_to END::VARCHAR(20) AS valid_to,
         CASE WHEN m.pmatn_flag = 'Y' THEN b.knart ELSE m.knart END::VARCHAR(20) AS knart,
