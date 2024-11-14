@@ -785,8 +785,8 @@ left join temp_b
 temp_d as 
 (
     (SELECT distinct tiering,
-        sku_code
- FROM itg_mcs_gt where year = (select max(year) from itg_mcs_gt) and month = 'December' )
+        sku_name
+ FROM itg_mcs_gt where year = (select max(year) from itg_mcs_gt)  )
 ),
 updt4 as 
 (
@@ -894,7 +894,7 @@ c.ADDITIONAL_INFORMATION_5_NAME
     from updt3 as c
     left join temp_d
     on c.latest_cust_grp2 = temp_d.tiering 
-    and c.jj_sap_cd_mp_prod_id = temp_d.sku_code 
+    and c.latest_put_up = temp_d.sku_name 
 )
 ,
 
@@ -902,7 +902,7 @@ temp_e as
 (
     (SELECT  tiering,
         count(DISTINCT sku_name) as distinct_variant_count
- FROM itg_mcs_gt where year = (select max(year) from itg_mcs_gt) and month = 'December'  group by tiering )
+ FROM itg_mcs_gt where year = (select max(year) from itg_mcs_gt)  group by tiering )
 ),
 updt5 as 
 (
