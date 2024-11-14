@@ -37,5 +37,6 @@ select
     branch_stock_value AS "branch_stock_value",
     stock_uom AS "stock_uom",
     stock_days AS "stock_days",
-    crtd_dttm AS "crtd_dttm"
+    crtd_dttm AS "crtd_dttm",
+	usd_conversion_rate as "usd_conversion_rate"
 from source

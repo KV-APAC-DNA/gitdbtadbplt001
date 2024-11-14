@@ -32,7 +32,9 @@ final as(
         product_sub_group::varchar(100) as product_sub_group,
         unit_of_measurement::varchar(10) as unit_of_measurement,
         custcode::varchar(20) as custcode,
-        customer::varchar(100) as customer,
+        --customer::varchar(100) as customer,
+        --Increase customer length
+        customer::varchar(1000) as customer,
         address::varchar(100) as address,
         district::varchar(100) as district,
         province::varchar(50) as province,
