@@ -53,6 +53,12 @@ AS (
     SELECT *
     FROM {{ref('aspedw_integration__edw_code_descriptions')}}
     ),
+itg_query_parameters 
+AS(
+    SELECT *
+    FROM {{ source('ntaitg_integration','itg_query_parameters') }}
+),
+
 inv_max
 AS (
     SELECT dstr_cd,
@@ -384,30 +390,30 @@ AS (
         cal_mnth_id
     ),
 
-t6a
-AS (SELECT ctry_cd,
-    Data_Type,
-    sold_to_party AS dstr_cd,
-    ean_num,
-    cal_month,
-    0 as inv_qty,                                              
-    0 as inv_VALUE,                                           
-    cast(sum(sls_qty) AS NUMERIC(38, 4)) AS so_qty,
-    cast(SUM(sls_value) AS NUMERIC(38, 4)) AS sls_value,
-    0 AS sI_qty,                                              
-    0 AS sI_value                                            
-FROM (
-    SELECT 'TW' AS ctry_cd,
-        'OFFTAKE' AS Data_Type,
-        vend_cd,
-        sold_to_party,
+t6a AS (
+    SELECT ctry_cd,
+        Data_Type,
+        qp.sold_to_party AS dstr_cd,    -- Changed to use qp.sold_to_party
         ean_num,
-        TO_CHAR(pos_dt, 'yyyymm') cal_month,                              
-        sls_qty AS sls_qty,
-        (sls_qty * price.prom_prc) AS sls_value
-    FROM edw_pos_fact txn,
-        (
-            SELECT CASE 
+        cal_month,
+        0 as inv_qty,
+        0 as inv_VALUE,
+        cast(sum(sls_qty) AS NUMERIC(38, 4)) AS so_qty,
+        cast(SUM(sls_value) AS NUMERIC(38, 4)) AS sls_value,
+        0 AS sI_qty,
+        0 AS sI_value
+    FROM (
+        SELECT 'TW' AS ctry_cd,
+            'OFFTAKE' AS Data_Type,
+            vend_cd,
+            txn.src_sys_cd,             -- Added src_sys_cd for joining
+            ean_num,
+            TO_CHAR(pos_dt, 'yyyymm') cal_month,
+            sls_qty AS sls_qty,
+            (sls_qty * price.prom_prc) AS sls_value
+        FROM edw_pos_fact txn,
+            (
+                SELECT CASE 
                     WHEN cust = 'ibonMart' THEN 'ibonMart'
                     WHEN cust = 'EC' THEN 'EC'
                     WHEN cust = '7-11' THEN '7-11'
@@ -419,37 +425,44 @@ FROM (
                     WHEN cust = 'Watsons' THEN 'Watsons 屈臣氏'
                     WHEN cust = 'RT-Mart' THEN 'RT-Mart 大潤發'
                 END AS cust,
-            barcd,
-            cust_prod_cd,
-            prom_prc,
-            prom_strt_dt,
-            prom_end_dt
-        FROM itg_pos_prom_prc_map
+                barcd,
+                cust_prod_cd,
+                prom_prc,
+                prom_strt_dt,
+                prom_end_dt
+            FROM itg_pos_prom_prc_map
         ) price
-    WHERE ctry_cd = 'TW'
-        AND txn.sls_grp IN ('RT-Mart 大潤發', 'Poya 寶雅', 'Cosmed 康是美')
-        AND LEFT(pos_dt, 4) >= (DATE_PART(YEAR, SYSDATE()) - 6)
-        AND crncy_cd = 'TWD'
-        AND txn.pos_dt BETWEEN price.prom_strt_dt AND price.prom_end_dt
-        AND txn.ean_num = price.barcd(+)                      
-        AND txn.src_sys_cd = price.cust(+)                   
-        AND txn.vend_prod_cd = price.cust_prod_cd(+)
-    )
-GROUP BY ctry_cd,
-    Data_Type,
-    sold_to_party,
-    ean_num,
-    cal_month
-    ),
-
+        WHERE ctry_cd = 'TW'
+            AND LEFT(pos_dt, 4) >= (DATE_PART(YEAR, SYSDATE()) - 6)
+            AND crncy_cd = 'TWD'
+            AND txn.pos_dt BETWEEN price.prom_strt_dt AND price.prom_end_dt
+            AND txn.ean_num = price.barcd(+)
+            AND txn.src_sys_cd = price.cust(+)
+            AND txn.vend_prod_cd = price.cust_prod_cd(+)
+    ) a
+    LEFT JOIN (
+        SELECT DISTINCT 
+            country_code,
+            parameter_name as src_sys_cd,
+            parameter_value as sold_to_party
+        FROM itg_query_parameters
+        WHERE country_code = 'TW'
+            AND parameter_type = 'sold_to_party'
+    ) qp ON qp.src_sys_cd = a.src_sys_cd
+    GROUP BY ctry_cd,
+        Data_Type,
+        qp.sold_to_party,
+        ean_num,
+        cal_month
+),
 
 t6b AS (
     SELECT 'TW' AS ctry_cd,
         'INV' AS Data_Type,
-        INV.sold_to_party AS dstr_cd,
+        qp.sold_to_party AS dstr_cd,    -- Changed to use qp.sold_to_party
         INV.ean_num,
         INV.MNTH_ID AS cal_month,
-        SUM(inv.invnt_qty) as inv_qty,                   
+        SUM(inv.invnt_qty) as inv_qty,
         SUM(inv.invnt_qty * price.prom_prc) as inv_value,
         0 AS so_qty,
         0 AS sls_value,
@@ -458,7 +471,7 @@ t6b AS (
     FROM (
         SELECT
             m.mnth_id,
-            p.sold_to_party,
+            p.src_sys_cd,               -- Added src_sys_cd for joining
             m.sls_grp,
             p.ean_num,
             p.vend_prod_cd,
@@ -468,7 +481,7 @@ t6b AS (
         JOIN (
             SELECT
                 TO_CHAR(pos_dt, 'YYYYMM') AS mnth_id,
-                sold_to_party,
+                src_sys_cd,              -- Added src_sys_cd
                 sls_grp,
                 ean_num,
                 vend_prod_cd,
@@ -476,31 +489,40 @@ t6b AS (
             FROM edw_pos_fact
             GROUP BY 
                 TO_CHAR(pos_dt, 'YYYYMM'),
-                sold_to_party,
+                src_sys_cd,
                 ean_num,
                 vend_prod_cd,
                 sls_grp
         ) m ON TO_CHAR(p.pos_dt, 'YYYYMM') = m.mnth_id
             AND p.pos_dt = m.max_pos_dt
-            AND p.sold_to_party = m.sold_to_party
+            AND p.src_sys_cd = m.src_sys_cd
             AND p.ean_num = m.ean_num
             AND p.vend_prod_cd = m.vend_prod_cd
         WHERE m.sls_grp IN ('RT-Mart 大潤發', 'Poya 寶雅', 'Cosmed 康是美')
     ) inv
-    LEFT JOIN ITG_POS_PROM_PRC_MAP price ON     
+    LEFT JOIN ITG_POS_PROM_PRC_MAP price ON
         inv.inv_dt::DATE BETWEEN price.prom_strt_dt AND price.prom_end_dt
         AND inv.ean_num = price.barcd
         AND inv.vend_prod_cd = price.cust_prod_cd
+    LEFT JOIN (
+        SELECT DISTINCT 
+            country_code,
+            parameter_name as src_sys_cd,
+            parameter_value as sold_to_party
+        FROM itg_query_parameters
+        WHERE country_code = 'TW'
+            AND parameter_type = 'sold_to_party'
+    ) qp ON qp.src_sys_cd = inv.src_sys_cd
     GROUP BY 
         ctry_cd,
         Data_Type,
-        inv.sold_to_party,
+        qp.sold_to_party,
         inv.ean_num,
         inv.MNTH_ID
     ORDER BY 
         inv.ean_num,
         ctry_cd DESC
-),  
+),
 
 t_joined
 AS (
