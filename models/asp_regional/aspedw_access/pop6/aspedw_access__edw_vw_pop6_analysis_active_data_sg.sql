@@ -119,7 +119,8 @@ final as (
         planned_visit_date as "planned_visit_date",
         visited_flag as "visited_flag",
         facing as "facing",
-        is_eyelevel as "is_eyelevel"
+        is_eyelevel as "is_eyelevel",
+        sku_length as "sku_length"
     from source
     where cntry_cd='SG'
 )
