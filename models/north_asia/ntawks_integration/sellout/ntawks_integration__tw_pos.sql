@@ -207,7 +207,7 @@ tw_pos_1 as (
                 AND rtrim(x.barcode) = rtrim(e.barcd)
                 AND x.src_sys_cd = e.cust
                 And rtrim(x.vend_prod_cd) = rtrim(e.cust_prod_cd)
-            WHERE x.ctry_cd = 'TW' and src_sys_cd in ('Carrefour 家樂福','Cosmed 康是美','EC','Poya 寶雅' ,'RT-Mart 大潤發')
+            WHERE x.ctry_cd = 'TW' and src_sys_cd in ('Carrefour 家樂福','Cosmed 康是美','EC','Poya 寶雅')
         ) src
         LEFT JOIN (
             SELECT DISTINCT matl_num,
@@ -383,7 +383,7 @@ tw_pos_2 as (
                 AND x.src_sys_cd = e.cust
                 And rtrim(x.vend_prod_cd) = rtrim(e.cust_prod_cd)
             WHERE x.ctry_cd = 'TW'
-                and src_sys_cd in ('7-11', 'PX 全聯','ibonMart')
+                and src_sys_cd in ('7-11', 'PX 全聯', 'RT-Mart 大潤發','ibonMart')
         ) src
         LEFT JOIN (
             SELECT DISTINCT matl_num,
