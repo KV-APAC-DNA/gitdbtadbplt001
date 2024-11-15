@@ -35,7 +35,8 @@ final as
 		file_name::varchar(100) as file_name,
 		run_id::number(14,0) as run_id,
 		current_timestamp() as crtd_dttm,
-		current_timestamp() as updt_dttm
+		current_timestamp() as updt_dttm,
+        sku_length::number(18,0) as sku_length
     FROM source
 )
 select * from final
