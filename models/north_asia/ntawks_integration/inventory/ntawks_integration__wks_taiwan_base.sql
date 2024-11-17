@@ -391,136 +391,118 @@ AS (
     ),
 
 t6a AS (
-    SELECT ctry_cd,
-        Data_Type,
-        qp.sold_to_party AS dstr_cd,    -- Changed to use qp.sold_to_party
-        ean_num,
-        cal_month,
+    SELECT 
+        'TW' AS ctry_cd,
+        'OFFTAKE' AS Data_Type,
+        qp.sold_to_party AS dstr_cd,
+        txn.ean_num,
+        TO_CHAR(txn.pos_dt, 'yyyymm') AS cal_month,
         0 as inv_qty,
         0 as inv_VALUE,
-        cast(sum(sls_qty) AS NUMERIC(38, 4)) AS so_qty,
-        cast(SUM(sls_value) AS NUMERIC(38, 4)) AS sls_value,
+        cast(sum(txn.sls_qty) AS NUMERIC(38, 4)) AS so_qty,
+        cast(SUM(txn.sls_qty * price.prom_prc) AS NUMERIC(38, 4)) AS sls_value,
         0 AS sI_qty,
         0 AS sI_value
-    FROM (
-        SELECT 'TW' AS ctry_cd,
-            'OFFTAKE' AS Data_Type,
-            vend_cd,
-            txn.src_sys_cd,             -- Added src_sys_cd for joining
-            ean_num,
-            TO_CHAR(pos_dt, 'yyyymm') cal_month,
-            sls_qty AS sls_qty,
-            (sls_qty * price.prom_prc) AS sls_value
-        FROM edw_pos_fact txn,
-            (
-                SELECT CASE 
-                    WHEN cust = 'ibonMart' THEN 'ibonMart'
-                    WHEN cust = 'EC' THEN 'EC'
-                    WHEN cust = '7-11' THEN '7-11'
-                    WHEN cust = 'Carrefour' THEN 'Carrefour 家樂福'
-                    WHEN cust = 'Cosmed' THEN 'Cosmed 康是美'
-                    WHEN cust = 'PX-Civilian' THEN 'PX 全聯'
-                    WHEN cust = 'A-Mart' THEN 'A-Mart 愛買'
-                    WHEN cust = 'Poya' THEN 'Poya 寶雅'
-                    WHEN cust = 'Watsons' THEN 'Watsons 屈臣氏'
-                    WHEN cust = 'RT-Mart' THEN 'RT-Mart 大潤發'
-                END AS cust,
-                barcd,
-                cust_prod_cd,
-                prom_prc,
-                prom_strt_dt,
-                prom_end_dt
-            FROM itg_pos_prom_prc_map
-        ) price
-        WHERE ctry_cd = 'TW'
-            AND LEFT(pos_dt, 4) >= (DATE_PART(YEAR, SYSDATE()) - 6)
-            AND crncy_cd = 'TWD'
-            AND txn.pos_dt BETWEEN price.prom_strt_dt AND price.prom_end_dt
-            AND txn.ean_num = price.barcd(+)
-            AND txn.src_sys_cd = price.cust(+)
-            AND txn.vend_prod_cd = price.cust_prod_cd(+)
-    ) a
+    FROM edw_pos_fact txn
+    LEFT JOIN (
+        SELECT CASE
+            WHEN cust = 'Cosmed' THEN 'Cosmed 康是美'
+            WHEN cust = 'Poya' THEN 'Poya 寶雅'
+            WHEN cust = 'RT-Mart' THEN 'RT-Mart 大潤發'
+        END AS cust,
+        barcd,
+        cust_prod_cd,
+        prom_prc,
+        prom_strt_dt,
+        prom_end_dt
+        FROM itg_pos_prom_prc_map
+    ) price ON txn.pos_dt BETWEEN price.prom_strt_dt AND price.prom_end_dt
+        AND rtrim(txn.ean_num) = rtrim(price.barcd)
+        AND txn.src_sys_cd = price.cust
+        AND rtrim(txn.vend_prod_cd) = rtrim(price.cust_prod_cd)
     LEFT JOIN (
         SELECT DISTINCT 
-            country_code,
             parameter_name as src_sys_cd,
             parameter_value as sold_to_party
         FROM itg_query_parameters
         WHERE country_code = 'TW'
             AND parameter_type = 'sold_to_party'
-    ) qp ON qp.src_sys_cd = a.src_sys_cd
-    GROUP BY ctry_cd,
-        Data_Type,
+    ) qp ON qp.src_sys_cd = txn.src_sys_cd
+    WHERE txn.ctry_cd = 'TW'
+        AND LEFT(txn.pos_dt, 4) >= (DATE_PART(YEAR, SYSDATE()) - 6)
+        AND txn.crncy_cd = 'TWD'
+        AND txn.sls_grp IN ('RT-Mart 大潤發', 'Poya 寶雅', 'Cosmed 康是美')
+    GROUP BY 
         qp.sold_to_party,
-        ean_num,
-        cal_month
+        txn.ean_num,
+        TO_CHAR(txn.pos_dt, 'yyyymm')
 ),
 
 t6b AS (
-    SELECT 'TW' AS ctry_cd,
+    SELECT 
+        'TW' AS ctry_cd,
         'INV' AS Data_Type,
-        qp.sold_to_party AS dstr_cd,    -- Changed to use qp.sold_to_party
-        INV.ean_num,
-        INV.MNTH_ID AS cal_month,
-        SUM(inv.invnt_qty) as inv_qty,
-        SUM(inv.invnt_qty * price.prom_prc) as inv_value,
+        qp.sold_to_party AS dstr_cd,
+        p.ean_num,
+        m.mnth_id AS cal_month,
+        SUM(p.invnt_qty) as inv_qty,
+        SUM(p.invnt_qty * price.prom_prc) as inv_value,
         0 AS so_qty,
         0 AS sls_value,
         0 AS sI_qty,
         0 AS sI_value
-    FROM (
+    FROM edw_pos_fact p
+    JOIN (
         SELECT
-            m.mnth_id,
-            p.src_sys_cd,               -- Added src_sys_cd for joining
-            m.sls_grp,
-            p.ean_num,
-            p.vend_prod_cd,
-            p.invnt_qty,
-            m.max_pos_dt as inv_dt
-        FROM edw_pos_fact p
-        JOIN (
-            SELECT
-                TO_CHAR(pos_dt, 'YYYYMM') AS mnth_id,
-                src_sys_cd,              -- Added src_sys_cd
-                sls_grp,
-                ean_num,
-                vend_prod_cd,
-                MAX(pos_dt) AS max_pos_dt
-            FROM edw_pos_fact
-            GROUP BY 
-                TO_CHAR(pos_dt, 'YYYYMM'),
-                src_sys_cd,
-                ean_num,
-                vend_prod_cd,
-                sls_grp
-        ) m ON TO_CHAR(p.pos_dt, 'YYYYMM') = m.mnth_id
-            AND p.pos_dt = m.max_pos_dt
-            AND p.src_sys_cd = m.src_sys_cd
-            AND p.ean_num = m.ean_num
-            AND p.vend_prod_cd = m.vend_prod_cd
-        WHERE m.sls_grp IN ('RT-Mart 大潤發', 'Poya 寶雅', 'Cosmed 康是美')
-    ) inv
-    LEFT JOIN ITG_POS_PROM_PRC_MAP price ON
-        inv.inv_dt::DATE BETWEEN price.prom_strt_dt AND price.prom_end_dt
-        AND inv.ean_num = price.barcd
-        AND inv.vend_prod_cd = price.cust_prod_cd
+            TO_CHAR(pos_dt, 'YYYYMM') AS mnth_id,
+            src_sys_cd,
+            sls_grp,
+            ean_num,
+            vend_prod_cd,
+            MAX(pos_dt) AS max_pos_dt
+        FROM edw_pos_fact
+        WHERE sls_grp IN ('RT-Mart 大潤發', 'Poya 寶雅', 'Cosmed 康是美')
+        GROUP BY 
+            TO_CHAR(pos_dt, 'YYYYMM'),
+            src_sys_cd,
+            ean_num,
+            vend_prod_cd,
+            sls_grp
+    ) m ON TO_CHAR(p.pos_dt, 'YYYYMM') = m.mnth_id
+        AND p.pos_dt = m.max_pos_dt
+        AND p.src_sys_cd = m.src_sys_cd
+        AND p.ean_num = m.ean_num
+        AND p.vend_prod_cd = m.vend_prod_cd
+    LEFT JOIN (
+        SELECT CASE
+            WHEN cust = 'Cosmed' THEN 'Cosmed 康是美'
+            WHEN cust = 'Poya' THEN 'Poya 寶雅'
+            WHEN cust = 'RT-Mart' THEN 'RT-Mart 大潤發'
+        END AS cust,
+        barcd,
+        cust_prod_cd,
+        prom_prc,
+        prom_strt_dt,
+        prom_end_dt
+        FROM itg_pos_prom_prc_map
+    ) price ON p.pos_dt BETWEEN price.prom_strt_dt AND price.prom_end_dt
+        AND rtrim(p.ean_num) = rtrim(price.barcd)
+        AND p.src_sys_cd = price.cust
+        AND rtrim(p.vend_prod_cd) = rtrim(price.cust_prod_cd)
     LEFT JOIN (
         SELECT DISTINCT 
-            country_code,
             parameter_name as src_sys_cd,
             parameter_value as sold_to_party
         FROM itg_query_parameters
         WHERE country_code = 'TW'
             AND parameter_type = 'sold_to_party'
-    ) qp ON qp.src_sys_cd = inv.src_sys_cd
+    ) qp ON qp.src_sys_cd = p.src_sys_cd
     GROUP BY 
-        ctry_cd,
-        Data_Type,
         qp.sold_to_party,
-        inv.ean_num,
-        inv.MNTH_ID
+        p.ean_num,
+        m.mnth_id
     ORDER BY 
-        inv.ean_num,
+        p.ean_num,
         ctry_cd DESC
 ),
 
