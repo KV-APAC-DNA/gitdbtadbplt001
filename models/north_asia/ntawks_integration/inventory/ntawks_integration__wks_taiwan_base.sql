@@ -1,3 +1,9 @@
+{{
+    config(
+        pre_hook= "drop table PROD_DNA_CORE.dbt_cloud_pr_5458_1562.ntaedw_integration__edw_pos_fact;"
+    )
+}}
+
 WITH v_rpt_ims_inventory
 AS (
     SELECT *
