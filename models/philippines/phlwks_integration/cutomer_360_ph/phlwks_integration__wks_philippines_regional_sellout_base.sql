@@ -184,7 +184,7 @@ final as
 						 UPPER(chnl_sub_grp_cd) AS retail_env, brnch_cd, cust_cd from ITG_MDS_PH_POS_CUSTOMERS WHERE UPPER(active) = 'Y' and store_mtrx <> ' ') mds_pos_cust 
                          ON  LTRIM(sls.sold_to,'0') = LTRIM(mds_pos_cust.jj_sold_to,'0')
                          AND LTRIM(sls.cust_brnch_cd,'0') = LTRIM(mds_pos_cust.brnch_cd,'0')
-                         AND UPPER(sls.cust_cd) = LTRIM(mds_pos_cust.cust_cd)
+                         AND sls.cust_cd = mds_pos_cust.cust_cd
 		
 		--left join (SELECT distinct cust_id, channel_cd, channel_desc FROM itg_mds_ph_lav_customer WHERE UPPER(active) = 'Y') mds_cust on ltrim(mds_cust.cust_id,'0') = ltrim(sls.sold_to,'0')
 
@@ -231,7 +231,7 @@ final as
                          UPPER(store_mtrx) AS channel,
 						 UPPER(chnl_sub_grp_cd) AS retail_env, brnch_cd, cust_cd from ITG_MDS_PH_POS_CUSTOMERS WHERE UPPER(active) = 'Y' and store_mtrx <> ' ') mds_pos_cust ON ltrim(sls_v2.sold_to,'0') = ltrim(mds_pos_cust.jj_sold_to,'0')
                          AND LTRIM(sls_v2.cust_brnch_cd,'0') = LTRIM(mds_pos_cust.brnch_cd,'0') 
-                         AND UPPER(sls_v2.cust_cd) = LTRIM(mds_pos_cust.cust_cd)
+                         AND sls_v2.cust_cd = mds_pos_cust.cust_cd
     
 	--left join (SELECT distinct cust_id, channel_cd, channel_desc FROM itg_mds_ph_lav_customer WHERE UPPER(active) = 'Y') mds_cust on ltrim(mds_cust.cust_id,'0') = ltrim(sls_v2.sold_to,'0')
 
