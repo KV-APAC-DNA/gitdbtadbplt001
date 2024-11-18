@@ -250,8 +250,7 @@ SELECT fisc_yr,
        0 as unit,
        0 as Standard_cost_per_unit,
        0 as pre_apsc_cper_pc,
-       CASE WHEN copa.acct_hier_shrt_desc = 'SCOGS' then sum(amt_obj_crncy) else 0 end as COGS_at_Pre_APSC,
-       CASE WHEN copa.acct_hier_shrt_desc = 'ICMC' then sum(amt_obj_crncy) else 0 end as ICMC_amt,
+       sum(amt_obj_crncy) as COGS_at_Pre_APSC,
        0 AS Free_Goods_COGS_at_Pre_APSC,
        COGS_at_Pre_APSC + Free_Goods_COGS_at_Pre_APSC AS Total_APSC
 FROM  edw_copa_trans_fact copa
@@ -261,16 +260,18 @@ INNER JOIN itg_custgp_cogs_fg_control fgctl on /*case when cogs.acct_hier_shrt_d
 													   copa.co_cd = fgctl.co_cd and 
 													   copa.fisc_yr_per >= fgctl.valid_from and
 													   copa.fisc_yr_per < fgctl.valid_to and 
-													   case when copa.acct_hier_shrt_desc = 'FG' 
+													   cast(case when copa.acct_hier_shrt_desc = 'FG' 
 													        then ltrim(copa.acct_num,'0') = fgctl.gl_acct_num 
 															when copa.acct_hier_shrt_desc = 'NTS' 
 													        then '0'
 															when copa.acct_hier_shrt_desc = 'SCOGS' 
-													        then ltrim(Cust_num,'0') 
+													        then nvl(nullif(ltrim(copa.cust_num,'0'),''),'0') 
+                                                            when copa.acct_hier_shrt_desc = 'ICMC'
+                                                            then '0' end as numeric
+                                                          )
                                                             --when copa.acct_hier_shrt_desc = 'ICMC'
                                                             --then '0' 
-															= fgctl.gl_acct_num end
-															and
+															= fgctl.gl_acct_num and 
 													   fgctl.active = 'Y'	
 --left join (select distinct cust_num,cust_nm from rg_edw.edw_customer_base_dim) ecd	ON LTRIM (ecd.cust_num,'0') = ltrim(copa.cust_num,'0')
 where copa.co_cd in (select distinct co_cd from edw_company_dim where ctry_group = 'Vietnam'
