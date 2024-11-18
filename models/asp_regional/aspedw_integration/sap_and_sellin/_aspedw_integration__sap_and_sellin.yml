@@ -168,6 +168,14 @@ models:
     config:
       alias: v_rpt_copa
       tags: ["regional_copa_refresh","transformation"]
+  - name: aspedw_integration__GMC_hierarchy_attributes
+    config:
+      alias: GMC_hierarchy_attributes
+      tags: ["regional_copa_refresh","transformation"]
+  - name: aspedw_integration__edw_company_reporting_dim
+    config:
+      alias: edw_company_reporting_dim
+      tags: ["regional_copa_refresh","transformation"]      
   - name: aspedw_integration__v_rpt_copa_ciw
     config:
       alias: v_rpt_copa_ciw
