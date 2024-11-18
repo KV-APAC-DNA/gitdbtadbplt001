@@ -255,9 +255,6 @@ SELECT fisc_yr,
        0 AS Free_Goods_COGS_at_Pre_APSC,
        COGS_at_Pre_APSC + Free_Goods_COGS_at_Pre_APSC AS Total_APSC
 FROM  edw_copa_trans_fact copa
-where copa.co_cd in (select distinct co_cd from rg_edw.edw_company_dim where ctry_group = 'Vietnam'
-and copa.acct_hier_shrt_desc = 'SCOGS')
-union all 
 INNER JOIN itg_custgp_cogs_fg_control fgctl on /*case when cogs.acct_hier_shrt_desc = 'FG' 
                                                             then 'FG' end*/
 													   copa.acct_hier_shrt_desc	= fgctl.acct_hier_shrt_desc and 	
@@ -275,7 +272,7 @@ INNER JOIN itg_custgp_cogs_fg_control fgctl on /*case when cogs.acct_hier_shrt_d
 													   fgctl.active = 'Y'	
 --left join (select distinct cust_num,cust_nm from rg_edw.edw_customer_base_dim) ecd	ON LTRIM (ecd.cust_num,'0') = ltrim(copa.cust_num,'0')
 where copa.co_cd in (select distinct co_cd from rg_edw.edw_company_dim where ctry_group = 'Vietnam'
-and copa.acct_hier_shrt_desc = 'SCOGS')												   
+and copa.acct_hier_shrt_desc in ('SCOGS','ICMC'))												   
 GROUP BY fisc_yr,
          fisc_yr_per,
          copa.co_cd,
