@@ -269,7 +269,7 @@ INNER JOIN itg_custgp_cogs_fg_control fgctl on /*case when cogs.acct_hier_shrt_d
 													        then ltrim(Cust_num,'0') end
                                                             --when copa.acct_hier_shrt_desc = 'ICMC'
                                                             --then '0' end
-															--= fgctl.gl_acct_num
+															= fgctl.gl_acct_num
 															and
 													   fgctl.active = 'Y'	
 --left join (select distinct cust_num,cust_nm from rg_edw.edw_customer_base_dim) ecd	ON LTRIM (ecd.cust_num,'0') = ltrim(copa.cust_num,'0')
