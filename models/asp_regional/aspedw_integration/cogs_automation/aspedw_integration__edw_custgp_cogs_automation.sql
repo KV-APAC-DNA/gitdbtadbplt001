@@ -268,7 +268,7 @@ INNER JOIN itg_custgp_cogs_fg_control fgctl on /*case when cogs.acct_hier_shrt_d
 															when copa.acct_hier_shrt_desc = 'SCOGS' 
 													        then ltrim(Cust_num,'0')
                                                             when copa.acct_hier_shrt_desc = 'ICMC'
-                                                            then null end
+                                                            then '0' end
 															= fgctl.gl_acct_num
 															and
 													   fgctl.active = 'Y'	
