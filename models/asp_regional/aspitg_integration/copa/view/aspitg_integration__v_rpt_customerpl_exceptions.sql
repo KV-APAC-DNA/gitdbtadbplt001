@@ -394,7 +394,7 @@ period,
 cmp.ctry_group as ctry_group,
 matl_num,
 profit_cntr
-RG_EDW.EDW_CUSTGP_COGS_AUTOMATION cogs		--// FROM rg_edw.edw_custgp_cogs_automation cogs
+EDW_CUSTGP_COGS_AUTOMATION cogs		--// FROM rg_edw.edw_custgp_cogs_automation cogs
 LEFT JOIN EDW_COMPANY_DIM CMP ON COGS.CO_CD = CMP.CO_CD		--// LEFT JOIN rg_edw.edw_company_dim cmp ON cogs.co_cd = cmp.co_cd
 where pre_apsc_cper_pc is null
 and nts_volume != 0
