@@ -389,8 +389,8 @@ SELECT DISTINCT copa3.fisc_yr,
         copa3.Free_Goods_COGS_at_Pre_APSC,
         copa3.Total_APSC
         FROM copa3
-        LEFT JOIN emd ON LTRIM (emd.matl_num,'0') = copa.matl_num
-        LEFT JOIN ecd ON LTRIM (ecd.cust_num,'0') = copa.cust_num	 
+        LEFT JOIN emd ON LTRIM (emd.matl_num,'0') = copa3.matl_num
+        LEFT JOIN ecd ON LTRIM (ecd.cust_num,'0') = copa3.cust_num	 
 
 )
 select fisc_yr::number(38,0) as fisc_yr,
