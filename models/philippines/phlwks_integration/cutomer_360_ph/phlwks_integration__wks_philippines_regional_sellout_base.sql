@@ -133,9 +133,10 @@ final as
         left join edw_mv_ph_customer_dim cust ON cust.cust_id = store.sap_soldto_code
         left join edw_vw_os_time_dim b on sls.invoice_dt = b.cal_date
         left join (select distinct UPPER(rpt_grp11_desc) AS channel,
-						  UPPER(rpt_grp9_desc) AS retail_env , dstrbtr_grp_cd
+						  UPPER(rpt_grp9_desc) AS retail_env , dstrbtr_grp_cd, dstrbtr_cust_id
 					FROM ITG_MDS_PH_GT_CUSTOMER WHERE UPPER(active) = 'Y') mds_gt_cust
 					ON ltrim(sls.dstrbtr_grp_cd,'0') = ltrim(mds_gt_cust.dstrbtr_grp_cd,'0')
+                    AND ltrim(sls.trnsfrm_cust_id,'0') = ltrim(mds_gt_cust.dstrbtr_cust_id,'0')
 		
 		--left join (SELECT distinct cust_id, channel_cd, channel_desc FROM itg_mds_ph_lav_customer WHERE UPPER(active) = 'Y') mds_cust on ltrim(mds_cust.cust_id,'0') = ltrim(store.sap_soldto_code,'0')
 
@@ -180,7 +181,10 @@ final as
         from edw_ph_pos_analysis sls
         left join (select distinct jj_sold_to,
                          UPPER(store_mtrx) AS channel,
-						 UPPER(chnl_sub_grp_cd) AS retail_env from ITG_MDS_PH_POS_CUSTOMERS WHERE UPPER(active) = 'Y' and store_mtrx <> ' ') mds_pos_cust ON ltrim(sls.sold_to,'0') = ltrim(mds_pos_cust.jj_sold_to,'0')
+						 UPPER(chnl_sub_grp_cd) AS retail_env, brnch_cd, cust_cd from ITG_MDS_PH_POS_CUSTOMERS WHERE UPPER(active) = 'Y' and store_mtrx <> ' ') mds_pos_cust 
+                         ON  LTRIM(sls.sold_to,'0') = LTRIM(mds_pos_cust.jj_sold_to,'0')
+                         AND LTRIM(sls.cust_brnch_cd,'0') = LTRIM(mds_pos_cust.brnch_cd,'0')
+                         AND UPPER(sls.cust_cd) = LTRIM(mds_pos_cust.cust_cd)
 		
 		--left join (SELECT distinct cust_id, channel_cd, channel_desc FROM itg_mds_ph_lav_customer WHERE UPPER(active) = 'Y') mds_cust on ltrim(mds_cust.cust_id,'0') = ltrim(sls.sold_to,'0')
 
@@ -202,8 +206,8 @@ final as
         mt_cust_brnch_nm AS STORE_NAME,
         'NA' as store_type,
         sold_to as SOLDTO_CODE,
-        cust_cd AS DISTRIBUTOR_CODE,
-        cust_cd AS DISTRIBUTOR_NAME,
+        sls_v2.cust_cd AS DISTRIBUTOR_CODE,
+        sls_v2.cust_cd AS DISTRIBUTOR_NAME,
         sls_grp_desc as region,
         'NA' as zone_or_area,
         region_nm AS DSTRBTR_LVL1,
@@ -212,7 +216,7 @@ final as
         jj_qty_pc as SO_SLS_QTY, 
         --COALESCE(pos_gts, jj_gts) as SO_SLS_VALUE,
         case 
-            when cust_cd in ('SM', 'PG') then COALESCE(pos_gts, jj_gts)
+            when sls_v2.cust_cd in ('SM', 'PG') then COALESCE(pos_gts, jj_gts)
             else pos_gts
         end as SO_SLS_VALUE,
         jj_item_prc_per_pc as SO_LIST_PRICE,
@@ -225,8 +229,9 @@ final as
         from edw_ph_pos_analysis_v2 sls_v2
 		left join (select distinct jj_sold_to,
                          UPPER(store_mtrx) AS channel,
-						 UPPER(chnl_sub_grp_cd) AS retail_env, brnch_cd from ITG_MDS_PH_POS_CUSTOMERS WHERE UPPER(active) = 'Y' and store_mtrx <> ' ') mds_pos_cust ON ltrim(sls_v2.sold_to,'0') = ltrim(mds_pos_cust.jj_sold_to,'0')
+						 UPPER(chnl_sub_grp_cd) AS retail_env, brnch_cd, cust_cd from ITG_MDS_PH_POS_CUSTOMERS WHERE UPPER(active) = 'Y' and store_mtrx <> ' ') mds_pos_cust ON ltrim(sls_v2.sold_to,'0') = ltrim(mds_pos_cust.jj_sold_to,'0')
                          AND LTRIM(sls_v2.cust_brnch_cd,'0') = LTRIM(mds_pos_cust.brnch_cd,'0') 
+                         AND UPPER(sls_v2.cust_cd) = LTRIM(mds_pos_cust.cust_cd)
     
 	--left join (SELECT distinct cust_id, channel_cd, channel_desc FROM itg_mds_ph_lav_customer WHERE UPPER(active) = 'Y') mds_cust on ltrim(mds_cust.cust_id,'0') = ltrim(sls_v2.sold_to,'0')
 
