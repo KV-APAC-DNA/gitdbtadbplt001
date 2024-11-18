@@ -9,4 +9,4 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: itg_custpl_excp_ctrl
+      - name: itg_custpl_excp_ctrl_temp

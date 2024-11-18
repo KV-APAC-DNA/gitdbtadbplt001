@@ -10,7 +10,7 @@ with edw_rpt_copa_customergp_agg as
 ),
 itg_custpl_excp_ctrl as
 (
-    select * from {{ source('aspitg_integration','itg_custpl_excp_ctrl') }}
+    select * from {{ source('aspitg_integration','itg_custpl_excp_ctrl_temp') }}
 ),
 edw_material_dim as
 (
