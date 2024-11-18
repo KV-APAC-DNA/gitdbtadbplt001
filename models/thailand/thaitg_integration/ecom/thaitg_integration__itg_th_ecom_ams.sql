@@ -36,7 +36,7 @@ select
 	deduction_status::varchar(100) as deduction_status,
 	deduction_method::varchar(100) as deduction_method,
 	deduction_time::varchar(100) as deduction_time,
-	shope_name::varchar(50) as shope_name,
+	shop_name::varchar(50) as shop_name,
 	filename::varchar(255) as filename,
 	crtd_dttm :: timestamp_ntz(9) as crtd_dttm,
 	current_timestamp()::timestamp_ntz(9) as updt_dttm
@@ -66,7 +66,7 @@ select
 	deduction_status::varchar(100) as deduction_status,
 	deduction_method::varchar(100) as deduction_method,
 	deduction_time::varchar(100) as deduction_time,
-	shope_name::varchar(50) as shope_name,
+	shop_name::varchar(50) as shop_name,
 	filename::varchar(255) as filename,
 	crtd_dttm :: timestamp_ntz(9) as crtd_dttm,
 	current_timestamp()::timestamp_ntz(9) as updt_dttm
@@ -96,7 +96,7 @@ select
 	deduction_status::varchar(100) as deduction_status,
 	deduction_method::varchar(100) as deduction_method,
 	deduction_time::varchar(100) as deduction_time,
-	shope_name::varchar(50) as shope_name,
+	shop_name::varchar(50) as shop_name,
 	filename::varchar(255) as filename,
 	crtd_dttm :: timestamp_ntz(9) as crtd_dttm,
 	current_timestamp()::timestamp_ntz(9) as updt_dttm
