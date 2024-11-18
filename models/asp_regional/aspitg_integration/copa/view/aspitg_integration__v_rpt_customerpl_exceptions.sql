@@ -406,7 +406,7 @@ left join ( select market_code,materialnumber,materialdescription,valid_from,
           select market_code,materialnumber,materialdescription, year_code||'0'||lpad(month_code,2,'0') as valid_from,
                  lead(year_code||'0'||lpad(month_code,2,'0'),1) over (partition by market_code, materialnumber order by year_code||'0'||lpad(month_code,2,'0') ) as valid_to,
                   pre_apsc_per_pc
-            from RG_ITG.ITG_MDS_PRE_APSC_MASTER		--//             from rg_itg.itg_mds_pre_apsc_master
+            from ITG_MDS_PRE_APSC_MASTER		--//             from rg_itg.itg_mds_pre_apsc_master
           --where -- materialnumber = '6127076' and
             --market_code ='Korea'
          )  base
@@ -454,7 +454,7 @@ left join ( select market_code,materialnumber,materialdescription,valid_from,
           select market_code,materialnumber,materialdescription, year_code||'0'||lpad(month_code,2,'0') as valid_from,
                  lead(year_code||'0'||lpad(month_code,2,'0'),1) over (partition by market_code, materialnumber order by year_code||'0'||lpad(month_code,2,'0') ) as valid_to,
                   pre_apsc_per_pc
-            from RG_ITG.ITG_MDS_PRE_APSC_MASTER		--//             from rg_itg.itg_mds_pre_apsc_master
+            from ITG_MDS_PRE_APSC_MASTER		--//             from rg_itg.itg_mds_pre_apsc_master
           --where -- materialnumber = '6127076' and
             --market_code ='Korea'
          )  base
