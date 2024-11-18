@@ -260,15 +260,11 @@ INNER JOIN itg_custgp_cogs_fg_control fgctl on /*case when cogs.acct_hier_shrt_d
 													   copa.co_cd = fgctl.co_cd and 
 													   copa.fisc_yr_per >= fgctl.valid_from and
 													   copa.fisc_yr_per < fgctl.valid_to and 
-													   cast(case when copa.acct_hier_shrt_desc = 'FG' 
-													        then ltrim(copa.acct_num,'0') = fgctl.gl_acct_num 
-															when copa.acct_hier_shrt_desc = 'NTS' 
-													        then '0'
-															when copa.acct_hier_shrt_desc = 'SCOGS' 
-													        then nvl(nullif(ltrim(copa.cust_num,'0'),''),'0') 
-                                                            when copa.acct_hier_shrt_desc = 'ICMC'
-                                                            then '0' end as numeric
-                                                          )
+													   cast(case when copa.acct_hier_shrt_desc = 'SCOGS'
+                                                       then nvl(nullif(ltrim(copa.cust_num,'0'),''),'0')                                                     --'140328' 
+                                                       when copa.acct_hier_shrt_desc = 'ICMC'
+                                                       then '0'
+                                                       end as numeric)
                                                             --when copa.acct_hier_shrt_desc = 'ICMC'
                                                             --then '0' 
 															= fgctl.gl_acct_num and 
