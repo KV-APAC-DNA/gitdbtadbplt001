@@ -250,8 +250,8 @@ SELECT fisc_yr,
        0 as unit,
        0 as Standard_cost_per_unit,
        0 as pre_apsc_cper_pc,
-       CASE WHEN acct_hier_shrt_desc = 'SCOGS' then sum(amt_obj_crncy) else 0 end as COGS_at_Pre_APSC,
-       CASE WHEN acct_hier_shrt_desc = 'ICMC' then sum(amt_obj_crncy) else 0 end as ICMC_amt,
+       CASE WHEN copa.acct_hier_shrt_desc = 'SCOGS' then sum(amt_obj_crncy) else 0 end as COGS_at_Pre_APSC,
+       CASE WHEN copa.acct_hier_shrt_desc = 'ICMC' then sum(amt_obj_crncy) else 0 end as ICMC_amt,
        0 AS Free_Goods_COGS_at_Pre_APSC,
        COGS_at_Pre_APSC + Free_Goods_COGS_at_Pre_APSC AS Total_APSC
 FROM  edw_copa_trans_fact copa
