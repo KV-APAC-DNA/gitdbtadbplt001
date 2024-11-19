@@ -90,6 +90,6 @@ final as
                 AND ctry_cd = 'TW'
         ) TGT ON SRC.pos_date = TGT.pos_dt
         AND SRC.product_code = TGT.vend_prod_cd
-        --where src.crt_dttm>tgt.upd_dttm
+        where src.crt_dttm>(select max(upd_dttm) from ITG_POS where src_sys_cd = 'EC' AND ctry_cd = 'TW')
 )
 select * from final
