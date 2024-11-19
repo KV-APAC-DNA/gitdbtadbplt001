@@ -1,9 +1,3 @@
-{{
-    config(
-        materialized='view'
-    )
-}}
-
 with edw_rpt_copa_customergp_agg as
 (
     select * from {{ ref('aspedw_integration__edw_rpt_copa_customergp_agg') }}
@@ -63,7 +57,7 @@ itg_mds_pre_apsc_master as
 
 final as
 (
-    select distinct 'incomplete regional customer hierarchy' as error_catgeory,
+    select distinct 'incomplete regional customer hierarchy' as error_category,
        custgp.fisc_yr as year,		--//        custgp.fisc_yr as year,
        custgp.fisc_yr_per as period,		--//        custgp.fisc_yr_per as period,
        custgp.ctry_nm as market,		--//        custgp.ctry_nm as market,
@@ -97,7 +91,7 @@ and (
 (coalesce(nullif(custgp."banner format",''),'na') = 'na' or custgp."banner format" is null or custgp."banner format" = 'not available'))		--// (coalesce(nullif(custgp."banner format",''),'na') = 'na' or custgp."banner format" is null or custgp."banner format" = 'not available'))
 and (custgp.cust_num != '' and custgp.cust_num != 'not available' and custgp.cust_num is not null)		--// and (custgp.cust_num != '' and custgp.cust_num != 'not available' and custgp.cust_num is not null)
 union all
-select distinct 'missing sold-to code in regional customer hierarchy' as error_catgeory,
+select distinct 'missing sold-to code in regional customer hierarchy' as error_category,
        custgp.fisc_yr as year,		--//        custgp.fisc_yr as year,
        custgp.fisc_yr_per as period,		--//        custgp.fisc_yr_per as period,
        custgp.ctry_nm as market,		--//        custgp.ctry_nm as market,
@@ -133,7 +127,7 @@ left join
         and custgp.cust_num::text = cust.cust_num		--//         and custgp.cust_num::text = cust.cust_num
 where (cust.cust_num = '' or cust.cust_num is null) and (custgp.cust_num != '' or custgp.cust_num != 'not available' or custgp.cust_num is not null)		--// where (cust.cust_num = '' or cust.cust_num is null) and (custgp.cust_num != '' or custgp.cust_num != 'not available' or custgp.cust_num is not null)
 union all
-select distinct 'incomplete regional product hierarchy' as error_catgeory,
+select distinct 'incomplete regional product hierarchy' as error_category,
        custgp.fisc_yr as year,		--//        custgp.fisc_yr as year,
        custgp.fisc_yr_per as period,		--//        custgp.fisc_yr_per as period,
        custgp.ctry_nm as market,		--//        custgp.ctry_nm as market,
@@ -180,7 +174,7 @@ end = exc.prodkey) and custgp.ctry_nm = exc.ctry_nm) and		--// end = exc.prodkey
 (coalesce(nullif(custgp.pka_product_key_description,''),'na') = 'na' or custgp.pka_product_key_description is null or custgp.pka_product_key_description = 'not available')		--// (coalesce(nullif(custgp.pka_product_key_description,''),'na') = 'na' or custgp.pka_product_key_description is null or custgp.pka_product_key_description = 'not available')
 )
 union all
-select distinct 'missing regional product hierarchy' as error_catgeory,
+select distinct 'missing regional product hierarchy' as error_category,
        custgp.fisc_yr as year,		--//        custgp.fisc_yr as year,
        custgp.fisc_yr_per as period,		--//        custgp.fisc_yr_per as period,
        custgp.ctry_nm as market,		--//        custgp.ctry_nm as market,
@@ -194,7 +188,7 @@ left join edw_material_dim mat on custgp.matl_num = ltrim(mat.matl_num,'0')		--/
 where (custgp.matl_num is not null and custgp.matl_num != '' and custgp.matl_num != 'not available')		--// where (custgp.matl_num is not null and custgp.matl_num != '' and custgp.matl_num != 'not available')
 and (mat.matl_num is null or mat.matl_num = '')		--// and (mat.matl_num is null or mat.matl_num = '')
 union all
-select distinct 'missing regional product hierarchy' as error_catgeory,
+select distinct 'missing regional product hierarchy' as error_category,
        custgp.fisc_yr as year,		--//        custgp.fisc_yr as year,
        custgp.fisc_yr_per as period,		--//        custgp.fisc_yr_per as period,
        custgp.ctry_nm as market,		--//        custgp.ctry_nm as market,
@@ -208,7 +202,7 @@ left join edw_gch_producthierarchy gch on custgp.matl_num = ltrim(gch.materialnu
 where (custgp.matl_num is not null and custgp.matl_num != '' and custgp.matl_num != 'not available')		--// where (custgp.matl_num is not null and custgp.matl_num != '' and custgp.matl_num != 'not available')
 and (gch.materialnumber is null or gch.materialnumber = '')		--// and (gch.materialnumber is null or gch.materialnumber = '')
 union all
-select distinct 'incomplete local product hierarchy' as error_catgeory,
+select distinct 'incomplete local product hierarchy' as error_category,
        custgp.fisc_yr as year,		--//        custgp.fisc_yr as year,
        custgp.fisc_yr_per as period,		--//        custgp.fisc_yr_per as period,
        custgp.ctry_nm as market,		--//        custgp.ctry_nm as market,
@@ -257,7 +251,7 @@ end = exc.prodkey) and custgp.ctry_nm = exc.ctry_nm) and		--// end = exc.prodkey
 (coalesce(nullif(custgp.loc_prod10,''),'na') = 'na' or custgp.loc_prod10 is null or custgp.loc_prod10 = 'not available')		--// (coalesce(nullif(custgp.loc_prod10,''),'na') = 'na' or custgp.loc_prod10 is null or custgp.loc_prod10 = 'not available')
 )
 union all
-select distinct 'missing local product hierarchy' as error_catgeory,
+select distinct 'missing local product hierarchy' as error_category,
        custgp.fisc_yr as year,		--//        custgp.fisc_yr as year,
        custgp.fisc_yr_per as period,		--//        custgp.fisc_yr_per as period,
        custgp.ctry_nm as market,		--//        custgp.ctry_nm as market,
@@ -272,7 +266,7 @@ left join vw_itg_custgp_prod_hierarchy locprod on		--// left join rg_itg.vw_itg_
 (custgp.ctry_nm = locprod.ctry_nm and custgp.cust_num = locprod.matl_num)		--// (custgp.ctry_nm = locprod.ctry_nm and custgp.cust_num = locprod.matl_num)
 where (custgp.matl_num != 'not available' and custgp.matl_num != '' and custgp.matl_num is not null) and (locprod.matl_num = '' or locprod.matl_num is null or locprod.matl_num = 'not available')		--// where (custgp.matl_num != 'not available' and custgp.matl_num != '' and custgp.matl_num is not null) and (locprod.matl_num = '' or locprod.matl_num is null or locprod.matl_num = 'not available')
 union all
-select distinct 'incomplete local customer hierarchy' as error_catgeory,
+select distinct 'incomplete local customer hierarchy' as error_category,
        custgp.fisc_yr as year,		--//        custgp.fisc_yr as year,
        custgp.fisc_yr_per as period,		--//        custgp.fisc_yr_per as period,
        custgp.ctry_nm as market,		--//        custgp.ctry_nm as market,
@@ -313,7 +307,7 @@ end = exc.prodkey) and  custgp.ctry_nm = exc.ctry_nm) and		--// end = exc.prodke
 (coalesce(nullif(custgp.local_cust_segmentation_2,''),'na') = 'na' or custgp.local_cust_segmentation_2 is null or custgp.local_cust_segmentation_2 = 'not available')		--// (coalesce(nullif(custgp.local_cust_segmentation_2,''),'na') = 'na' or custgp.local_cust_segmentation_2 is null or custgp.local_cust_segmentation_2 = 'not available')
 )
 union all
-select distinct 'missing sold-to code in local customer hierarchy' as error_catgeory,
+select distinct 'missing sold-to code in local customer hierarchy' as error_category,
        custgp.fisc_yr as year,		--//        custgp.fisc_yr as year,
        custgp.fisc_yr_per as period,		--//        custgp.fisc_yr_per as period,
        custgp.ctry_nm as market,		--//        custgp.ctry_nm as market,
@@ -329,7 +323,7 @@ left join vw_itg_custgp_customer_hierarchy loccust on		--// left join rg_itg.vw_
 where (custgp.cust_num != 'not available' and custgp.cust_num != '' and custgp.cust_num is not null) and		--// where (custgp.cust_num != 'not available' and custgp.cust_num != '' and custgp.cust_num is not null) and
  (loccust.cust_num = '' or loccust.cust_num is null or loccust.cust_num = 'not available')		--//  (loccust.cust_num = '' or loccust.cust_num is null or loccust.cust_num = 'not available')
 union all
-select distinct 'incomplete regional product portfolio' as error_catgeory,
+select distinct 'incomplete regional product portfolio' as error_category,
        custgp.fisc_yr as year,		--//        custgp.fisc_yr as year,
        custgp.fisc_yr_per as period,		--//        custgp.fisc_yr_per as period,
        custgp.ctry_nm as market,		--//        custgp.ctry_nm as market,
@@ -343,7 +337,7 @@ where (custgp.ctry_nm = exc.ctry_nm and 'regprodseg' = exc.prodkey) and		--// wh
 (custgp.prft_ctr != 'not available' and custgp.prft_ctr != '' and custgp.prft_ctr is not null) and		--// (custgp.prft_ctr != 'not available' and custgp.prft_ctr != '' and custgp.prft_ctr is not null) and
 (custgp.ctry_nm = portf.market and custgp.prft_ctr = portf.prft_ctr)		--// (custgp.ctry_nm = portf.market and custgp.prft_ctr = portf.prft_ctr)
 union all
-select distinct 'incomplete market product portfolio' as error_catgeory,
+select distinct 'incomplete market product portfolio' as error_category,
        custgp.fisc_yr as year,		--//        custgp.fisc_yr as year,
        custgp.fisc_yr_per as period,		--//        custgp.fisc_yr_per as period,
        custgp.ctry_nm as market,		--//        custgp.ctry_nm as market,
@@ -358,7 +352,7 @@ where (custgp.ctry_nm = exc.ctry_nm and 'locprodseg' = exc.prodkey) and		--// wh
 (custgp.prft_ctr != 'not available' and custgp.prft_ctr != '' and custgp.prft_ctr is not null) and		--// (custgp.prft_ctr != 'not available' and custgp.prft_ctr != '' and custgp.prft_ctr is not null) and
 (custgp.ctry_nm = portf.market and custgp.prft_ctr = portf.prft_ctr)		--// (custgp.ctry_nm = portf.market and custgp.prft_ctr = portf.prft_ctr)
 union all
-select 'missing product portfolio' as error_catgeory,
+select 'missing product portfolio' as error_category,
        custgp.fisc_yr as year,		--//        custgp.fisc_yr as year,
        custgp.fisc_yr_per as period,		--//        custgp.fisc_yr_per as period,
        custgp.ctry_nm as market,		--//        custgp.ctry_nm as market,
@@ -373,7 +367,7 @@ left join itg_mds_custgp_portfolio_mapping portf on (custgp.ctry_nm = portf.mark
 where (custgp.prft_ctr != 'not available' and custgp.prft_ctr != '' and custgp.prft_ctr is not null) and		--// where (custgp.prft_ctr != 'not available' and custgp.prft_ctr != '' and custgp.prft_ctr is not null) and
 (portf.prft_ctr = '' or portf.prft_ctr is null)		--// (portf.prft_ctr = '' or portf.prft_ctr is null)
 union all
-select distinct 'missing pre-apsc cost' as error_catgeory,
+select distinct 'missing pre-apsc cost' as error_category,
        custgp.fisc_yr as year,		--//        custgp.fisc_yr as year,
        custgp.period as period,		--//        custgp.period as period,
        custgp.ctry_nm as market,		--//        custgp.ctry_nm as market,
@@ -422,7 +416,7 @@ left join ( select market_code,materialnumber,materialdescription,valid_from,
         and calccogs.period < preapsc.valid_to		--//         and calccogs.period < preapsc.valid_to
 where (preapsc.materialnumber is null or preapsc.materialnumber = ' '))custgp		--// where (preapsc.materialnumber is null or preapsc.materialnumber = ' '))custgp
 union all
-select distinct 'missing pre-apsc cost' as error_catgeory,
+select distinct 'missing pre-apsc cost' as error_category,
        custgp.fisc_yr as year,		--//        custgp.fisc_yr as year,
        custgp.period as period,		--//        custgp.period as period,
        custgp.ctry_nm as market,		--//        custgp.ctry_nm as market,
@@ -470,7 +464,7 @@ left join ( select market_code,materialnumber,materialdescription,valid_from,
         and calccogs.period < preapsc.valid_to		--//         and calccogs.period < preapsc.valid_to
 where (preapsc.materialnumber is not null or preapsc.materialnumber != ' ') and (pre_apsc_cper_pc is null or  pre_apsc_cper_pc = 0))custgp		--// where (preapsc.materialnumber is not null or preapsc.materialnumber != ' ') and (pre_apsc_cper_pc is null or  pre_apsc_cper_pc = 0))custgp
 union all
-select distinct 'unassigned customer number in copa' as error_catgeory,
+select distinct 'unassigned customer number in copa' as error_category,
        custgp.fisc_yr as year,		--//        custgp.fisc_yr as year,
        custgp.fisc_yr_per as period,		--//        custgp.fisc_yr_per as period,
        custgp.ctry_nm as market,		--//        custgp.ctry_nm as market,
@@ -482,7 +476,7 @@ select distinct 'unassigned customer number in copa' as error_catgeory,
 from edw_rpt_copa_customergp_agg custgp		--// from rg_edw.edw_rpt_copa_customergp_agg custgp
 where cust_num is null or cust_num = '' or cust_num = 'not available'
 union all
-select distinct 'unassigned material number in copa' as error_catgeory,
+select distinct 'unassigned material number in copa' as error_category,
        custgp.fisc_yr as year,		--//        custgp.fisc_yr as year,
        custgp.fisc_yr_per as period,		--//        custgp.fisc_yr_per as period,
        custgp.ctry_nm as market,		--//        custgp.ctry_nm as market,
@@ -494,7 +488,7 @@ select distinct 'unassigned material number in copa' as error_catgeory,
 from edw_rpt_copa_customergp_agg custgp		--// from rg_edw.edw_rpt_copa_customergp_agg custgp
 where matl_num is null or matl_num = '' or matl_num = 'not available'
 union all
-select distinct 'unassigned profit center in copa' as error_catgeory,
+select distinct 'unassigned profit center in copa' as error_category,
        custgp.fisc_yr as year,		--//        custgp.fisc_yr as year,
        custgp.fisc_yr_per as period,		--//        custgp.fisc_yr_per as period,
        custgp.ctry_nm as market,		--//        custgp.ctry_nm as market,
@@ -506,7 +500,7 @@ select distinct 'unassigned profit center in copa' as error_catgeory,
 from edw_rpt_copa_customergp_agg custgp		--// from rg_edw.edw_rpt_copa_customergp_agg custgp
 where prft_ctr is null or prft_ctr = '' or prft_ctr = 'not available'
 union all
-select distinct 'incomplete copa record in dna' as error_catgeory,
+select distinct 'incomplete copa record in dna' as error_category,
        custgp.fisc_yr as year,		--//        custgp.fisc_yr as year,
        custgp.fisc_yr_per as period,		--//        custgp.fisc_yr_per as period,
        cmp.ctry_group as market,		--//        cmp.ctry_group as market,
