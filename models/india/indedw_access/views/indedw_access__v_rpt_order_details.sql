@@ -21,7 +21,7 @@ select
     variant_name as "variant_name",
     product_category_name as "product_category_name",
     mothersku_name as "mothersku_name",
-    invoice_date as "invoice_date"
+    invoice_date as "invoice_date",
     invoice_no as "invoice_no",
     order_date as "order_date",
     order_no as "order_no",
