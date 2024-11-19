@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: hcposeitg_integration__itg_survey
+    config:
+      alias: itg_survey
+      tags: ["iconnect_data_ingestion","ingestion"]
+
+  - name: hcposeitg_integration__itg_survey_question
+    config: 
+      alias: itg_survey_question
+      tags: ["iconnect_data_ingestion","ingestion"]
+
+  - name: hcposeitg_integration__itg_survey_target
+    config:
+      alias: itg_survey_target
+      tags: ["iconnect_data_ingestion","ingestion"]

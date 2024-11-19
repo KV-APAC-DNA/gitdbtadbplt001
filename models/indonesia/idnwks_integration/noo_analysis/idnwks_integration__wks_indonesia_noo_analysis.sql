@@ -134,7 +134,17 @@ union1 as
         NULL as LATEST_COUNT_LOCAL_VARIANT,
         NULL as LATEST_CHNL_GRP2,
         NULL as Latest_Distributor_Group,
-        NULL as Latest_Dstrbtr_grp_cd
+        NULL as Latest_Dstrbtr_grp_cd,
+        edcd.ADDITIONAL_INFORMATION_1_CODE,
+        edcd.ADDITIONAL_INFORMATION_1_NAME,
+        edcd.ADDITIONAL_INFORMATION_2_CODE,
+        edcd.ADDITIONAL_INFORMATION_2_NAME,
+        edcd.ADDITIONAL_INFORMATION_3_CODE,
+        edcd.ADDITIONAL_INFORMATION_3_NAME,
+        edcd.ADDITIONAL_INFORMATION_4_CODE,
+        edcd.ADDITIONAL_INFORMATION_4_NAME,
+        edcd.ADDITIONAL_INFORMATION_5_CODE,
+        edcd.ADDITIONAL_INFORMATION_5_NAME 
     FROM (
             SELECT TRANS_KEY,
                 BILL_DOC,
@@ -332,7 +342,17 @@ union2 as
         NULL as LATEST_COUNT_LOCAL_VARIANT,
         NULL as LATEST_CHNL_GRP2,
         NULL as Latest_Distributor_Group,
-        NULL as Latest_Dstrbtr_grp_cd
+        NULL as Latest_Dstrbtr_grp_cd,
+        edcd.ADDITIONAL_INFORMATION_1_CODE,
+        edcd.ADDITIONAL_INFORMATION_1_NAME,
+        edcd.ADDITIONAL_INFORMATION_2_CODE,
+        edcd.ADDITIONAL_INFORMATION_2_NAME,
+        edcd.ADDITIONAL_INFORMATION_3_CODE,
+        edcd.ADDITIONAL_INFORMATION_3_NAME,
+        edcd.ADDITIONAL_INFORMATION_4_CODE,
+        edcd.ADDITIONAL_INFORMATION_4_NAME,
+        edcd.ADDITIONAL_INFORMATION_5_CODE,
+        edcd.ADDITIONAL_INFORMATION_5_NAME 
     FROM (
             SELECT T1.TRANS_KEY,
                 T1.BILL_DOC,
@@ -499,6 +519,16 @@ updt as(
             transformed.latest_dstrbtr_grp_cd
         ) as latest_dstrbtr_grp_cd,
         -- transformed.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd
+        edcd.ADDITIONAL_INFORMATION_1_CODE,
+        edcd.ADDITIONAL_INFORMATION_1_NAME,
+        edcd.ADDITIONAL_INFORMATION_2_CODE,
+        edcd.ADDITIONAL_INFORMATION_2_NAME,
+        edcd.ADDITIONAL_INFORMATION_3_CODE,
+        edcd.ADDITIONAL_INFORMATION_3_NAME,
+        edcd.ADDITIONAL_INFORMATION_4_CODE,
+        edcd.ADDITIONAL_INFORMATION_4_NAME,
+        edcd.ADDITIONAL_INFORMATION_5_CODE,
+        edcd.ADDITIONAL_INFORMATION_5_NAME 
     from transformed
         left join EDW_DISTRIBUTOR_CUSTOMER_DIM_rnk_outlet EDCD ON concat(
             TRIM(UPPER(transformed.JJ_SAP_DSTRBTR_ID)),
@@ -671,7 +701,17 @@ updt2 as(
         end as latest_chnl_grp2,
         --updt.latest_chnl_grp2 as latest_chnl_grp2,
         updt.latest_distributor_group as latest_distributor_group,
-        updt.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd
+        updt.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd,
+        edcd.ADDITIONAL_INFORMATION_1_CODE,
+        edcd.ADDITIONAL_INFORMATION_1_NAME,
+        edcd.ADDITIONAL_INFORMATION_2_CODE,
+        edcd.ADDITIONAL_INFORMATION_2_NAME,
+        edcd.ADDITIONAL_INFORMATION_3_CODE,
+        edcd.ADDITIONAL_INFORMATION_3_NAME,
+        edcd.ADDITIONAL_INFORMATION_4_CODE,
+        edcd.ADDITIONAL_INFORMATION_4_NAME,
+        edcd.ADDITIONAL_INFORMATION_5_CODE,
+        edcd.ADDITIONAL_INFORMATION_5_NAME 
     from updt
         left join EDW_DISTRIBUTOR_CUSTOMER_DIM_rnk EDCD on concat(
             TRIM(UPPER(updt.JJ_SAP_DSTRBTR_ID)),
@@ -793,6 +833,16 @@ updated_noo as (
             filtered_noo.latest_dstrbtr_grp_cd
         ) as latest_dstrbtr_grp_cd,
         -- filtered_noo.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd
+        edcd.ADDITIONAL_INFORMATION_1_CODE,
+        edcd.ADDITIONAL_INFORMATION_1_NAME,
+        edcd.ADDITIONAL_INFORMATION_2_CODE,
+        edcd.ADDITIONAL_INFORMATION_2_NAME,
+        edcd.ADDITIONAL_INFORMATION_3_CODE,
+        edcd.ADDITIONAL_INFORMATION_3_NAME,
+        edcd.ADDITIONAL_INFORMATION_4_CODE,
+        edcd.ADDITIONAL_INFORMATION_4_NAME,
+        edcd.ADDITIONAL_INFORMATION_5_CODE,
+        edcd.ADDITIONAL_INFORMATION_5_NAME 
     from filtered_noo
         left join EDW_DISTRIBUTOR_CUSTOMER_DIM_rnk_outlet EDCD ON concat(
             TRIM(UPPER(filtered_noo.JJ_SAP_DSTRBTR_ID)),
@@ -801,7 +851,7 @@ updated_noo as (
         left join EDW_DISTRIBUTOR_DIM EDD ON TRIM(UPPER(filtered_noo.JJ_SAP_DSTRBTR_ID)) = trim(upper(edd.jj_sap_dstrbtr_id))
         left join EDW_PRODUCT_DIM_rnk AS EDP on TRIM(UPPER(filtered_noo.JJ_SAP_PROD_ID)) = trim(upper(edp.jj_sap_prod_id))
 ),
-transformed_noo as (
+transformed_noo as ( 
     select updated_noo.jj_year as jj_year,
         updated_noo.jj_qrtr as jj_qrtr,
         updated_noo.jj_mnth as jj_mnth,
@@ -965,7 +1015,17 @@ transformed_noo as (
         end as latest_chnl_grp2,
         --updated_noo.latest_chnl_grp2 as latest_chnl_grp2,
         updated_noo.latest_distributor_group as latest_distributor_group,
-        updated_noo.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd
+        updated_noo.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd ,
+        edcd.ADDITIONAL_INFORMATION_1_CODE,
+        edcd.ADDITIONAL_INFORMATION_1_NAME,
+        edcd.ADDITIONAL_INFORMATION_2_CODE,
+        edcd.ADDITIONAL_INFORMATION_2_NAME,
+        edcd.ADDITIONAL_INFORMATION_3_CODE,
+        edcd.ADDITIONAL_INFORMATION_3_NAME,
+        edcd.ADDITIONAL_INFORMATION_4_CODE,
+        edcd.ADDITIONAL_INFORMATION_4_NAME,
+        edcd.ADDITIONAL_INFORMATION_5_CODE,
+        edcd.ADDITIONAL_INFORMATION_5_NAME 
     from updated_noo
         left join EDW_DISTRIBUTOR_CUSTOMER_DIM_rnk EDCD on concat(
             TRIM(UPPER(updated_noo.JJ_SAP_DSTRBTR_ID)),
