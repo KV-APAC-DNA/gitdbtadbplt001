@@ -92,6 +92,8 @@ ITG_QUERY_PARAMETERS as
 (
 select * from DEV_DNA_CORE.INDITG_INTEGRATION.ITG_QUERY_PARAMETERS 
 ),
+
+
 final as 
 (
 SELECT sf.customer_code
@@ -454,35 +456,37 @@ SELECT sf.customer_code
     ,COALESCE(self.HQ_CODE,spec.HQ_CODE) as HQ_CODE
 
 FROM (
-    (
-        (
-            (
-                (
-                    (
-                        (
-                            (
-                                (
-                                    (
-                                        (
-                                            (
-                                                (
-                                                    (
-                                                        (
-                                                            (
-                                                                (
-                                                                    (
-                                                                        (
-																           edw_dailysales_fact sf LEFT JOIN edw_retailer_calendar_dim cd ON ((sf.invoice_date = cd.day))
-																        ) LEFT JOIN (
-																         SELECT derived_table1.rn
-																	     ,derived_table1.retailer_code
-																	     ,derived_table1.rtrlatitude
-																	     ,derived_table1.rtrlongitude
-																	     ,derived_table1.rtruniquecode
-																	     ,derived_table1.createddate
-																	     ,derived_table1.start_date
-																	     ,derived_table1.end_date
-																	      ,derived_table1.customer_code
+(
+
+ (
+
+  (
+	 (
+		(
+			(
+				(
+					(
+						(
+							(
+								(
+									(
+										(
+											(
+												(
+													(
+														(
+															(
+																edw_dailysales_fact sf LEFT JOIN edw_retailer_calendar_dim cd ON ((sf.invoice_date = cd.day))
+																) LEFT JOIN (
+																SELECT derived_table1.rn
+																	,derived_table1.retailer_code
+																	,derived_table1.rtrlatitude
+																	,derived_table1.rtrlongitude
+																	,derived_table1.rtruniquecode
+																	,derived_table1.createddate
+																	,derived_table1.start_date
+																	,derived_table1.end_date
+																	,derived_table1.customer_code
 																	,derived_table1.customer_name
 																	,derived_table1.retailer_name
 																	,derived_table1.retailer_address1
@@ -920,14 +924,14 @@ FROM (
 				AND (rgeo.urc_rnk = 1)
 				)
 			)
-	)  LEFT JOIN (
-		select parameter_value as prof_type 
-		    , parameter_name as brand_name 
+	    )  LEFT JOIN (
+		       select parameter_value as prof_type 
+		        , parameter_name as brand_name 
 		from itg_query_parameter 
           where parameter_type = 'Add_prof_heir')as qp
             on (pd.brand_name = qp.brand_name
 		    )
-        ) LEFT JOIN IN_HCP_SpecialtyCare as spec
+    ) LEFT JOIN IN_HCP_SpecialtyCare as spec
             ON sf.customer_code = spec.code AND qp.prof_type = 'speciality'
     ) LEFT JOIN IN_HCP_Selfcare as self
             ON sf.customer_code = self.code AND qp.prof_type = 'self_care'	
