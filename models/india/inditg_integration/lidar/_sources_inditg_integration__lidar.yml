@@ -31,4 +31,13 @@ sources:
     - name: sdl_lidar_ff_other_paid_media
     - name: sdl_lidar_ff_tv_spends
     - name: sdl_lidar_ff_tv_grp_spends
-      
+
+  - name: paidmedia_integration
+    database: "{{ env_var('DBT_ENV_CON360LIDAR_DB') }}"
+    schema: paidmedia_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: fct_currency_rate_global_daily    

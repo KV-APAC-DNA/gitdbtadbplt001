@@ -115,6 +115,7 @@ select
     ts.mediam::varchar(16777216) as mediam,
     ts.pr_code::varchar(16777216) as pr_code,
     floor(ts.ob_cost, 2)::float as ob_cost_inr,
+    floor((replace(ts.ob_cost,',','')/ curr.rate),2)::float as ob_cost_usd,
     ts.uidkey::varchar(16777216) as uidkey,
     ts.comp_grpcd::varchar(16777216) as comp_grpcd,
     ts.comp_grpnm::varchar(16777216) as comp_grpnm,
@@ -125,7 +126,6 @@ select
     null::varchar(16777216) as brand_harmonized_by,
     current_timestamp()::timestamp_ltz(9) as crt_dttm
 --try_to_timestamp('') as updt_dttm
-from {{ source(
-      "indsdl_raw",
-      "sdl_lidar_ff_tv_spends"
-    ) }} as ts
+from {{ source("indsdl_raw","sdl_lidar_ff_tv_spends") }} as ts
+left join {{ source("paidmedia_integration","fct_currency_rate_global_daily") }} as curr
+on ts.ob_date = curr.date
