@@ -118,7 +118,7 @@ FROM (SELECT COUNTRY_CODE,
              sellout_value_list_price AS SALES_VALUE_LIST_PRICE
 FROM edw_rpt_regional_sellout_offtake
 WHERE COUNTRY_CODE = 'PH'
-AND   DATA_SOURCE IN ('SELL-OUT','POS','STOCK TRANSFER')
+AND   DATA_SOURCE IN ('SELL-OUT','POS')
 AND   MNTH_ID >= (SELECT last_27mnths
                   FROM edw_vw_cal_retail_excellence_dim)::NUMERIC
 AND   MNTH_ID <= (SELECT prev_mnth FROM edw_vw_cal_retail_excellence_dim)::NUMERIC
