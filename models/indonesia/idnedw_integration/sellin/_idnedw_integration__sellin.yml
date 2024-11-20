@@ -5,6 +5,10 @@ models:
     config:
       alias: edw_rpt_id_sellin_analysis
       tags: ["id_sellin_analysis","transformation"]
+  - name: idnedw_integration__edw_rpt_id_sellin_analysis_ciw_type
+    config:
+      alias: edw_rpt_id_sellin_analysis_ciw_type
+      tags: ["id_sellin_analysis","transformation"]    
   - name: idnedw_integration__edw_order_sell_in_analysis
     config:
       alias: edw_order_sell_in_analysis
