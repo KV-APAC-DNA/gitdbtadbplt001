@@ -1633,6 +1633,7 @@ ct4 AS (
         ) LEFT JOIN (
             SELECT DISTINCT
                 edw_vw_ps_targets.kpi,
+                edw_vw_ps_targets.retail_environment,
                 edw_vw_ps_targets.attribute_1 AS category,
                 edw_vw_ps_targets.attribute_2 AS segment,
                 edw_vw_ps_targets.value AS "target",
@@ -1672,6 +1673,10 @@ ct4 AS (
                 AND (
                     upper((mkt_share.channel)::TEXT)
                     = upper((pop.channel)::TEXT)
+                )
+                AND (
+                    upper((mkt_share.retail_environment)::TEXT)
+                    = upper((pop.retail_environment_ps)::TEXT)
                 )
             )
         )
