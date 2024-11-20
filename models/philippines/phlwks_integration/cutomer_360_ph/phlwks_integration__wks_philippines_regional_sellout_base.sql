@@ -217,7 +217,7 @@ final as
         jj_qty_pc as SO_SLS_QTY, 
         --COALESCE(pos_gts, jj_gts) as SO_SLS_VALUE,
         case 
-            when cust_cd in ('SM', 'PG', 'MDC') then COALESCE(pos_gts, jj_gts)
+            when sls_v2.cust_cd in ('SM', 'PG', 'MDC') then COALESCE(pos_gts, jj_gts)
             else pos_gts
         end as SO_SLS_VALUE,
         jj_item_prc_per_pc as SO_LIST_PRICE,
