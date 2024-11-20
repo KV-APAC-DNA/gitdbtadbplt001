@@ -39,6 +39,23 @@ etd as (
 itg_query_parameters as (
     select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
 ),
+
+vw_edw_reg_exch_rate as
+(
+    select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
+),
+
+ex_rt as 
+(
+	SELECT *
+		FROM vw_edw_reg_exch_rate
+		WHERE cntry_key = 'ID'
+		AND   TO_CCY = 'USD'
+		AND   JJ_MNTH_ID = (SELECT MAX(JJ_MNTH_ID) FROM vw_edw_reg_exch_rate)
+),
+edw_rpt_id_sellin_analysis_ciw_type as (
+    select * from {{ ref('idnedw_integration__edw_rpt_id_sellin_analysis_ciw_type') }}
+), 
 final as (
 select to_date(eadlf.bill_dt) as bill_dt,
        eadlf.bill_doc::varchar(100) as bill_doc,
@@ -75,17 +92,22 @@ select to_date(eadlf.bill_dt) as bill_dt,
        epd.status::VARCHAR(50) as prod_status,
        sum(eadlf.sellin_qty)::NUMBER(18,4) as sellin_qty,
        sum(eadlf.sellin_val)::NUMBER(18,4) as sellin_val,
-       sum(eadlf.gross_sellin_val)::NUMBER(18,4) as gross_sellin_val
+       sum(eadlf.gross_sellin_val)::NUMBER(18,4) as gross_sellin_val,
+	  (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))::NUMERIC(28,10) AS usd_conversion_rate,
+       null as ciw_type,
+       null as ciw_amount
 from edw_id_sellin_fact_temp as eadlf,
      edw_distributor_dim as edd,
      edw_product_dim as epd,
-     etd
+     etd,
+	 ex_rt
 where
 trim(edd.jj_sap_dstrbtr_id(+)) = trim(eadlf.jj_sap_dstrbtr_id)
 and eadlf.jj_mnth_id between edd.effective_from(+) and edd.effective_to(+)     
 and   date(etd.cal_date) = date(eadlf.bill_dt)
 and   trim(epd.jj_sap_prod_id(+)) = trim(eadlf.jj_sap_prod_id) 
 and eadlf.jj_mnth_id between epd.effective_from(+) and epd.effective_to(+)  
+and ex_rt.from_ccy = 'IDR' 
 and   etd.jj_year >= date_part(year,convert_timezone('UTC',current_timestamp))- (select cast(parameter_value as int)
                                                   from itg_query_parameters
                                                   where upper(country_code) = 'ID'
@@ -122,6 +144,12 @@ group by eadlf.bill_dt,
          epd.variant2,
          epd.variant3,
          epd.variant3 || ' ' || nvl(cast(epd.put_up as varchar),''),
-         epd.status
+         epd.status,
+		 (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio))
+),
+final1 as (
+select * from final 
+union all
+select * from edw_rpt_id_sellin_analysis_ciw_type 
 )
-select * from final
+select * from final1

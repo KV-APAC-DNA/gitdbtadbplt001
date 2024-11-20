@@ -23,6 +23,19 @@ itg_mcs_gt as
 (
     select * from {{ ref('idnitg_integration__itg_mcs_gt') }}
 ),
+vw_edw_reg_exch_rate as
+(
+    select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
+),
+
+ex_rt as 
+(
+	SELECT *
+		FROM vw_edw_reg_exch_rate
+		WHERE cntry_key = 'ID'
+		AND   TO_CCY = 'USD'
+		AND   JJ_MNTH_ID = (SELECT MAX(JJ_MNTH_ID) FROM vw_edw_reg_exch_rate)
+),
 trans as 
 (
 SELECT T1.JJ_YEAR,
@@ -108,8 +121,20 @@ SELECT T1.JJ_YEAR,
      T1.LATEST_COUNT_LOCAL_VARIANT,
 	 T1.LATEST_CHNL_GRP2,
 	T1.Latest_Distributor_Group,
- T1.Latest_Dstrbtr_grp_cd
+ T1.Latest_Dstrbtr_grp_cd,
+ (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio)) AS usd_conversion_rate ,
+ T1.ADDITIONAL_INFORMATION_1_CODE,
+ T1.ADDITIONAL_INFORMATION_1_NAME,
+ T1.ADDITIONAL_INFORMATION_2_CODE,
+ T1.ADDITIONAL_INFORMATION_2_NAME,
+ T1.ADDITIONAL_INFORMATION_3_CODE,
+ T1.ADDITIONAL_INFORMATION_3_NAME,
+ T1.ADDITIONAL_INFORMATION_4_CODE,
+ T1.ADDITIONAL_INFORMATION_4_NAME,
+ T1.ADDITIONAL_INFORMATION_5_CODE,
+ T1.ADDITIONAL_INFORMATION_5_NAME 
 FROM wks_indonesia_noo_analysis T1 
+LEFT JOIN ex_rt where ex_rt.from_ccy = 'IDR'
 UNION ALL 
 SELECT CAST(YEAR AS INTEGER) AS JJ_YEAR,
        ETD.JJ_QRTR AS JJ_QRTR,
@@ -197,7 +222,18 @@ SELECT CAST(YEAR AS INTEGER) AS JJ_YEAR,
 	 NULL AS LATEST_COUNT_LOCAL_VARIANT,
 	   NULL AS LATEST_CHNL_GRP2,
 	  NULL AS Latest_Distributor_Group,
-     NULL AS Latest_Dstrbtr_grp_cd
+     NULL AS Latest_Dstrbtr_grp_cd,
+	 (ex_rt.EXCH_RATE/(ex_rt.from_ratio*ex_rt.to_ratio)) AS usd_conversion_rate,
+    null as ADDITIONAL_INFORMATION_1_CODE,
+    null as ADDITIONAL_INFORMATION_1_NAME,
+    null as ADDITIONAL_INFORMATION_2_CODE,
+    null as ADDITIONAL_INFORMATION_2_NAME,
+    null as ADDITIONAL_INFORMATION_3_CODE,
+    null as ADDITIONAL_INFORMATION_3_NAME,
+    null as ADDITIONAL_INFORMATION_4_CODE,
+    null as ADDITIONAL_INFORMATION_4_NAME,
+    null as ADDITIONAL_INFORMATION_5_CODE,
+    null as ADDITIONAL_INFORMATION_5_NAME  
 FROM itg_target_dist_brand_channel h
   LEFT JOIN (SELECT DISTINCT JJ_YEAR,
                     JJ_QRTR_NO,
@@ -218,6 +254,7 @@ FROM itg_target_dist_brand_channel h
         AND UPPER (TRIM (h.brand)) = UPPER (TRIM (EPD.brand))
 		and concat(h.year,decode(upper(trim(h.jj_mnth_long)),'JANUARY','01','FEBRUARY','02','MARCH','03','APRIL','04','MAY','05','JUNE','06','JULY','07','AUGUST','08',
 'SEPTEMBER','09','OCTOBER','10','NOVEMBER','11','DECEMBER','12','00')) between EPD.effective_from and EPD.effective_to THEN 1 END = 1
+LEFT JOIN ex_rt where ex_rt.from_ccy = 'IDR'
 ),
 transformed as 
 (
@@ -310,6 +347,17 @@ latest_count_local_variant,
 latest_chnl_grp2,
 latest_distributor_group,
 latest_dstrbtr_grp_cd,
+usd_conversion_rate,
+ADDITIONAL_INFORMATION_1_CODE,
+ADDITIONAL_INFORMATION_1_NAME,
+ADDITIONAL_INFORMATION_2_CODE,
+ADDITIONAL_INFORMATION_2_NAME,
+ADDITIONAL_INFORMATION_3_CODE,
+ADDITIONAL_INFORMATION_3_NAME,
+ADDITIONAL_INFORMATION_4_CODE,
+ADDITIONAL_INFORMATION_4_NAME,
+ADDITIONAL_INFORMATION_5_CODE,
+ADDITIONAL_INFORMATION_5_NAME 
     from trans
 ),
 
@@ -412,7 +460,18 @@ transformed.latest_msl as latest_msl,
 transformed.latest_count_local_variant as latest_count_local_variant,
 transformed.latest_chnl_grp2 as latest_chnl_grp2,
 transformed.latest_distributor_group as latest_distributor_group,
-transformed.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd
+transformed.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd,
+transformed.usd_conversion_rate as usd_conversion_rate,
+transformed.ADDITIONAL_INFORMATION_1_CODE,
+transformed.ADDITIONAL_INFORMATION_1_NAME,
+transformed.ADDITIONAL_INFORMATION_2_CODE,
+transformed.ADDITIONAL_INFORMATION_2_NAME,
+transformed.ADDITIONAL_INFORMATION_3_CODE,
+transformed.ADDITIONAL_INFORMATION_3_NAME,
+transformed.ADDITIONAL_INFORMATION_4_CODE,
+transformed.ADDITIONAL_INFORMATION_4_NAME,
+transformed.ADDITIONAL_INFORMATION_5_CODE,
+transformed.ADDITIONAL_INFORMATION_5_NAME 
 from transformed  
 left join temp_a
 on temp_a.tiering = transformed.tiering
@@ -557,6 +616,17 @@ t5.latest_count_local_variant as latest_count_local_variant,
 t5.latest_chnl_grp2 as latest_chnl_grp2,
 t5.latest_distributor_group as latest_distributor_group,
 t5.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd,
+t5.usd_conversion_rate as usd_conversion_rate,
+t5.ADDITIONAL_INFORMATION_1_CODE,
+t5.ADDITIONAL_INFORMATION_1_NAME,
+t5.ADDITIONAL_INFORMATION_2_CODE,
+t5.ADDITIONAL_INFORMATION_2_NAME,
+t5.ADDITIONAL_INFORMATION_3_CODE,
+t5.ADDITIONAL_INFORMATION_3_NAME,
+t5.ADDITIONAL_INFORMATION_4_CODE,
+t5.ADDITIONAL_INFORMATION_4_NAME,
+t5.ADDITIONAL_INFORMATION_5_CODE,
+t5.ADDITIONAL_INFORMATION_5_NAME 
 from updt1 as t5
 left join t6
     ON t5.tiering = t6.tiering
@@ -693,7 +763,18 @@ b.latest_msl as latest_msl,
 b.latest_count_local_variant as latest_count_local_variant,
 b.latest_chnl_grp2 as latest_chnl_grp2,
 b.latest_distributor_group as latest_distributor_group,
-b.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd
+b.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd,
+b.usd_conversion_rate as usd_conversion_rate,
+b.ADDITIONAL_INFORMATION_1_CODE,
+b.ADDITIONAL_INFORMATION_1_NAME,
+b.ADDITIONAL_INFORMATION_2_CODE,
+b.ADDITIONAL_INFORMATION_2_NAME,
+b.ADDITIONAL_INFORMATION_3_CODE,
+b.ADDITIONAL_INFORMATION_3_NAME,
+b.ADDITIONAL_INFORMATION_4_CODE,
+b.ADDITIONAL_INFORMATION_4_NAME,
+b.ADDITIONAL_INFORMATION_5_CODE,
+b.ADDITIONAL_INFORMATION_5_NAME 
 from updt2 as b 
 left join temp_b 
     ON b.tiering = temp_b.tiering
@@ -798,7 +879,18 @@ else c.latest_msl end as latest_msl,
 c.latest_count_local_variant as latest_count_local_variant,
 c.latest_chnl_grp2 as latest_chnl_grp2,
 c.latest_distributor_group as latest_distributor_group,
-c.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd
+c.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd,
+c.usd_conversion_rate as usd_conversion_rate,
+c.ADDITIONAL_INFORMATION_1_CODE,
+c.ADDITIONAL_INFORMATION_1_NAME,
+c.ADDITIONAL_INFORMATION_2_CODE,
+c.ADDITIONAL_INFORMATION_2_NAME,
+c.ADDITIONAL_INFORMATION_3_CODE,
+c.ADDITIONAL_INFORMATION_3_NAME,
+c.ADDITIONAL_INFORMATION_4_CODE,
+c.ADDITIONAL_INFORMATION_4_NAME,
+c.ADDITIONAL_INFORMATION_5_CODE,
+c.ADDITIONAL_INFORMATION_5_NAME 
     from updt3 as c
     left join temp_d
     on c.latest_cust_grp2 = temp_d.tiering 
@@ -902,7 +994,18 @@ n1.latest_msl as latest_msl,
 nvl(temp_e.distinct_variant_count,n1.latest_count_local_variant) as latest_count_local_variant,
 n1.latest_chnl_grp2 as latest_chnl_grp2,
 n1.latest_distributor_group as latest_distributor_group,
-n1.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd
+n1.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd,
+n1.usd_conversion_rate as usd_conversion_rate,
+n1.ADDITIONAL_INFORMATION_1_CODE,
+n1.ADDITIONAL_INFORMATION_1_NAME,
+n1.ADDITIONAL_INFORMATION_2_CODE,
+n1.ADDITIONAL_INFORMATION_2_NAME,
+n1.ADDITIONAL_INFORMATION_3_CODE,
+n1.ADDITIONAL_INFORMATION_3_NAME,
+n1.ADDITIONAL_INFORMATION_4_CODE,
+n1.ADDITIONAL_INFORMATION_4_NAME,
+n1.ADDITIONAL_INFORMATION_5_CODE,
+n1.ADDITIONAL_INFORMATION_5_NAME 
     from updt4 as n1
     left join temp_e
     ON n1.latest_cust_grp2 = temp_e.tiering
@@ -998,7 +1101,18 @@ final as
 	latest_count_local_variant::varchar(200) as latest_count_local_variant,
 	latest_chnl_grp2::varchar(200) as latest_chnl_grp2,
 	latest_distributor_group::varchar(200) as latest_distributor_group,
-	latest_dstrbtr_grp_cd::varchar(200) as latest_dstrbtr_grp_cd
+	latest_dstrbtr_grp_cd::varchar(200) as latest_dstrbtr_grp_cd,
+	usd_conversion_rate::NUMERIC(28,10) as usd_conversion_rate,
+    ADDITIONAL_INFORMATION_1_CODE::varchar(100) as ADDITIONAL_INFORMATION_1,
+    --ADDITIONAL_INFORMATION_1_NAME::varchar(100) as ADDITIONAL_INFORMATION_1_NAME,
+    ADDITIONAL_INFORMATION_2_CODE::varchar(100) as ADDITIONAL_INFORMATION_2,
+    --ADDITIONAL_INFORMATION_2_NAME::varchar(100) as ADDITIONAL_INFORMATION_2_NAME,
+    ADDITIONAL_INFORMATION_3_CODE::varchar(100) as ADDITIONAL_INFORMATION_3,
+    --ADDITIONAL_INFORMATION_3_NAME::varchar(100) as ADDITIONAL_INFORMATION_3_NAME,
+    ADDITIONAL_INFORMATION_4_CODE::varchar(100) as ADDITIONAL_INFORMATION_4,
+    --ADDITIONAL_INFORMATION_4_NAME::varchar(100) as ADDITIONAL_INFORMATION_4_NAME,
+    ADDITIONAL_INFORMATION_5_CODE::varchar(100) as ADDITIONAL_INFORMATION_5 
+    --ADDITIONAL_INFORMATION_5_NAME::varchar(100) as ADDITIONAL_INFORMATION_5_NAME,
     from updt5
 )
 select * from final
