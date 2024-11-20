@@ -43,7 +43,7 @@ itg_mds_ph_pos_pricelist as
     select * from {{ ref('phlitg_integration__itg_mds_ph_pos_pricelist') }}
 ),
 edw_vw_ph_pos_sales_fact as (
-    select * from prod_dna_core.phledw_integration.edw_vw_ph_pos_sales_fact
+    select * from {{ ref('phledw_integration__edw_vw_ph_pos_sales_fact') }}
 ),
 final as
 (
