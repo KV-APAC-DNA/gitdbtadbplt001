@@ -30,4 +30,5 @@ sources:
     tables:
     - name: sdl_lidar_ff_other_paid_media
     - name: sdl_lidar_ff_tv_spends
+    - name: sdl_lidar_ff_tv_grp_spends
       
