@@ -94,7 +94,8 @@ select null as bill_dt,
 from edw_copa_trans_fact_temp  copa,
      edw_distributor_dim edd,
      edw_product_dim  epd,
-     edw_time_dim etd, ex_rt	   
+     (select distinct etd.jj_year, etd.jj_qrtr,etd.jj_mnth_id,etd.jj_mnth, etd.jj_mnth_desc,etd.jj_mnth_no,
+      etd.jj_mnth_long from edw_time_dim etd) etd, ex_rt	   
 where
 ltrim(edd.jj_sap_dstrbtr_id(+),0) = ltrim(copa.CUST_NUM,0)
 and copa.fisc_yr||lpad(copa.pstng_per,2,0) between edd.effective_from(+) and edd.effective_to(+)     
