@@ -67,13 +67,22 @@ base as(
 		SUM(SELLOUT.JCP_NET_PRICE) AS SO_SLS_VALUE,
 		ITEM.ITEM_CD AS msl_product_code,
 		--SELLOUT.item_nm AS msl_product_desc,
-		CASE 
+		/*CASE 
         --WHEN MDS.NAME = 'Retailer Name' THEN MDS.NAME_ENG
 			WHEN MDS1.NAME = 'Store Type'
 				AND MDS1.NAME_ENG <> 'Others'
 				THEN MDS1.NAME_ENG
 			WHEN MDS1.NAME = 'Store Type'
 				AND  MDS1.NAME_ENG = 'Others'
+				THEN MDS1.NAME_ENG
+			ELSE 'NA'
+			END AS retail_env,*/
+        CASE --WHEN MDS.NAME = 'Retailer Name' THEN MDS.NAME_ENG
+			WHEN MDS1.NAME = 'Store Type'
+				AND MDS1.NAME_ENG <> 'Others'
+				THEN ('Other' || ' ' || MDS1.NAME_ENG)
+			WHEN MDS1.NAME = 'Store Type'
+				AND MDS1.NAME_ENG = 'Others'
 				THEN MDS1.NAME_ENG
 			ELSE 'NA'
 			END AS retail_env,
