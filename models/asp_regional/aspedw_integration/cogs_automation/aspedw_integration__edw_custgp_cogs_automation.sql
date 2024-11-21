@@ -229,6 +229,58 @@ pac1 as
 
         order by market_code, materialnumber, valid_from
 ),
+---For VN OTC customers starting 2024, follow absolute COGS + ELC/IC markup amount as COGS unlike other VN customers. Hence the below CTE
+copa3 as 
+(  
+SELECT fisc_yr,
+       fisc_yr_per,
+       copa.co_cd,
+       obj_crncy_co_obj,
+       sls_org,
+       prft_Ctr,
+       ltrim(matl_num,'0') as matl_num,
+       --emd.matl_desc,
+       ltrim(cust_num,'0') as cust_num,
+       --ecd.cust_nm,
+       0 as nts,
+       0 as nts_volume,
+       0 AS free_goods_value,
+       0 AS standard_cost,
+       0 AS freegoods_cost_per_unit,
+       0 as unit,
+       0 as Standard_cost_per_unit,
+       0 as pre_apsc_cper_pc,
+       sum(amt_obj_crncy) as COGS_at_Pre_APSC,
+       0 AS Free_Goods_COGS_at_Pre_APSC,
+       COGS_at_Pre_APSC + Free_Goods_COGS_at_Pre_APSC AS Total_APSC
+FROM  edw_copa_trans_fact copa
+INNER JOIN itg_custgp_cogs_fg_control fgctl on /*case when cogs.acct_hier_shrt_desc = 'FG' 
+                                                            then 'FG' end*/
+													   copa.acct_hier_shrt_desc	= fgctl.acct_hier_shrt_desc and 	
+													   copa.co_cd = fgctl.co_cd and 
+													   copa.fisc_yr_per >= fgctl.valid_from and
+													   copa.fisc_yr_per < fgctl.valid_to and 
+													   cast(case when copa.acct_hier_shrt_desc = 'SCOGS'
+                                                       then nvl(nullif(ltrim(copa.cust_num,'0'),''),'0')                                                     --'140328' 
+                                                       when copa.acct_hier_shrt_desc = 'ICMC'
+                                                       then 0
+                                                       end as numeric)
+                                                            --when copa.acct_hier_shrt_desc = 'ICMC'
+                                                            --then '0' 
+															= fgctl.gl_acct_num and 
+													   fgctl.active = 'Y'	
+--left join (select distinct cust_num,cust_nm from rg_edw.edw_customer_base_dim) ecd	ON LTRIM (ecd.cust_num,'0') = ltrim(copa.cust_num,'0')
+where copa.co_cd in (select distinct co_cd from edw_company_dim where ctry_group = 'Vietnam'
+and copa.acct_hier_shrt_desc in ('SCOGS','ICMC'))												   
+GROUP BY fisc_yr,
+         fisc_yr_per,
+         copa.co_cd,
+         prft_ctr,
+         sls_org,
+         obj_crncy_co_obj,
+         LTRIM(cust_num,'0'),
+         LTRIM(matl_num,'0')
+),
 final as
 (
     SELECT DISTINCT copa.fisc_yr,
@@ -312,6 +364,33 @@ final as
             AND pac1.market_code = copa1.ctry_group
             AND copa1.fisc_yr_per >= pac1.valid_from  
             AND copa1.fisc_yr_per < pac1.valid_to
+    UNION ALL
+--VN OTC New COGS calculation logic
+SELECT DISTINCT copa3.fisc_yr,
+        copa3.fisc_yr_per AS period,
+        copa3.co_cd,
+        copa3.obj_crncy_co_obj AS currency,
+        copa3.sls_org AS plant,
+        copa3.prft_Ctr AS profit_cntr,
+        copa3.matl_num,
+        emd.matl_desc,
+        copa3.cust_num,
+        ecd.cust_nm,
+        copa3.nts,
+        copa3.nts_volume,
+        copa3.free_goods_value,
+        copa3.standard_cost,
+        copa3.freegoods_cost_per_unit,
+        copa3.unit,
+        copa3.Standard_cost_per_unit,
+        copa3.pre_apsc_cper_pc,
+        copa3.COGS_at_Pre_APSC,
+        copa3.Free_Goods_COGS_at_Pre_APSC,
+        copa3.Total_APSC
+        FROM copa3
+        LEFT JOIN emd ON LTRIM (emd.matl_num,'0') = copa3.matl_num
+        LEFT JOIN ecd ON LTRIM (ecd.cust_num,'0') = copa3.cust_num	 
+
 )
 select fisc_yr::number(38,0) as fisc_yr,
     period::number(38,0) as period,
