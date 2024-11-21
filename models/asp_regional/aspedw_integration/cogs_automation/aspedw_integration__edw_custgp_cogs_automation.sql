@@ -263,7 +263,7 @@ INNER JOIN itg_custgp_cogs_fg_control fgctl on /*case when cogs.acct_hier_shrt_d
 													   cast(case when copa.acct_hier_shrt_desc = 'SCOGS'
                                                        then nvl(nullif(ltrim(copa.cust_num,'0'),''),'0')                                                     --'140328' 
                                                        when copa.acct_hier_shrt_desc = 'ICMC'
-                                                       then '0'
+                                                       then null
                                                        end as numeric)
                                                             --when copa.acct_hier_shrt_desc = 'ICMC'
                                                             --then '0' 
