@@ -22,9 +22,16 @@ edw_vw_os_time_dim as
 (
     select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
-itg_mds_ph_lav_customer as
+/*itg_mds_ph_lav_customer as
 (
     select * from {{ ref('phlitg_integration__itg_mds_ph_lav_customer') }}
+),*/
+
+itg_mds_ph_gt_customer as (
+    select * from {{ ref('phlitg_integration__itg_mds_ph_gt_customer')}}
+),
+itg_mds_ph_pos_customers as (
+    select * from {{ ref('phlitg_integration__itg_mds_ph_pos_customers')}}
 ),
 edw_ph_pos_analysis as
 (
@@ -78,6 +85,7 @@ final as
     --BASE.msl_product_code,
     --BASE.msl_product_desc,
     BASE.channel,
+    BASE.retail_env,
     convert_timezone('UTC',current_timestamp()) AS crtd_dttm,
     convert_timezone('UTC',current_timestamp()) AS updt_dttm
     FROM
@@ -111,7 +119,9 @@ final as
         NULL as SO_SELLOUT_VALUE_LIST_PRICE,
         --nvl(mat.sap_matl_num, sls.dstrbtr_prod_id) as msl_product_code,
         --emd.matl_desc as msl_product_desc,
-        mds_cust.channel_desc as channel
+        --mds_cust.channel_desc as channel
+		mds_gt_cust.channel as channel,
+		mds_gt_cust.retail_env as retail_env
     FROM itg_ph_dms_sellout_sales_fact sls left join
             (select distinct dstrbtr_grp_cd, dstrbtr_matl_num, sap_matl_num
                 from edw_vw_ph_dstrbtr_material_dim where cntry_cd = 'PH') mat
@@ -122,7 +132,13 @@ final as
         on sls.trnsfrm_cust_id = store.cust_cd
         left join edw_mv_ph_customer_dim cust ON cust.cust_id = store.sap_soldto_code
         left join edw_vw_os_time_dim b on sls.invoice_dt = b.cal_date
-        left join (SELECT distinct cust_id, channel_cd, channel_desc FROM itg_mds_ph_lav_customer WHERE UPPER(active) = 'Y') mds_cust on ltrim(mds_cust.cust_id,'0') = ltrim(store.sap_soldto_code,'0')
+        left join (select distinct UPPER(rpt_grp11_desc) AS channel,
+						  UPPER(rpt_grp9_desc) AS retail_env , dstrbtr_grp_cd, dstrbtr_cust_id
+					FROM ITG_MDS_PH_GT_CUSTOMER WHERE UPPER(active) = 'Y') mds_gt_cust
+					ON ltrim(sls.dstrbtr_grp_cd,'0') = ltrim(mds_gt_cust.dstrbtr_grp_cd,'0')
+                    AND ltrim(sls.trnsfrm_cust_id,'0') = ltrim(mds_gt_cust.dstrbtr_cust_id,'0')
+		
+		--left join (SELECT distinct cust_id, channel_cd, channel_desc FROM itg_mds_ph_lav_customer WHERE UPPER(active) = 'Y') mds_cust on ltrim(mds_cust.cust_id,'0') = ltrim(store.sap_soldto_code,'0')
 
         
     UNION ALL
@@ -150,14 +166,28 @@ final as
         sls.prov_nm AS DSTRBTR_LVL2,
         sls.mncplty_nm AS DSTRBTR_LVL3,
         jj_qty_pc as SO_SLS_QTY, 
+        --COALESCE(pos_gts, jj_gts) as SO_SLS_VALUE,
+        /*case 
+            when sls.cust_cd = 'MDC' then COALESCE(pos_gts, jj_gts)
+            else pos_gts
+        end as SO_SLS_VALUE,*/
         pos_gts as SO_SLS_VALUE,
         jj_item_prc_per_pc as SO_LIST_PRICE,
         jj_gts as SO_SELLOUT_VALUE_LIST_PRICE,
         --sku as msl_product_code,
         --mt_item_nm as msl_product_desc,
-        mds_cust.channel_desc as channel
+        --mds_cust.channel_desc as channel
+		mds_pos_cust.channel as channel,
+		mds_pos_cust.retail_env as retail_env
         from edw_ph_pos_analysis sls
-        left join (SELECT distinct cust_id, channel_cd, channel_desc FROM itg_mds_ph_lav_customer WHERE UPPER(active) = 'Y') mds_cust on ltrim(mds_cust.cust_id,'0') = ltrim(sls.sold_to,'0')
+        left join (select distinct jj_sold_to,
+                         UPPER(store_mtrx) AS channel,
+						 UPPER(chnl_sub_grp_cd) AS retail_env, brnch_cd, cust_cd from ITG_MDS_PH_POS_CUSTOMERS WHERE UPPER(active) = 'Y' and store_mtrx <> ' ') mds_pos_cust 
+                         ON  LTRIM(sls.sold_to,'0') = LTRIM(mds_pos_cust.jj_sold_to,'0')
+                         AND LTRIM(sls.cust_brnch_cd,'0') = LTRIM(mds_pos_cust.brnch_cd,'0')
+                         AND sls.cust_cd = mds_pos_cust.cust_cd
+		
+		--left join (SELECT distinct cust_id, channel_cd, channel_desc FROM itg_mds_ph_lav_customer WHERE UPPER(active) = 'Y') mds_cust on ltrim(mds_cust.cust_id,'0') = ltrim(sls.sold_to,'0')
 
 
     UNION ALL
@@ -177,22 +207,34 @@ final as
         mt_cust_brnch_nm AS STORE_NAME,
         'NA' as store_type,
         sold_to as SOLDTO_CODE,
-        cust_cd AS DISTRIBUTOR_CODE,
-        cust_cd AS DISTRIBUTOR_NAME,
+        sls_v2.cust_cd AS DISTRIBUTOR_CODE,
+        sls_v2.cust_cd AS DISTRIBUTOR_NAME,
         sls_grp_desc as region,
         'NA' as zone_or_area,
         region_nm AS DSTRBTR_LVL1,
         prov_nm AS DSTRBTR_LVL2,
         mncplty_nm AS DSTRBTR_LVL3,
         jj_qty_pc as SO_SLS_QTY, 
-        pos_gts as SO_SLS_VALUE,
+        --COALESCE(pos_gts, jj_gts) as SO_SLS_VALUE,
+        case 
+            when sls_v2.cust_cd in ('SM', 'PG', 'MDC') then COALESCE(pos_gts, jj_gts)
+            else pos_gts
+        end as SO_SLS_VALUE,
         jj_item_prc_per_pc as SO_LIST_PRICE,
         jj_gts as SO_SELLOUT_VALUE_LIST_PRICE,
         --'NA' as msl_product_code,
         --'NA' as msl_product_desc,
-        mds_cust.channel_desc as channel
+        --mds_cust.channel_desc as channel
+		mds_pos_cust.channel as channel,
+		mds_pos_cust.retail_env as retail_env
         from edw_ph_pos_analysis_v2 sls_v2
-    left join (SELECT distinct cust_id, channel_cd, channel_desc FROM itg_mds_ph_lav_customer WHERE UPPER(active) = 'Y') mds_cust on ltrim(mds_cust.cust_id,'0') = ltrim(sls_v2.sold_to,'0')
+		left join (select distinct jj_sold_to,
+                         UPPER(store_mtrx) AS channel,
+						 UPPER(chnl_sub_grp_cd) AS retail_env, brnch_cd, cust_cd from ITG_MDS_PH_POS_CUSTOMERS WHERE UPPER(active) = 'Y' and store_mtrx <> ' ') mds_pos_cust ON ltrim(sls_v2.sold_to,'0') = ltrim(mds_pos_cust.jj_sold_to,'0')
+                         AND LTRIM(sls_v2.cust_brnch_cd,'0') = LTRIM(mds_pos_cust.brnch_cd,'0') 
+                         AND sls_v2.cust_cd = mds_pos_cust.cust_cd
+    
+	--left join (SELECT distinct cust_id, channel_cd, channel_desc FROM itg_mds_ph_lav_customer WHERE UPPER(active) = 'Y') mds_cust on ltrim(mds_cust.cust_id,'0') = ltrim(sls_v2.sold_to,'0')
 
     UNION ALL
 
@@ -224,7 +266,8 @@ final as
         NULL as SO_SELLOUT_VALUE_LIST_PRICE,
         --'NA' as msl_product_code,
         --'NA' as msl_product_desc,
-        'NA' as channel
+        'NA' as channel,
+		'NA' as retail_env
         from edw_ph_ecommerce_offtake ecom left join edw_vw_os_time_dim b on ecom.cal_day = b.cal_date
         LEFT JOIN itg_query_parameters iqp
         on upper(trim(iqp.parameter_name)) = upper(trim(ecom.distributor_name)) and parameter_type='sold_to_code' and country_code='PH'
@@ -234,4 +277,5 @@ final as
     AND BASE.mnth_id>= (case when (select param_value from itg_mds_ap_customer360_config where code='base_load_ph')='ALL' THEN '190001' ELSE to_char(add_months(to_date(convert_timezone('UTC',current_timestamp())), -((select param_value from itg_mds_ap_customer360_config where code='base_load_ph')::integer)), 'YYYYMM')
     END)
 )
+
 select * from final

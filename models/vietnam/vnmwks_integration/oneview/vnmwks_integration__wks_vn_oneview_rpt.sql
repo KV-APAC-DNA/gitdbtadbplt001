@@ -1359,7 +1359,9 @@ select
 	dstrbtr_matl_name::varchar(500) as dstrbtr_matl_name,
 	bar_code::varchar(40) as bar_code,
 	customer_code::varchar(100) as customer_code,
-	customer_name::varchar(500) as customer_name,
+    --increase field length to 1000
+	--customer_name::varchar(500) as customer_name,
+    customer_name::varchar(1000) as customer_name,
 	invoice_date::date as invoice_date,
 	salesman::varchar(50) as salesman,
 	salesman_name::varchar(100) as salesman_name,

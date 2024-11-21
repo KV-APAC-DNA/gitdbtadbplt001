@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: hcposeitg_integration__itg_sample_lot
+    config:
+      alias: itg_sample_lot
+      tags: ["iconnect_data_ingestion","ingestion"]
+
+  - name: hcposeitg_integration__itg_sample_receipt
+    config: 
+      alias: itg_sample_receipt
+      tags: ["iconnect_data_ingestion","ingestion"]
+
+  - name: hcposeitg_integration__itg_sample_transaction
+    config:
+      alias: itg_sample_transaction
+      tags: ["iconnect_data_ingestion","ingestion"]

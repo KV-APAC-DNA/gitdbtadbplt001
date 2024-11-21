@@ -29,3 +29,7 @@ models:
     config:
       alias: sdl_raw_clavis_gb_search_terms_results
       tags: ["rg_clavis","transformation"]
+  - name: aspitg_integration__itg_mds_ap_digital_shelf_targets
+    config:
+      alias: itg_mds_ap_digital_shelf_targets
+      tags: ["rg_mds_to_dna","ingestion"]

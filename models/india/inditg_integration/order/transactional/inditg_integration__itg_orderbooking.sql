@@ -4,7 +4,7 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
-                    delete from {{this}} WHERE createdDate >= (SELECT min(s.createdDate)
+                    delete from {{this}} WHERE createddt >= (SELECT min(s.createddt)
                     FROM {{ source('indsdl_raw', 'sdl_csl_orderbooking') }} s);
                     {% endif %}"
     )
@@ -46,6 +46,7 @@ final as
         createddate::timestamp_ntz(9) as createddate,
         syncid::number(38,0) as syncid,
         recommendedsku::varchar(10) as recommendedsku,
+        createddt::timestamp_ntz(9) as createddt,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm,
         file_name::varchar(255) as file_name

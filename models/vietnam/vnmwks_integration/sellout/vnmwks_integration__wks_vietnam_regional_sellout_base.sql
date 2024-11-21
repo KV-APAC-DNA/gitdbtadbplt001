@@ -10,6 +10,9 @@ select * from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }}
 itg_vn_dms_customer_dim as (
 select * from {{ ref('vnmitg_integration__itg_vn_dms_customer_dim') }}
 ),
+sdl_mds_vn_store_retail_environment_mapping as (
+select * from {{ source('vnmsdl_raw', 'sdl_mds_vn_store_retail_environment_mapping') }}
+),
 edw_vw_os_time_dim as (
 select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
@@ -104,14 +107,17 @@ select 'SELL-OUT' as data_src,
 	   so_fact.jj_net_sls as so_sls_value,
        nvl(mat.prmry_upc_cd,matsls.matsls_ean) as msl_product_code,
        --prod_dim.product_name as msl_product_desc,
-       cust.shop_type as retail_env,
-       cust.shop_type as channel
+       --cust.shop_type as retail_env,
+       --cust.shop_type as channel
+	   re_map.msl_re_name as retail_env,
+	   re_map.channel_name as channel
       from edw_vw_vn_sellout_sales_fact so_fact
 	join(select dstrb.dstrbtr_id, mapp.sap_sold_to_code, dstrb.territory_dist,dstrb.dstrbtr_type, dstrb.dstrbtr_name, dstrb.region, dstrb.province from itg_vn_distributor_sap_sold_to_mapping mapp, itg_vn_dms_distributor_dim dstrb 
 	where mapp.distributor_id = nvl(dstrb.mapped_spk,dstrb.dstrbtr_id)
 	) d on so_fact.dstrbtr_grp_cd = d.dstrbtr_id
 	left join itg_vn_dms_customer_dim cust
 	  on so_fact.dstrbtr_grp_cd = cust.dstrbtr_id and so_fact.cust_cd = cust.outlet_id
+	left join sdl_mds_vn_store_retail_environment_mapping re_map on upper(cust.shop_type) = upper(re_map.code)
 	left join edw_vw_os_time_dim time_dim on so_fact.bill_date::date = time_dim.cal_date
 	left join itg_vn_dms_product_dim prod_dim on prod_dim.product_code=so_fact.dstrbtr_matl_num
         left join (select matl_num,ean_num as matsls_ean from (         
@@ -154,7 +160,8 @@ select 'SELL-OUT' as data_src,
        nvl(prd.barcode,'NA') as msl_product_code,
        --so_fact.product as msl_product_desc,
        cust.retail_environment as retail_env,
-       cust.retail_environment as channel 
+       --cust.retail_environment as channel 
+       'GT' as channel
   from (
 		select productid, product, custcode, customer, channel, sellin_sub_channel, province, region, cust_group, invoice_date, qty_exclude_foc, net_amount_wo_vat, gross_amount_wo_vat
 		   from ( select dense_rank()
@@ -190,7 +197,8 @@ SELECT 'POS' AS DATA_SRC,
     shopname AS STORE_NAME,
      channelname AS store_type,
     nvl(pos.barcode,'NA') AS EAN,
-    nvl(vtdp.jnj_sap_code,matsls.matl_num) AS MATL_NUM,
+    --nvl(vtdp.jnj_sap_code,matsls.matl_num) AS MATL_NUM,
+    coalesce(vtdp.jnj_sap_code,matsls.matl_num, matdim.matl_num) AS MATL_NUM,
      productname AS Customer_Product_Desc,
      stt AS region,
      area AS zone_or_area,
@@ -210,6 +218,10 @@ SELECT 'POS' AS DATA_SRC,
             (select distinct co_cd from edw_company_dim where crncy_key = 'VND' and ctry_key = 'VN' and ctry_group = 'Vietnam'))
       and (ean_num != 'N/A' and nullif(ean_num,'') is not null)) where rn = 1) matsls 
       ON LTRIM(matsls.matsls_ean,'0') = LTRIM(pos.barcode,'0')
+    LEFT JOIN (select prmry_upc_cd as matdim_ean, matl_num from (select ltrim(prmry_upc_cd,'0') as prmry_upc_cd, 
+        ltrim(matl_num,'0') as matl_num, row_number() over (partition by ltrim(prmry_upc_cd,'0') order by crt_dttm desc) as rn 
+        from EDW_MATERIAL_DIM where (nullif(prmry_upc_cd,'') is not null and prmry_upc_cd != 'N/A' and lower(prmry_upc_cd) != 'na' and lower(prmry_upc_cd) != 'null' and (prmry_upc_cd is not null and trim(prmry_upc_cd) != ''))) where rn = 1) matdim 
+    ON  LTRIM(matdim.matdim_ean,'0') = LTRIM(pos.barcode,'0')
     LEFT JOIN edw_vw_os_time_dim time_dim on TO_DATE(pos.year||lpad(pos.month,2,'00')|| '01','YYYYMMDD') = time_dim.cal_date
 	  )base
 where NOT (nvl(base.so_sls_value, 0) = 0 and nvl(base.so_sls_qty, 0) = 0) AND base.day > (select to_date(param_value,'YYYY-MM-DD') from itg_mds_ap_customer360_config where code='min_date') 
@@ -230,7 +242,9 @@ soldto_code::varchar(300) as soldto_code,
 distributor_code::varchar(30) as distributor_code,
 distributor_name::varchar(750) as distributor_name,
 store_cd::varchar(100) as store_cd,
-store_name::varchar(100) as store_name,
+--store_name::varchar(100) as store_name,
+--increased store_name length to 1000
+store_name::varchar(1000) as store_name,
 store_type::varchar(300) as store_type,
 ean::varchar(100) as ean,
 matl_num::varchar(40) as matl_num,

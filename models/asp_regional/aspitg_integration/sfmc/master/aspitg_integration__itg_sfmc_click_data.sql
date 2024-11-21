@@ -111,7 +111,7 @@ final as
         event_date::timestamp_ntz(9) as event_date,
         domain::varchar(50) as domain,
         url::varchar(1000) as url,
-        link_name::varchar(200) as link_name,
+        LEFT(link_name,200)::varchar(200) as link_name,
         link_content::varchar(1000) as link_content,
         is_unique::varchar(10) as is_unique,
         email_name::varchar(100) as email_name,

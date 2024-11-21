@@ -121,3 +121,7 @@ models:
     config:
       alias: wks_sdl_kr_otc_sellout
       tags: ["kr_gt_sellout","ingestion"]
+  - name: ntawks_integration__wks_sdl_kr_daiso_gt_sellout
+    config:
+      alias: wks_sdl_kr_daiso_gt_sellout
+      tags: ["kr_gt_sellout","ingestion"]
