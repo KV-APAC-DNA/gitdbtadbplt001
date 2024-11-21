@@ -1,13 +1,12 @@
 {{ config(
-  materialized='incremental',
-  incremental_strategy='append',
-  transient=false,
+  materialized='view',
+  secure='true'
 ) }}
 
 select
     client::varchar(16777216) as client,
     gcph_brand::varchar(16777216) as gcph_brand,
-    'India'::varchar(16777216) as gcgh_country,
+    gcgh_country::varchar(16777216) as gcgh_country,
     campaign::varchar(16777216) as campaign,
     objective::varchar(16777216) as objective,
     year::number(38, 0) as year,
@@ -44,8 +43,5 @@ select
     delivered_engagements::number(38, 5) as delivered_engagements,
     delivered_net_rate::number(38, 5) as delivered_net_rate,
     net_cost::number(38, 5) as net_cost,
-    load_date as load_ts
-from {{ source('indsdl_raw','sdl_lidar_ff_other_paid_media') }}
-{% if is_incremental() %}
-    where load_date > (select max(load_ts) from {{ this }})
-{% endif %}
+    load_ts as load_ts
+from {{ ref('inditg_integration__fct_other_paid_media_lidar_monthly_apac') }}

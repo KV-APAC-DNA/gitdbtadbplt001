@@ -1,9 +1,18 @@
 {{ config(
-  materialized='table',
+  materialized='incremental',
+  incremental_strategy='append',
   transient=false,
   post_hook="{{ get_harmonized_brand('TRADITIONAL_ACTUAL_TV_SPEND', 'Y') }}"
 ) }}
 
+with curr_rate as (
+    select
+        date,
+        avg(rate) as rate
+    from {{ source("paidmedia_integration","fct_currency_rate_global_daily") }}
+    where currency_code = 'INR'
+    group by date
+)
 
 select
     ts.client::varchar(16777216) as client,
@@ -115,7 +124,7 @@ select
     ts.mediam::varchar(16777216) as mediam,
     ts.pr_code::varchar(16777216) as pr_code,
     floor(ts.ob_cost, 2)::float as ob_cost_inr,
-    floor((replace(ts.ob_cost,',','')/ curr.rate),2)::float as ob_cost_usd,
+    floor((replace(ts.ob_cost, ',', '') / curr.rate), 2)::float as ob_cost_usd,
     ts.uidkey::varchar(16777216) as uidkey,
     ts.comp_grpcd::varchar(16777216) as comp_grpcd,
     ts.comp_grpnm::varchar(16777216) as comp_grpnm,
@@ -124,8 +133,13 @@ select
     'india'::varchar(16777216) as gcgh_country,
     null::varchar(16777216) as gcph_brand,
     null::varchar(16777216) as brand_harmonized_by,
-    current_timestamp()::timestamp_ltz(9) as crt_dttm
+    ts.load_date as crt_dttm
 --try_to_timestamp('') as updt_dttm
 from {{ source("indsdl_raw","sdl_lidar_ff_tv_spends") }} as ts
-left join {{ source("paidmedia_integration","fct_currency_rate_global_daily") }} as curr
-on ts.ob_date = curr.date
+left join curr_rate as curr
+    on ts.ob_date = curr.date
+
+{% if is_incremental() %}
+    where ts.load_date > (select max(crt_dttm) from {{ this }})
+{% endif %}
+

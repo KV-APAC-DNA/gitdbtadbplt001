@@ -1,5 +1,6 @@
 {{ config(
-  materialized='table',
+   materialized='incremental',
+  incremental_strategy='append',
   transient=false,
   post_hook="{{ get_harmonized_brand('TRADITIONAL_COMPETITIVE_TV_GRP_SPENDS', 'Y') }}"
 ) }}
@@ -33,7 +34,6 @@ select
     'India'::VARCHAR(1000) as Gcgh_country,
     Brand_harmonized_by::VARCHAR(16777216) as Brand_harmonized_by,
     Load_date::TIMESTAMP_NTZ(9) as Load_date,
-    TO_DATE("Date", 'DD/MM/YYYY') as Date,
     "Start Time"::TIME as "Start Time",
     "Year"::INT as Year,
     "Month"::INT as Month,
@@ -41,6 +41,7 @@ select
     "Length (sec)"::INT as "Length (sec)",
     "No"::INT as No,
     "To"::INT as "To",
+    TO_DATE("Date", 'DD/MM/YYYY') as Date,
     ("kpi_1" * "Length (sec)") / 30::FLOAT as "Norm_GRP Competes",
     DATE_PART(hour, '7:23:08'::TIME) as "HOUR",
     case
@@ -92,3 +93,6 @@ from {{ source(
       "indsdl_raw",
       "sdl_lidar_ff_tv_grp_spends"
     ) }}
+{% if is_incremental() %}
+    where Load_date > (select MAX(Load_date) from {{ this }})
+{% endif %}

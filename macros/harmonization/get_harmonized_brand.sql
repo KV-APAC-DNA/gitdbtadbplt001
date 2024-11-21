@@ -3,7 +3,7 @@
 {{ log("Data Source: " ~ data_source) }}
 {{ log("Fresh Run Flag: " ~ fresh_run_flag) }}
 {{ log("Fresh Run Flag: " ~ target.database) }}
-
+{{ log("Fresh Run Flag: " ~ target.target_name) }}
 {% set sql_table %}
         SELECT
         distinct TABLENAME,FILTER_CONDITION
@@ -19,8 +19,8 @@
 {{ log("table to update unharmonized:" ~ source_table.TABLENAME) }}
 {# update condition for data when run GHM #}
 {% set UPDT_NULL_QRY_1 %}
-            UPDATE {% if target.schema == 'KSHANU01_WORKSPACE' %}
-			{{ target.database }}.KSHANU01_WORKSPACE.{{ 'INDITG_INTEGRATION__' ~ source_table.TABLENAME }} 
+            UPDATE {% if target.target_name == 'DEV' %}
+			{{ target.database }}.{{ target.schema }}.{{ 'INDITG_INTEGRATION__' ~ source_table.TABLENAME }} 
 			{% else %}
 {{ target.database }}.INDITG_INTEGRATION.{{ source_table.TABLENAME }} 
 {% endif %}
@@ -31,8 +31,8 @@
 
 {#update null if flage is Y#}
 {% set UPDT_NULL_QRY %}
-            UPDATE {% if target.schema == 'KSHANU01_WORKSPACE' %}
-			{{ target.database }}.KSHANU01_WORKSPACE.{{ 'INDITG_INTEGRATION__' ~ source_table.TABLENAME }} 
+            UPDATE {% if target.target_name == 'DEV' %}
+			{{ target.database }}.{{ target.schema }}.{{ 'INDITG_INTEGRATION__' ~ source_table.TABLENAME }} 
 			{% else %}
 {{ target.database }}.INDITG_INTEGRATION.{{ source_table.TABLENAME }} 
 {% endif %} A
@@ -84,8 +84,8 @@
 {# update GHM columns null if filter is not blank GHM #}
 
 {% set UPDT_NULL_QRY %}
-            UPDATE {% if target.schema == 'KSHANU01_WORKSPACE' %}
-			{{ target.database }}.KSHANU01_WORKSPACE.{{ 'INDITG_INTEGRATION__' ~ rule.TABLENAME }}
+            UPDATE {% if target.target_name == 'DEV' %}
+			{{ target.database }}.{{ target.schema }}.{{ 'INDITG_INTEGRATION__' ~ rule.TABLENAME }}
 			{% else %}
 {{ target.database }}.INDITG_INTEGRATION.{{ rule.TABLENAME }} 
 {% endif %} A
@@ -115,8 +115,8 @@
 
 {# Construct the update query #}
 {% set update_query %}
-            UPDATE {% if target.schema == 'KSHANU01_WORKSPACE' %}
-			{{ target.database }}.KSHANU01_WORKSPACE.{{ 'INDITG_INTEGRATION__' ~ rule.TABLENAME }}
+            UPDATE {% if target.target_name == 'DEV' %}
+			{{ target.database }}.{{ target.schema }}.{{ 'INDITG_INTEGRATION__' ~ rule.TABLENAME }}
 			{% else %}
 {{ target.database }}.INDITG_INTEGRATION.{{ rule.TABLENAME }} 
 {% endif %} A SET
@@ -124,8 +124,8 @@
 {{ log("Generated SQL:P14") }}
                 GCPH_BRAND = B.GCPH_BRAND_NAME,
                 BRAND_HARMONIZED_BY  = '{{ rule.PATTERN_ID }} : {{ rule.COLUMN_NAME }}'
-                FROM {% if target.schema == 'KSHANU01_WORKSPACE' %}
-					{{ target.database }}.KSHANU01_WORKSPACE.inditg_integration__vw_harmonization_brand_pattern_mapping
+                FROM {% if target.target_name == 'DEV' %}
+					{{ target.database }}.{{ target.schema }}.inditg_integration__vw_harmonization_brand_pattern_mapping
 					{% else %}
 					{{ target.database }}.inditg_integration.vw_harmonization_brand_pattern_mapping 
 					{% endif %} B
@@ -135,8 +135,8 @@
 {{ log("Generated SQL:P65") }}
                 GCPH_BRAND = B.GCPH_BRAND_NAME,
                 BRAND_HARMONIZED_BY  = '{{ rule.PATTERN_ID }} : {{ rule.COLUMN_NAME }}'
-                FROM {% if target.schema == 'KSHANU01_WORKSPACE' %}
-					{{ target.database }}.KSHANU01_WORKSPACE.inditg_integration__vw_harmonization_brand_pattern_mapping
+                FROM {% if target.target_name == 'DEV' %}
+					{{ target.database }}.{{ target.schema }}.inditg_integration__vw_harmonization_brand_pattern_mapping
 					{% else %}
 					{{ target.database }}.inditg_integration.vw_harmonization_brand_pattern_mapping 
 					{% endif %} B
@@ -146,8 +146,8 @@
 {{ log("Generated SQL:P73") }}
                 GCPH_BRAND = B.GCPH_BRAND_NAME,
                 BRAND_HARMONIZED_BY  = '{{ rule.PATTERN_ID }} : {{ rule.COLUMN_NAME }}'
-                FROM {% if target.schema == 'KSHANU01_WORKSPACE' %}
-					{{ target.database }}.KSHANU01_WORKSPACE.inditg_integration__vw_harmonization_brand_pattern_mapping
+                FROM {% if target.target_name == 'DEV' %}
+					{{ target.database }}.{{ target.schema }}.inditg_integration__vw_harmonization_brand_pattern_mapping
 					{% else %}
 					{{ target.database }}.inditg_integration.vw_harmonization_brand_pattern_mapping 
 					{% endif %} B
@@ -167,8 +167,8 @@
 {{ log("Generated SQL:else-Non") }}
                     GCPH_BRAND = B.GCPH_BRAND_NAME,
                     BRAND_HARMONIZED_BY = '{{ rule.PATTERN_ID }} : {{ rule.COLUMN_NAME }}'
-                    FROM {% if target.schema == 'KSHANU01_WORKSPACE' %}
-					{{ target.database }}.KSHANU01_WORKSPACE.inditg_integration__vw_harmonization_brand_pattern_mapping
+                    FROM {% if target.target_name == 'DEV' %}
+					{{ target.database }}.{{ target.schema }}.inditg_integration__vw_harmonization_brand_pattern_mapping
 					{% else %}
 					{{ target.database }}.inditg_integration.vw_harmonization_brand_pattern_mapping 
 					{% endif %} B
@@ -208,8 +208,8 @@
 {{ log("table to update unharmonized:" ~ source_table_null.TABLENAME) }}
 {#update null records to unharmonized#}
 {% set UPDT_NULL_QRY_2 %}
-		UPDATE {% if target.schema == 'KSHANU01_WORKSPACE' %}
-			{{ target.database }}.KSHANU01_WORKSPACE.{{ 'INDITG_INTEGRATION__' ~ source_table_null.TABLENAME }}
+		UPDATE {% if target.target_name == 'DEV' %}
+			{{ target.database }}.{{ target.schema }}.{{ 'INDITG_INTEGRATION__' ~ source_table_null.TABLENAME }}
 			{% else %}
 {{ target.database }}.INDITG_INTEGRATION.{{ rule.TABLENAME }} 
 {% endif %} A
