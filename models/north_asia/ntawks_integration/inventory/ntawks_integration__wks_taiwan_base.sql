@@ -459,6 +459,7 @@ t6b AS (
             sls_grp,
             ean_num,
             vend_prod_cd,
+            str_cd,
             MAX(pos_dt) AS max_pos_dt
         FROM edw_pos_fact
         WHERE sls_grp IN ('RT-Mart 大潤發', 'Poya 寶雅', 'Cosmed 康是美')
@@ -467,9 +468,10 @@ t6b AS (
             src_sys_cd,
             ean_num,
             vend_prod_cd,
-            sls_grp
+            sls_grp, str_cd
     ) m ON TO_CHAR(p.pos_dt, 'YYYYMM') = m.mnth_id
         AND p.pos_dt = m.max_pos_dt
+        AND p.str_cd = m.str_cd
         AND p.src_sys_cd = m.src_sys_cd
         AND p.ean_num = m.ean_num
         AND p.vend_prod_cd = m.vend_prod_cd
