@@ -16,7 +16,7 @@ final as
 	trim(channel)::varchar(100) as chnl,
 	trim(outlet_type)::varchar(100) as outlet_type,
 	trim(channel_group1)::varchar(100) as chnl_grp,
-	trim(jjid)::varchar(100) as jjid,
+	trim(jjid)::varchar(200) as jjid,
 	trim(postal_code)::varchar(100) as pst_cd,
 	trim(cust_id_map)::varchar(100) as cust_id_map,
 	trim(cust_name_map)::varchar(100) as cust_nm_map,
