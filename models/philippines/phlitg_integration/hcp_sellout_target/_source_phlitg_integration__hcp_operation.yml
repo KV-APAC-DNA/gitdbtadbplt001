@@ -19,4 +19,11 @@ sources:
 
     - name : sdl_mds_ph_hce_customer_master
 
- 
+    - name:  sdl_mds_ph_hcp_product_master_adftemp
+    - name: sdl_mds_ph_hcp_store_master_adftemp
+    - name : sdl_mds_ph_hcp_sellout_target_adftemp
+    - name : sdl_mds_ph_hce_portal_target_adftemp
+
+    - name : sdl_mds_ph_hce_product_master_adftemp
+
+    - name : sdl_mds_ph_hce_customer_master_adftemp

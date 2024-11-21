@@ -1,6 +1,6 @@
 with source as 
 (
-    select * from  {{source ('phlsdl_raw','sdl_mds_ph_hcp_sellout_target')}}
+    select * from  {{source ('phlsdl_raw','sdl_mds_ph_hcp_sellout_target_adftemp')}}
 ),
 transformed as
 (
