@@ -395,7 +395,9 @@ SELECT su.schdate,
     udc.udc_hsacounterq42023,
     udc.udc_hsacounterq12024,
     udc.udc_q124bssprogram,
-    udc.udc_specialtyprofessional2024
+    udc.udc_specialtyprofessional2024,
+    udc.udc_hsacounterq22024,
+	udc.udc_dispensingdrs2024
 FROM (
     (
         (
