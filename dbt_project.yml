@@ -444,8 +444,7 @@ models:
         +materialized: table
         +schema: IDNWKS_INTEGRATION
         noo_analysis:
-          wks_indonesia_noo_analysis:
-            +snowflake_warehouse: "{{ env_var('DBT_ENV_CORE_DB_MEDIUM_WH') }}"
+          +snowflake_warehouse: "{{ env_var('DBT_ENV_CORE_DB_MEDIUM_WH') }}"
       idnedw_access:
         +materialized: view
         +schema: IDNEDW_ACCESS
