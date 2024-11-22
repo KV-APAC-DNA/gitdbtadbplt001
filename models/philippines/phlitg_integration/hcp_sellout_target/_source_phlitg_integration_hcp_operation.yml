@@ -1,0 +1,29 @@
+version: 2
+
+sources:
+  - name: phlsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: phlsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name:  sdl_mds_ph_hcp_product_master
+    - name: sdl_mds_ph_hcp_store_master
+    - name : sdl_mds_ph_hcp_sellout_target
+    - name : sdl_mds_ph_hce_portal_target
+
+    - name : sdl_mds_ph_hce_product_master
+    - name : sdl_hcp_acommerce_load
+
+    - name : sdl_mds_ph_hce_customer_master
+
+    - name:  sdl_mds_ph_hcp_product_master_adftemp
+    - name: sdl_mds_ph_hcp_store_master_adftemp
+    - name : sdl_mds_ph_hcp_sellout_target_adftemp
+    - name : sdl_mds_ph_hce_portal_target_adftemp
+
+    - name : sdl_mds_ph_hce_product_master_adftemp
+
+    - name : sdl_mds_ph_hce_customer_master_adftemp
