@@ -5,4 +5,16 @@ models:
     config: 
       alias: fct_other_paid_media_lidar_monthly_apac
       tags: ["in_lidar_ff_refresh","transformation"]
+
+  - name: inditg_integration__fct_traditional_tv_spends_india_monthly
+    config: 
+      alias: fct_traditional_tv_spends_india_monthly
+      tags: ["in_lidar_ff_refresh","transformation"]
+    
+  - name: inditg_integration__fct_tv_grp_spends_global_monthly
+    config: 
+      alias: fct_tv_grp_spends_global_monthly
+      tags: ["in_lidar_ff_refresh","transformation"]
+
+  
       

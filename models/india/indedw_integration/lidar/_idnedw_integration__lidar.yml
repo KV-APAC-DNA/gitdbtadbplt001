@@ -30,3 +30,13 @@ models:
     config:
       alias: vw_lidar_ff_other_paid_media_monthly_apac
       tags: ["in_lidar_ff_refresh","transformation"]
+
+  - name: indedw_integration__vw_lidar_ff_traditional_tv_spends_india_monthly
+    config:
+      alias: vw_lidar_ff_traditional_tv_spends_india_monthly
+      tags: ["in_lidar_ff_refresh","transformation"]
+
+  - name: indedw_integration__vw_lidar_ff_tv_grp_spends_global_monthly
+    config:
+      alias: vw_lidar_ff_tv_grp_spends_global_monthly
+      tags: ["in_lidar_ff_refresh","transformation"]
