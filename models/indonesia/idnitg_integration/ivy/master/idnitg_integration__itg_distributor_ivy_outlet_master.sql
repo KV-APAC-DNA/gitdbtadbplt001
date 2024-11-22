@@ -7,7 +7,7 @@
         delete from {{this}}
     where (upper(trim(distributorcode)), upper(trim(outletcode))) 
     in (select distinct upper(trim(distributorcode)) as distributorcode, upper(trim(outletcode)) as outletcode
-    from {{source ('idnsdl_raw', 'sdl_distributor_ivy_outlet_master')}}
+    from {{source ('idnsdl_raw', 'sdl_distributor_ivy_outlet_master_uattemp')}}
     where file_name not in (
             select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_outlet_master__null_test') }}
             union all
@@ -20,7 +20,7 @@
 with sdl_distributor_ivy_outlet_master as 
 (
     select *, dense_rank() over(partition by upper(trim(distributorcode)), upper(trim(outletcode)) order by file_name desc) as rnk 
-    from {{source ('idnsdl_raw', 'sdl_distributor_ivy_outlet_master')}}
+    from {{source ('idnsdl_raw', 'sdl_distributor_ivy_outlet_master_uattemp')}}
     where file_name not in (
             select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_outlet_master__null_test') }}
             union all
@@ -83,7 +83,7 @@ final as (
         routecode::varchar(25) as routecode,
         visit_frequency::varchar(15) as visit_frequency,
         visitday::varchar(200) as visitday,
-        jnj_id::varchar(20) as jnj_id,
+        jnj_id::varchar(200) as jnj_id,
         contactperson::varchar(255) as contactperson,
         credit_limit::number(18,2) as credit_limit,
         invoice_limit::number(18,2) as invoice_limit,

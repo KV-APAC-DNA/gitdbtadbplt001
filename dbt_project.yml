@@ -1,13 +1,12 @@
-
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: 'DNA_CORE_ASP'
-version: '1.0.0'
+name: "DNA_CORE_ASP"
+version: "1.0.0"
 config-version: 2
 
 # This setting configures which "profile" dbt uses for this project.
-profile: 'default'
+profile: "default"
 
 # These configurations specify where dbt should look for different types of files.
 # The `source-paths` config, for example, states that models in this project can be
@@ -19,8 +18,8 @@ seed-paths: ["seeds"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
-target-path: "target"  # directory which will store compiled SQL files
-clean-targets:         # directories to be removed by `dbt clean`
+target-path: "target" # directory which will store compiled SQL files
+clean-targets: # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
 
@@ -65,9 +64,8 @@ tests:
     pacific:
       +severity: warn
     asp_regional:
-      +severity: warn 
+      +severity: warn
 # for hcposea test severity is configured at source yml file level
-
 
 models:
   dbt_artifacts:
@@ -175,32 +173,32 @@ models:
           view:
             +materialized: view
         sellin:
-            view:
-              +materialized: view
+          view:
+            +materialized: view
         customer_distributor:
-            view:
-              +materialized: view
+          view:
+            +materialized: view
         listprice:
-            view:
-              +materialized: view
+          view:
+            +materialized: view
         material:
-            view:
-              +materialized: view
+          view:
+            +materialized: view
         orders:
-            view:
-              +materialized: view
+          view:
+            +materialized: view
         pos:
-            view:
-              +materialized: view
+          view:
+            +materialized: view
         sellin_and_pos:
-            view:
-              +materialized: view
+          view:
+            +materialized: view
         sellin_and_sellout:
-            view:
-              +materialized: view
+          view:
+            +materialized: view
         sellout:
-            view:
-              +materialized: view
+          view:
+            +materialized: view
         perfect_store:
           view:
             +materialized: view
@@ -445,6 +443,8 @@ models:
       idnwks_integration:
         +materialized: table
         +schema: IDNWKS_INTEGRATION
+        noo_analysis:
+          +snowflake_warehouse: "{{ env_var('DBT_ENV_CORE_DB_MEDIUM_WH') }}"
       idnedw_access:
         +materialized: view
         +schema: IDNEDW_ACCESS
@@ -635,7 +635,7 @@ models:
         +transient: false
         +schema: JPDCLEDW_INTEGRATION
         view:
-            +materialized: view
+          +materialized: view
       jpndclitg_integration:
         +materialized: table
         +transient: false
