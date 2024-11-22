@@ -62,8 +62,9 @@ REG_SO as
 						  MSL_PRODUCT_DESC,
                           DISTRIBUTOR_CODE as dist_cd,
 						  DISTRIBUTOR_NAME as dist_nm,
+                          store_code as str_cd
 						FROM WKS_PHILIPPINES_BASE_RETAIL_EXCELLENCE
-                         WHERE DATA_SOURCE IN ('SELL-OUT','POS')),
+                         WHERE DATA_SOURCE IN ('SELL-OUT','POS','STOCK TRANSFER')),
 GT_CUST as 					 
 (SELECT DISTINCT rep_grp2_desc AS region,
                           rep_grp3_desc AS "Area/Zone/Province",
@@ -84,7 +85,7 @@ PRNT_CUST as
 (SELECT DISTINCT rpt_grp_1_desc AS trade_type,
                 rpt_grp_12_desc AS sales_group,
                 parent_cust_cd
-        FROM ITG_MDS_PH_REF_PARENT_CUSTOMER WHERE UPPER(trade_type) IN ('GENERAL TRADE','NATIONAL KEY ACCOUNT') AND UPPER(active) = 'Y'),
+        FROM ITG_MDS_PH_REF_PARENT_CUSTOMER WHERE UPPER(trade_type) IN ('GENERAL TRADE','NATIONAL KEY ACCOUNT','RKA AND RESELLER') AND UPPER(active) = 'Y'),
 
 POS_CUST as 
 (SELECT DISTINCT region_nm AS region,
@@ -95,6 +96,8 @@ POS_CUST as
                          UPPER(store_mtrx) AS sell_out_channel,
 						 UPPER(chnl_sub_grp_cd) AS retail_environment,
 						 ltrim(SPLIT_PART(code, '-', 2),'0') AS store_code,
+                         brnch_cd,
+                         cust_cd,
 						 MAX(brnch_nm) OVER (PARTITION BY ltrim(SPLIT_PART(code, '-', 2),'0') ORDER BY crtd_dttm DESC ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS store_name,
                          (address1||address2) AS store_address,
                          zip_code AS store_postcode,
@@ -148,8 +151,8 @@ JOIN (select * from LAV
  AND   MSL.JJ_MNTH_ID <= (SELECT prev_mnth FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)
  AND   CUST.RNO = 1),
 
-------------------------------------------POS----------------------------------------
-itg_ph_re_msl_list_pos as 
+------------------------------------------POS & STOCK TRANSFER----------------------------------------
+itg_ph_re_msl_list_pos_and_st as 
 (SELECT DISTINCT MSL.YEAR AS fisc_yr,
        MSL.JJ_MNTH_ID AS fisc_per,
        CUST.Customer_L0,
@@ -181,10 +184,12 @@ itg_ph_re_msl_list_pos as
 	   SYSDATE() AS CRTD_DTTM
 FROM MSL
 JOIN ( select * from LAV
-		JOIN (select * from REG_SO WHERE data_src = 'POS') REG_SO_MT
+		JOIN (select * from REG_SO WHERE data_src in ('POS', 'STOCK TRANSFER')) REG_SO_MT
 		  ON LTRIM(LAV.CUSTOMER_L0,'0') = LTRIM(REG_SO_MT.SOLDTO_CODE,'0')
-		JOIN (select * from POS_CUST) POS_CUST ON ltrim(LAV.Customer_L0,'0') = ltrim(POS_CUST.Sell_Out_Parent_Customer_L1,'0')		
-		JOIN (select * from PRNT_CUST where trade_type = 'NATIONAL KEY ACCOUNT') PRNT_CUST_MT ON UPPER(LTRIM(LAV.PARENT_CUSTOMER,'0')) = UPPER(LTRIM(PRNT_CUST_MT.PARENT_CUST_CD,'0'))) cust		
+		JOIN (select * from POS_CUST) POS_CUST ON ltrim(LAV.Customer_L0,'0') = ltrim(POS_CUST.Sell_Out_Parent_Customer_L1,'0')
+          AND LTRIM(pos_cust.brnch_cd,'0') = LTRIM(REG_SO_MT.store_code,'0')
+          AND pos_cust.cust_cd = REG_SO_MT.dist_cd	
+		JOIN (select * from PRNT_CUST where upper(trade_type) in ('NATIONAL KEY ACCOUNT','RKA AND RESELLER')) PRNT_CUST_MT ON UPPER(LTRIM(LAV.PARENT_CUSTOMER,'0')) = UPPER(LTRIM(PRNT_CUST_MT.PARENT_CUST_CD,'0'))) cust		
     ON  LOWER (MSL.SUB_CHANNEL) = LOWER (CUST.SELL_OUT_CHANNEL)
 	AND LTRIM(MSL.SKU_UNIQUE_IDENTIFIER,'0') = LTRIM(CUST.MSL_PRODUCT_CODE,'0')
  WHERE MSL.JJ_MNTH_ID >= (SELECT last_16mnths
@@ -196,7 +201,7 @@ itg_ph_re_msl_list as
 (
     select * from itg_ph_re_msl_list_so
     union
-    select * from itg_ph_re_msl_list_pos
+    select * from itg_ph_re_msl_list_pos_and_st
 ),
 
 final as 
@@ -204,32 +209,32 @@ final as
     select 
     fisc_yr	:: numeric(18,0) as fisc_yr,
     fisc_per :: numeric(18,0) as fisc_per,
-    customer_l0 :: varchar(50) as customer_l0,
+    customer_l0 :: varchar(255) as customer_l0,
     trade_type :: varchar(255) as trade_type,
     sales_group :: varchar(255) as sales_group,
     account_group :: varchar(255) as account_group,
     data_src :: varchar(14) as data_src,
-    channel :: varchar(255) as channel,
-    sub_channel :: varchar(200) as sub_channel,
-    retail_environment :: varchar(382) as retail_environment,
-    distributor_code :: varchar(100) as distributor_code,
-    distributor_name :: varchar(356) as distributor_name,
-    parent_customer :: varchar(75) as parent_customer,
+    channel :: varchar(500) as channel,
+    sub_channel :: varchar(500) as sub_channel,
+    retail_environment :: varchar(500) as retail_environment,
+    distributor_code :: varchar(200) as distributor_code,
+    distributor_name :: varchar(500) as distributor_name,
+    parent_customer :: varchar(200) as parent_customer,
     region :: varchar(255) as region,
     "Area/Zone/Province" :: varchar(255) as "Area/Zone/Province",
     city :: varchar(255) as city,
     sell_out_parent_customer_l2 :: varchar(255) as sell_out_parent_customer_l2,
     sell_out_parent_customer_l1 :: varchar(255) as sell_out_parent_customer_l1,
-    sell_out_channel :: varchar(382) as sell_out_channel,
-    store_code :: varchar(50) as store_code,
-    store_name :: varchar(500) as store_name,
+    sell_out_channel :: varchar(500) as sell_out_channel,
+    store_code :: varchar(200) as store_code,
+    store_name :: varchar(700) as store_name,
     store_address :: varchar(510) as store_address,
     store_postcode :: varchar(100) as store_postcode,
     store_lat :: varchar(50) as store_lat,
     store_long :: varchar(255) as store_long,
     master_code :: varchar(200) as master_code,
-    mapped_sku_cd :: varchar(40) as mapped_sku_cd,
-    msl_product_desc :: varchar(300) as msl_product_desc,
+    mapped_sku_cd :: varchar(200) as mapped_sku_cd,
+    msl_product_desc :: varchar(500) as msl_product_desc,
     crtd_dttm :: timestamp without time zone as crtd_dttm
 from itg_ph_re_msl_list
 )
