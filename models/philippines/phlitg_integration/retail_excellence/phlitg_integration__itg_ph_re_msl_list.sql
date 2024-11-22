@@ -187,7 +187,7 @@ JOIN ( select * from LAV
 		JOIN (select * from REG_SO WHERE data_src in ('POS', 'STOCK TRANSFER')) REG_SO_MT
 		  ON LTRIM(LAV.CUSTOMER_L0,'0') = LTRIM(REG_SO_MT.SOLDTO_CODE,'0')
 		JOIN (select * from POS_CUST) POS_CUST ON ltrim(LAV.Customer_L0,'0') = ltrim(POS_CUST.Sell_Out_Parent_Customer_L1,'0')
-          AND LTRIM(pos_cust.brnch_cd,'0') = LTRIM(REG_SO_MT.store_code,'0')
+          AND LTRIM(pos_cust.brnch_cd,'0') = LTRIM(REG_SO_MT.str_cd,'0')
           AND pos_cust.cust_cd = REG_SO_MT.dist_cd	
 		JOIN (select * from PRNT_CUST where upper(trade_type) in ('NATIONAL KEY ACCOUNT','RKA AND RESELLER')) PRNT_CUST_MT ON UPPER(LTRIM(LAV.PARENT_CUSTOMER,'0')) = UPPER(LTRIM(PRNT_CUST_MT.PARENT_CUST_CD,'0'))) cust		
     ON  LOWER (MSL.SUB_CHANNEL) = LOWER (CUST.SELL_OUT_CHANNEL)
