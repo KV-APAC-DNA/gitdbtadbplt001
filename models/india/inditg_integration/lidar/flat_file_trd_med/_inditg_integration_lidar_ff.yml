@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: inditg_integration__fct_other_paid_media_lidar_monthly_apac
+    config: 
+      alias: fct_other_paid_media_lidar_monthly_apac
+      tags: ["in_lidar_ff_refresh","transformation"]
+      

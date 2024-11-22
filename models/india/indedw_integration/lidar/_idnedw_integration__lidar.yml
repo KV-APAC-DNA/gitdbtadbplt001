@@ -26,3 +26,7 @@ models:
       alias: edw_vw_schemecube_lidar
       tags: ["india_views","transformation"]
 
+  - name: indedw_integration__vw_lidar_ff_other_paid_media_monthly_apac
+    config:
+      alias: vw_lidar_ff_other_paid_media_monthly_apac
+      tags: ["in_lidar_ff_refresh","transformation"]
