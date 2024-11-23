@@ -30,7 +30,10 @@ SELECT
     curr.customer_code,
     curr.inventory_qty,
     p.purchase_qty,
-    (prev.inventory_qty + COALESCE(p.purchase_qty,0) - curr.inventory_qty) as offtake_qty
+    (prev.inventory_qty + COALESCE(p.purchase_qty,0) - curr.inventory_qty) as offtake_qty,
+    CURRENT_TIMESTAMP()::timestamp_ntz(9) AS crtd_dttm,
+        CURRENT_TIMESTAMP()::timestamp_ntz(9) AS UPD_DTTM
+
 FROM inventory curr
 LEFT JOIN inventory prev ON curr.item_code = prev.item_code 
     AND curr.mnth_id = prev.mnth_id + 1
@@ -44,19 +47,20 @@ LEFT JOIN purchases p ON curr.item_code = p.product_code
 itg_pos as (
     select * from {{ source('ntaitg_integration', 'itg_pos_temp') }}
 ),
+
 final as
 (
     select 
-        LAST_DAY(TO_DATE(pos_dt,'YYYYmm')) AS pos_dt,
+        LAST_DAY(TO_DATE(CONCAT(mnth_id,'01'),'YYYYMMDD')) AS pos_dt,
         '12087' AS vend_cd,
         null AS vend_nm,
-        item_desc AS prod_nm,
+        null AS prod_nm,
         item_code AS vend_prod_cd,
         item_desc AS vend_prod_nm,
         null AS brnd_nm,
         null AS ean_num,
-        customer_code AS str_cd,
-        customer_code AS str_nm,
+        null AS str_cd,
+        null AS str_nm,
         purchase_qty AS sls_qty,
         NULL AS sls_amt,
         null AS unit_prc_amt,
@@ -102,16 +106,17 @@ final as
         SELECT pos_dt,
             vend_prod_cd,
             ean_num,
-            str_cd,
+            -- str_cd,
             src_sys_cd,
             ctry_cd,
             CRT_DTTM
         FROM ITG_POS
         where src_sys_cd = 'A-Mart 愛買'
             and ctry_cd = 'TW'
-    ) TGT ON SRC.pos_date = TGT.pos_dt
-    AND SRC.product_code = TGT.vend_prod_cd
-    AND SRC.store_no = TGT.str_cd
+    ) TGT ON LAST_DAY(TO_DATE(CONCAT(SRC.mnth_id,'01'),'YYYYMMDD')) = TGT.pos_dt
+    AND SRC.item_code = TGT.vend_prod_cd
+    -- AND SRC.store_no = TGT.str_cd
+    
         
 )
 select * from final
