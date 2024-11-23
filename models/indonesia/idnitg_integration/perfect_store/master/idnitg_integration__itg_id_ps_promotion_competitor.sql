@@ -49,7 +49,7 @@ final as
     cast(trim(input_date) as date) as input_date,
     trim(franchise)::varchar(50) as franchise,
     trim(photo_link)::varchar(100) as photo_link,
-    trim(description)::varchar(1000) as description,
+    trim(description)::varchar(2000) as description,
     trim(file_name)::varchar(100) as file_name,
     sysdate() as crt_dttm
     from source
