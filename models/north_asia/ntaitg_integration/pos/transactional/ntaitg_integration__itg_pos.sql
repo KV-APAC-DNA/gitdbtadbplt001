@@ -6,7 +6,8 @@
         pre_hook= [" {% if is_incremental() %}
                     {% if var('pos_job_to_execute') == 'tw_pos' %}
                     delete from {{this}} where (pos_dt,vend_prod_cd,src_sys_cd,ctry_cd) in
-                    ( select distinct pos_dt,vend_prod_cd,src_sys_cd,ctry_cd from ( select * from {{ ref('ntawks_integration__wks_itg_pos_poya') }} union all select * from {{ ref('ntawks_integration__wks_itg_pos_7eleven') }} union all select * from {{ ref('ntawks_integration__wks_itg_pos_ec') }} union all select * from {{ ref('ntawks_integration__wks_itg_pos_cosmed') }} ) where chng_flg = 'U'
+                    ( select distinct pos_dt,vend_prod_cd,src_sys_cd,ctry_cd from ( select * from {{ ref('ntawks_integration__wks_itg_pos_poya') }} union all select * from {{ ref('ntawks_integration__wks_itg_pos_7eleven') }} union all select * from {{ ref('ntawks_integration__wks_itg_pos_ec') }} 
+                    union all select * from {{ ref('ntawks_integration__wks_itg_pos_cosmed') }} union all select * from {{ ref('ntaitg_integration__itg_tw_pos_amart_inventory_combined') }} ) where chng_flg = 'U'
                     );
                     delete from {{this}} where (pos_dt,vend_prod_cd,src_sys_cd,ctry_cd,str_cd) in
                     ( select distinct pos_dt,vend_prod_cd,src_sys_cd,ctry_cd,str_cd from ( select * from {{ ref('ntawks_integration__wks_itg_pos_carrefour') }} union all select * from {{ ref('ntawks_integration__wks_itg_pos_rt_mart') }} union all select * from {{ ref('ntawks_integration__wks_itg_pos_px_civila') }} ) where chng_flg = 'U'
@@ -90,7 +91,6 @@ wks_kr_pos_emart_ecvan as (
 itg_pos_amart_inventory_combined as (
       select * from {{ ref('ntaitg_integration__itg_tw_pos_amart_inventory_combined') }}
 )
-
 {% if var('pos_job_to_execute') == 'tw_pos' %}
 ,
 final as 
