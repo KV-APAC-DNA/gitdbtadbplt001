@@ -1,6 +1,6 @@
 {{
     config(
-        materialized='table'
+        materialized='table',
         pre_hook = "create or replace TABLE PROD_DNA_LOAD.NTASDL_RAW.SDL_TW_POS_AMART_PURCHASE (
 	STORE_CODE VARCHAR(40),
 	PURCHASE_DATE VARCHAR(100),
