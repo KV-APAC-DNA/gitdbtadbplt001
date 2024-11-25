@@ -57,7 +57,7 @@ AS (
 itg_query_parameters 
 AS(
     SELECT *
-    FROM {{ source('ntaitg_integration','itg_query_parameters') }}
+    FROM {{ source('ntaitg_integration','itg_query_parameters_temp') }}
 ),
 
 inv_max
