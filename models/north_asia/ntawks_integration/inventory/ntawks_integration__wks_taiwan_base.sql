@@ -53,6 +53,7 @@ AS (
     SELECT *
     FROM {{ref('aspedw_integration__edw_code_descriptions')}}
     ),
+-- change back during deployment
 itg_query_parameters 
 AS(
     SELECT *

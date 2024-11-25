@@ -29,8 +29,9 @@ select * from {{ source('ntaitg_integration','itg_pos_cust_prod_to_sap_prod_map'
 itg_mds_hk_pos_product_mapping as (
 select * from {{ ref('ntaitg_integration__itg_mds_hk_pos_product_mapping') }}
 ),
+-- change back during deployment
 itg_query_parameters as (
-    select * from {{ source('ntaitg_integration','itg_query_parameters') }}
+    select * from {{ source('ntaitg_integration','itg_query_parameters_temp') }}
 ),
 tw_pos_1 as (
     SELECT src.pos_dt,
