@@ -1,5 +1,3 @@
-
-
 with apc_a902 AS
 (
   SELECT *
@@ -29,7 +27,7 @@ EDW_MATERIAL_DIM AS (
     WHERE MATL_TYPE_CD IN ('FERT','HALB','SAPR')
 ),
 
--- Material consolidation CTEs
+
 material_number_union AS (
     SELECT DISTINCT matnr AS matl_num FROM apc_mvke
     UNION
@@ -46,7 +44,7 @@ material_join AS (
         ON ltrim(a.matl_num,'0') = ltrim(b.matnr,'0')
 ),
 
--- Base pricing CTEs
+
 base_join AS (
     SELECT 
         A.KNUMH AS COND_REC_NO,
@@ -68,7 +66,7 @@ base_join AS (
         AND A.KNUMH = B.KNUMH
 ),
 
--- Country specific records
+
 india_records AS (
     SELECT 
         SLS_ORG,
@@ -114,67 +112,74 @@ all_records AS (
 ),
 
 mvke_join AS (
-    SELECT  A.*, 
-    B.SLS_ORG,
-        B.MATERIAL,
-        B.COND_REC_NO,
-        B.VALID_TO,
-        B.KNART,
-        B.DT_FROM,
-        B.AMOUNT,
-        B.CURRENCY,
-        B.UNIT,
-        B.PRICE_UNIT,
-    CASE 
-    WHEN B.COND_REC_NO IS NULL 
-    AND B.AMOUNT IS NULL 
-    AND A.PMATN IS NOT NULL 
-    AND A.PMATN <>'' 
-    THEN 'Y' 
-    ELSE 'N' 
-    END AS pmatn_flag 
-    FROM (SELECT * FROM MATERIAL_JOIN) a
-     LEFT JOIN (
+    SELECT  
+        A.MATL_NUM,
+        A.PMATN,
+        A.VKORG,
+        A.VTWEG,
+        COALESCE(B.COND_REC_NO, C.COND_REC_NO) AS COND_REC_NO,
+        COALESCE(B.KNART, C.KNART) AS KNART,
+        COALESCE(B.AMOUNT, C.AMOUNT) AS AMOUNT,
+        COALESCE(B.CURRENCY, C.CURRENCY) AS CURRENCY,
+        COALESCE(B.PRICE_UNIT, C.PRICE_UNIT) AS PRICE_UNIT,
+        COALESCE(B.UNIT, C.UNIT) AS UNIT,
+        COALESCE(B.VALID_TO, C.VALID_TO) AS VALID_TO,
+        COALESCE(B.DT_FROM, C.DT_FROM) AS DT_FROM,
+        CASE 
+            WHEN 
+            B.COND_REC_NO IS NOT NULL and
+            B.KNART IS NOT NULL and
+            B.AMOUNT IS NOT NULL and
+            B.PRICE_UNIT IS NOT NULL and
+            B.UNIT IS NOT NULL and
+            B.VALID_TO IS NOT NULL and
+            B.DT_FROM IS NOT NULL 
+            THEN 'Y'
+            ELSE 'N'
+        END AS pmatn_flag
+    FROM (SELECT * FROM MATERIAL_JOIN) A
+    LEFT JOIN (
         SELECT * 
         FROM all_records 
         WHERE valid_to != '00000000' 
         OR dt_from != '00000000'
-    ) b
-        ON A.MATL_NUM = B.MATERIAL
-       AND A.VKORG = B.SLS_ORG
+    ) B
+        ON A.PMATN = B.MATERIAL
+        AND A.VKORG = B.SLS_ORG
+    LEFT JOIN (
+        SELECT * 
+        FROM all_records 
+        WHERE valid_to != '00000000' 
+        OR dt_from != '00000000'
+    ) C
+        ON A.MATL_NUM = C.MATERIAL
+        AND A.VKORG = C.SLS_ORG
     QUALIFY ROW_NUMBER() OVER (
-        PARTITION BY A.VKORG, A.MATL_NUM,B.VALID_TO, A.PMATN--, B.COND_REC_NO 
+        PARTITION BY A.VKORG, A.MATL_NUM, COALESCE(B.VALID_TO, C.VALID_TO)
         ORDER BY A.VTWEG
     ) = 1
 ),
 
 FINAL AS (
-    SELECT m.MATL_NUM AS material,
-        M.PMATN,
-        CASE WHEN m.pmatn_flag = 'Y' THEN b.sls_org ELSE m.sls_org END::VARCHAR(50) AS sls_org,
-        -- CASE WHEN m.pmatn_flag = 'Y' THEN b.material ELSE m.material END::VARCHAR(50) AS material,
-        CASE WHEN m.pmatn_flag = 'Y' THEN b.cond_rec_no ELSE m.cond_rec_no END::VARCHAR(100) AS cond_rec_no,
-        CASE WHEN m.pmatn_flag = 'Y' THEN b.valid_to ELSE m.valid_to END::VARCHAR(20) AS valid_to,
-        CASE WHEN m.pmatn_flag = 'Y' THEN b.knart ELSE m.knart END::VARCHAR(20) AS knart,
-        CASE WHEN m.pmatn_flag = 'Y' THEN b.dt_from ELSE m.dt_from END::VARCHAR(20) AS dt_from,
-        CASE WHEN m.pmatn_flag = 'Y' THEN CAST(b.amount AS DECIMAL(20,4)) ELSE CAST(m.amount AS DECIMAL(20,4)) END AS amount,
-        CASE WHEN m.pmatn_flag = 'Y' THEN b.currency ELSE m.currency END::VARCHAR(20) AS currency,
-        CASE WHEN m.pmatn_flag = 'Y' THEN b.unit ELSE m.unit END::VARCHAR(20) AS unit,
-        CASE WHEN m.pmatn_flag = 'Y' THEN b.price_unit ELSE m.price_unit END::VARCHAR(50) AS price_unit,
-        -- CASE WHEN m.pmatn_flag = 'Y' THEN b.pmatn ELSE m.pmatn END AS pmatn,
+    SELECT 
+        m.MATL_NUM AS material,
+        m.PMATN,
+        m.VKORG AS sls_org,
+        m.COND_REC_NO,
+        m.VALID_TO,
+        m.KNART,
+        m.DT_FROM,
+        CAST(m.AMOUNT AS DECIMAL(20,4)) AS amount,
+        m.CURRENCY,
+        m.UNIT,
+        m.PRICE_UNIT,
         CURRENT_TIMESTAMP()::timestamp_ntz(9) AS crtd_dttm,
         CURRENT_TIMESTAMP()::timestamp_ntz(9) AS updt_dttm,
         m.pmatn_flag,
         NULL AS file_name
-
-    FROM (
-        SELECT *            
-        FROM mvke_join 
-    )m
-    LEFT JOIN mvke_join b ON m.pmatn = b.MATL_NUM and m.vkorg = b.sls_org
-    AND m.amount is null
+    FROM mvke_join m
 )
 
 SELECT DISTINCT *
-FROM FINAL WHERE 
-COND_REC_NO is not null
+FROM FINAL
+WHERE COND_REC_NO IS NOT NULL
