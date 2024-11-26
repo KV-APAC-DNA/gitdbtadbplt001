@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_th_ecom_ams
+    config:
+      alias: itg_th_ecom_ams
+      tags: ["tha_ecom_ams_load","ingestion"] 
+
+  - name: thaitg_integration__itg_th_ecom_backmargin
+    config:
+      alias: itg_th_ecom_backmargin
+      tags: ["tha_ecom_load","ingestion"]
+
+  - name: thaitg_integration__itg_th_ecom_cogs
+    config:
+      alias: itg_th_ecom_cogs
+      tags: ["tha_ecom_load","ingestion"]
+
+  - name: thaitg_integration__itg_th_ecom_cpas
+    config:
+      alias: itg_th_ecom_cpas
+      tags: ["tha_ecom_load","ingestion"]
+
+  - name: thaitg_integration__itg_th_ecom_search_ads_by_channel
+    config:
+      alias: itg_th_ecom_search_ads_by_channel
+      tags: ["tha_ecom_load","ingestion"]
+
+  - name: thaitg_integration__itg_th_ecom_search_ads_by_date
+    config:
+      alias: itg_th_ecom_search_ads_by_date
+      tags: ["tha_ecom_load","ingestion"]
+
+  - name: thaitg_integration__itg_th_ecom_shopee_compensation
+    config:
+      alias: itg_th_ecom_shopee_compensation
+      tags: ["tha_ecom_load","ingestion"]
+
+  - name: thaitg_integration__itg_th_ecom_gmv_konvy
+    config:
+      alias: itg_th_ecom_gmv_konvy
+      tags: ["tha_ecom_gmv_load","ingestion"]
+
+  - name: thaitg_integration__itg_th_ecom_gmv_shopee
+    config:
+      alias: itg_th_ecom_gmv_shopee
+      tags: ["tha_ecom_gmv_load","ingestion"]
+    
