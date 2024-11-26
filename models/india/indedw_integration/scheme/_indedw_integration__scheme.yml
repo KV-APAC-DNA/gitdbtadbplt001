@@ -11,3 +11,7 @@ models:
       materialized: view
       alias: v_rpt_schemeutilize_cube
       tags: ["in_edw_scheme","transformation"]
+  - name: indedw_integration__edw_rpt_scheme_and_sales
+    config:
+      alias: edw_rpt_scheme_and_sales
+      tags: ["in_edw_schemevssales","transformation"]
