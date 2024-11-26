@@ -110,7 +110,7 @@ FROM (SELECT DISTINCT CAL.FISC_YR AS YEAR,
                LEFT JOIN MT_PRF PRF ON PRF.PRF_CD = STORE.JIS_PRFCT_C
                LEFT JOIN JP_INV_COVERAGE_AREA_REGION_MAPPING REG_JAPAN ON PRF.PRF_CD = REG_JAPAN.JIS_CD
                LEFT JOIN SDL_MDS_JP_C360_ENG_TRANSLATION ENG ON SGMT.SGMT_NM_REP = ENG.NAME_JP) STORE_DET
-         ON MSL.CHANNEL = STORE_DET.SEGMENT
+         ON UPPER(MSL.CHANNEL) = UPPER(STORE_DET.SEGMENT)
        AND LTRIM(MSL.SKU_UNIQUE_IDENTIFIER,'0') =ltrim(STORE_DET.MSL_PRODUCT_CODE,'0')
         --AND MSL.JJ_MNTH_ID = STORE_DET.MNTH_ID
 WHERE MSL.JJ_MNTH_ID >= (select last_16mnths from edw_vw_cal_Retail_excellence_Dim)
@@ -129,8 +129,8 @@ sell_out_parent_customer_l1::varchar(256) AS sell_out_parent_customer_l1,
 sell_out_child_customer_l2::varchar(256) AS sell_out_child_customer_l2,
 parent_name1::varchar(256) AS parent_name1,
 child_name2::varchar(256) AS child_name2,
-segment::varchar(256) AS segment,
-sell_out_re::varchar(200) AS sell_out_re,
+segment::varchar(500) AS segment,
+sell_out_re::varchar(500) AS sell_out_re,
 distributor_code::varchar(100) AS distributor_code,
 distributor_name::varchar(457) AS distributor_name,
 sold_to_code::varchar(255) AS sold_to_code,
@@ -143,9 +143,9 @@ zone_name::varchar(50) AS zone_name,
 zone_name_eng::varchar(100) AS zone_name_eng,
 store_address::varchar(256) AS store_address,
 post_code::varchar(256) AS post_code,
-retail_environment::varchar(50) AS retail_environment,
-channel::varchar(50) AS channel,
-sku_cd::varchar(100) AS sku_cd,
+retail_environment::varchar(500) AS retail_environment,
+channel::varchar(500) AS channel,
+sku_cd::varchar(200) AS sku_cd,
 crt_dttm::timestamp AS crt_dttm
 from transformation
 )
