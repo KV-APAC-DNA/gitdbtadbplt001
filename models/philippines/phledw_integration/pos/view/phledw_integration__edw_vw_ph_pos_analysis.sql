@@ -111,6 +111,7 @@ veposf as(
 			select *
 			from edw_vw_ph_pos_sales_fact
 			where cntry_cd = 'PH'
+            and cust_cd <> 'MDC'
 			) a,
 			(
 				select distinct "year",
@@ -144,8 +145,8 @@ veposf as(
 					ash_nm,
 					pms_nm
 				from itg_mds_ph_pos_customers
-				where cust_cd in ('MDC', 'WAT')
-					AND active = 'Y'
+				where cust_cd = 'WAT' AND active = 'Y'
+                --cust_cd in ('MDC', 'WAT')
 				) f
 		where b.mnth_id = a.jj_mnth_id
 			and c.brnch_cd(+) = a.cust_brnch_cd
