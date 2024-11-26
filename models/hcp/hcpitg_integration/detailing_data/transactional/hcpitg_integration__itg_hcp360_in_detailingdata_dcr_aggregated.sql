@@ -1,10 +1,10 @@
-
-
-
-
-
-
-WITH dcr_aggregated AS (
+WITH dcr_data as (
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_ventasys_dcrdata') }}
+),
+ventasys_hcp_master as (
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_ventasys_hcp_master') }}
+),
+final AS (
 
     SELECT
 
@@ -31,9 +31,9 @@ WITH dcr_aggregated AS (
 
         END AS calls_done
 
-    FROM {{ ref(hcpitg_integration__itg_hcp360_in_ventasys_dcrdata) }} dcr
+    FROM dcr_data dcr
 
-    JOIN {{ source('dev_dna_core', 'hcpitg_integration_itg_hcp360_in_ventasys_hcp_master') }} hcp
+    JOIN ventasys_hcp_master hcp
 
         ON dcr.v_custid = hcp.v_custid
 
@@ -45,4 +45,4 @@ WITH dcr_aggregated AS (
 
 SELECT * 
 
-FROM dcr_aggregated 
+FROM final 
