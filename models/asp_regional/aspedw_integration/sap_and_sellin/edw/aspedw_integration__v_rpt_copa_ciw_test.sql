@@ -216,14 +216,8 @@ FROM (SELECT fact.fisc_yr AS fisc_yr,
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              GMC_SKU_CODE
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       FROM GMC_hierarchy_attributes
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       WHERE GMC_REGION = 'APAC') gmc ON RIGHT (gmc.GMC_SKU_CODE,18) = fact.matl_num)
-                   --left join vw_itg_custgp_customer_hierarchy cust on trim(upper(fact.ctry_nm))=trim(upper(cust.ctry_nm)) and ltrim(cust.cust_num,0)=ltrim(fact.cust_num,0))
+                   
                             LEFT JOIN edw_gch_producthierarchy AS gph ON ((CAST((fact.matl_num) AS TEXT) = CAST((gph.materialnumber) AS TEXT)))) LEFT JOIN edw_gch_customerhierarchy AS gch ON ((CAST((fact.cust_num) AS TEXT) = CAST((gch.customer) AS TEXT))))
-        LEFT JOIN (SELECT DISTINCT ctry_nm,
-                          cust_num,
-                          customer_segmentation
-                   FROM vw_itg_custgp_customer_hierarchy) cust
-               ON TRIM (UPPER (fact.reporting_market)) = TRIM (UPPER (cust.ctry_nm))
-              AND ltrim (cust.cust_num,0) = ltrim (fact.cust_num,0)
       GROUP BY fact.fisc_yr,
                fact.fisc_yr_per,
                fact.fisc_day,
