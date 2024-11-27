@@ -1,5 +1,5 @@
 with source as (
-    select * from {{ ref('aspedw_integration__v_rpt_copa_ciw') }}
+    select * from {{ ref('aspedw_integration__v_rpt_copa_ciw_test') }}
 ),
 final as (
     select
@@ -20,6 +20,14 @@ final as (
         "b3 base product",
         "b4 variant",
         "b5 put-up",
+        BRAND,
+        SUBBRAND,
+        BUSINESS_SEGMENT,
+        BUSINESS_SUBSEGMENT,
+        NEED_STATE,
+        CATEGORY,
+        SUBCATEGORY,
+        customer_segmentation,
         cust_num as "cust_num",
         "parent customer",
         banner as "banner",
