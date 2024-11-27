@@ -29,19 +29,27 @@ EDW_MATERIAL_DIM AS (
 
 
 material_number_union AS (
-    SELECT DISTINCT matnr AS matl_num FROM apc_mvke
-    UNION
-    SELECT DISTINCT PMATN AS matl_num FROM apc_mvke
-    UNION
-    SELECT DISTINCT matnr AS matl_num FROM apc_a902
-    UNION 
-    SELECT DISTINCT matl_num FROM edw_material_dim
+select distinct matnr as matl_num, vkorg from apc_mvke
+UNION
+select distinct PMATN as matl_num, vkorg from apc_mvke
+UNION
+select distinct matnr as matl_num, vkorg from apc_a902
+UNION 
+select distinct matl_num as matl_num, null as vkorg from edw_material_dim
 ),
-material_join AS (
-    SELECT A.*, b.* 
-    FROM (SELECT DISTINCT MATL_NUM FROM material_number_union) a 
-    LEFT JOIN (SELECT DISTINCT matnr, pmatn, VKORG, VTWEG FROM apc_mvke) b
-        ON ltrim(a.matl_num,'0') = ltrim(b.matnr,'0')
+material_join as (
+SELECT 
+a.matl_num,
+a.vkorg,
+b.matnr,
+b.pmatn,
+b.vtweg 
+from
+(SELECT DISTINCT MATL_NUM,vkorg FROM material_number_union) a 
+LEFT JOIN 
+(SELECT DISTINCT matnr, pmatn,VKORG, VTWEG from apc_mvke where vtweg not in (19)) b
+ON ltrim(a.matl_num,'0') = ltrim(b.matnr,'0') AND a.vkorg = b.vkorg
+where a.vkorg is not null
 ),
 
 
@@ -137,7 +145,11 @@ mvke_join AS (
             THEN 'Y'
             ELSE 'N'
         END AS pmatn_flag
-    FROM (SELECT * FROM MATERIAL_JOIN) A
+    FROM (SELECT * FROM MATERIAL_JOIN
+    QUALIFY ROW_NUMBER() OVER (
+        PARTITION BY VKORG, MATL_NUM
+        ORDER BY VTWEG)= 1
+    ) A
     LEFT JOIN (
         SELECT * 
         FROM all_records 
@@ -154,10 +166,6 @@ mvke_join AS (
     ) C
         ON A.MATL_NUM = C.MATERIAL
         AND A.VKORG = C.SLS_ORG
-    QUALIFY ROW_NUMBER() OVER (
-        PARTITION BY A.VKORG, A.MATL_NUM, COALESCE(B.VALID_TO, C.VALID_TO)
-        ORDER BY A.VTWEG
-    ) = 1
 ),
 
 FINAL AS (
