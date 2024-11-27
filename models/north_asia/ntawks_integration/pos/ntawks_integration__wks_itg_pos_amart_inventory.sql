@@ -1,3 +1,10 @@
+{{
+    config(
+        materialized='incremental',
+        incincremental_strategy='append'
+    )
+}}
+
 with sdl_tw_pos_amart_inventory as (
     select * from {{ source('ntasdl_raw', 'sdl_tw_pos_amart_inventory') }}
     
