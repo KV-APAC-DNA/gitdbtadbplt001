@@ -35,7 +35,7 @@ transformed as
         chnl::varchar(100) as chnl,
         idiom.subchannelcode::varchar(100) as outlet_type,
         null::varchar(100) as chnl_grp,
-        idiom.jnj_id::varchar(100) as jjid,
+        idiom.jnj_id::varchar(200) as jjid,
         idiom.pincode::varchar(100) as pst_cd,
         trim(idiom.outletcode)::varchar(100) as cust_id_map,
         idiom.outletname::varchar(100) as cust_nm_map,
