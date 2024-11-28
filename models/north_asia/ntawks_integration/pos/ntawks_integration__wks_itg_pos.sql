@@ -103,8 +103,8 @@ final as
     left outer join 
     (
         select pos_dt,
-            trim(ean_num),
-            trim(str_cd),
+            trim(ean_num) as ean_num,
+            trim(str_cd) as str_cd,
             src_sys_cd,
             ctry_cd,
             crt_dttm,
