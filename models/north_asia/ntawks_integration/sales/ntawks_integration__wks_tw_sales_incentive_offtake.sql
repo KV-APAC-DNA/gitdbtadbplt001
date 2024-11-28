@@ -1,8 +1,9 @@
 with v_rpt_pos_offtake_wkly_nonkorea as (
     select * from {{ ref('ntaedw_integration__v_rpt_pos_offtake_wkly_nonkorea') }}
 ),
+-- change during deployment
 itg_sls_grp_to_customer_mapping as (
-    select * from {{ source('ntaitg_integration','itg_sls_grp_to_customer_mapping') }}
+    select * from {{ source('ntaitg_integration','itg_sls_grp_to_customer_mapping_temp') }}
 ),
 itg_mds_tw_customer_sales_rep_mapping as (
     select * from {{ ref('ntaitg_integration__itg_mds_tw_customer_sales_rep_mapping') }}
@@ -97,14 +98,14 @@ monthly_offtake as
                                     ) AS MONTH,
                                     CAST(SUBSTRING(fisc_per, 1, 4) AS INTEGER) AS YEAR,
                                     CASE
-                                        WHEN b.sls_grp IN ('Cosmed 康是美', 'Poya 寶雅', 'Watsons 屈臣氏') THEN strategy_customer_hierachy_name
+                                        WHEN b.sls_grp IN ('Cosmed 康是美', 'Poya 寶雅', 'Watsons 屈臣氏','A-Mart 愛買') THEN strategy_customer_hierachy_name
                                     END AS customer,
                                     SUM(sls_amt) offtake_actual,
                                     0 AS offtake_target
                                 FROM v_rpt_pos_offtake_wkly_nonkorea a
                                     LEFT JOIN itg_sls_grp_to_customer_mapping b ON a.sls_grp = b.sls_grp
                                 WHERE ctry_nm = 'Taiwan'
-                                    AND b.sls_grp IN ('Cosmed 康是美', 'Poya 寶雅', 'Watsons 屈臣氏')
+                                    AND b.sls_grp IN ('Cosmed 康是美', 'Poya 寶雅', 'Watsons 屈臣氏','A-Mart 愛買')
                                     AND to_crncy = 'TWD'
                                 GROUP BY a.crncy_cd,
                                     a.to_crncy,
@@ -398,7 +399,7 @@ quarterly_offtake as
                                     CAST(SUBSTRING(a.fisc_per, 1, 4) AS INTEGER) AS YEAR,
                                     cal.qrtr,
                                     CASE
-                                        WHEN b.sls_grp IN ('Cosmed 康是美', 'Poya 寶雅', 'Watsons 屈臣氏') THEN strategy_customer_hierachy_name
+                                        WHEN b.sls_grp IN ('Cosmed 康是美', 'Poya 寶雅', 'Watsons 屈臣氏','A-Mart 愛買') THEN strategy_customer_hierachy_name
                                     END AS customer,
                                     SUM(sls_amt) offtake_actual,
                                     0 AS offtake_target
@@ -412,7 +413,7 @@ quarterly_offtake as
                                     ) cal on SUBSTRING(a.fisc_per, 1, 4) || SUBSTRING(a.fisc_per, 6, 7) = cal.mnth_id
                                     LEFT JOIN itg_sls_grp_to_customer_mapping b ON a.sls_grp = b.sls_grp
                                 WHERE ctry_nm = 'Taiwan' --       AND   fisc_per = '2023003'
-                                    AND b.sls_grp IN ('Cosmed 康是美', 'Poya 寶雅', 'Watsons 屈臣氏')
+                                    AND b.sls_grp IN ('Cosmed 康是美', 'Poya 寶雅', 'Watsons 屈臣氏','A-Mart 愛買')
                                     AND to_crncy = 'TWD'
                                 GROUP BY a.crncy_cd,
                                     a.to_crncy,
@@ -723,7 +724,7 @@ ec_customer_offtake_data as
                                     CAST(SUBSTRING(a.fisc_per, 1, 4) AS INTEGER) AS YEAR,
                                     cal.qrtr,
                                     CASE
-                                        WHEN b.sls_grp IN ('Cosmed 康是美', 'Poya 寶雅', 'Watsons 屈臣氏') THEN strategy_customer_hierachy_name
+                                        WHEN b.sls_grp IN ('Cosmed 康是美', 'Poya 寶雅', 'Watsons 屈臣氏','A-Mart 愛買') THEN strategy_customer_hierachy_name
                                     END AS customer,
                                     SUM(sls_amt) offtake_actual,
                                     0 AS offtake_target
@@ -737,7 +738,7 @@ ec_customer_offtake_data as
                                     ) cal on SUBSTRING(a.fisc_per, 1, 4) || SUBSTRING(a.fisc_per, 6, 7) = cal.mnth_id
                                     LEFT JOIN itg_sls_grp_to_customer_mapping b ON a.sls_grp = b.sls_grp
                                 WHERE ctry_nm = 'Taiwan'
-                                    AND b.sls_grp IN ('Cosmed 康是美', 'Poya 寶雅', 'Watsons 屈臣氏')
+                                    AND b.sls_grp IN ('Cosmed 康是美', 'Poya 寶雅', 'Watsons 屈臣氏','A-Mart 愛買')
                                     AND to_crncy = 'TWD'
                                 GROUP BY a.crncy_cd,
                                     a.to_crncy,
