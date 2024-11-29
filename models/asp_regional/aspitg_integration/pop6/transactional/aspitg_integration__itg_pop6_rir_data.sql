@@ -36,7 +36,7 @@ final as
 		run_id::number(14,0) as run_id,
 		current_timestamp() as crtd_dttm,
 		current_timestamp() as updt_dttm,
-        sku_length::number(18,0) as sku_length
+        sku_length::number(18,4) as sku_length
     FROM source
 )
 select * from final
