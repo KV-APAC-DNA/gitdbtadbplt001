@@ -52,7 +52,7 @@ final as
 (
     select 
         LAST_DAY(TO_DATE(CONCAT(mnth_id,'01'),'YYYYMMDD')) AS pos_dt,
-        '12087' AS vend_cd,
+        customer_code AS vend_cd,
         null AS vend_nm,
         null AS prod_nm,
         item_code AS vend_prod_cd,
