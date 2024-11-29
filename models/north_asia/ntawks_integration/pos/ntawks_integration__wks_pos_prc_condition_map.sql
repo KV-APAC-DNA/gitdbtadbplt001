@@ -1,3 +1,4 @@
+--import cte
 with itg_pos_prc_condition_map as (
 select * from {{ ref('ntaitg_integration__itg_pos_prc_condition_map') }}
 ),
