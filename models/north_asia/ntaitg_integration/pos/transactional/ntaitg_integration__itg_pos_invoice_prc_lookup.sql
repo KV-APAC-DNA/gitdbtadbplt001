@@ -1,3 +1,5 @@
+--import cte
+
 with wks_edw_pos_fact_korea as
 (
     select * from {{ ref('ntawks_integration__wks_edw_pos_fact_korea') }}

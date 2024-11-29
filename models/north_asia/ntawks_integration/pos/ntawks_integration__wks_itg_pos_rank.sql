@@ -178,7 +178,7 @@ lohbs as
 homeplus as 
 (
     select
-        bar_code as barcode,
+        trim(bar_code) as barcode,
         customer_code,
         Null as customer_code_vend_cd,
         date_of_preparation,
@@ -193,7 +193,7 @@ homeplus as
         null as sales_rvenue_excl_vat,
         serial_num,
         null as sl_no,
-        ltrim(store_code, 0) as store_code,
+        ltrim(trim(store_code), 0) as store_code,
         null as store_name,
         unit_price::numeric(16, 5) as unit_price,
         'KRW' as currency,

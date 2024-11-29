@@ -109,7 +109,7 @@ FROM (
 
       SELECT   a.*,
              b.sold_to_cd AS sold_to_party,
-             CAST(a.ean_num AS VARCHAR(100)) AS barcode,
+             CAST(trim(a.ean_num) AS VARCHAR(100)) AS barcode,
             CASE
                WHEN c.sls_grp IS NULL OR c.sls_grp = '' THEN a.src_sys_cd
                ELSE c.sls_grp
@@ -119,7 +119,7 @@ FROM (
                     --- d.sap_matl_num, /*old logic */
              NULL AS prom_sls_amt,
              NULL AS prom_prc_amt, 
-             a.str_cd AS str_num
+             trim(a.str_cd) AS str_num
              , CASE
                WHEN b.sales_grp_cd IS NULL OR b.sales_grp_cd = '' THEN c.sls_grp_cd
                ELSE b.sales_grp_cd
