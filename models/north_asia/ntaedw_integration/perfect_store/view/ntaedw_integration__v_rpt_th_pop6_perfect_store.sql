@@ -1569,6 +1569,7 @@ AS (
                         ps_segment
             from edw_vw_pop6_visits_rir_data
             where upper(company) in ('KENVUE','JNJ','KV')
+            and  sku_length is not null
         UNION ALL
         select  cntry_cd ,
                         visit_id,
@@ -1589,7 +1590,8 @@ AS (
                         username,
                         ps_category,
                         ps_segment
-            from edw_vw_pop6_visits_rir_data)
+            from edw_vw_pop6_visits_rir_data
+            where sku_length is not null) 
         where   (date_part('year', visit_date) >= (date_part('year',  sysdate()) - 2))
             group by cntry_cd,
                     visit_id,
