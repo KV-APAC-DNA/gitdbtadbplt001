@@ -37,21 +37,37 @@ select distinct matnr as matl_num, vkorg from apc_a902
 UNION 
 select distinct matl_num as matl_num, null as vkorg from edw_material_dim
 ),
-material_join as (
-SELECT 
-a.matl_num,
-a.vkorg,
-b.matnr,
-b.pmatn,
-b.vtweg 
-from
-(SELECT DISTINCT MATL_NUM,vkorg FROM material_number_union) a 
-LEFT JOIN 
-(SELECT DISTINCT matnr, pmatn,VKORG, VTWEG from apc_mvke where vtweg not in (19)) b
-ON ltrim(a.matl_num,'0') = ltrim(b.matnr,'0') AND a.vkorg = b.vkorg
-where a.vkorg is not null
+material_join AS (
+    SELECT A.matl_num,
+    a.org,
+    b.matnr,
+    CASE 
+    WHEN b.VTWEG = 19 AND b.VKORG IN ('3300') THEN NULL
+    ELSE NULLIF(b.PMATN,'') 
+    END AS pmatn,
+    b.vkorg,
+    b.vtweg
+    FROM (SELECT DISTINCT MATL_NUM,vkorg as org 
+    FROM material_number_union) a 
+    LEFT JOIN (
+        SELECT DISTINCT matnr, 
+            FIRST_VALUE(pmatn) OVER (
+                PARTITION BY matnr, VKORG 
+                ORDER BY 
+                    CASE 
+                        WHEN vtweg != 19 AND pmatn IS NOT NULL AND TRIM(pmatn) != '' THEN 1
+                        WHEN vtweg != 19 AND (pmatn IS NULL OR TRIM(pmatn) = '') THEN 2
+                        ELSE 3 
+                    END
+            ) as pmatn,
+            VKORG , 
+            VTWEG 
+        FROM apc_mvke
+        QUALIFY ROW_NUMBER() OVER (PARTITION BY VKORG, MATNR ORDER BY VTWEG) = 1
+    ) b
+        ON ltrim(a.matl_num,'0') = ltrim(b.matnr,'0')
+        AND a.org = b.vkorg
 ),
-
 
 base_join AS (
     SELECT 
@@ -146,9 +162,9 @@ mvke_join AS (
             ELSE 'N'
         END AS pmatn_flag
     FROM (SELECT * FROM MATERIAL_JOIN
-    QUALIFY ROW_NUMBER() OVER (
-        PARTITION BY VKORG, MATL_NUM
-        ORDER BY VTWEG)= 1
+    -- QUALIFY ROW_NUMBER() OVER (
+    --     PARTITION BY VKORG, MATL_NUM
+    --     ORDER BY VTWEG)= 1
     ) A
     LEFT JOIN (
         SELECT * 
