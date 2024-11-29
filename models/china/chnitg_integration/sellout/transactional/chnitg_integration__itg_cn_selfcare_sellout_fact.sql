@@ -5,13 +5,13 @@
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
         DELETE FROM {{this}} WHERE yearmonth IN (SELECT DISTINCT yearmonth
-		FROM {{source('chnsdl_raw', 'sdl_cn_selfcare_sellout_fact')}});
+		FROM {{source('chnedw_integration', 'dm_sellerbuyer')}});
         {% endif %}"
     )
 }}
-with sdl_cn_selfcare_sellout_fact as
+with DM_SELLERBUYER as
 (
-    select * from {{source('chnsdl_raw', 'sdl_cn_selfcare_sellout_fact')}}
+    select * from {{source('chnedw_integration', 'dm_sellerbuyer')}}
 ),
 itg_mds_cn_otc_product_mapping as
 (
@@ -42,7 +42,7 @@ trans as
 	selfcare.brand_name,
 	selfcare.product_code,
 	selfcare.product_name,
-	selfcare.region,
+	selfcare."region" as region,
 	selfcare.seller_province_code,
 	selfcare.seller_province_name,
 	selfcare.seller_city_code,
@@ -74,8 +74,8 @@ trans as
 	selfcare.etl_update_date,
 	current_timestamp()::TIMESTAMP_NTZ(9) AS crtd_dttm,
 	current_timestamp()::TIMESTAMP_NTZ(9) AS updt_dttm,
-	selfcare.file_name
-    FROM sdl_cn_selfcare_sellout_fact selfcare
+	'NA' as file_name
+    FROM DM_SELLERBUYER selfcare
     LEFT JOIN itg_mds_cn_otc_product_mapping as otc_prdt_map ON LTRIM(otc_prdt_map.code) = LTRIM(selfcare.product_code)
     LEFT JOIN itg_mds_cn_otc_soldto_mapping as otc_sold_to_map ON otc_sold_to_map.code = selfcare.sellercode
 ),
