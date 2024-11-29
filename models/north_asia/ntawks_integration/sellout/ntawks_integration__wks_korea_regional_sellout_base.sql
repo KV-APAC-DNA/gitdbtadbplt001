@@ -1,3 +1,5 @@
+--import cte
+
 with edw_pos_fact as (
 select * from {{ ref('ntaedw_integration__edw_pos_fact') }}
 ),
