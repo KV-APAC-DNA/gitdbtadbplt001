@@ -110,7 +110,8 @@ SELECT ETD.JJ_YEAR,
                    0 as NON_SALEABLE_STOCK_VALUE,
                    0 as INTRANSIT_QTY,
                    0 as INTRANSIT_HNA,
-                   0 as INTRANSIT_NIV
+                   0 as INTRANSIT_NIV,
+                   usd_conversion_rate
             FROM 
 			(select JJ_MNTH_ID,JJ_SAP_DSTRBTR_ID,JJ_SAP_PROD_ID,usd_conversion_rate,sum(SELLIN_QTY) as SELLIN_QTY,sum(SELLIN_VAL) as SELLIN_VAL,sum(GROSS_SELLIN_VAL) as GROSS_SELLIN_VAL,MAX(current_timestamp()::timestamp_ntz) as CRTD_DTTM,
 				   MAX(CAST(NULL AS TIMESTAMP)) as UPTD_DTTM, from 
