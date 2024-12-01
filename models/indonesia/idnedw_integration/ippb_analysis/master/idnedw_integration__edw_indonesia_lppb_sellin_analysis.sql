@@ -116,7 +116,7 @@ SELECT ETD.JJ_YEAR,
 			(select JJ_MNTH_ID,JJ_SAP_DSTRBTR_ID,JJ_SAP_PROD_ID,usd_conversion_rate,sum(SELLIN_QTY) as SELLIN_QTY,sum(SELLIN_VAL) as SELLIN_VAL,sum(GROSS_SELLIN_VAL) as GROSS_SELLIN_VAL,MAX(current_timestamp()::timestamp_ntz) as CRTD_DTTM,
 				   MAX(CAST(NULL AS TIMESTAMP)) as UPTD_DTTM, from 
 			edw_rpt_id_sellin_analysis 
-            group by JJ_MNTH,JJ_SAP_DSTRBTR_ID,JJ_SAP_PROD_ID,usd_conversion_rate) as sellin
+            group by JJ_MNTH_id,JJ_SAP_DSTRBTR_ID,JJ_SAP_PROD_ID,usd_conversion_rate) as sellin
 											) AS T1,
            EDW_DISTRIBUTOR_DIM AS EDD,
            EDW_PRODUCT_DIM AS EPD,
