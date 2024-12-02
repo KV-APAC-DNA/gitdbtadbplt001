@@ -27,7 +27,6 @@ EDW_MATERIAL_DIM AS (
     WHERE MATL_TYPE_CD IN ('FERT','HALB','SAPR')
 ),
 
-
 material_number_union AS (
 select distinct matnr as matl_num, vkorg from apc_mvke
 UNION
