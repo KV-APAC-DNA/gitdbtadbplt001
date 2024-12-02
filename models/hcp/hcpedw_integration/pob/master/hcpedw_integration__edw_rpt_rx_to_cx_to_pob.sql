@@ -40,6 +40,19 @@ final as
 	zone_vent::varchar(100) as zone_vent,
 	"URC Active Flag"::varchar(1) as "urc active flag",
     "URC Active Flag Ventasys"::varchar(1) as "urc active flag ventasys",
+    latest_customer_code::varchar(100) as latest_customer_code,
+    latest_customer_name::varchar(100) as latest_customer_name,
+    latest_salesman_code::varchar(100) as latest_salesman_code,
+    latest_salesman_name::varchar(100) as latest_salesman_name,
+    latest_region::varchar(100) as latest_region,
+    latest_zone::varchar(100) as latest_zone,
+    latest_territory::varchar(100) as latest_territory,
+    emp_hq_name::varchar(100) as emp_hq_name,
+    city::varchar(100) as city,
+    state::varchar(100) as state,
+    customer_type::varchar(100) as customer_type,
+    core_noncore::varchar(100) as core_noncore,
+    is_active::varchar(1) as is_active,
 	current_timestamp()::timestamp_ntz(9) as load_dttm
     from wks_rx_to_cx_to_pob
 )
