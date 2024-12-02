@@ -23,6 +23,7 @@ select
     mothersku_name as "mothersku_name",
     invoice_date as "invoice_date",
     invoice_no as "invoice_no",
+    order_source as "order_source",
     order_date as "order_date",
     order_no as "order_no",
     ord_dt_week as "ord_dt_week",

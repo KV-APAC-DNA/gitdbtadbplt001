@@ -69,6 +69,7 @@ SELECT
     oti.ord_qty AS order_product_quantity, 
     oti.ord_amt AS order_product_nr_amount, 
     oti.product_code_invoiced,
+    oti.remarks as order_source,
     rtld.csrtrcode, 
     NULL  AS abi_ntid, 
     NULL  AS flm_ntid, 
@@ -101,6 +102,7 @@ SELECT
              b.order_no,
              b.ord_qty,
              b.ord_amt,
+             b.remarks,
              a.customer_code AS customer_code_invoiced,
              a.invoice_no AS invoice_no_invoiced,
 			 a.invoice_date,
@@ -118,6 +120,7 @@ SELECT
                    edw_order_fact.order_date AS order_date,
                    TRIM(edw_order_fact.route_code) AS route_code,
                    TRIM(edw_order_fact.order_no) AS order_no,
+                   TRIM(edw_order_fact.remarks) AS remarks,
                     sum(edw_order_fact.ord_qty) AS ord_qty, 
                     sum(edw_order_fact.ord_amt) AS ord_amt 
                     FROM edw_order_fact edw_order_fact 
@@ -131,7 +134,8 @@ SELECT
                     edw_order_fact.salesman_code, 
                     edw_order_fact.route_code, 
                     edw_order_fact.order_date, 
-                    edw_order_fact.order_no
+                    edw_order_fact.order_no,
+                    edw_order_fact.remarks
                 ) b 
             FULL OUTER JOIN (
                     SELECT 
