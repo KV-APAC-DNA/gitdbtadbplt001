@@ -67,7 +67,7 @@
                         null::varchar(25) as store_type,
                         null::varchar(18) as sls_grp_cd
                     FROM
-                    {{ ref('ntawks_integration__tw_pos') }} where src_sys_cd like 'Cos%'",
+                    {{ ref('ntawks_integration__tw_pos') }} where src_sys_cd like 'A-M%'",
                    "{% if is_incremental() %}
                     delete
                     from {{this}}
