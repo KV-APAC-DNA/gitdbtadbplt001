@@ -38,7 +38,7 @@
                 chnl varchar(100),
                 outlet_type varchar(100),
                 chnl_grp varchar(100),
-                jjid varchar(100),
+                jjid varchar(200),
                 chnl_grp2 varchar(100),
                 city varchar(229),
                 cust_status varchar(8),
