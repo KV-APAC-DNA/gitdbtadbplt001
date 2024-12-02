@@ -1,0 +1,55 @@
+WITH dcr_data as (
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_ventasys_dcrdata') }}
+),
+
+ventasys_hcp_master as (
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_ventasys_hcp_master') }}
+),
+
+territory_master as(
+    select *
+    from DEV_DNA_CORE.HCPITG_INTEGRATION.ITG_HCP360_IN_VENTASYS_TERRITORY_MASTER
+    
+),
+
+
+
+
+dcr_hcp_region_join as (
+select dcr_year,
+dcr_month,
+team_name,
+v_terrid,
+RBM,
+ZBM,
+FBM,
+hq,
+cust_spec,
+core_noncore,
+count(distinct(v_custid)) as distinct_hcp_count,
+'DCR' as datasource 
+
+from (
+
+    select hcp.team_name,
+    hcp.v_terrid,
+    vtm.lvl1 as RBM,
+    vtm.lvl2 as ZBM,
+    vtm.lvl3 as FBM,
+    vtm.hq,
+    hcp.cust_spec,
+    hcp.v_custid,
+    to_char(to_date(dcr.dcr_dt),'MM') as dcr_month,
+    to_char(to_date(dcr.dcr_dt),'20'||'YY') as dcr_year,hcp.core_noncore
+
+from  dcr_data dcr
+left join  ventasys_hcp_master hcp
+on hcp.v_custid=dcr.v_custid
+left join territory_master vtm
+on vtm.v_terrid=hcp.v_terrid
+where is_active='Y')
+group by 1,2,3,4,5,6,7,8,9,10
+
+)
+select * from dcr_hcp_region_join
+
