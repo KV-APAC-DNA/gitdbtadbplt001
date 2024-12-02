@@ -88,7 +88,8 @@ final as
                 AND CASE WHEN exch_rate.to_crncy::TEXT <> 'USD'::CHARACTER VARYING::TEXT THEN exch_rate.to_crncy::TEXT = copa.obj_crncy_co_obj::TEXT ELSE exch_rate.to_crncy::TEXT = 'USD'::CHARACTER VARYING::TEXT END
         WHERE (copa.acct_hier_shrt_desc::TEXT = 'NTS'::CHARACTER VARYING::TEXT OR copa.acct_hier_shrt_desc::TEXT = 'GTS'::CHARACTER VARYING::TEXT OR copa.acct_hier_shrt_desc::TEXT = 'RTN'::CHARACTER VARYING::TEXT)
         AND   copa.fisc_yr_per::CHARACTER VARYING::TEXT >= ((((date_part(year,convert_timezone('UTC',current_timestamp())) - 2::DOUBLE PRECISION)::CHARACTER VARYING::TEXT || 0::CHARACTER VARYING::TEXT) || 0::CHARACTER VARYING::TEXT) || 1::CHARACTER VARYING::TEXT)
-        AND   (company.ctry_group::TEXT = 'Malaysia'::CHARACTER VARYING::TEXT OR company.ctry_group::TEXT = 'Singapore'::CHARACTER VARYING::TEXT OR company.ctry_group::TEXT = 'Korea'::CHARACTER VARYING::TEXT OR company.ctry_group::TEXT = 'Thailand'::CHARACTER VARYING::TEXT OR company.ctry_group::TEXT = 'Hong Kong'::CHARACTER VARYING::TEXT OR company.ctry_group::TEXT = 'Taiwan'::CHARACTER VARYING::TEXT OR company.ctry_group = 'Philippines' OR company.ctry_group = 'Vietnam' OR company.ctry_group = 'India')
+        AND   (company.ctry_group::TEXT = 'Malaysia'::CHARACTER VARYING::TEXT OR company.ctry_group::TEXT = 'Singapore'::CHARACTER VARYING::TEXT OR company.ctry_group::TEXT = 'Korea'::CHARACTER VARYING::TEXT OR company.ctry_group::TEXT = 'Thailand'::CHARACTER VARYING::TEXT OR company.ctry_group::TEXT = 'Hong Kong'::CHARACTER VARYING::TEXT OR company.ctry_group::TEXT = 'Taiwan'::CHARACTER VARYING::TEXT OR company.ctry_group = 'Philippines' OR company.ctry_group = 'Vietnam'
+         OR company.ctry_group = 'India' OR company.ctry_group = 'Australia' OR company.ctry_group = 'New Zealand' OR company.ctry_group = 'Indonesia')
         GROUP BY nvl(company.ctry_group,''),
                 nvl(company."cluster",''),
                 copa.fisc_yr,
@@ -107,7 +108,7 @@ final as
                 exch_rate.to_crncy) fact
     LEFT JOIN itg_account_ciw_tt_tp_mapping ciw_mapping ON 
     /*Exclude hidden discount G/L account# 402041 from CIW TT TP allocation, if hidden discounts are separately allocated for the market*/
-    CASE WHEN co_cd in ('3820','4880','8266','4330') and ltrim(fact.acct_num,'0') = '402041' then '0' else 
+    CASE WHEN co_cd in ('3820','4880','8266','4330','7470','7472','9761','747A','7465','9760','8361','836A') and ltrim(fact.acct_num,'0') = '402041' then '0' else 
     LTRIM (fact.acct_num::TEXT,0::CHARACTER VARYING::TEXT) end  = LTRIM (ciw_mapping.acct_num::TEXT,0::CHARACTER VARYING::TEXT)
     LEFT JOIN edw_calendar_dim timedim ON fact.fisc_day::CHARACTER VARYING::TEXT = timedim.cal_day::CHARACTER VARYING::TEXT
 
