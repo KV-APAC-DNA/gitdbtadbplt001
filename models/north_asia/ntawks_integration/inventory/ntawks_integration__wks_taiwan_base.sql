@@ -557,7 +557,7 @@ GROUP BY
     txn.BARCODE,
     txn.mnth_id
 
-)
+),
 
 t_joined
 AS (
