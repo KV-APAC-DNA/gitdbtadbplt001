@@ -59,6 +59,9 @@ AS(
     SELECT *
     FROM {{ source('ntaitg_integration','itg_query_parameters_temp') }}
 ),
+itg_cosmed_inventory as
+(SELECT * FROM {{ ref('ntaitg_integration__itg_cosmed_inventory') }}
+),
 
 inv_max
 AS (
@@ -510,6 +513,51 @@ t6b AS (
         p.ean_num,
         ctry_cd DESC
 ),
+t6cosmed as (
+    SELECT 
+    'TW' AS ctry_cd,
+    'INV' AS Data_Type,
+    qp.sold_to_party AS dstr_cd,
+    txn.BARCODE,
+    txn.mnth_id AS cal_month,
+    SUM(txn.TOTAL_INVENTORY_QTY) as inv_qty,
+    SUM(txn.TOTAL_INVENTORY_QTY * COALESCE(price.prom_prc, 0)) as inv_value,
+    0 AS so_qty,
+    0 AS sls_value,
+    0 AS sI_qty,
+    0 AS sI_value
+FROM itg_cosmed_inventory txn
+LEFT JOIN (
+    SELECT DISTINCT
+        CASE
+            WHEN cust = 'Cosmed' THEN 'Cosmed 康是美'
+            WHEN cust = 'Poya' THEN 'Poya 寶雅'
+            WHEN cust = 'RT-Mart' THEN 'RT-Mart 大潤發'
+            WHEN cust = 'A-Mart' THEN 'A-Mart 愛買'
+        END AS cust,
+        barcd,
+        cust_prod_cd,
+        prom_prc,
+        prom_strt_dt,
+        prom_end_dt
+    FROM itg_pos_prom_prc_map
+) price ON txn.mnth_id BETWEEN TO_CHAR(price.prom_strt_dt, 'YYYYMM') AND TO_CHAR(price.prom_end_dt, 'YYYYMM')
+    AND rtrim(txn.BARCODE) = rtrim(price.barcd)
+    AND txn.src_sys_cd = price.cust
+LEFT JOIN (
+    SELECT DISTINCT 
+        parameter_name as src_sys_cd,
+        parameter_value as sold_to_party
+    FROM itg_query_parameters
+    WHERE country_code = 'TW'
+        AND parameter_type = 'sold_to_party'
+) qp ON qp.src_sys_cd = txn.src_sys_cd
+GROUP BY 
+    qp.sold_to_party,
+    txn.BARCODE,
+    txn.mnth_id
+
+)
 
 t_joined
 AS (
@@ -550,6 +598,11 @@ AS (
     
     SELECT *
     FROM t6b
+
+    UNION ALL
+    
+    SELECT *
+    FROM t6cosmed
     ),
 t_select
 AS (
