@@ -5,12 +5,7 @@
         materialized="incremental",
         incremental_strategy= "append",
         sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";",
-        pre_hook= ["DELETE FROM
-                    {{this}}
-                    WHERE
-                    ctry_cd = 'TW' 
-                    AND hist_flg = 'N';
-                    ",
+        pre_hook= [
                     "INSERT INTO
                         {{this}}
                         SELECT
@@ -72,7 +67,7 @@
                         null::varchar(25) as store_type,
                         null::varchar(18) as sls_grp_cd
                     FROM
-                    {{ ref('ntawks_integration__tw_pos') }}",
+                    {{ ref('ntawks_integration__tw_pos') }} where src_sys_cd like 'Cos%'",
                    "{% if is_incremental() %}
                     delete
                     from {{this}}
