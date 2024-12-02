@@ -1,8 +1,8 @@
 WITH sdl_tw_pos_cosmed_store_inventory AS 
-(SELECT * FROM {{ source('ntasdl_raw', 'sdl_tw_pos_cosmed_store_inventory') }}),
+(SELECT * FROM {{ ref('ntawks_integration__wks_itg_pos_cosmed_store_inventory') }}),
 
 sdl_tw_pos_cosmed_dc_inventory AS 
-(SELECT * FROM {{ source('ntasdl_raw', 'sdl_tw_pos_cosmed_dc_inventory') }}),
+(SELECT * FROM {{ ref('ntawks_integration__wks_itg_pos_cosmed_dc_inventory') }}),
 
 final as (
 SELECT 
