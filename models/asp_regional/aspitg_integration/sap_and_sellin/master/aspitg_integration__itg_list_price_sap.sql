@@ -188,6 +188,7 @@ FINAL AS (
     SELECT 
         m.MATL_NUM AS material,
         m.PMATN,
+        m.vtweg as channel,
         m.VKORG AS sls_org,
         m.COND_REC_NO,
         m.VALID_TO,
