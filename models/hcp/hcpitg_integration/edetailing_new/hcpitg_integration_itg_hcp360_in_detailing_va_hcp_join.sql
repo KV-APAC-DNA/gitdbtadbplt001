@@ -59,4 +59,4 @@ detailing_va_hcp_join as (
         on concat('C', edr.cid) = hcp.v_custid
 )
 
-select * from detailing_va_hcp_join
+select *  from detailing_va_hcp_join

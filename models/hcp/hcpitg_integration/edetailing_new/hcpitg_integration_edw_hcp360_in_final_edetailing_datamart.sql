@@ -140,4 +140,4 @@ final_edetailing_datamart as (
     from dcr_hcp_region_join
 )
 
-select * from final_edetailing_datamart 
+select  * from final_edetailing_datamart 
