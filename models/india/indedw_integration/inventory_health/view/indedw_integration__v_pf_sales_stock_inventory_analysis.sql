@@ -2041,3 +2041,6 @@ final as
 	offer_stkadj::number(38,6) as offer_stkadj,
 	purchasereturn::number(38,6) as purchasereturn
     from trans
+
+    )
+select * from final
