@@ -54,6 +54,6 @@ final as
     v_rpt_order_details_with_history.datasource,
     v_rpt_order_details_with_history.desc_flag 
     FROM v_rpt_order_details_with_history 
-    WHERE ((v_rpt_order_details_with_history.ord_dt_year):: double precision >= (date_part(year,convert_timezone('UTC',current_timestamp())::timestamp_ntz) - (1):: double precision))
+    WHERE ((v_rpt_order_details_with_history.ord_dt_year):: double precision >= 2024)
 )
 select * from final
