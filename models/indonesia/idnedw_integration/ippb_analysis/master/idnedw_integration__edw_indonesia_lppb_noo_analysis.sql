@@ -144,11 +144,11 @@ SELECT ETD.JJ_YEAR,
       AND   ETD.JJ_MNTH_ID = T1.JJ_MNTH_ID
       AND   TRIM(UPPER(EPD.JJ_SAP_PROD_ID(+))) = TRIM(UPPER(T1.JJ_SAP_PROD_ID))
 	  and   T1.jj_mnth_id between EPD.effective_from(+) and EPD.effective_to(+)
-      AND   TRIM(UPPER(T1.jj_sap_prod_id)) != 'REBATE'
-      AND   TRIM(UPPER(T1.JJ_SAP_DSTRBTR_ID)) != '119683'
-      AND   TRIM(UPPER(EDD.DSTRBTR_GRP_CD)) != 'SPLD'
-      AND   TRIM(UPPER(EDD.DSTRBTR_GRP_CD)) != 'JYM'
-      AND   TRIM(UPPER(T1.JJ_SAP_PROD_ID)) != 'DAOG20'
+      --AND   TRIM(UPPER(T1.jj_sap_prod_id)) != 'REBATE'
+      --AND   TRIM(UPPER(T1.JJ_SAP_DSTRBTR_ID)) != '119683'
+      --AND   TRIM(UPPER(EDD.DSTRBTR_GRP_CD)) != 'SPLD'
+      --AND   TRIM(UPPER(EDD.DSTRBTR_GRP_CD)) != 'JYM'
+      --AND   TRIM(UPPER(T1.JJ_SAP_PROD_ID)) != 'DAOG20'
 	  
 	  )
 
