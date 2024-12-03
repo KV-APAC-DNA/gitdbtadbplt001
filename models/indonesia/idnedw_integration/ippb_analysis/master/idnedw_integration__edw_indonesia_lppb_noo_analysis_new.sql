@@ -31,7 +31,7 @@ edw_indonesia_noo_analysis
 
 p2m_sellout as(
 		
-	SELECT JJ_MNTH_ID,
+	SELECT T1.JJ_MNTH_ID,
         JJ_SAP_DSTRBTR_ID,
 		JJ_SAP_PROD_ID,
 		usd_conversion_rate,
@@ -67,7 +67,7 @@ p2m_sellout as(
       WHERE
       T1.JJ_MNTH_ID >= CAL.L2_MONTH
       AND T1.JJ_MNTH_ID <= CAL.L1_MONTH
-	  group by JJ_MNTH_ID,
+	  group by T1.JJ_MNTH_ID,
                    JJ_SAP_DSTRBTR_ID,
                    JJ_SAP_PROD_ID,
                    usd_conversion_rate
@@ -75,7 +75,7 @@ p2m_sellout as(
 	  ),	  
 p3m_sellout as (
 	SELECT 
-        JJ_MNTH_ID,
+        T1.JJ_MNTH_ID,
         JJ_SAP_DSTRBTR_ID,
 		JJ_SAP_PROD_ID,
 		usd_conversion_rate,
@@ -111,7 +111,7 @@ p3m_sellout as (
       WHERE
       T1.JJ_MNTH_ID >= CAL.L3_MONTH
       AND T1.JJ_MNTH_ID <= CAL.L1_MONTH
-	  group by JJ_MNTH_ID,
+	  group by T1.JJ_MNTH_ID,
                    JJ_SAP_DSTRBTR_ID,
                    JJ_SAP_PROD_ID,
                    usd_conversion_rate
@@ -121,7 +121,7 @@ p3m_sellout as (
 	  
 	),
 p6m_sellout as (
-	SELECT JJ_MNTH_ID,
+	SELECT T1.JJ_MNTH_ID,
         JJ_SAP_DSTRBTR_ID,
 		JJ_SAP_PROD_ID,
 		usd_conversion_rate,
@@ -157,7 +157,7 @@ p6m_sellout as (
       WHERE
       T1.JJ_MNTH_ID >= CAL.L6_MONTH
       AND T1.JJ_MNTH_ID <= CAL.L1_MONTH
-	  group by JJ_MNTH_ID,
+	  group by T1.JJ_MNTH_ID,
                    JJ_SAP_DSTRBTR_ID,
                    JJ_SAP_PROD_ID,
                    usd_conversion_rate
