@@ -82,11 +82,11 @@ select * from {{ ref('inditg_integration__itg_in_rretailergeoextension') }}
 ),
 IN_HCP_SpecialtyCare as
 (
-select * from DEV_DNA_LOAD.HCPSDL_RAW.SDL_MDS_IN_HCP_SPECIALTYCARE
+select * from DEV_DNA_CORE.INDITG_INTEGRATION.ITG_SDL_MDS_IN_HCP_SPECIALTYCARE
 ),
 IN_HCP_Selfcare as 
 (
-select * from  DEV_DNA_LOAD.HCPSDL_RAW.SDL_MDS_IN_HCP_SELFCARE
+select * from  DEV_DNA_CORE.INDITG_INTEGRATION.ITG_SDL_MDS_IN_HCP_SELFCARE
 ),
 ITG_QUERY_PARAMETERS as
 (
