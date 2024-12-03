@@ -330,9 +330,9 @@ AS (
                     )
                 )
         )
-
+    
     UNION ALL
-
+    
     SELECT itg_pf_retail_mth_ds.month,
         itg_pf_retail_mth_ds.year,
         itg_pf_retail_mth_ds.customer_code,
@@ -920,7 +920,7 @@ END AS yr,
         2
     )) AS prev_mon,
 
-
+                        
                        TO_NUMBER(SUBSTR(
         TO_CHAR(DATE_TRUNC('month', ADD_MONTHS(TO_DATE(SUBSTR(CAST(edw_retailer_calendar_dim.mth_mm AS VARCHAR), 1, 4) || SUBSTR(CAST(edw_retailer_calendar_dim.mth_mm AS VARCHAR), 5, 2), 'YYYYMM'), -1)), 'YYYYMM'), 
         1, 
@@ -1613,11 +1613,11 @@ AS (
         COALESCE(prd.mothersku_name, 'Unknown') AS mothersku_name,
         --COALESCE(prd.mothersku_name, 'Unknown'::CHARACTER VARYING) AS mothersku_name,
         NULL AS abi_ntid,
-
+        
         NULL AS flm_ntid,
-
+        
         NULL AS bdm_ntid,
-
+        
         NULL AS rsm_ntid,
         plt.plantid,
         COALESCE(plt.plantname, 'Unknown'::CHARACTER VARYING) AS plantname,
@@ -1825,34 +1825,34 @@ AS (
                         FROM (
                             SELECT *
                             FROM union_1
-
+                            
                             UNION ALL
-
+                            
                             SELECT *
                             FROM union_2
-
+                            
                             UNION ALL
-
+                            
                             SELECT *
                             FROM union_3
-
+                            
                             UNION ALL
-
+                            
                             SELECT *
                             FROM union_4
-
+                            
                             UNION ALL
-
+                            
                             SELECT *
                             FROM union_5
-
+                            
                             UNION ALL
-
+                            
                             SELECT *
                             FROM union_6
-
+                            
                             UNION ALL
-
+                            
                             SELECT *
                             FROM union_7
                             ) tr1
@@ -2041,6 +2041,5 @@ final as
 	offer_stkadj::number(38,6) as offer_stkadj,
 	purchasereturn::number(38,6) as purchasereturn
     from trans
-
-    )
+)
 select * from final
