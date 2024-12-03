@@ -22,4 +22,9 @@ models:
       alias: itg_call_key_message
       tags: ["iconnect_data_ingestion","ingestion"]
 
+  - name: hcposeitg_integration__itg_call_sample
+    config:
+      alias: itg_call_sample
+      tags: ["iconnect_data_ingestion","ingestion"]      
+
   
