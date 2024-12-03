@@ -40,11 +40,11 @@ material_join AS (
     SELECT A.matl_num,
     a.org,
     b.matnr,
-    -- CASE 
-    -- WHEN b.VTWEG = 19 AND b.VKORG IN ('3300') THEN NULL
-    -- ELSE NULLIF(b.PMATN,'') 
-    -- END AS pmatn,
-    NULLIF(b.PMATN,'') as pmatn,
+    CASE 
+    WHEN b.VTWEG = 19 AND b.VKORG IN ('3300','3410') THEN NULL
+    ELSE NULLIF(b.PMATN,'') 
+    END AS pmatn,
+    -- NULLIF(b.PMATN,'') as pmatn,
     b.vkorg,
     b.vtweg
     FROM (SELECT DISTINCT MATL_NUM,vkorg as org 
