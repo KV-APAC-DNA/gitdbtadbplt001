@@ -932,4 +932,5 @@ FROM (
             ON sf.customer_code = self.code AND qp.prof_type = 'self_care'	
 )
 WHERE (cd.fisc_yr >= 2014))
-select * from final
+select * from final 
+
