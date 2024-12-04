@@ -6,10 +6,10 @@
 
 with edw_copa_trans_fact as(
     select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
-),
+),/*
 edw_company_dim as(
     select * from {{ ref('aspedw_integration__edw_company_dim') }}
-),
+),*/
 edw_material_dim as(
     select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
@@ -25,12 +25,12 @@ edw_acct_ciw_hier as(
 edw_account_ciw_dim as(
     select * from {{ ref('aspedw_integration__edw_account_ciw_dim') }}
 ),
-edw_gch_producthierarchy as(
+/*edw_gch_producthierarchy as(
     select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 edw_gch_customerhierarchy as (
     select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
-),
+),*/
 vw_itg_custgp_customer_hierarchy as(
     select * from {{ ref('aspitg_integration__vw_itg_custgp_customer_hierarchy') }}
 ),
@@ -71,10 +71,12 @@ FROM (SELECT fact.fisc_yr AS fisc_yr,
              nvl(gmc.C3_NEED_STATE,'Not Available') AS NEED_STATE,
              nvl(gmc.C4_CATEGORY,'Not Available') AS CATEGORY,
              nvl(gmc.C5_SUBCATEGORY,'Not Available') AS SUBCATEGORY,
-             IFF(mat.brnd_desc = '',NULL,mat.brnd_desc) AS "b2 brand",
+
+             /*IFF(mat.brnd_desc = '',NULL,mat.brnd_desc) AS "b2 brand",
              IFF(mat.base_prod_desc = '',NULL,mat.base_prod_desc) AS "b3 base product",
              IFF(mat.varnt_desc = '',NULL,mat.varnt_desc) AS "b4 variant",
-             IFF(mat.put_up_desc = '',NULL,mat.put_up_desc) AS "b5 put-up",
+             IFF(mat.put_up_desc = '',NULL,mat.put_up_desc) AS "b5 put-up",*/
+
              IFF(fact.cust_num = '',NULL,fact.cust_num) AS cust_num,
              IFF(cus_sales_extn."parent customer" = '',NULL,cus_sales_extn."parent customer") AS "parent customer",
              IFF(cus_sales_extn.banner = '',NULL,cus_sales_extn.banner) AS banner,
@@ -83,7 +85,8 @@ FROM (SELECT fact.fisc_yr AS fisc_yr,
              IFF(cus_sales_extn."go to model" = '',NULL,cus_sales_extn."go to model") AS "go to model",
              IFF(cus_sales_extn."sub channel" = '',NULL,cus_sales_extn."sub channel") AS "sub channel",
              IFF(cus_sales_extn.retail_env = '',NULL,cus_sales_extn.retail_env) AS retail_env,
-             IFF(gph.gcph_franchise = '',NULL,gph.gcph_franchise) AS gcph_franchise,
+             
+             /*IFF(gph.gcph_franchise = '',NULL,gph.gcph_franchise) AS gcph_franchise,
              IFF(gph.gcph_brand = '',NULL,gph.gcph_brand) AS gcph_brand,
              IFF(gph.gcph_subbrand = '',NULL,gph.gcph_subbrand) AS gcph_subbrand,
              IFF(gph.gcph_variant = '',NULL,gph.gcph_variant) AS gcph_variant,
@@ -96,7 +99,8 @@ FROM (SELECT fact.fisc_yr AS fisc_yr,
              IFF(gch.gcch_total_enterprise = '',NULL,gch.gcch_total_enterprise) AS gcch_total_enterprise,
              IFF(gch.gcch_retail_banner = '',NULL,gch.gcch_retail_banner) AS gcch_retail_banner,
              IFF(gch.primary_format = '',NULL,gch.primary_format) AS gcch_primary_format,
-             IFF(gch.distributor_attribute = '',NULL,gch.distributor_attribute) AS gcch_distributor_attribute,
+             IFF(gch.distributor_attribute = '',NULL,gch.distributor_attribute) AS gcch_distributor_attribute,*/
+
              IFF(fact.acct_hier_shrt_desc = '',NULL,fact.acct_hier_shrt_desc) AS acct_hier_shrt_desc,
              SUM(fact.qty) AS qty,
              SUM(fact.amt_lcy) AS amt_lcy,
@@ -217,7 +221,9 @@ FROM (SELECT fact.fisc_yr AS fisc_yr,
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       FROM GMC_hierarchy_attributes
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       WHERE GMC_REGION = 'APAC') gmc ON RIGHT (gmc.GMC_SKU_CODE,18) = fact.matl_num)
                    
-                            LEFT JOIN edw_gch_producthierarchy AS gph ON ((CAST((fact.matl_num) AS TEXT) = CAST((gph.materialnumber) AS TEXT)))) LEFT JOIN edw_gch_customerhierarchy AS gch ON ((CAST((fact.cust_num) AS TEXT) = CAST((gch.customer) AS TEXT))))
+                            /*LEFT JOIN edw_gch_producthierarchy AS gph ON ((CAST((fact.matl_num) AS TEXT) = CAST((gph.materialnumber) AS TEXT))
+                            )*/ )
+                             /*LEFT JOIN edw_gch_customerhierarchy AS gch ON ((CAST((fact.cust_num) AS TEXT) = CAST((gch.customer) AS TEXT)))*/ )
       GROUP BY fact.fisc_yr,
                fact.fisc_yr_per,
                fact.fisc_day,
@@ -238,10 +244,10 @@ FROM (SELECT fact.fisc_yr AS fisc_yr,
                ciw.ciw_bucket,
                csw.csw_desc,
                mat.mega_brnd_desc,
-               mat.brnd_desc,
+               /*mat.brnd_desc,
                mat.base_prod_desc,
                mat.varnt_desc,
-               mat.put_up_desc,
+               mat.put_up_desc,*/
                fact.cust_num,
                fact.acct_num,
                cus_sales_extn."parent customer",
@@ -251,7 +257,7 @@ FROM (SELECT fact.fisc_yr AS fisc_yr,
                cus_sales_extn."go to model",
                cus_sales_extn."sub channel",
                cus_sales_extn.retail_env,
-               gph.gcph_franchise,
+               /*gph.gcph_franchise,
                gph.gcph_brand,
                gph.gcph_subbrand,
                gph.gcph_variant,
@@ -264,7 +270,7 @@ FROM (SELECT fact.fisc_yr AS fisc_yr,
                gch.gcch_total_enterprise,
                gch.gcch_retail_banner,
                gch.primary_format,
-               gch.distributor_attribute,
+               gch.distributor_attribute,*/
                fact.acct_hier_shrt_desc) main
   LEFT JOIN (SELECT DISTINCT ctry_nm,
                     cust_num,
