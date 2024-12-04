@@ -91,48 +91,51 @@ base_join AS (
 ),
 
 
-india_records AS (
-    SELECT 
-        SLS_ORG,
-        MATERIAL,
-        COND_REC_NO,
-        VALID_TO,
-        'ZPRD' AS KNART,
-        DT_FROM,
-        AMOUNT,
-        CURRENCY,
-        UNIT,
-        PRICE_UNIT
-    FROM base_join
-    WHERE TRIM(SLS_ORG) IN (
-        SELECT TRIM(sls_org)
-        FROM EDW_SALES_ORG_DIM
-        WHERE ctry_key = 'IN'
-    )
-),
-other_country_records AS (
-    SELECT 
-        SLS_ORG,
-        MATERIAL,
-        COND_REC_NO,
-        VALID_TO,
-        'ZPR0' AS KNART,
-        DT_FROM,
-        AMOUNT,
-        CURRENCY,
-        UNIT,
-        PRICE_UNIT
-    FROM base_join
-    WHERE TRIM(SLS_ORG) IN (
-        SELECT TRIM(sls_org)
-        FROM EDW_SALES_ORG_DIM
-        WHERE ctry_key != 'IN'
-    )
-),
-all_records AS (
-    SELECT * FROM india_records
-    UNION ALL
-    SELECT * FROM other_country_records
+-- india_records AS (
+--     SELECT 
+--         SLS_ORG,
+--         MATERIAL,
+--         COND_REC_NO,
+--         VALID_TO,
+--         'ZPRD' AS KNART,
+--         DT_FROM,
+--         AMOUNT,
+--         CURRENCY,
+--         UNIT,
+--         PRICE_UNIT
+--     FROM base_join
+--     WHERE TRIM(SLS_ORG) IN (
+--         SELECT TRIM(sls_org)
+--         FROM EDW_SALES_ORG_DIM
+--         WHERE ctry_key = 'IN'
+--     )
+-- ),
+-- other_country_records AS (
+--     SELECT 
+--         SLS_ORG,
+--         MATERIAL,
+--         COND_REC_NO,
+--         VALID_TO,
+--         'ZPR0' AS KNART,
+--         DT_FROM,
+--         AMOUNT,
+--         CURRENCY,
+--         UNIT,
+--         PRICE_UNIT
+--     FROM base_join
+--     WHERE TRIM(SLS_ORG) IN (
+--         SELECT TRIM(sls_org)
+--         FROM EDW_SALES_ORG_DIM
+--         WHERE ctry_key != 'IN'
+--     )
+-- ),
+all_records AS
+(
+  SELECT *
+  FROM base_join WHERE KNART IN ('ZPRD','ZPR0')
+--   UNION ALL 
+--   SELECT *
+--   FROM india_records
 ),
 
 mvke_join AS (
