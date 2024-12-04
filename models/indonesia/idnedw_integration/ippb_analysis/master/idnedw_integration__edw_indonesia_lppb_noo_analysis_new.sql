@@ -298,7 +298,7 @@ SELECT ETD.JJ_YEAR,
 				   P3M_GROSS_SELLOUT_VAL,
 				   P6M_SELLOUT_VAL,
 				   P6M_GROSS_SELLOUT_VAL,
-				   usd_conversion_rate
+				   
                    
             FROM trans ) AS T1,
            EDW_DISTRIBUTOR_DIM AS EDD,
