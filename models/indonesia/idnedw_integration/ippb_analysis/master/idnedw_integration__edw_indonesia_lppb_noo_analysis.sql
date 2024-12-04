@@ -10,8 +10,188 @@ edw_distributor_dim as(
 edw_product_dim as(
 	select * from {{ ref('idnedw_integration__edw_product_dim') }}
 ),
+noo as (
+	select replace(JJ_MNTH,'.','') as JJ_MNTH_ID,
+		JJ_SAP_DSTRBTR_ID,
+		JJ_SAP_PROD_ID,
+		usd_conversion_rate,
+		sum(SLS_QTY) as SELLOUT_QTY,
+		sum(niv) as SELLOUT_VAL,
+		sum(hna) as GROSS_SELLOUT_VAL,
+		0 as P2M_SELLOUT_QTY,
+		0 as P2M_SELLOUT_VAL,
+		0 as P2M_GROSS_SELLOUT_VAL,
+		0 as P3M_SELLOUT_VAL,
+		0 as P3M_GROSS_SELLOUT_VAL,
+		0 as P6M_SELLOUT_VAL,
+		0 as P6M_GROSS_SELLOUT_VAL from 
+edw_indonesia_noo_analysis 
+            group by JJ_MNTH,JJ_SAP_DSTRBTR_ID,JJ_SAP_PROD_ID,usd_conversion_rate
+),
 
-trans as(
+p2m_sellout as(
+		
+	SELECT CAL.JJ_MNTH_ID,
+        JJ_SAP_DSTRBTR_ID,
+		JJ_SAP_PROD_ID,
+		usd_conversion_rate,
+		0 as SELLOUT_QTY,
+		0 as SELLOUT_VAL,
+		0 as GROSS_SELLOUT_VAL,
+		SUM(T1.SELLOUT_QTY) AS P2M_SELLOUT_QTY,
+        SUM(T1.SELLOUT_VAL) AS P2M_SELLOUT_VAL,
+        SUM(T1.GROSS_SELLOUT_VAL) AS P2M_GROSS_SELLOUT_VAL,
+		0 as P3M_SELLOUT_VAL,
+		0 as P3M_GROSS_SELLOUT_VAL,
+		0 as P6M_SELLOUT_VAL,
+		0 as P6M_GROSS_SELLOUT_VAL
+				   
+				   
+      FROM (SELECT 
+                   
+                   JJ_MNTH_ID,
+                   JJ_SAP_DSTRBTR_ID,
+                   JJ_SAP_PROD_ID,
+                   SELLOUT_QTY,
+                   SELLOUT_VAL,
+                   GROSS_SELLOUT_VAL,
+                   usd_conversion_rate,
+				                      
+            FROM noo ) AS T1,
+           
+      (SELECT DISTINCT 
+              JJ_MNTH_ID,              
+			  TO_CHAR(DATEADD(MONTH, -1, TO_DATE(TO_CHAR(EDW_TIME_DIM.JJ_MNTH_ID), 'YYYYMM')), 'YYYYMM') AS L1_MONTH,
+              TO_CHAR(DATEADD(MONTH, -2, TO_DATE(TO_CHAR(EDW_TIME_DIM.JJ_MNTH_ID), 'YYYYMM')), 'YYYYMM') AS L2_MONTH
+       FROM EDW_TIME_DIM) AS CAL
+      WHERE
+      T1.JJ_MNTH_ID >= CAL.L2_MONTH
+      AND T1.JJ_MNTH_ID <= CAL.L1_MONTH
+	  group by CAL.JJ_MNTH_ID,
+                   JJ_SAP_DSTRBTR_ID,
+                   JJ_SAP_PROD_ID,
+                   usd_conversion_rate
+	  
+	  ),	  
+p3m_sellout as (
+	SELECT 
+        CAL.JJ_MNTH_ID,
+        JJ_SAP_DSTRBTR_ID,
+		JJ_SAP_PROD_ID,
+		usd_conversion_rate,
+		0 as SELLOUT_QTY,
+		0 as SELLOUT_VAL,
+		0 as GROSS_SELLOUT_VAL,
+		0 AS P2M_SELLOUT_QTY,
+        0 AS P2M_SELLOUT_VAL,
+        0 AS P2M_GROSS_SELLOUT_VAL,
+		SUM(T1.SELLOUT_VAL) as P3M_SELLOUT_VAL,
+        SUM(T1.GROSS_SELLOUT_VAL) as P3M_GROSS_SELLOUT_VAL,
+		0 as P6M_SELLOUT_VAL,
+		0 as P6M_GROSS_SELLOUT_VAL
+				   
+                   
+      FROM (SELECT 
+                   
+                   JJ_MNTH_ID,
+                   JJ_SAP_DSTRBTR_ID,
+                   JJ_SAP_PROD_ID,
+                   SELLOUT_QTY,
+                   SELLOUT_VAL,
+                   GROSS_SELLOUT_VAL,
+                   usd_conversion_rate,
+				                      
+            FROM  noo ) AS T1,
+           
+      (SELECT DISTINCT 
+              JJ_MNTH_ID,              
+			  TO_CHAR(DATEADD(MONTH, -1, TO_DATE(TO_CHAR(EDW_TIME_DIM.JJ_MNTH_ID), 'YYYYMM')), 'YYYYMM') AS L1_MONTH,
+              TO_CHAR(DATEADD(MONTH, -3, TO_DATE(TO_CHAR(EDW_TIME_DIM.JJ_MNTH_ID), 'YYYYMM')), 'YYYYMM') AS L3_MONTH
+       FROM EDW_TIME_DIM) AS CAL
+      WHERE
+      T1.JJ_MNTH_ID >= CAL.L3_MONTH
+      AND T1.JJ_MNTH_ID <= CAL.L1_MONTH
+	  group by CAL.JJ_MNTH_ID,
+                   JJ_SAP_DSTRBTR_ID,
+                   JJ_SAP_PROD_ID,
+                   usd_conversion_rate
+	  
+	  
+	  
+	  
+	),
+p6m_sellout as (
+	SELECT CAL.JJ_MNTH_ID,
+        JJ_SAP_DSTRBTR_ID,
+		JJ_SAP_PROD_ID,
+		usd_conversion_rate,
+		0 as SELLOUT_QTY,
+		0 as SELLOUT_VAL,
+		0 as GROSS_SELLOUT_VAL,
+		0 AS P2M_SELLOUT_QTY,
+        0 AS P2M_SELLOUT_VAL,
+        0 AS P2M_GROSS_SELLOUT_VAL,
+		0 as P3M_SELLOUT_VAL,
+        0 as P3M_GROSS_SELLOUT_VAL,
+		SUM(T1.SELLOUT_VAL) as  P6M_SELLOUT_VAL,
+        SUM(T1.GROSS_SELLOUT_VAL) as P6M_GROSS_SELLOUT_VAL
+				   
+                   
+      FROM (SELECT 
+                   
+                   JJ_MNTH_ID,
+                   JJ_SAP_DSTRBTR_ID,
+                   JJ_SAP_PROD_ID,
+                   SELLOUT_QTY,
+                   SELLOUT_VAL,
+                   GROSS_SELLOUT_VAL,
+                   usd_conversion_rate,
+				                      
+            FROM  noo ) AS T1,
+           
+      (SELECT DISTINCT 
+              JJ_MNTH_ID,              
+			  TO_CHAR(DATEADD(MONTH, -1, TO_DATE(TO_CHAR(EDW_TIME_DIM.JJ_MNTH_ID), 'YYYYMM')), 'YYYYMM') AS L1_MONTH,
+              TO_CHAR(DATEADD(MONTH, -6, TO_DATE(TO_CHAR(EDW_TIME_DIM.JJ_MNTH_ID), 'YYYYMM')), 'YYYYMM') AS L6_MONTH
+       FROM EDW_TIME_DIM) AS CAL
+      WHERE
+      T1.JJ_MNTH_ID >= CAL.L6_MONTH
+      AND T1.JJ_MNTH_ID <= CAL.L1_MONTH
+	  group by CAL.JJ_MNTH_ID,
+                   JJ_SAP_DSTRBTR_ID,
+                   JJ_SAP_PROD_ID,
+                   usd_conversion_rate
+),
+
+trans as (
+	SELECT JJ_MNTH_ID,
+        JJ_SAP_DSTRBTR_ID,
+		JJ_SAP_PROD_ID,
+		usd_conversion_rate,
+		sum(SELLOUT_QTY) as SELLOUT_QTY,
+		sum(SELLOUT_VAL) as SELLOUT_VAL,
+		sum(GROSS_SELLOUT_VAL) as GROSS_SELLOUT_VAL,
+		sum(P2M_SELLOUT_QTY) as SELLOUT_LAST_TWO_MNTHS_QTY,
+        sum(P2M_SELLOUT_VAL) as SELLOUT_LAST_TWO_MNTHS_VAL,
+        sum(P2M_GROSS_SELLOUT_VAL) as GROSS_SELLOUT_LAST_TWO_MNTHS_VAL,
+		sum(P3M_SELLOUT_VAL) as P3M_SELLOUT_VAL,
+        sum(P3M_GROSS_SELLOUT_VAL) as P3M_GROSS_SELLOUT_VAL,
+		sum(P6M_SELLOUT_VAL) as P6M_SELLOUT_VAL,
+        sum(P6M_GROSS_SELLOUT_VAL) as P6M_GROSS_SELLOUT_VAL,
+		MAX(current_timestamp()::timestamp_ntz) as CRTD_DTTM,
+		MAX(CAST(NULL AS TIMESTAMP)) as UPTD_DTTM
+		from (
+
+	select * from noo
+	union all
+	select * from p2m_sellout
+	union all
+	select * from p3m_sellout
+	union all
+	select * from p6m_sellout )
+	group by JJ_MNTH_ID,JJ_SAP_DSTRBTR_ID, JJ_SAP_PROD_ID,usd_conversion_rate
+),
+final as(
 SELECT ETD.JJ_YEAR,
              ETD.JJ_QRTR,
              ETD.JJ_MNTH_ID,
@@ -111,19 +291,16 @@ SELECT ETD.JJ_YEAR,
                    0 as INTRANSIT_HNA,
                    0 as INTRANSIT_NIV,
                    usd_conversion_rate,
-                   SUM(SELLOUT_QTY) OVER (PARTITION BY JJ_SAP_DSTRBTR_ID,JJ_SAP_PROD_ID ORDER BY JJ_MNTH_ID ROWS BETWEEN 2 PRECEDING AND 1 PRECEDING) AS sellout_last_two_mnths_qty,
-				   SUM(SELLOUT_VAL) OVER (PARTITION BY JJ_SAP_DSTRBTR_ID,JJ_SAP_PROD_ID ORDER BY JJ_MNTH_ID ROWS BETWEEN 2 PRECEDING AND 1 PRECEDING) AS SELLOUT_LAST_TWO_MNTHS_VAL,
-				   SUM(GROSS_SELLOUT_VAL) OVER (PARTITION BY JJ_SAP_DSTRBTR_ID,JJ_SAP_PROD_ID ORDER BY JJ_MNTH_ID ROWS BETWEEN 2 PRECEDING AND 1 PRECEDING) AS GROSS_SELLOUT_LAST_TWO_MNTHS_VAL,
-                   SUM(SELLOUT_VAL) OVER (PARTITION BY JJ_SAP_DSTRBTR_ID,JJ_SAP_PROD_ID ORDER BY JJ_MNTH_ID ROWS BETWEEN 3 PRECEDING AND 1 PRECEDING) AS P3M_SELLOUT_VAL,
-                   SUM(GROSS_SELLOUT_VAL) OVER (PARTITION BY JJ_SAP_DSTRBTR_ID,JJ_SAP_PROD_ID ORDER BY JJ_MNTH_ID ROWS BETWEEN 3 PRECEDING AND 1 PRECEDING) AS P3M_GROSS_SELLOUT_VAL,
-                   SUM(SELLOUT_VAL) OVER (PARTITION BY JJ_SAP_DSTRBTR_ID,JJ_SAP_PROD_ID ORDER BY JJ_MNTH_ID ROWS BETWEEN 6 PRECEDING AND 1 PRECEDING) AS P6M_SELLOUT_VAL,
-                   SUM(GROSS_SELLOUT_VAL) OVER (PARTITION BY JJ_SAP_DSTRBTR_ID,JJ_SAP_PROD_ID ORDER BY JJ_MNTH_ID ROWS BETWEEN 6 PRECEDING AND 1 PRECEDING) AS P6M_GROSS_SELLOUT_VAL
-            FROM 
-			(select replace(JJ_MNTH,'.','') as JJ_MNTH_ID,JJ_SAP_DSTRBTR_ID,JJ_SAP_PROD_ID,usd_conversion_rate,sum(SLS_QTY) as SELLOUT_QTY,sum(niv) as SELLOUT_VAL,sum(hna) as GROSS_SELLOUT_VAL,MAX(current_timestamp()::timestamp_ntz) as CRTD_DTTM,
-				   MAX(CAST(NULL AS TIMESTAMP)) as UPTD_DTTM, from 
-			edw_indonesia_noo_analysis 
-            group by JJ_MNTH,JJ_SAP_DSTRBTR_ID,JJ_SAP_PROD_ID,usd_conversion_rate) as noo
-											) AS T1,
+				   SELLOUT_LAST_TWO_MNTHS_QTY,
+				   SELLOUT_LAST_TWO_MNTHS_VAL,
+				   GROSS_SELLOUT_LAST_TWO_MNTHS_VAL,
+				   P3M_SELLOUT_VAL,
+				   P3M_GROSS_SELLOUT_VAL,
+				   P6M_SELLOUT_VAL,
+				   P6M_GROSS_SELLOUT_VAL,
+				   
+                   
+            FROM trans ) AS T1,
            EDW_DISTRIBUTOR_DIM AS EDD,
            EDW_PRODUCT_DIM AS EPD,
            --EDW_DISTRIBUTOR_GROUP_DIM AS EDGD,
@@ -138,19 +315,12 @@ SELECT ETD.JJ_YEAR,
               JJ_MNTH_LONG
        FROM EDW_TIME_DIM) AS ETD
       WHERE
-      --TRIM(UPPER(EDGD.DSTRBTR_GRP_CD (+)))=TRIM(UPPER(EDD.DSTRBTR_GRP_CD)) AND
       TRIM(UPPER(EDD.JJ_SAP_DSTRBTR_ID(+))) = TRIM(UPPER(T1.JJ_SAP_DSTRBTR_ID))
 	  and   T1.jj_mnth_id between EDD.effective_from(+) and EDD.effective_to(+)
       AND   ETD.JJ_MNTH_ID = T1.JJ_MNTH_ID
       AND   TRIM(UPPER(EPD.JJ_SAP_PROD_ID(+))) = TRIM(UPPER(T1.JJ_SAP_PROD_ID))
 	  and   T1.jj_mnth_id between EPD.effective_from(+) and EPD.effective_to(+)
-      --AND   TRIM(UPPER(T1.jj_sap_prod_id)) != 'REBATE'
-      --AND   TRIM(UPPER(T1.JJ_SAP_DSTRBTR_ID)) != '119683'
-      --AND   TRIM(UPPER(EDD.DSTRBTR_GRP_CD)) != 'SPLD'
-      --AND   TRIM(UPPER(EDD.DSTRBTR_GRP_CD)) != 'JYM'
-      --AND   TRIM(UPPER(T1.JJ_SAP_PROD_ID)) != 'DAOG20'
+      
 	  
 	  )
-
-
-select * from trans
+select * from final
