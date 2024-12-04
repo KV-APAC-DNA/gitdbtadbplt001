@@ -417,12 +417,12 @@ ph_rpt_retail_excellence_non_mdp as
                                             ltrim(SPLIT_PART(code, '-', 2),'0') AS store_code,
 											brnch_cd,
 											cust_cd,
-                                            MAX(brnch_nm) OVER (PARTITION BY ltrim(SPLIT_PART(code, '-', 2),'0') ORDER BY crtd_dttm DESC ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS store_name,
+                                            MAX(brnch_nm) OVER (PARTITION BY cust_cd, ltrim(SPLIT_PART(code, '-', 2),'0') ORDER BY crtd_dttm DESC ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS store_name,
                                             (address1||address2) AS store_address,
                                             zip_code AS store_postcode,
                                             latitude::VARCHAR AS store_lat,
                                             longitude::VARCHAR AS store_long,
-                                            ROW_NUMBER() OVER (PARTITION BY ltrim(SPLIT_PART(code, '-', 2),'0') ORDER BY upper(store_mtrx) ASC, crtd_dttm DESC) AS rno
+                                            ROW_NUMBER() OVER (PARTITION BY cust_cd, ltrim(SPLIT_PART(code, '-', 2),'0') ORDER BY upper(store_mtrx) ASC, crtd_dttm DESC) AS rno
                                         FROM (select * from ITG_MDS_PH_POS_CUSTOMERS WHERE UPPER(active) = 'Y' AND store_mtrx <> ' ')) c ON ltrim(a.Customer_L0,'0') = ltrim(c.Sell_Out_Parent_Customer_L1,'0')	
 											AND LTRIM(c.brnch_cd,'0') = LTRIM(REG_SO.STR_CD,'0')
 											AND c.cust_cd = REG_SO.distributor_code	
