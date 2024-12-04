@@ -191,3 +191,8 @@ models:
     config: 
       alias: edw_rpt_okr_dashboard
       tags: ["okr_dashboard_datamart_refresh","transformation"]
+
+  - name: aspedw_access__v_rpt_customerpl_exceptions
+    config: 
+      alias: v_rpt_customerpl_exceptions
+      tags: ["j_ap_dna_datamart_refresh_etl_framework_customer_pl","transformation"]    
