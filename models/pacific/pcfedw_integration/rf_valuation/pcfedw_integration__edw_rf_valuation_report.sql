@@ -20,7 +20,7 @@ EDW_CALENDAR_DIM as
 ),
 itg_list_price_sap as
 (
-  select * from {{ source('aspitg_integration','aspitg_integration__itg_list_price_sap') }}
+  select * from prod_dna_core.dbt_cloud_pr_5458_1542.aspitg_integration__itg_list_price_sap
 ),
 sdl_pcf_price_list_exception as
 (
