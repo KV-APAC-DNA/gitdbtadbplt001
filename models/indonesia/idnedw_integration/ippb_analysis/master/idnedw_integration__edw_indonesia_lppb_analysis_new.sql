@@ -457,10 +457,8 @@ FROM (
 	select * from union5
     
 	
-)lppb
-where lppb.JJ_MNTH_ID <= (SELECT DISTINCT JJ_MNTH_ID
-                                       FROM EDW_TIME_DIM
-                                       WHERE to_date(CAL_DATE) = to_date(current_timestamp()::timestamp_ntz(9)))
+)
+
 GROUP BY JJ_YEAR,
          JJ_QRTR,
          JJ_MNTH_ID,
@@ -570,5 +568,8 @@ final as(
         p6m_gross_sellout_val::number(18,4) as p6m_gross_sellout_val,
 		usd_conversion_rate::NUMERIC(28,10) as usd_conversion_rate
     from transformed
+    where JJ_MNTH_ID <= (SELECT DISTINCT JJ_MNTH_ID
+                                       FROM EDW_TIME_DIM
+                                       WHERE to_date(CAL_DATE) = to_date(current_timestamp()::timestamp_ntz(9)))
 )
 select * from final
