@@ -81,3 +81,22 @@ sources:
           config:
             store_failures: true
             schema: hcposewks_integration
+
+
+    - name: sdl_hcp_osea_call_sample
+      tags: ["iconnect_data_ingestion","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["call_sample_id"]
+          not_null_columns: ["call_sample_id"]
+          name: TRATBL_sdl_hcp_osea_call_sample__null_test
+          config:
+            store_failures: true
+            schema: hcposewks_integration
+      - test_duplicate:
+          select_columns: ["call_sample_id"]
+          group_by_columns: ["call_sample_id"]
+          name: TRATBL_sdl_hcp_osea_call_sample__duplicate_test
+          config:
+            store_failures: true
+            schema: hcposewks_integration            
