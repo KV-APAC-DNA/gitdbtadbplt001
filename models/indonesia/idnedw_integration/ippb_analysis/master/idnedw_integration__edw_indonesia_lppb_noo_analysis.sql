@@ -188,7 +188,10 @@ trans as (
 	union all
 	select * from p3m_sellout
 	union all
-	select * from p6m_sellout )
+	select * from p6m_sellout ) sellout
+    where sellout.JJ_MNTH_ID <= (SELECT DISTINCT JJ_MNTH_ID
+                                       FROM EDW_TIME_DIM
+                                       WHERE to_date(CAL_DATE) = to_date(current_timestamp()::timestamp_ntz(9)))
 	group by JJ_MNTH_ID,JJ_SAP_DSTRBTR_ID, JJ_SAP_PROD_ID,usd_conversion_rate
 ),
 final as(

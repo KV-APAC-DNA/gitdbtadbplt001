@@ -528,7 +528,8 @@ updt as(
         edcd.ADDITIONAL_INFORMATION_4_CODE,
         edcd.ADDITIONAL_INFORMATION_4_NAME,
         edcd.ADDITIONAL_INFORMATION_5_CODE,
-        edcd.ADDITIONAL_INFORMATION_5_NAME 
+        edcd.ADDITIONAL_INFORMATION_5_NAME,
+		nvl(edd.JJ_SAP_DSTRBTR_NM,transformed.latest_dsitributor_name) as latest_dsitributor_name 	
     from transformed
         left join EDW_DISTRIBUTOR_CUSTOMER_DIM_rnk_outlet EDCD ON concat(
             TRIM(UPPER(transformed.JJ_SAP_DSTRBTR_ID)),
@@ -711,7 +712,8 @@ updt2 as(
         edcd.ADDITIONAL_INFORMATION_4_CODE,
         edcd.ADDITIONAL_INFORMATION_4_NAME,
         edcd.ADDITIONAL_INFORMATION_5_CODE,
-        edcd.ADDITIONAL_INFORMATION_5_NAME 
+        edcd.ADDITIONAL_INFORMATION_5_NAME,
+		updt.latest_dsitributor_name as latest_dsitributor_name
     from updt
         left join EDW_DISTRIBUTOR_CUSTOMER_DIM_rnk EDCD on concat(
             TRIM(UPPER(updt.JJ_SAP_DSTRBTR_ID)),
@@ -842,7 +844,8 @@ updated_noo as (
         edcd.ADDITIONAL_INFORMATION_4_CODE,
         edcd.ADDITIONAL_INFORMATION_4_NAME,
         edcd.ADDITIONAL_INFORMATION_5_CODE,
-        edcd.ADDITIONAL_INFORMATION_5_NAME 
+        edcd.ADDITIONAL_INFORMATION_5_NAME,
+		nvl(edd.JJ_SAP_DSTRBTR_NM, filtered_noo.latest_dsitributor_name) as latest_dsitributor_name	
     from filtered_noo
         left join EDW_DISTRIBUTOR_CUSTOMER_DIM_rnk_outlet EDCD ON concat(
             TRIM(UPPER(filtered_noo.JJ_SAP_DSTRBTR_ID)),
@@ -1025,7 +1028,8 @@ transformed_noo as (
         edcd.ADDITIONAL_INFORMATION_4_CODE,
         edcd.ADDITIONAL_INFORMATION_4_NAME,
         edcd.ADDITIONAL_INFORMATION_5_CODE,
-        edcd.ADDITIONAL_INFORMATION_5_NAME 
+        edcd.ADDITIONAL_INFORMATION_5_NAME,
+		updated_noo.latest_dsitributor_name as latest_dsitributor_name		
     from updated_noo
         left join EDW_DISTRIBUTOR_CUSTOMER_DIM_rnk EDCD on concat(
             TRIM(UPPER(updated_noo.JJ_SAP_DSTRBTR_ID)),

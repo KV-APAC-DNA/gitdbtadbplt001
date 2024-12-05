@@ -97,6 +97,7 @@ select
     ADDITIONAL_INFORMATION_2 as "additional_information_2",
     ADDITIONAL_INFORMATION_3 as "additional_information_3",
     ADDITIONAL_INFORMATION_4 as "additional_information_4",
-    ADDITIONAL_INFORMATION_5 as "additional_information_5"
+    ADDITIONAL_INFORMATION_5 as "additional_information_5",
+    latest_dsitributor_name as "latest_dsitributor_name"
     
 from source
