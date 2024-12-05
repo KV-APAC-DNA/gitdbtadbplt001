@@ -7,7 +7,7 @@
 }}
 
 with source as (
-    select * from {{ source('vnmsdl_raw','sdl_mds_vn_customer_segmentation') }}
+    select * from {{ source('vnmsdl_raw','sdl_mds_vn_customer_segmentation_ADFTemp') }}
 ),
 
 final as
