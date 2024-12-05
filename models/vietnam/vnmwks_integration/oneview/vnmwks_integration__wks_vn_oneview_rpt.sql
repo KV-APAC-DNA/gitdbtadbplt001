@@ -64,6 +64,9 @@ itg_mds_vn_ecom_target as (
 itg_vn_oneview_otc as (
     select * from {{ ref('vnmitg_integration__itg_vn_oneview_otc') }}
 ),
+itg_mds_vn_customer_segmentation as (
+    select * from {{ ref('vnmitg_integration__itg_mds_vn_customer_segmentation') }}
+),
 
 prod_dim as 
 (
