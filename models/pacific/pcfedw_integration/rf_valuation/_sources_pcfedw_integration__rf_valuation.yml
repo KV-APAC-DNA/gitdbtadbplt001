@@ -1,0 +1,33 @@
+version: 2
+ 
+sources:
+  - name: aspitg_integration
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: dbt_cloud_pr_5458_1542
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: aspitg_integration__itg_list_price_sap
+  - name: pcfsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: pcfsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_mds_pacific_rf_valuation_exception_list_price_adftemp
+      - name: sdl_mds_pacific_brandcon_mapping_adftemp
+      - name: sdl_mds_pacific_planning_channel_mapping_adftemp
+  - name: pcfedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: pcfedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: edw_sales_reporting
+      - name: vw_demand_forecast_analysis
