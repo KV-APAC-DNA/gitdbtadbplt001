@@ -1463,7 +1463,7 @@ AS (
     and upper(kpi_wt.market) = 'THAILAND' and upper(kpi_wt.kpi) = 'PLANOGRAM COMPLIANCE'
 
     ),
-ct6  -- This is not required as of now , thus not added in UNION condition. Query is kept in case its required in future.
+ct6  
 AS (  
         select 'IR_Response' as dataset,
                 null as merchandisingresponseid,
@@ -1540,7 +1540,7 @@ AS (
                 vst_status,
                 questiontext,
                 ques_desc,
-                sum(facing_of_this_layer)::numeric(20,2) as value,
+                sum(sku_length)::numeric(20,2) as value,
                 visit_date,
                 check_in_datetime,
                 check_out_datetime,
@@ -1557,7 +1557,7 @@ AS (
                         case  when cancelled_visit = 0 then 'completed'else 'cancelled' end as vst_status,
                         'How many ' || ps_category || ' ' || ps_segment || ' facing Kenvue acquired?' as questiontext,
                         'numerator' as ques_desc,
-                        facing_of_this_layer,
+                        sku_length,
                         visit_date,
                         check_in_datetime,
                         check_out_datetime,
@@ -1569,6 +1569,7 @@ AS (
                         ps_segment
             from edw_vw_pop6_visits_rir_data
             where upper(company) in ('KENVUE','JNJ','KV')
+            and  sku_length is not null
         UNION ALL
         select  cntry_cd ,
                         visit_id,
@@ -1579,7 +1580,7 @@ AS (
                         then 'How many ' || ps_category || ' ' || ps_segment || ' facing Kenvue acquired?'
                         else 'How many ' || ps_category || ' ' || ps_segment || ' facing Competitor acquired?' end  as questiontext,
                         'denominator' as ques_desc,
-                        facing_of_this_layer,
+                        sku_length,
                         visit_date,
                         check_in_datetime,
                         check_out_datetime,
@@ -1589,7 +1590,8 @@ AS (
                         username,
                         ps_category,
                         ps_segment
-            from edw_vw_pop6_visits_rir_data)
+            from edw_vw_pop6_visits_rir_data
+            where sku_length is not null) 
         where   (date_part('year', visit_date) >= (date_part('year',  sysdate()) - 2))
             group by cntry_cd,
                     visit_id,
@@ -1649,10 +1651,10 @@ AS (
     SELECT *
     FROM ct5
 
-    /*UNION ALL --commented as its not going to get used as for now
+    UNION ALL --commented as its not going to get used as for now
     
     SELECT *
-    FROM ct6*/
+    FROM ct6
     
     )
 SELECT *

@@ -122,7 +122,8 @@ SELECT
   edw_vw_pop6_analysis_data.total_layer,
   edw_vw_pop6_analysis_data.layer,
   edw_vw_pop6_analysis_data.facing, 
-  edw_vw_pop6_analysis_data.is_eyelevel 
+  edw_vw_pop6_analysis_data.is_eyelevel,
+  edw_vw_pop6_analysis_data.sku_length 
 FROM 
   edw_vw_pop6_analysis_data 
 WHERE 

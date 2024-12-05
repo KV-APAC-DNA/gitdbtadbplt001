@@ -122,7 +122,8 @@ final as (
         total_layer as "total_layer",
         layer as "layer",
         facing as "facing",
-        is_eyelevel as "is_eyelevel"
+        is_eyelevel as "is_eyelevel",
+        sku_length as "sku_length"
     from source
     where cntry_cd='TH'
 )

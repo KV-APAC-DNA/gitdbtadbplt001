@@ -178,7 +178,8 @@ sku_audit as ((
                           NULL as total_layer,
                           NULL as layer,
                           NULL  AS facing, 
-                          NULL  AS is_eyelevel 
+                          NULL  AS is_eyelevel,
+                          NULL as sku_length 
                         FROM 
                           (
                             (
@@ -409,7 +410,8 @@ sku_audit as ((
                           NULL as total_layer,
                           NULL as layer,
                           NULL  AS facing, 
-                          NULL  AS is_eyelevel 
+                          NULL  AS is_eyelevel,
+                          NULL as sku_length 
                         FROM 
                           (
                             (
@@ -547,7 +549,8 @@ tasks as (SELECT
                         NULL as total_layer,
                         NULL as layer,
                         NULL  AS facing, 
-                        NULL  AS is_eyelevel 
+                        NULL  AS is_eyelevel,
+                        NULL as sku_length 
                       FROM 
                         (
                           (
@@ -685,7 +688,8 @@ promotions as (SELECT
                       NULL as total_layer,
                       NULL as layer,
                       NULL  AS facing, 
-                      NULL  AS is_eyelevel 
+                      NULL  AS is_eyelevel,
+                      NULL as sku_length 
                     FROM 
                       (
                         (
@@ -850,7 +854,8 @@ product_attribute_audit as  (
                     NULL as total_layer,
                     NULL as layer,
                     NULL AS facing, 
-                    NULL AS is_eyelevel 
+                    NULL AS is_eyelevel,
+                    NULL as sku_length 
                   FROM 
                     (
                       (
@@ -1253,7 +1258,8 @@ product_attribute_audit as  (
                   NULL as total_layer,
                   NULL as layer,
                   NULL AS facing, 
-                  NULL AS is_eyelevel 
+                  NULL AS is_eyelevel,
+                  NULL as sku_length 
                 FROM 
                   (
                     (
@@ -1664,7 +1670,8 @@ PRODUCT_ATTRIBUTE_AUDIT_2 as (
                 NULL as total_layer,
                 NULL as layer,
                 NULL AS facing, 
-                NULL AS is_eyelevel 
+                NULL AS is_eyelevel,
+                NULL as sku_length 
               FROM 
                 (
                   (
@@ -2095,7 +2102,8 @@ display_2 as (
               NULL as total_layer,
               NULL as layer,
               NULL AS facing, 
-              NULL AS is_eyelevel 
+              NULL AS is_eyelevel,
+              NULL as sku_length 
             FROM 
               (
                 SELECT 
@@ -2463,7 +2471,8 @@ display_2 as (
             NULL as total_layer,
             NULL as layer,
             NULL AS facing, 
-            NULL AS is_eyelevel 
+            NULL AS is_eyelevel,
+            NULL as sku_length 
           FROM 
             (
               (
@@ -2894,7 +2903,8 @@ display_3 as  (
           NULL as total_layer,
           NULL as layer, 
           NULL AS facing, 
-          NULL AS is_eyelevel 
+          NULL AS is_eyelevel,
+          NULL as sku_length 
         FROM 
           (
             SELECT 
@@ -3262,7 +3272,8 @@ product_attribute_audit_4 as (
         NULL as total_layer,
         NULL as layer,
         NULL AS facing, 
-        NULL AS is_eyelevel 
+        NULL AS is_eyelevel,
+        NULL as sku_length 
       FROM 
         (
           (
@@ -3692,7 +3703,8 @@ display_4 as (
       NULL as total_layer,
       NULL as layer, 
       NULL AS facing, 
-      NULL AS is_eyelevel 
+      NULL AS is_eyelevel,
+      NULL as sku_length 
     FROM 
       (
         SELECT 
@@ -4050,7 +4062,8 @@ rir as (
             srv.total_layer,
             srv.layer,
             srv.facing_of_this_layer as facing,
-            coalesce( he_lvl.is_eyelevel,0) as is_eyelevel     
+            coalesce( he_lvl.is_eyelevel,0) as is_eyelevel,
+            srv.sku_length     
         from edw_vw_pop6_visits_rir_data srv
         left join edw_vw_pop6_products prd
         on prd.productdb_id = srv.sku_id and prd.cntry_cd = 'TH'
@@ -4192,7 +4205,8 @@ planned_visits as (SELECT
   NULL as total_layer,
   NULL as layer,
   NULL AS facing, 
-  NULL AS is_eyelevel 
+  NULL AS is_eyelevel,
+  NULL as sku_length 
 FROM 
   (
     (
@@ -4414,7 +4428,8 @@ final as
         total_layer,
         layer,
         facing,
-        is_eyelevel
+        is_eyelevel,
+        sku_length
     from transformed
 )
 select * from final

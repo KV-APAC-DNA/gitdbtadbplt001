@@ -98,7 +98,8 @@ final as
        rir.related_attribute,
        rir.layer,
        rir.total_layer,
-       rir.facing_of_this_layer
+       rir.facing_of_this_layer,
+       rir.sku_length
  from itg_pop6_rir_data rir
  left join visit on visit.visit_id = rir.visit_id
  left join edw_vw_pop6_products prd on prd.productdb_id = rir.sku_id
