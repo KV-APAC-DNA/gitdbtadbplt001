@@ -847,7 +847,7 @@ updated_noo as (
         edcd.ADDITIONAL_INFORMATION_4_NAME,
         edcd.ADDITIONAL_INFORMATION_5_CODE,
         edcd.ADDITIONAL_INFORMATION_5_NAME,
-        nvl(edd.JJ_SAP_DSTRBTR_NM,filtered_noo.latest_distributor_name) as latest_distributor_name  
+        nvl(edd.JJ_SAP_DSTRBTR_NM,'Not available') as latest_distributor_name  
     from filtered_noo
         left join EDW_DISTRIBUTOR_CUSTOMER_DIM_rnk_outlet EDCD ON concat(
             TRIM(UPPER(filtered_noo.JJ_SAP_DSTRBTR_ID)),
