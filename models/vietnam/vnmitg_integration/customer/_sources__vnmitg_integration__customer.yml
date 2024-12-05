@@ -11,8 +11,6 @@ sources:
     tables:
       - name: sdl_mds_vn_distributor_customers
         tags: ['vn_mt_pos_master','ingestion']
-      - name: sdl_mds_vn_customer_segmentation
-        tags: ["vn_mt_sellin_master","ingestion"]
       - name: sdl_mds_vn_customer_segmentation_adftemp
         tags: ["vn_mt_sellin_master","ingestion"]  
       - name: sdl_vn_dms_customer_dim
