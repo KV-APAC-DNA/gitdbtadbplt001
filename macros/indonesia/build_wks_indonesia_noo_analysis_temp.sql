@@ -106,7 +106,7 @@
                 ADDITIONAL_INFORMATION_3_CODE varchar(100),
                 ADDITIONAL_INFORMATION_4_CODE varchar(100),
                 ADDITIONAL_INFORMATION_5_CODE varchar(100),
-                latest_distributor_name 
+                latest_distributor_name varchar(200)
                 
     );
         create or replace table {{tablename}} clone
