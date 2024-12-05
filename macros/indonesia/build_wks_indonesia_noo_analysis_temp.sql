@@ -102,15 +102,12 @@
                 latest_distributor_group varchar(200),
                 latest_dstrbtr_grp_cd varchar(200),
                 ADDITIONAL_INFORMATION_1_CODE varchar(100),
-                --ADDITIONAL_INFORMATION_1_NAME varchar(100),
                 ADDITIONAL_INFORMATION_2_CODE varchar(100),
-                --ADDITIONAL_INFORMATION_2_NAME varchar(100),
                 ADDITIONAL_INFORMATION_3_CODE varchar(100),
-                --ADDITIONAL_INFORMATION_3_NAME varchar(100),
                 ADDITIONAL_INFORMATION_4_CODE varchar(100),
-                --ADDITIONAL_INFORMATION_4_NAME varchar(100),
-                ADDITIONAL_INFORMATION_5_CODE varchar(100) 
-                --ADDITIONAL_INFORMATION_5_NAME varchar(100)
+                ADDITIONAL_INFORMATION_5_CODE varchar(100),
+                latest_distributor_name 
+                
     );
         create or replace table {{tablename}} clone
         {% if target.name=='prod' %}
