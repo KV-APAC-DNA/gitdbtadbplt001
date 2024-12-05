@@ -1,15 +1,16 @@
-with teikikeiyaku_data_mart_cn
-as
-(
+{{ config(materialized='table') }}
+with teikikeiyaku_data_mart_cn as (
     select * from {{ ref('jpndcledw_integration__teikikeiyaku_data_mart_cn') }}
 ),
-teikikeiyaku_data_mart_cl as
-(
-  select * from {{ source('jpdcledw_integration', 'teikikeiyaku_data_mart_cl') }}
-    ),
-t1 as
-(
-    SELECT teikikeiyaku_data_mart_cn.c_diregularcontractid,
+
+teikikeiyaku_data_mart_cl as (
+    select *
+    from {{ source('jpdcledw_integration', 'teikikeiyaku_data_mart_cl') }}
+),
+
+t1 as (
+    select
+        teikikeiyaku_data_mart_cn.c_diregularcontractid,
         teikikeiyaku_data_mart_cn.c_diusrid,
         teikikeiyaku_data_mart_cn.dirouteid,
         teikikeiyaku_data_mart_cn.keiyakubi,
@@ -29,15 +30,16 @@ t1 as
         teikikeiyaku_data_mart_cn.diordercode,
         teikikeiyaku_data_mart_cn.c_dikesaiid,
         teikikeiyaku_data_mart_cn.dimeisaiid,
-        '0' AS maker,
+        '0' as maker,
         teikikeiyaku_data_mart_cn.kaiyakumoushidebi
-    FROM teikikeiyaku_data_mart_cn
+    from teikikeiyaku_data_mart_cn
 ),
-t2 as
-(
-    SELECT teikikeiyaku_data_mart_cl.c_diregularcontractid,
+
+t2 as (
+    select
+        teikikeiyaku_data_mart_cl.c_diregularcontractid,
         teikikeiyaku_data_mart_cl.c_diusrid,
-        0 AS dirouteid,
+        0 as dirouteid,
         teikikeiyaku_data_mart_cl.keiyakubi,
         teikikeiyaku_data_mart_cl.shokai_ym,
         teikikeiyaku_data_mart_cl.kaiyakubi,
@@ -57,38 +59,40 @@ t2 as
         teikikeiyaku_data_mart_cl.dimeisaiid,
         teikikeiyaku_data_mart_cl.maker,
         teikikeiyaku_data_mart_cl.kaiyakumoushidebi
-    FROM teikikeiyaku_data_mart_cl
+    from teikikeiyaku_data_mart_cl
 ),
-union_of as
-(
+
+union_of as (
     select * from t1
     union all
     select * from t2
 ),
-final as
-(
-    select c_diregularcontractid::NUMBER(38,0) AS C_DIREGULARCONTRACTID,
-        c_diusrid::VARCHAR(20) AS C_DIUSRID,
-        dirouteid::NUMBER(38,0) AS DIROUTEID,
-        keiyakubi::VARCHAR(150) AS KEIYAKUBI,
-        shokai_ym::VARCHAR(10) AS SHOKAI_YM,
-        kaiyakubi::VARCHAR(150) AS KAIYAKUBI,
-        c_dsregularmeisaiid::NUMBER(38,0) AS C_DSREGULARMEISAIID,
-        header_flg::VARCHAR(1) AS HEADER_FLG,
-        c_dsdeleveryym::VARCHAR(10) AS C_DSDELEVERYYM,
-        dsitemid::VARCHAR(45) AS DSITEMID,
-        c_diregularcourseid::NUMBER(38,0) AS C_DIREGULARCOURSEID,
-        diitemsalesprc::NUMBER(38,18) AS DIITEMSALESPRC,
-        c_dsordercreatekbn::VARCHAR(96) AS C_DSORDERCREATEKBN,
-        c_dscontractchangekbn::VARCHAR(96) AS C_DSCONTRACTCHANGEKBN,
-        c_dicancelflg::VARCHAR(1) AS C_DICANCELFLG,
-        kaiyaku_kbn::VARCHAR(96) AS KAIYAKU_KBN,
-        contract_kbn::VARCHAR(150) AS CONTRACT_KBN,
-        diordercode::VARCHAR(19) AS DIORDERCODE,
-        c_dikesaiid::NUMBER(38,0) AS C_DIKESAIID,
-        dimeisaiid::NUMBER(38,0) AS DIMEISAIID,
-        maker::VARCHAR(1) AS MAKER,
-        kaiyakumoushidebi::VARCHAR(10) AS KAIYAKUMOUSHIDEBI,
-    FROM union_of
+
+final as (
+    select
+        c_diregularcontractid::NUMBER(38, 0) as c_diregularcontractid,
+        c_diusrid::VARCHAR(20) as c_diusrid,
+        dirouteid::NUMBER(38, 0) as dirouteid,
+        keiyakubi::VARCHAR(150) as keiyakubi,
+        shokai_ym::VARCHAR(10) as shokai_ym,
+        kaiyakubi::VARCHAR(150) as kaiyakubi,
+        c_dsregularmeisaiid::NUMBER(38, 0) as c_dsregularmeisaiid,
+        header_flg::VARCHAR(1) as header_flg,
+        c_dsdeleveryym::VARCHAR(10) as c_dsdeleveryym,
+        dsitemid::VARCHAR(45) as dsitemid,
+        c_diregularcourseid::NUMBER(38, 0) as c_diregularcourseid,
+        diitemsalesprc::NUMBER(38, 18) as diitemsalesprc,
+        c_dsordercreatekbn::VARCHAR(96) as c_dsordercreatekbn,
+        c_dscontractchangekbn::VARCHAR(96) as c_dscontractchangekbn,
+        c_dicancelflg::VARCHAR(1) as c_dicancelflg,
+        kaiyaku_kbn::VARCHAR(96) as kaiyaku_kbn,
+        contract_kbn::VARCHAR(150) as contract_kbn,
+        diordercode::VARCHAR(19) as diordercode,
+        c_dikesaiid::NUMBER(38, 0) as c_dikesaiid,
+        dimeisaiid::NUMBER(38, 0) as dimeisaiid,
+        maker::VARCHAR(1) as maker,
+        kaiyakumoushidebi::VARCHAR(10) as kaiyakumoushidebi
+    from union_of
 )
+
 select * from final
