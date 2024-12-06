@@ -53,6 +53,58 @@ select * from {{ ref('phlitg_integration__itg_ph_non_ise_weights') }}
 vw_ph_clobotics_perfect_store as (
 select * from {{ ref('phledw_integration__vw_ph_clobotics_perfect_store') }}
 ),
+itg_ph_non_ise_msl_base as (
+    select ret_nm_prefix,
+       sku_code,
+       brand,
+       barcode,
+       item_description,
+       month,
+       week,
+       reason,
+       acct_deliv_date,
+       osa_check_date,
+       team_leader,
+       branch_code,
+       branch_code_original,
+       branch_classification,
+       branch_name,
+       osa_flag,
+       retailer_name,
+       sub_channel,
+from itg_ph_non_ise_msl_osa
+where (upper(sub_channel) = 'DEPT MASS' and upper(MSL_DEPT) = 'Y')
+or (upper(sub_channel) = 'SPMKT PREM' and upper(msl_premium) = 'Y')
+or (upper(sub_channel) = 'SPMKT LARGE' and upper(msl_large) = 'Y')
+or (upper(sub_channel) = 'SPMKT SMALL' and upper(msl_small) = 'Y')
+or (upper(sub_channel) = 'RESELLER' and upper(msl_reseller) = 'Y')
+or (upper(sub_channel) = 'PRICE CLUB' and upper(msl_priceclub) = 'Y')
+or (upper(sub_channel) = 'GROCERY' and upper(msl_dept) = 'Y')
+),
+
+itg_ph_non_ise_oos_base as (
+select ret_nm_prefix,
+       sku_code,
+       brand,
+       barcode,
+       item_description,
+       month,
+       week,
+       reason,
+       acct_deliv_date,
+       osa_check_date,
+       team_leader,
+       branch_code,
+       branch_code_original,
+       branch_classification,
+       branch_name,
+       osa_flag,
+       retailer_name,
+       sub_channel,
+from  itg_ph_non_ise_msl_osa
+where osa_flag in ('0','1')
+),
+
 union_1 as 				(
 						SELECT 'Merchandising_Response' AS dataset
 							,srv_det.branchcode AS customerid
@@ -995,6 +1047,7 @@ LEFT JOIN (
         FROM edw_vw_os_time_dim
         ) evotd ON ippmo.osa_check_date = evotd.cal_date
 WHERE DATE_PART(year, ippmo.osa_check_date::TIMESTAMP without TIME zone) >= (DATE_PART(year, current_timestamp()) - 2::DOUBLE PRECISION) 
+and evotd."year" < 2023
 ),
 union_7 as (
   SELECT 
@@ -1279,6 +1332,7 @@ union_7 as (
         current_timestamp()
       ) -2 :: DOUBLE PRECISION
     )
+    and evotd."year" < 2023
 ),
 union_8 as (
 SELECT dataset,
@@ -1319,6 +1373,136 @@ SELECT dataset,
 FROM vw_ph_clobotics_perfect_store
 WHERE date_part(year, scheduleddate) >= (date_part(year, scheduleddate) - 2)
 ),
+--- Adding query for NON ISE data after 2023
+union_9 as (
+    select 'Merchandising_Response' as dataset,
+            (msl.ret_nm_prefix::TEXT || '-' || msl.branch_code) AS customerid,
+            null as salespersonid,
+            null as mrch_resp_startdt,
+            null as mrch_resp_enddt,
+            null as survey_enddate,
+            null as questiontext,
+            null as value,
+            'true' AS mustcarryitem,
+            null as answerscore,
+            case when msl.osa_flag = '1' then 'true' else 'false' end as presence,
+            case when msl.osa_flag = '0' then 'true' else 'false' end as outofstock,
+            'MSL Compliance' AS kpi,
+            msl.osa_check_date AS scheduleddate,
+            'completed' AS vst_status,
+            time_dim."year" as fisc_yr,
+            time_dim.mnth_id as fisc_per,
+            ('(Non-ISE) ' || msl.team_leader) AS firstname,
+            '' as lastname,
+            (msl.ret_nm_prefix || '-' || msl.branch_code || ' - ' || msl.branch_name) AS customername,
+            'Philippines' AS country,
+            cust.parentcustomername AS storereference,
+            msl.sub_channel as storetype,
+            cust.rpt_grp_1_desc as channel,
+            (cust.parentcustomername || '-' || msl.ret_nm_prefix) AS salesgroup,
+            prd.scard_franchise_desc AS prod_hier_l3,
+            prd.scard_brand_desc AS prod_hier_l4,
+            prd.scard_varient_desc AS prod_hier_l5,
+            prd.scard_put_up_desc AS prod_hier_l6,
+            null AS category,
+            null AS segment,
+            kpi_wt.weight as kpi_chnl_wt,
+            null as mkt_share,
+            null as ques_desc,
+            null as "y/n_flag"
+        from itg_ph_non_ise_msl_base msl
+        left join edw_vw_os_time_dim time_dim
+        on msl.osa_check_date = time_dim.cal_date
+        left join (SELECT DISTINCT retailer_name, sold_to FROM  itg_ph_ps_retailer_soldto_map) soldto 
+        on upper(trim(msl.retailer_name)) = upper(trim(soldto.retailer_name)) 
+        left join (SELECT ise_prnt.soldtocode,
+            ise_prnt.parentcustomername,
+            ref_prnt_cust.rpt_grp_12_desc,
+            ref_prnt_cust.rpt_grp_1_desc
+        FROM 
+            (select distinct  soldtocode,parentcustomercode, parentcustomername
+            FROM itg_mds_ph_ise_parent) ise_prnt
+            left join  (select distinct  parent_cust_cd, rpt_grp_12_desc, rpt_grp_1_desc
+                        FROM itg_mds_ph_ref_parent_customer
+                        WHERE UPPER(active) = 'Y') ref_prnt_cust ON ise_prnt.parentcustomercode = ref_prnt_cust.parent_cust_cd) cust
+        on soldto.sold_to = cust.soldtocode
+        left join (select distinct item_cd , 
+                                scard_franchise_desc , 
+                                scard_brand_desc,
+                                scard_varient_desc,
+                                scard_put_up_desc
+                    from itg_mds_ph_lav_product where active = 'Y')prd  on ltrim (prd.item_cd ,'0') = ltrim(msl.sku_code ,'0')
+        left join itg_ph_non_ise_weights  kpi_wt
+        on upper(kpi_wt.kpi) = 'MSL COMPLIANCE'
+        where  date_part(year, msl.osa_check_date) >= (date_part(year,current_timestamp()) -2 )
+        and time_dim."year" >= 2023
+),
+
+union_10 as (
+    select 'Merchandising_Response' as dataset,
+            (oos.ret_nm_prefix::TEXT || '-' || oos.branch_code) AS customerid,
+            null as salespersonid,
+            null as mrch_resp_startdt,
+            null as mrch_resp_enddt,
+            null as survey_enddate,
+            null as questiontext,
+            null as value,
+            'true' AS mustcarryitem,
+            null as answerscore,
+            'true' as presence,
+            case when oos.osa_flag = '0' then 'true' else '' end as outofstock,
+            'OOS Compliance' AS kpi,
+            oos.osa_check_date AS scheduleddate,
+            'completed' AS vst_status,
+            time_dim."year" as fisc_yr,
+            time_dim.mnth_id as fisc_per,
+            ('(Non-ISE) ' || oos.team_leader) AS firstname,
+            '' as lastname,
+            (oos.ret_nm_prefix || '-' || oos.branch_code || ' - ' || oos.branch_name) AS customername,
+            'Philippines' AS country,
+            cust.parentcustomername AS storereference,
+            oos.sub_channel as storetype,
+            cust.rpt_grp_1_desc as channel,
+            (cust.parentcustomername || '-' || oos.ret_nm_prefix) AS salesgroup,
+            prd.scard_franchise_desc AS prod_hier_l3,
+            prd.scard_brand_desc AS prod_hier_l4,
+            prd.scard_varient_desc AS prod_hier_l5,
+            prd.scard_put_up_desc AS prod_hier_l6,
+            null AS category,
+            null AS segment,
+            kpi_wt.weight as kpi_chnl_wt,
+            null as mkt_share,
+            null as ques_desc,
+            null as "y/n_flag"
+        from itg_ph_non_ise_oos_base oos
+        left join edw_vw_os_time_dim time_dim
+        on oos.osa_check_date = time_dim.cal_date
+        left join (SELECT DISTINCT retailer_name, sold_to FROM  itg_ph_ps_retailer_soldto_map) soldto 
+        on upper(trim(oos.retailer_name)) = upper(trim(soldto.retailer_name)) 
+        left join (SELECT ise_prnt.soldtocode,
+            ise_prnt.parentcustomername,
+            ref_prnt_cust.rpt_grp_12_desc,
+            ref_prnt_cust.rpt_grp_1_desc
+        FROM 
+            (select distinct  soldtocode,parentcustomercode, parentcustomername
+            FROM itg_mds_ph_ise_parent) ise_prnt
+            left join  (select distinct  parent_cust_cd, rpt_grp_12_desc, rpt_grp_1_desc
+                        FROM itg_mds_ph_ref_parent_customer
+                        WHERE UPPER(active) = 'Y') ref_prnt_cust ON ise_prnt.parentcustomercode = ref_prnt_cust.parent_cust_cd) cust
+        on soldto.sold_to = cust.soldtocode
+        left join (select distinct item_cd , 
+                                scard_franchise_desc , 
+                                scard_brand_desc,
+                                scard_varient_desc,
+                                scard_put_up_desc
+                    from itg_mds_ph_lav_product where active = 'Y')prd  on ltrim (prd.item_cd ,'0') = ltrim(oos.sku_code ,'0')
+        left join itg_ph_non_ise_weights  kpi_wt
+        on upper(kpi_wt.kpi) = 'OOS COMPLIANCE'
+        where  date_part(year, oos.osa_check_date) >= (date_part(year,current_timestamp()) -2 )
+        and time_dim."year" >= 2023
+),
+
+
 final as (
 select * from union_1
 union all
@@ -1335,5 +1519,9 @@ union all
 select * from union_7
 union all
 select * from union_8
+union all
+select * from union_9
+union all
+select * from union_10
 )
 select * from final

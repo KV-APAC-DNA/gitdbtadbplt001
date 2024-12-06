@@ -1,5 +1,5 @@
 with source as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_sm') }}
+    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_sm_test') }}
     where filename not in (
         select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_non_ise_robinsons_sm__null_test')}}
         union all
@@ -33,6 +33,7 @@ final as (
         branch_name,
         osa_flag,
         retailer_name,
+        sub_channel,
         filename,
         run_id,
         current_timestamp()::timestamp_ntz(9) as crtd_dttm

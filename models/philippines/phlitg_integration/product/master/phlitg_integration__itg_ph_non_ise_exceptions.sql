@@ -101,7 +101,12 @@ landmark_ds as(
         retailer_name::varchar(50) as retailer_name,
         filename::varchar(100) as filename,
         run_id::number(14,0) as run_id,
-        crtd_dttm::timestamp_ntz(9) as crtd_dttm
+        crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+        sub_channel::varchar(200) as sub_channel,
+        null::varchar(200) as store_location,
+        null::varchar(200) as diser_name,
+        null::varchar(10) as msl_reseller,
+        null::varchar(10) as msl_priceclub
     from wks_ph_non_ise_landmark_ds
     where encoded_report <> '1'
 ),
@@ -129,7 +134,12 @@ landmark_sm as(
         retailer_name::varchar(50) as retailer_name,
         filename::varchar(100) as filename,
         run_id::number(14,0) as run_id,
-        crtd_dttm::timestamp_ntz(9) as crtd_dttm
+        crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+        sub_channel::varchar(200) as sub_channel,
+        null::varchar(200) as store_location,
+        null::varchar(200) as diser_name,
+        null::varchar(10) as msl_reseller,
+        null::varchar(10) as msl_priceclub
     from wks_ph_non_ise_landmark_sm
     WHERE encoded_report <> '1'       
 ),
@@ -157,7 +167,12 @@ puregold as(
         retailer_name::varchar(50) as retailer_name,
         filename::varchar(100) as filename,
         run_id::number(14,0) as run_id,
-        crtd_dttm::timestamp_ntz(9) as crtd_dttm
+        crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+        sub_channel::varchar(200) as sub_channel,
+        null::varchar(200) as store_location,
+        diser_name::varchar(200) as diser_name,
+        msl_reseller::varchar(10) as msl_reseller,
+        msl_priceclub::varchar(10) as msl_priceclub
     from wks_ph_non_ise_puregold
     where encoded_report <> '1'
 ),
@@ -185,7 +200,12 @@ ROBINSONS_DS as(
         retailer_name::varchar(50) as retailer_name,
         filename::varchar(100) as filename,
         run_id::number(14,0) as run_id,
-        crtd_dttm::timestamp_ntz(9) as crtd_dttm
+        crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+        sub_channel::varchar(200) as sub_channel,
+        null::varchar(200) as store_location,
+        null::varchar(200) as diser_name,
+        null::varchar(10) as msl_reseller,
+        null::varchar(10) as msl_priceclub
     from wks_ph_non_ise_robinsons_ds
     where encoded_report <> '1'
 ),
@@ -213,7 +233,12 @@ ROBINSONS_SM as(
     	retailer_name::varchar(50) as retailer_name,
     	filename::varchar(100) as filename,
     	run_id::number(14,0) as run_id,
-    	crtd_dttm::timestamp_ntz(9) as crtd_dttm
+    	crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+        sub_channel::varchar(200) as sub_channel,
+        null::varchar(200) as store_location,
+        null::varchar(200) as diser_name,
+        null::varchar(10) as msl_reseller,
+        null::varchar(10) as msl_priceclub
     from wks_ph_non_ise_robinsons_sm
     where encoded_report <> '1'
 
@@ -242,7 +267,12 @@ rustans as(
         retailer_name::varchar(50) as retailer_name,
         filename::varchar(100) as filename,
         run_id::number(14,0) as run_id,
-        crtd_dttm::timestamp_ntz(9) as crtd_dttm
+        crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+        sub_channel::varchar(200) as sub_channel,
+        null::varchar(200) as store_location,
+        null::varchar(200) as diser_name,
+        null::varchar(10) as msl_reseller,
+        null::varchar(10) as msl_priceclub
     from wks_ph_non_ise_rustans
     where encoded_report <> '1'
 ),
@@ -270,7 +300,12 @@ shm as(
         retailer_name::varchar(50) as retailer_name,
         filename::varchar(100) as filename,
         run_id::number(14,0) as run_id,
-        crtd_dttm::timestamp_ntz(9) as crtd_dttm
+        crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+        sub_channel::varchar(200) as sub_channel,
+        store_location::varchar(200) as store_location,
+        null::varchar(200) as diser_name,
+        null::varchar(10) as msl_reseller,
+        null::varchar(10) as msl_priceclub
     from wks_ph_non_ise_shm
     where encoded_report <> '1'
 
@@ -299,7 +334,12 @@ super_8 as(
         retailer_name::varchar(50) as retailer_name,
         filename::varchar(100) as filename,
         run_id::number(14,0) as run_id,
-        crtd_dttm::timestamp_ntz(9) as crtd_dttm
+        crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+        sub_channel::varchar(200) as sub_channel,
+        null::varchar(200) as store_location,
+        null::varchar(200) as diser_name,
+        null::varchar(10) as msl_reseller,
+        null::varchar(10) as msl_priceclub
     FROM wks_ph_non_ise_super_8
     WHERE encoded_report <> '1' 
 ),
@@ -327,7 +367,12 @@ svi_smc as(
         retailer_name::varchar(50) as retailer_name,
         filename::varchar(100) as filename,
         run_id::number(14,0) as run_id,
-        crtd_dttm::timestamp_ntz(9) as crtd_dttm
+        crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+        sub_channel::varchar(200) as sub_channel,
+        store_location::varchar(200) as store_location,
+        null::varchar(200) as diser_name,
+        null::varchar(10) as msl_reseller,
+        null::varchar(10) as msl_priceclub
     FROM wks_ph_non_ise_svi_smc
     WHERE encoded_report <> '1'
 ),
@@ -355,7 +400,12 @@ waltermart as (
         retailer_name::varchar(50) as retailer_name,
         filename::varchar(100) as filename,
         run_id::number(14,0) as run_id,
-        crtd_dttm::timestamp_ntz(9) as crtd_dttm
+        crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+        sub_channel::varchar(200) as sub_channel,
+        null::varchar(200) as store_location,
+        null::varchar(200) as diser_name,
+        null::varchar(10) as msl_reseller,
+        null::varchar(10) as msl_priceclub
     FROM wks_ph_non_ise_waltermart
     WHERE encoded_report <> '1'
 
