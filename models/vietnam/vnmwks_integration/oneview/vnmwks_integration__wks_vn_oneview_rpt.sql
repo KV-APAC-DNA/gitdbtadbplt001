@@ -64,8 +64,21 @@ itg_mds_vn_ecom_target as (
 itg_vn_oneview_otc as (
     select * from {{ ref('vnmitg_integration__itg_vn_oneview_otc') }}
 ),
-itg_mds_vn_customer_segmentation as (
+itg_mds_vn_customer_segmentation  as (
     select * from {{ ref('vnmitg_integration__itg_mds_vn_customer_segmentation') }}
+),
+
+
+cust_segm as (
+    select * ,
+    case when cust_num = '135463' then 'TD002-Tiến Thành' 
+        when cust_num = '135462' then 'TD001-Dương Anh' 
+        when upper(channel_code) = 'ECOM' then 'ECOM'
+        when upper(channel_code) = 'OTC' then 'OTC'
+        when upper(channel_code) = 'MT' and upper(regionalre_code) like '%DISTRIBUTOR%' then 'MTI'
+        else 'MTD'
+        end as sub_channel
+        from itg_mds_vn_customer_segmentation
 ),
 
 prod_dim as 
@@ -119,66 +132,59 @@ ecom_hist as
 -----------------------------Sell-In Actual--------------------------------------
 cte1 as
 (	   
- SELECT 'Sell-In Actual' AS data_type,
-      CASE
-        WHEN LTRIM(copa.cust_num,'0') = qry_param.parameter_name
-        THEN SUBSTRING(qry_param.country_code, 9)
-      	ELSE 'MT'
-      END AS channel,
-      CASE
-        WHEN LTRIM(copa.cust_num,'0') = qry_param.parameter_name
-        THEN qry_param.parameter_value
-      	ELSE 'MTD'
-      END AS sub_channel,
-      copa.fisc_yr AS jj_year,
-      time_dim.qrtr AS jj_qrtr,
-      CAST(copa.caln_yr_mo AS varchar(23)) AS jj_mnth_id,
-      CAST(SUBSTRING(copa.caln_yr_mo, 5,2) AS INTEGER) AS jj_mnth_no,
-      time_dim.mnth_wk_no AS jj_mnth_wk_no,
-      CAST(SUBSTRING(copa.caln_day, 7,2) AS BIGINT) AS jj_mnth_day,
-      NULL AS mapped_spk, 
-      NULL AS dstrbtr_grp_cd, 
-      NULL AS dstrbtr_name, 
-      LTRIM(copa.cust_num, 0) AS sap_sold_to_code,
-      prod_dim.sap_code AS sap_matl_num,
-      prod_dim.sap_matl_name,
-      NULL AS dstrbtr_matl_num,
-      NULL AS dstrbtr_matl_name,
-      NULL AS bar_code,
-      NULL AS customer_code,
-      cus_sales_extn."parent customer" AS customer_name,
-      copa.invoice_date,
-      NULL AS salesman,
-      NULL AS salesman_name,
-      copa.gts_incl_dm AS si_gts_val,
-      copa.gts_excl_dm AS si_gts_excl_dm_val,
-      copa.nts AS si_nts_val,
-      NULL AS si_mnth_tgt_by_sku,
-      NULL AS so_net_trd_sls_loc,
-      NULL AS so_net_trd_sls_usd,
-      NULL AS so_mnth_tgt,
-      NULL AS so_avg_wk_tgt,
-      NULL AS so_mnth_tgt_by_sku,
-      NULL AS zone_manager_id,
-      NULL AS zone_manager_name,
-      NULL AS "zone",
-      NULL AS province,
-      NULL AS region,
-      NULL AS shop_type,
-      NULL AS mt_sub_channel,
-      NULL AS retail_environment,
-      NULL AS group_account,
-      NULL AS account,
-      prod_dim.franchise,
-      prod_dim.brand,
-      prod_dim.variant,
-      prod_dim.product_group,
-      prod_dim.group_jb,
-      qry_param.parameter_value,
-      copa.caln_yr_mo
-FROM 
-(
-SELECT   
+    ---------------------Sell-In for GT , MTD , ECOM , MTI (taking ecom and MTI as that needs to be calculated similar to this after 202209)----------------------------
+ select  'Sell-In Actual' AS data_type,
+         cust_segm.channel_code as channel,
+         cust_segm.sub_channel,
+         copa.fisc_yr AS jj_year,
+         time_dim.qrtr AS jj_qrtr,
+         CAST(copa.caln_yr_mo AS varchar(23)) AS jj_mnth_id,
+         CAST(SUBSTRING(copa.caln_yr_mo, 5,2) AS INTEGER) AS jj_mnth_no,
+         time_dim.mnth_wk_no AS jj_mnth_wk_no,
+         CAST(SUBSTRING(copa.caln_day, 7,2) AS BIGINT) AS jj_mnth_day,
+         NULL AS mapped_spk, 
+         NULL AS dstrbtr_grp_cd, 
+         NULL AS dstrbtr_name, 
+         LTRIM(copa.cust_num, 0) AS sap_sold_to_code,
+         prod_dim.sap_code AS sap_matl_num,
+         prod_dim.sap_matl_name,
+         NULL AS dstrbtr_matl_num,
+         NULL AS dstrbtr_matl_name,
+         NULL AS bar_code,
+         NULL AS customer_code,
+         cus_sales_extn."parent customer" AS customer_name,
+         copa.invoice_date,
+         NULL AS salesman,
+         NULL AS salesman_name,
+         copa.gts_incl_dm AS si_gts_val,
+         copa.gts_excl_dm AS si_gts_excl_dm_val,
+         copa.nts AS si_nts_val,
+         NULL AS si_mnth_tgt_by_sku,
+         NULL AS so_net_trd_sls_loc,
+         NULL AS so_net_trd_sls_usd,
+         NULL AS so_mnth_tgt,
+         NULL AS so_avg_wk_tgt,
+         NULL AS so_mnth_tgt_by_sku,
+         NULL AS zone_manager_id,
+         NULL AS zone_manager_name,
+         NULL AS "zone",
+         NULL AS province,
+         NULL AS region,
+         NULL AS shop_type,
+         NULL AS mt_sub_channel,
+         NULL AS retail_environment,
+         NULL AS group_account,
+         NULL AS account,
+         prod_dim.franchise,
+         prod_dim.brand,
+         prod_dim.variant,
+         prod_dim.product_group,
+         prod_dim.group_jb,
+          null as parameter_value,
+         copa.caln_yr_mo
+       
+from
+(SELECT   
 	   ltrim(cust_num, 0) AS sap_sold_to_code,
 	   TO_DATE(caln_day, 'YYYYMMDD') AS invoice_date,
 	   amt_obj_crncy,
@@ -198,19 +204,17 @@ SELECT
 	   SUM(CASE WHEN acct_hier_shrt_desc = 'NTS' THEN amt_obj_crncy ELSE NULL END) AS nts
 	   FROM edw_copa_trans_fact 
        where UPPER(ctry_key) in ('VN')
-	   GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13
-) copa
-  INNER JOIN time_dim ON copa.invoice_date = time_dim.cal_date 
-  LEFT JOIN prod_dim ON prod_dim.sap_code = LTRIM(copa.matl_num, '0')    
-  FULL JOIN itg_query_parameters qry_param ON LTRIM(copa.cust_num,'0') = qry_param.parameter_name 
-  AND LEFT(qry_param.country_code,7) = 'VN_COPA' 
-  LEFT JOIN edw_company_dim cmp ON copa.co_cd = cmp.co_cd
-  LEFT JOIN v_edw_customer_sales_dim cus_sales_extn
+	   GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13) copa
+       INNER JOIN time_dim ON copa.invoice_date = time_dim.cal_date  
+       INNER JOIN cust_segm on ltrim(copa.cust_num,0) = cust_segm.cust_num 
+       LEFT JOIN prod_dim ON prod_dim.sap_code = LTRIM(copa.matl_num, '0') 
+       LEFT JOIN edw_company_dim cmp ON copa.co_cd = cmp.co_cd
+       LEFT JOIN v_edw_customer_sales_dim cus_sales_extn
          ON copa.sls_org = cus_sales_extn.sls_org
         AND copa.dstr_chnl = cus_sales_extn.dstr_chnl::TEXT
         AND copa.div = cus_sales_extn.div
         AND copa.cust_num = cus_sales_extn.cust_num
-      WHERE 
+        WHERE 
             (
                 si_gts_val IS NOT NULL 
   	            OR si_gts_excl_dm_val IS NOT NULL
