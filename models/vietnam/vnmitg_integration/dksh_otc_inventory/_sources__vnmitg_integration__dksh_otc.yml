@@ -1,0 +1,34 @@
+version: 2
+
+sources:
+  - name: vnmsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: vnmsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_vn_dksh_sdl_otc
+        tags: ["vn_dksh_otc_inventory", "transformation"]
+        tests:
+          - test_null:
+              not_null_columns: ["business_unit","date","stock_type","product_code","product_name","batch","plant_code"]
+              name: TRATBL_sdl_vn_dksh_otc__null_test
+              config:
+                  store_failures: true
+                  schema: vnmwks_integration          
+          - test_duplicate:
+              select_columns: ["business_unit","date","stock_type","product_code","product_name","batch","plant_code"]
+              group_by_columns: ["business_unit","date","stock_type","product_code","product_name","batch","plant_code"]
+              name: TRATBL_sdl_vn_dksh_otc__duplicate_test
+              config:
+                  store_failures: true
+                  schema: vnmwks_integration
+          - test_format:
+              where_clause: "not regexp_like (trim(date),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]')"
+              failure_reason: "'Invalid Recording Date'"
+              name: TRATBL_sdl_vn_dksh_otc__date_format_test
+              config:
+                  store_failures: true
+                  schema: thawks_integration  
