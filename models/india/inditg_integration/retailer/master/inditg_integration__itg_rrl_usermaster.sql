@@ -43,7 +43,7 @@ trans as
 	sdl_usm.filename::varchar(100) as filename,
 	sdl_usm.crt_dttm as crt_dttm,
 	current_timestamp()::timestamp_ntz(9) as updt_dttm,
-    row_number() over (partition by sdl_usm.userid order by sdl_usm.crt_dttm desc) rnum
+    row_number() over (partition by sdl_usm.usercode order by sdl_usm.user_createddate desc) rnum
     
       from combined sdl_usm)
 where rnum = '1'
