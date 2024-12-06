@@ -70,7 +70,13 @@ itg_mds_vn_customer_segmentation  as (
 
 
 cust_segm as (
-    select * ,
+    select cust_num ,
+            customer_segmentation_level_1_code,
+            customer_segmentation_level_2_code,
+            accounttype_code,
+            regionalre_code,
+            channel_code,
+            sold_to_code_name,
     case when cust_num = '135463' then 'TD002-Tiến Thành' 
         when cust_num = '135462' then 'TD001-Dương Anh' 
         when upper(channel_code) = 'ECOM' then 'ECOM'
@@ -133,7 +139,7 @@ ecom_hist as
 cte1 as
 (	   
     ---------------------Sell-In for GT , MTD , ECOM , MTI (taking ecom and MTI as that needs to be calculated similar to this after 202209)----------------------------
- select  'Sell-In Actual' AS data_type,
+ select  'Sell-In Actual New' AS data_type,
          cust_segm.channel_code as channel,
          cust_segm.sub_channel,
          copa.fisc_yr AS jj_year,
@@ -182,7 +188,6 @@ cte1 as
          prod_dim.group_jb,
           null as parameter_value,
          copa.caln_yr_mo
-       
 from
 (SELECT   
 	   ltrim(cust_num, 0) AS sap_sold_to_code,
@@ -206,7 +211,7 @@ from
        where UPPER(ctry_key) in ('VN')
 	   GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13) copa
        INNER JOIN time_dim ON copa.invoice_date = time_dim.cal_date  
-       INNER JOIN cust_segm on ltrim(copa.cust_num,0) = cust_segm.cust_num 
+       INNER JOIN cust_segm on ltrim(copa.cust_num,0) = cust_segm.cust_num and cust_segm.channel_code <> 'OTC'
        LEFT JOIN prod_dim ON prod_dim.sap_code = LTRIM(copa.matl_num, '0') 
        LEFT JOIN edw_company_dim cmp ON copa.co_cd = cmp.co_cd
        LEFT JOIN v_edw_customer_sales_dim cus_sales_extn
@@ -225,10 +230,8 @@ from
 cte1_filtered as
 (
 select * from cte1
-where parameter_value = 'MTI' and jj_mnth_id in (select distinct CAST(caln_yr_mo AS varchar(23)) as jj_mnth_id from edw_copa_trans_fact where jj_mnth_id not between '202105' and '202209')
-union all
-select * from cte1
-where (parameter_value != 'MTI' or parameter_value is null) and jj_mnth_id = CAST(caln_yr_mo AS varchar(23))
+where upper(sub_channel) not in ( 'MTI' , 'ECOM') 
+and jj_mnth_id not in (select distinct CAST(caln_yr_mo AS varchar(23)) as jj_mnth_id from edw_copa_trans_fact where jj_mnth_id  between '202105' and '202209')
 ),
 
 cte2 as 
