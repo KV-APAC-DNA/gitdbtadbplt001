@@ -139,7 +139,7 @@ ecom_hist as
 cte1 as
 (	   
     ---------------------Sell-In for GT , MTD , ECOM , MTI (taking ecom and MTI as that needs to be calculated similar to this after 202209)----------------------------
- select  'Sell-In Actual New' AS data_type,
+ select  'Sell-In New' AS data_type,
          cust_segm.channel_code as channel,
          cust_segm.sub_channel,
          copa.fisc_yr AS jj_year,
