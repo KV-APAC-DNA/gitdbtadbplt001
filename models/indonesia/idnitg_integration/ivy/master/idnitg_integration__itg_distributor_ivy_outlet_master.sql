@@ -83,7 +83,7 @@ final as (
         routecode::varchar(25) as routecode,
         visit_frequency::varchar(15) as visit_frequency,
         visitday::varchar(200) as visitday,
-        jnj_id::varchar(20) as jnj_id,
+        jnj_id::varchar(200) as jnj_id,
         contactperson::varchar(255) as contactperson,
         credit_limit::number(18,2) as credit_limit,
         invoice_limit::number(18,2) as invoice_limit,
