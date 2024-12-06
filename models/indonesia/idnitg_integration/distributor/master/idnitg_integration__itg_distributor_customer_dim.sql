@@ -16,7 +16,7 @@ final as
 	trim(channel)::varchar(100) as chnl,
 	trim(outlet_type)::varchar(100) as outlet_type,
 	trim(channel_group1)::varchar(100) as chnl_grp,
-	trim(jjid)::varchar(100) as jjid,
+	trim(jjid)::varchar(200) as jjid,
 	trim(postal_code)::varchar(100) as pst_cd,
 	trim(cust_id_map)::varchar(100) as cust_id_map,
 	trim(cust_name_map)::varchar(100) as cust_nm_map,
@@ -26,7 +26,18 @@ final as
 	convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) as crtd_dttm,
 	convert_timezone('UTC',current_timestamp())::TIMESTAMP_NTZ(9) as UPDT_DTTM,
 	nvl(effective_from,'200001')::varchar(10) as effective_from,
-    nvl(effective_to,'999912')::varchar(10) as effective_to 
+    nvl(effective_to,'999912')::varchar(10) as effective_to ,
+    ADDITIONAL_INFORMATION_1_CODE::varchar(100) as ADDITIONAL_INFORMATION_1_CODE,
+    ADDITIONAL_INFORMATION_1_NAME::varchar(100) as ADDITIONAL_INFORMATION_1_NAME,
+    ADDITIONAL_INFORMATION_2_CODE::varchar(100) as ADDITIONAL_INFORMATION_2_CODE,
+    ADDITIONAL_INFORMATION_2_NAME::varchar(100) as ADDITIONAL_INFORMATION_2_NAME,
+    ADDITIONAL_INFORMATION_3_CODE::varchar(100) as ADDITIONAL_INFORMATION_3_CODE,
+    ADDITIONAL_INFORMATION_3_NAME::varchar(100) as ADDITIONAL_INFORMATION_3_NAME,
+    ADDITIONAL_INFORMATION_4_CODE::varchar(100) as ADDITIONAL_INFORMATION_4_CODE,
+    ADDITIONAL_INFORMATION_4_NAME::varchar(100) as ADDITIONAL_INFORMATION_4_NAME,
+    ADDITIONAL_INFORMATION_5_CODE::varchar(100) as ADDITIONAL_INFORMATION_5_CODE,
+    ADDITIONAL_INFORMATION_5_NAME::varchar(100) as ADDITIONAL_INFORMATION_5_NAME	
+
     from source
 )
 select * from final

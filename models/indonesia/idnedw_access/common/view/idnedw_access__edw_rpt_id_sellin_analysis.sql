@@ -39,5 +39,8 @@ select
 	prod_status as "prod_status",
 	sellin_qty as "sellin_qty",
 	sellin_val as "sellin_val",
-	gross_sellin_val as "gross_sellin_val"
+	gross_sellin_val as "gross_sellin_val",
+	usd_conversion_rate as "usd_conversion_rate",
+    ciw_type as "ciw_type",
+    ciw_amount as "ciw_amount"
 from source

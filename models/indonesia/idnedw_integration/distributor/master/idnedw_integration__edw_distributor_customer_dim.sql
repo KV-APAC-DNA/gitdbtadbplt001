@@ -20,7 +20,7 @@ final as (
                 then (trim(jj_sap_dstrbtr_id::varchar) ||trim (cust_id::varchar)) 
             else           	
                 trim(jjid::varchar) 
-        end::VARCHAR(100) as jjid,
+        end::VARCHAR(200) as jjid,
         pst_cd::varchar(100) as pst_cd,
         cust_id_map::varchar(100) as cust_id_map,
         cust_nm_map::varchar(100) as cust_nm_map,
@@ -31,7 +31,17 @@ final as (
         current_timestamp()::timestamp_ntz(9) AS updt_dttm,
         effective_from::VARCHAR(10) as effective_from,
         effective_to::VARCHAR(10) as effective_to,
-        null::VARCHAR(255) as filename
+        null::VARCHAR(255) as filename,
+        ADDITIONAL_INFORMATION_1_CODE::varchar(100) as ADDITIONAL_INFORMATION_1_CODE,
+        ADDITIONAL_INFORMATION_1_NAME::varchar(100) as ADDITIONAL_INFORMATION_1_NAME,
+        ADDITIONAL_INFORMATION_2_CODE::varchar(100) as ADDITIONAL_INFORMATION_2_CODE,
+        ADDITIONAL_INFORMATION_2_NAME::varchar(100) as ADDITIONAL_INFORMATION_2_NAME,
+        ADDITIONAL_INFORMATION_3_CODE::varchar(100) as ADDITIONAL_INFORMATION_3_CODE,
+        ADDITIONAL_INFORMATION_3_NAME::varchar(100) as ADDITIONAL_INFORMATION_3_NAME,
+        ADDITIONAL_INFORMATION_4_CODE::varchar(100) as ADDITIONAL_INFORMATION_4_CODE,
+        ADDITIONAL_INFORMATION_4_NAME::varchar(100) as ADDITIONAL_INFORMATION_4_NAME,
+        ADDITIONAL_INFORMATION_5_CODE::varchar(100) as ADDITIONAL_INFORMATION_5_CODE,
+        ADDITIONAL_INFORMATION_5_NAME::varchar(100) as ADDITIONAL_INFORMATION_5_NAME	
     from source 
     where effective_to = '999912'
 )
