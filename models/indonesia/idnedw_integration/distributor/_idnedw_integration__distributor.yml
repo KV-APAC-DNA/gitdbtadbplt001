@@ -26,6 +26,17 @@ models:
     config:
       alias: edw_indonesia_noo_analysis
       tags: ["id_noo_analysis","transformation"]
+    tests:
+      - test_lookup:
+          select_columns: ["jj_mnth","jj_sap_dstrbtr_id"]
+          column: "jj_mnth,jj_sap_dstrbtr_id"
+          lookup_column: "jj_mnth,jj_sap_dstrbtr_id"
+          lookup_table: "{{ref('idnedw_integration__edw_indonesia_lppb_analysis') }}"     
+          failure_reason: "'Distributor_id not present in SISO but exists in NOO'"
+          name: TRATBL_sdl_ID_SISO__lookup_test
+          config:
+            store_failures: true
+            schema: idnwks_integration  
   - name: idnedw_integration__edw_distributor_channel_dim
     config:
       alias: edw_distributor_channel_dim
