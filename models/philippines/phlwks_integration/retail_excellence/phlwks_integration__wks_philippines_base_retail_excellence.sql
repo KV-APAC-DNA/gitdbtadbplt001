@@ -119,6 +119,7 @@ FROM (SELECT COUNTRY_CODE,
 FROM edw_rpt_regional_sellout_offtake
 WHERE COUNTRY_CODE = 'PH'
 AND   DATA_SOURCE IN ('SELL-OUT','POS','STOCK TRANSFER')
+AND UPPER(DISTRIBUTOR_NAME) <> 'NA'
 AND   MNTH_ID >= (SELECT last_27mnths
                   FROM edw_vw_cal_retail_excellence_dim)::NUMERIC
 AND   MNTH_ID <= (SELECT prev_mnth FROM edw_vw_cal_retail_excellence_dim)::NUMERIC
