@@ -924,13 +924,13 @@ FROM (
 		        , parameter_name as brand_name 
 		from itg_query_parameters
           where parameter_type = 'Add_prof_heir')as qp
-            on (pd.brand_name = qp.brand_name
+            on (lower (pd.brand_name) = lower (qp.brand_name)
 		    )
-) LEFT JOIN IN_HCP_SpecialtyCare as spec
+        ) LEFT JOIN IN_HCP_SpecialtyCare as spec
             ON sf.customer_code = spec.code AND qp.prof_type = 'speciality'
-)LEFT JOIN IN_HCP_Selfcare as self
+    ) LEFT JOIN IN_HCP_Selfcare as self
             ON sf.customer_code = self.code AND qp.prof_type = 'self_care'	
 )
-WHERE (cd.fisc_yr >= 2014))
-select * from final 
+WHERE (cd.fisc_yr >= 2014)) 
+select * from final
 
