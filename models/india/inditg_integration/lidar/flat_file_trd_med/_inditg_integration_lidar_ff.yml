@@ -16,5 +16,20 @@ models:
       alias: fct_tv_grp_spends_global_monthly
       tags: ["in_lidar_ff_refresh","transformation"]
 
+  - name: inditg_integration__fct_digital_micro_level_reach_india_monthly
+    config: 
+      alias: fct_digital_micro_level_reach_india_monthly
+      tags: ["in_lidar_ff_refresh","transformation"]
+
+  - name: inditg_integration__fct_digital_platform_level_reach_india_monthly
+    config: 
+      alias: fct_digital_platform_level_reach_india_monthly
+      tags: ["in_lidar_ff_refresh","transformation"]
+
+  - name: inditg_integration__fct_traditional_print_comp_spends_india_monthly
+    config: 
+      alias: fct_traditional_print_comp_spends_india_monthly
+      tags: ["in_lidar_ff_refresh","transformation"]
+
   
       

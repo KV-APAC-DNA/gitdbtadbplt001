@@ -140,6 +140,6 @@ left join curr_rate as curr
     on ts.ob_date = curr.date
 
 {% if is_incremental() %}
-    where ts.load_date > (select max(crt_dttm) from {{ this }})
+    where ts.spot_date > (select max(spot_date) from {{ this }})
 {% endif %}
 

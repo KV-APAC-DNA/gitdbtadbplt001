@@ -23,7 +23,7 @@ select
     "Position"::VARCHAR(1000) as Position,
     "Channel Language"::VARCHAR(1000) as "Channel Language",
     "Spot language"::VARCHAR(1000) as "Spot language",
-    File_name::VARCHAR(500) as File_name,
+    File_name::VARCHAR(1000) as File_name,
     "kpi"::VARCHAR(1000) as "Market Cluster & Target Group",
     "kpi_1"::FLOAT as "GRP Competes",
     'MMM'::VARCHAR(50) as "Report Cadence Type",
@@ -34,7 +34,7 @@ select
     'India'::VARCHAR(1000) as Gcgh_country,
     Brand_harmonized_by::VARCHAR(16777216) as Brand_harmonized_by,
     Load_date::TIMESTAMP_NTZ(9) as Load_date,
-    "Start Time"::TIME as "Start Time",
+    "Start Time"::VARCHAR(16777216) as "Start Time",
     "Year"::INT as Year,
     "Month"::INT as Month,
     "NIns"::INT as Nins,
@@ -94,5 +94,5 @@ from {{ source(
       "sdl_lidar_ff_tv_grp_spends"
     ) }}
 {% if is_incremental() %}
-    where Load_date > (select MAX(Load_date) from {{ this }})
+    where TO_DATE("Date", 'DD/MM/YYYY') > (select MAX(Date) from {{ this }})
 {% endif %}

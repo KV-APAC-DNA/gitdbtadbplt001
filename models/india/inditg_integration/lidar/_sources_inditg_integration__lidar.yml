@@ -31,6 +31,9 @@ sources:
     - name: sdl_lidar_ff_other_paid_media
     - name: sdl_lidar_ff_tv_spends
     - name: sdl_lidar_ff_tv_grp_spends
+    - name: sdl_lidar_ff_print_comp_spend
+    - name: sdl_lidar_ff_microlevel_reach
+    - name: sdl_lidar_ff_platformlevel_reach
 
   - name: paidmedia_integration
     database: "{{ env_var('DBT_ENV_CON360LIDAR_DB') }}"
