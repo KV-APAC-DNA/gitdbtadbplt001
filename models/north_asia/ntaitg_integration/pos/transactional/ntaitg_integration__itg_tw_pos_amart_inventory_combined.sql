@@ -162,7 +162,7 @@ final as
         null AS ean_num,
         null AS str_cd,
         null AS str_nm,
-        purchase_qty AS sls_qty,
+        offtake_qty AS sls_qty,
         NULL AS sls_amt,
         null AS unit_prc_amt,
         null AS sls_excl_vat_amt,
