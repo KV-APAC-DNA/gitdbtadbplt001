@@ -29,8 +29,8 @@ models:
     tests:
       - test_lookup:
           select_columns: ["jj_mnth","SLSMN_ID","jj_sap_dstrbtr_id"]
-          column: "SLSMN_ID,jj_sap_dstrbtr_id"
-          lookup_column: "SLSMN_ID,jj_sap_dstrbtr_id"
+          column: "upper(SLSMN_ID),jj_sap_dstrbtr_id"
+          lookup_column: "upper(SLSMN_ID),jj_sap_dstrbtr_id"
           lookup_table: "{{ref('idnedw_integration__edw_distributor_salesman_dim') }}"     
           failure_reason: "'SLSMN_ID,jj_sap_dstrbtr_id is not present in edw_distributor_salesman_dim'"
           name: TRATBL_edw_ID_NOO_SLSMN_ID_lookup_test
