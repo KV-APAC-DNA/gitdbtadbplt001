@@ -1,6 +1,18 @@
-with edw_ph_pos_analysis as(
+with edw_ph_pos_analysis_pos as(
 
     select * from {{ ref('phledw_integration__edw_ph_pos_analysis') }}
+),
+edw_ph_pos_analysis_mercury as(
+
+    select * from {{ ref('phledw_integration__edw_ph_pos_analysis_v2') }} where sold_to='107882'
+),
+edw_ph_pos_analysis as 
+(
+    select * from  edw_ph_pos_analysis_pos 
+
+    union all
+
+    select * from edw_ph_pos_analysis_mercury
 ),
 hcp_product_master as 
 (
@@ -10,10 +22,7 @@ hcp_store_master as
 (
     select * from {{ ref('phlitg_integration__itg_ph_mds_hcp_store_master') }}
 ),
-rose_pharma_sellout_data as 
-(
-  select * from prod_dna_core.phledw_integration.edw_ph_pos_rka_analysis_test
-),
+
 ph_hcp_gmc_brands as (
 
   select * from {{ ref('phlitg_integration__itg_ph_hcp_gmc_brands') }}
