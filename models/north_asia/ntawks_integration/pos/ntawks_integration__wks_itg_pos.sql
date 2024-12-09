@@ -15,8 +15,8 @@ final as
         product_code AS vend_prod_cd,
         product_name AS vend_prod_nm,
         NULL AS brnd_nm,
-        barcode AS ean_num,
-        store_code AS str_cd,
+        trim(barcode) AS ean_num,
+        trim(store_code) AS str_cd,
         store_name AS str_nm,
         number_of_sales AS sls_qty,
         sales_revenue AS sls_amt,
@@ -103,8 +103,8 @@ final as
     left outer join 
     (
         select pos_dt,
-            ean_num,
-            str_cd,
+            trim(ean_num) as ean_num,
+            trim(str_cd) as str_cd,
             src_sys_cd,
             ctry_cd,
             crt_dttm,
