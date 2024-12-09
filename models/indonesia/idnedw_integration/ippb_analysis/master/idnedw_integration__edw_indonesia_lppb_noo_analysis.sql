@@ -1,7 +1,12 @@
 with edw_indonesia_noo_analysis as
 (
     select * from {{ ref('idnedw_integration__edw_indonesia_noo_analysis') }}
-),EDW_TIME_DIM as(
+),
+ edw_indonesia_noo_analysis_rnk as
+(
+    select * from {{ ref('idnedw_integration__edw_indonesia_noo_analysis') }} qualify row_number() over (partition by jj_mnth,JJ_SAP_DSTRBTR_ID,JJ_SAP_PROD_ID order by null) = 1
+),
+EDW_TIME_DIM as(
 	select * from {{ source('idnedw_integration', 'edw_time_dim') }}
 ),
 edw_distributor_dim as(
@@ -307,7 +312,7 @@ SELECT ETD.JJ_YEAR,
             FROM trans ) AS T1,
            EDW_DISTRIBUTOR_DIM AS EDD,
            EDW_PRODUCT_DIM AS EPD,
-           edw_indonesia_noo_analysis NOO,
+           edw_indonesia_noo_analysis_rnk NOO,
       (SELECT DISTINCT JJ_YEAR,
               JJ_QRTR_NO,
               JJ_QRTR,
