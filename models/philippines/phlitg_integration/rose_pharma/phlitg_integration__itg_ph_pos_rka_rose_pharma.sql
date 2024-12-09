@@ -3,25 +3,36 @@
         materialized="incremental",
         incremental_strategy="append",
         unique_keys=['jj_month_id','branch_code','sku'],
-        pre_hook = "delete from {{this}} where filename in (
+        pre_hook = "delete from {{this}} where filename in
+         (
         select distinct filename from {{ source('phlsdl_raw', 'sdl_pos_rks_rose_pharma_consumer') }}
         union 
-        select distinct filename from {{ source('phlsdl_raw', 'sdl_pos_rks_rose_pharma') }} );"
+        select distinct filename from {{ source('phlsdl_raw', 'sdl_pos_rks_rose_pharma') }} 
+        );"
     )
 }}    
 with source1 as
 (
     select * from {{ source('phlsdl_raw', 'sdl_pos_rks_rose_pharma') }}
+       
 ),
 source2 as
 (
     select * from {{ source('phlsdl_raw', 'sdl_pos_rks_rose_pharma_consumer') }}
+        
 ),
 source3 as 
 (
     select * from source1 
     union 
     select * from  source2
+    where file_name not in (
+        select distinct file_name from 
+         {% if target.name=='prod' %}
+                        phlwks_integration.TRATBL_sdl_ph_pos_rosepharma_product__lookup_test
+         {% else %}
+                        {{schema}}.TRATBL_sdl_ph_pos_rosepharma_product__lookup_test
+         {% endif %})
 ),
 final as
 (
