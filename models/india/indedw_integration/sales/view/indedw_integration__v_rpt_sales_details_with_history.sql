@@ -924,11 +924,7 @@ FROM (
 		        , parameter_name as brand_name 
 		from itg_query_parameters
           where parameter_type = 'Add_prof_heir')as qp
-<<<<<<< HEAD
-            on (lower (pd.brand_name) = lower (qp.brand_name)
-=======
             on (lower(trim(pd.brand_name)) = lower(trim(qp.brand_name))
->>>>>>> 30d81c7e8c9a380415e6d2e4b0790346c90cf5fb
 		    )
         ) LEFT JOIN IN_HCP_SpecialtyCare as spec
             ON sf.customer_code = spec.code AND qp.prof_type = 'speciality'
