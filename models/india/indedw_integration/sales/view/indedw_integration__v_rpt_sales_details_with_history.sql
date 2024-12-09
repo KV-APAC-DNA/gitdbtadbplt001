@@ -924,7 +924,7 @@ FROM (
 		        , parameter_name as brand_name 
 		from itg_query_parameters
           where parameter_type = 'Add_prof_heir')as qp
-            on (pd.brand_name = qp.brand_name
+            on (lower(trim(pd.brand_name)) = lower(trim(qp.brand_name))
 		    )
 ) LEFT JOIN IN_HCP_SpecialtyCare as spec
             ON sf.customer_code = spec.code AND qp.prof_type = 'speciality'
