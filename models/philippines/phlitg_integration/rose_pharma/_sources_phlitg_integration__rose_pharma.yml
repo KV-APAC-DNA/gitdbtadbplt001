@@ -11,8 +11,8 @@ sources:
         tags: ["ph_rks_rose_pharma","ingestion"]
       - name : sdl_pos_rks_rose_pharma_consumer  
 
-      - name : sdl_mds_ph_rka_customers_temp 
-      - name : sdl_mds_ph_pos_product_temp
+      - name : sdl_mds_ph_rka_customers_adf_temp 
+      - name : sdl_mds_ph_pos_product_adf_temp
 
   - name: phlitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -24,4 +24,13 @@ sources:
     tables:
       - name: itg_mds_ph_pos_rosepharma_products
       - name : itg_mds_ph_pos_rosepharma_customers
-     
+
+  - name: phlwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: phlwks_integration   
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: TRATBL_sdl_ph_pos_rosepharma_product__lookup_test

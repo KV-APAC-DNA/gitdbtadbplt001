@@ -1,7 +1,7 @@
 
 with source as
 (
-    select * from {{ source('phlsdl_raw', 'sdl_mds_ph_pos_product_temp') }}
+    select * from {{ source('phlsdl_raw', 'sdl_mds_ph_pos_product_adf_temp') }}
 ),
 transformed as 
 (
