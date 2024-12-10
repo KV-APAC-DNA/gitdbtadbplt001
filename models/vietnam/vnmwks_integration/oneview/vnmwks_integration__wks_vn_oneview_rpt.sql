@@ -425,7 +425,7 @@ FROM
        SUM(CASE WHEN acct_hier_shrt_desc = 'NTS' THEN amt_obj_crncy ELSE NULL END) AS nts
 	   FROM edw_copa_trans_fact 
        WHERE UPPER(ctry_key) = 'VN' 
-	   GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14
+	   GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13
        ) copa
        INNER JOIN ecom_hist ON copa.caln_yr_mo = ecom_hist.mnth_id 
              and ltrim(copa.cust_num,0) = ecom_hist.sold_to
@@ -515,7 +515,7 @@ FROM
        SUM(CASE WHEN acct_hier_shrt_desc = 'NTS' THEN amt_obj_crncy ELSE NULL END) AS nts
 	   FROM edw_copa_trans_fact 
        WHERE UPPER(ctry_key) = 'VN'
-	   GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14
+	   GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13
        ) copa
 	   INNER JOIN ecom_hist ON copa.caln_yr_mo = ecom_hist.mnth_id and ltrim(cust_num,'0') = ecom_hist.sold_to
 	   INNER JOIN time_dim ON copa.invoice_date = time_dim.cal_date 
