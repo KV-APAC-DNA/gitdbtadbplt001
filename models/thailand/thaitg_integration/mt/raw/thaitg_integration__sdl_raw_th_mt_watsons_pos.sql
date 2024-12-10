@@ -7,11 +7,11 @@
 
 with source as(
     select * from {{ source('thasdl_raw', 'sdl_th_mt_watsons_pos_1210_UAT') }}
-    /*where file_name not in (
-            select distinct file_name from {{ source('thawks_integration', 'TRATBL_SDL_TH_WATSONS_WEEKLY_POS__NULL_TEST') }}
+    where file_name not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_watsons_weekly_pos__null_test') }}
             union all
-            select distinct file_name from {{ source('thawks_integration', 'TRATBL_SDL_TH_WATSONS_WEEKLY_POS__DUPLICATE_TEST') }}
-    )*/
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_watsons_weekly_pos__null_test') }}
+    )
 ),
 final as(
     select * from source
