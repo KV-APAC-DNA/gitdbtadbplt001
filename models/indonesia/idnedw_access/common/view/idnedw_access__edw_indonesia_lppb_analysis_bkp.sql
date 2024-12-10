@@ -1,6 +1,6 @@
 with source as
 (
-    select * from {{ref('idnedw_integration__edw_indonesia_lppb_analysis_new')}}
+    select * from {{ref('idnedw_integration__edw_indonesia_lppb_analysis_bkp')}}
 )
 
 select jj_year as "jj_year",
