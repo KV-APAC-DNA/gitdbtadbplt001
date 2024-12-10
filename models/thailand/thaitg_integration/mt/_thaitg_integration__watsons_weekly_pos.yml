@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: thawks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: "{{ target.schema if target.name in ('dev','default') else 'thawks_integration' }}"
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+
+    - name: TRATBL_SDL_TH_WATSONS_WEEKLY_POS__NULL_TEST
+    - name: TRATBL_SDL_TH_WATSONS_WEEKLY_POS__DUPLICATE_TEST
