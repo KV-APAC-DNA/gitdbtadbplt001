@@ -545,7 +545,7 @@ models:
           view:
             +materialized: view
         lidar:
-          view: 
+          view:
             +materialized: view
       inditg_integration:
         +materialized: table
