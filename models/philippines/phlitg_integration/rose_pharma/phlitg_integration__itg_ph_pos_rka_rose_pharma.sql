@@ -26,8 +26,8 @@ source3 as
     select * from source1 
     union 
     select * from  source2
-    where file_name not in (
-        select distinct file_name from 
+    where filename not in (
+        select distinct filename from 
          {% if target.name=='prod' %}
                         phlwks_integration.TRATBL_sdl_ph_pos_rosepharma_product__lookup_test
          {% else %}
