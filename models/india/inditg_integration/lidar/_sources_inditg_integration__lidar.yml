@@ -43,4 +43,4 @@ sources:
       schema: false
       identifier: false
     tables:
-    - name: fct_currency_rate_global_daily    
+    - name: fct_currency_rate_global_daily

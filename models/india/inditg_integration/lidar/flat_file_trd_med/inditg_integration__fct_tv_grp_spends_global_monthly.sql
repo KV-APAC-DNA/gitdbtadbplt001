@@ -2,7 +2,6 @@
    materialized='incremental',
   incremental_strategy='append',
   transient=false,
-  post_hook="{{ get_harmonized_brand('TRADITIONAL_COMPETITIVE_TV_GRP_SPENDS', 'Y') }}"
 ) }}
 
 select
@@ -89,6 +88,7 @@ select
             and DATE_PART(hour, "Start Time"::TIME) < 7
             then 'NPT'
     end as "PT/NPT"
+<<<<<<< HEAD
 from {{ source(
       "indsdl_raw",
       "sdl_lidar_ff_tv_grp_spends"
@@ -96,3 +96,9 @@ from {{ source(
 {% if is_incremental() %}
     where TO_DATE("Date", 'DD/MM/YYYY') > (select MAX(Date) from {{ this }})
 {% endif %}
+=======
+from {{ source('indsdl_raw','sdl_lidar_ff_tv_grp_spends') }}
+-- {% if is_incremental() %}
+--     where TO_DATE("Date", 'DD/MM/YYYY') > (select MAX(Date) from {{ this }})
+-- {% endif %}
+>>>>>>> 3220b660bf0dbedf4930d032f5f2ec055a6bfcd9

@@ -10,7 +10,7 @@ with daily_exchange_rate as (
         i.*,
         1 / AVG(t.rate) as rate
     from
-        {{ source("paidmedia_integration","fct_currency_rate_global_daily") }}
+        {{ source('paidmedia_integration','fct_currency_rate_global_daily') }}
             as t
         join
         (select distinct
@@ -102,10 +102,7 @@ select
     CAST(post_engagements as integer) as post_engagements,
     CAST(follows_or_likes as float) as follows_or_likes
 from
-{{ source(
-      "indsdl_raw",
-      "sdl_lidar_ff_platformlevel_reach"
-    ) }} as src
+{{source('indsdl_raw','sdl_lidar_ff_platformlevel_reach') }} as src
 left join
     daily_exchange_rate as de
     on src.month_filter = de.month_filter

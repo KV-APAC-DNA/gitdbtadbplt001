@@ -10,17 +10,14 @@ with daily_exchange_rate as (
         i.*,
         1 / AVG(t.rate) as rate
     from
-        {{ source("paidmedia_integration","fct_currency_rate_global_daily") }}
+        {{ source('paidmedia_integration','fct_currency_rate_global_daily') }}
             as t
         join
         (select distinct
             CAST(month_filter as date) as month_filter,
             CAST(month_filter as date) as start_date,
             LAST_DAY(start_date, 'month') as end_date
-        from {{ source(
-      "indsdl_raw",
-      "sdl_lidar_ff_microlevel_reach"
-    ) }}) as i
+        from {{source('indsdl_raw','sdl_lidar_ff_microlevel_reach') }}) as i
         on t.date = i.start_date
     where t.date between i.start_date and i.end_date
     group by month_filter, start_date, end_date
@@ -103,10 +100,7 @@ select
     CAST(post_engagements as integer) as post_engagements,
     CAST(follows_or_likes as float) as follows_or_likes
 from
-{{ source(
-      "indsdl_raw",
-      "sdl_lidar_ff_microlevel_reach"
-    ) }} as src
+{{source('indsdl_raw', 'sdl_lidar_ff_microlevel_reach') }} as src
 left join
     daily_exchange_rate as de
     on src.month_filter = de.month_filter
