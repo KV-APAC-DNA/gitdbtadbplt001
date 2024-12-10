@@ -175,9 +175,13 @@ FROM (SELECT COUNTRY_CODE,
             AND   DATA_SOURCE IN ('SELL-OUT','POS')
             -------logic to exclude POS Online data
             AND (CASE WHEN DATA_SOURCE = 'SELL-OUT' THEN STORE_NAME
-                ELSE 
-                (CASE WHEN (UPPER(STORE_NAME) LIKE '%_ONLINE%' OR UPPER(STORE_NAME) LIKE '%온라인몰점%' OR UPPER(STORE_NAME) LIKE '%김포온라인센터%') THEN 'POS_ONLINE'
-                ELSE STORE_NAME END) END) <> 'POS_ONLINE' 
+                 ELSE 
+                (CASE 
+                 WHEN (UPPER(STORE_NAME) LIKE '%_ONLINE%' OR UPPER(STORE_NAME) LIKE '%온라인몰점%' OR UPPER(STORE_NAME) LIKE '%김포온라인센터%') THEN 'POS_ONLINE' 
+                 WHEN (UPPER(DISTRIBUTOR_NAME)||'-'||UPPER(STORE_TYPE) IN ('EMART-HYPER', 'EMART (W.C)-WAREHOUSE') AND UPPER(STORE_NAME) LIKE '%가상점%') THEN 'POS_ONLINE'
+                 ELSE STORE_NAME END) 
+                 END) <> 'POS_ONLINE' 
+            ---------------------------------
             AND   MNTH_ID >= (SELECT last_27mnths
                               FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::NUMERIC
             AND   MNTH_ID <= (SELECT prev_mnth FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::NUMERIC
