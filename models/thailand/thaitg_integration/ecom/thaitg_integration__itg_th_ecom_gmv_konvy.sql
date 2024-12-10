@@ -23,7 +23,7 @@ select
     market_value::varchar(50) as market_value,
     stock_turnover_days::varchar(50) as stock_turnover_days,
     view_no ::varchar(50) as view_val,
-    conversion::number(20,4) as conversion,
+    replace(conversion,'%','')::number(20,4) as conversion,
     discontinue::varchar(50) as discontinue,
     date::varchar(50) as date,
     platform::varchar(50) as platform,
