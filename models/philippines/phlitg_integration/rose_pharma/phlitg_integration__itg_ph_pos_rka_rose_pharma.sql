@@ -38,7 +38,7 @@ source4 as
          {% else %}
                         {{schema}}.TRATBL_sdl_ph_pos_rosepharma_product__lookup_test
          {% endif %})
-)
+),
 final as
 (
   select
