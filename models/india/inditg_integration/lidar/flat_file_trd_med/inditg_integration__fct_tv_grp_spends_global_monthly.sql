@@ -89,10 +89,7 @@ select
             and DATE_PART(hour, "Start Time"::TIME) < 7
             then 'NPT'
     end as "PT/NPT"
-from {{ source(
-      "indsdl_raw",
-      "sdl_lidar_ff_tv_grp_spends"
-    ) }}
+from {{ source('indsdl_raw','sdl_lidar_ff_tv_grp_spends') }}
 -- {% if is_incremental() %}
 --     where TO_DATE("Date", 'DD/MM/YYYY') > (select MAX(Date) from {{ this }})
 -- {% endif %}

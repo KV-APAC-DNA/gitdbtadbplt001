@@ -9,7 +9,7 @@ with curr_rate as (
     select
         date,
         avg(rate) as rate
-    from {{ source("paidmedia_integration","fct_currency_rate_global_daily") }}
+    from {{ source('paidmedia_integration','fct_currency_rate_global_daily') }}
     where currency_code = 'INR'
     group by date
 )
@@ -135,7 +135,7 @@ select
     null::varchar(16777216) as brand_harmonized_by,
     ts.load_date as crt_dttm
 --try_to_timestamp('') as updt_dttm
-from {{ source("indsdl_raw","sdl_lidar_ff_tv_spends") }} as ts
+from {{ source('indsdl_raw','sdl_lidar_ff_tv_spends') }} as ts
 left join curr_rate as curr
     on ts.ob_date = curr.date
 

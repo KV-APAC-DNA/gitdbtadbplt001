@@ -9,7 +9,7 @@ with curr_rate as (
     select
         date,
         avg(rate) as rate
-    from {{ source("paidmedia_integration","fct_currency_rate_global_daily") }}
+    from {{ source('paidmedia_integration','fct_currency_rate_global_daily') }}
     where currency_code = 'INR'
     group by date
 )
@@ -73,10 +73,7 @@ select
         as adjusted_cost_in_usd,
     to_timestamp(current_timestamp()) as crt_dttm,
     to_timestamp(current_timestamp()) as updt_dttm
-from {{ source(
-      "indsdl_raw",
-      "sdl_lidar_ff_print_comp_spend"
-    ) }} as cs
+from {{ source('indsdl_raw','sdl_lidar_ff_print_comp_spend') }} as cs
 left join curr_rate as er
     on to_date(cs.date, 'DD/MM/YYYY') = er.date
 {% if is_incremental() %}
