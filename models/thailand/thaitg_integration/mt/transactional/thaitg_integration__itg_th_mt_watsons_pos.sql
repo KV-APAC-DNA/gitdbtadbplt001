@@ -2,14 +2,14 @@
     config(
         materialized="incremental",
         incremental_strategy="delete+insert",
-        unique_key = ["product_id","year_month","year_week","store_format","store_segment"]
+        unique_key = ["year_week"]
         )
 }}
 
 --Import CTE
 with source as 
 (
-    select * from {{ source('thasdl_raw', 'sdl_th_mt_watsons_pos') }}
+    select * from {{ source('thasdl_raw', 'sdl_th_mt_watsons_pos_1210_UAT') }}
       where file_name not in (
         select distinct file_name from {{source('thawks_integration','TRATBL_SDL_TH_WATSONS_WEEKLY_POS__NULL_TEST')}}
         union all
