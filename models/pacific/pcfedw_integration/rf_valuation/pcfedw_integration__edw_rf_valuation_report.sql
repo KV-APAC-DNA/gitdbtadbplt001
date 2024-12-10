@@ -1,3 +1,12 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy= "append",
+        unique_key=["UPDATE_DATE"],
+        pre_hook= "{%if is_incremental()%}
+        delete from {{this}} where UPDATE_DATE = (CURRENT_DATE - EXTRACT (DOW FROM CURRENT_DATE -1));{%endif%}"
+    )
+}}
 with EDW_SALES_REPORTING as
 (
   select * from {{ ref('pcfedw_integration__edw_sales_reporting') }}
