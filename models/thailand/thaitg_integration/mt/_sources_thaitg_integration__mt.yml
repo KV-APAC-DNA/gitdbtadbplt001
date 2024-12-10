@@ -13,6 +13,8 @@ sources:
       tags: ["th_non_tesco","ingestion"]
     - name: sdl_th_mt_makro
       tags: ["tesco_mt_7_11_and_tops","ingestion"]
+    - name: sdl_th_mt_watsons_1209_UAT
+      tags: ["tesco_mt_7_11_and_tops","ingestion"]  
     - name: sdl_th_mt_bigc
       tags: ["tesco_mt_7_11_and_tops","ingestion"]
 
