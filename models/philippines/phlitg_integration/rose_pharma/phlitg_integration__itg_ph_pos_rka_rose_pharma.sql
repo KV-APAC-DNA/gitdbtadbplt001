@@ -11,33 +11,25 @@
         );"
     )
 }}    
-with source1 as
+with source as
 (
     select * from {{ source('phlsdl_raw', 'sdl_pos_rks_rose_pharma') }}
+    union all
+     select * from {{ source('phlsdl_raw', 'sdl_pos_rks_rose_pharma_consumer') }}  
        
 ),
-source2 as
+source1 as
 (
-    select * from {{ source('phlsdl_raw', 'sdl_pos_rks_rose_pharma_consumer') }}
-        
-),
-source3 as 
-(
-    select * from source1 
-    union 
-    select * from  source2
-    
-),
-source4 as 
-(
-    select * from source3
+    select * from source 
     where filename not in (
         select distinct filename from 
          {% if target.name=='prod' %}
                         phlwks_integration.TRATBL_sdl_ph_pos_rosepharma_product__lookup_test
          {% else %}
                         {{schema}}.TRATBL_sdl_ph_pos_rosepharma_product__lookup_test
-         {% endif %})
+         {% endif %}
+         )
+        
 ),
 final as
 (
