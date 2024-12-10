@@ -16,3 +16,15 @@ models:
           config:
             store_failures: true
             schema: idnwks_integration
+  - name: idnedw_integration__edw_indonesia_lppb_analysis_bkp
+    config:
+      alias: edw_indonesia_lppb_analysis_bkp
+      tags: ["id_lppb_analysis","transformation"] 
+  - name: idnedw_integration__edw_indonesia_lppb_noo_analysis
+    config:
+      alias: edw_indonesia_lppb_noo_analysis
+      tags: ["id_lppb_analysis","transformation"]
+  - name: idnedw_integration__edw_indonesia_lppb_sellin_analysis
+    config:
+      alias: edw_indonesia_lppb_sellin_analysis
+      tags: ["id_lppb_analysis","transformation"]                       
