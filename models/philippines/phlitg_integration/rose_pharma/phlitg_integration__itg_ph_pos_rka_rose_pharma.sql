@@ -58,6 +58,6 @@ final as
     crtd_dttm :: TIMESTAMP_NTZ(9) as crtd_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm
     
-from source3 
+from source4
 )
 select * from final
