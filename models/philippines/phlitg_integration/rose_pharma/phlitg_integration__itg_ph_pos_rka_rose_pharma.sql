@@ -26,6 +26,11 @@ source3 as
     select * from source1 
     union 
     select * from  source2
+    
+),
+source4 as 
+(
+    select * from source3
     where filename not in (
         select distinct filename from 
          {% if target.name=='prod' %}
@@ -33,7 +38,7 @@ source3 as
          {% else %}
                         {{schema}}.TRATBL_sdl_ph_pos_rosepharma_product__lookup_test
          {% endif %})
-),
+)
 final as
 (
   select
