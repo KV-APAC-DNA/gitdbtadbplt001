@@ -406,13 +406,6 @@ cte3 as
 FROM 
       (
        SELECT   
-	   CASE LTRIM(cust_num,'0')
-         WHEN '135463' THEN 'TD002-Tiến Thành'
-         WHEN '135462' THEN 'TD001-Dương Anh'
-         WHEN '133806' THEN 'MTI'
-         WHEN '138023' THEN 'ECOM'
-         ELSE 'MTD'
-       END AS sub_channel,
 	   LTRIM(cust_num, 0) AS sap_sold_to_code,
 	   TO_DATE(caln_day, 'YYYYMMDD') AS invoice_date,
 	   amt_obj_crncy,
@@ -434,7 +427,8 @@ FROM
        WHERE UPPER(ctry_key) = 'VN' 
 	   GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14
        ) copa
-       LEFT JOIN ecom_hist ON copa.caln_yr_mo = ecom_hist.mnth_id
+       INNER JOIN ecom_hist ON copa.caln_yr_mo = ecom_hist.mnth_id 
+             and ltrim(copa.cust_num,0) = ecom_hist.sold_to
        INNER JOIN time_dim ON copa.invoice_date = time_dim.cal_date 
        LEFT JOIN prod_dim ON prod_dim.sap_code = LTRIM(copa.matl_num, '0')    
        LEFT JOIN edw_company_dim cmp ON copa.co_cd = cmp.co_cd
@@ -443,8 +437,7 @@ FROM
           AND copa.dstr_chnl = cus_sales_extn.dstr_chnl::TEXT
           AND copa.div = cus_sales_extn.div
           AND copa.cust_num = cus_sales_extn.cust_num
-       WHERE copa.sub_channel = 'MTI'
-	   AND (si_gts_val IS NOT NULL 
+       WHERE  (si_gts_val IS NOT NULL 
   	   OR si_gts_excl_dm_val IS NOT NULL
   	   OR si_nts_val IS NOT NULL)
 ),
@@ -453,7 +446,7 @@ cte4 as
 (
     SELECT 'Sell-In Actual' AS data_type,
        'MT' AS channel,
-	   copa.sub_channel,
+	   'MTI' as sub_channel,
 	   copa.fisc_yr AS jj_year,
        time_dim.qrtr AS jj_qrtr,
        CAST(copa.caln_yr_mo AS varchar(23)) AS jj_mnth_id,
@@ -503,13 +496,6 @@ cte4 as
 FROM 
     (
     SELECT   
-	   CASE LTRIM(cust_num,'0')
-         WHEN '135463' THEN 'TD002-Tiến Thành'
-         WHEN '135462' THEN 'TD001-Dương Anh'
-         WHEN '133806' THEN 'MTI'
-         WHEN '138023' THEN 'ECOM'
-         ELSE 'MTD'
-       END AS sub_channel,
 	   LTRIM(cust_num, 0) AS sap_sold_to_code,
 	   TO_DATE(caln_day, 'YYYYMMDD') AS invoice_date,
 	   amt_obj_crncy,
@@ -531,7 +517,7 @@ FROM
        WHERE UPPER(ctry_key) = 'VN'
 	   GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14
        ) copa
-	   LEFT JOIN ecom_hist ON copa.caln_yr_mo = ecom_hist.mnth_id
+	   INNER JOIN ecom_hist ON copa.caln_yr_mo = ecom_hist.mnth_id and ltrim(cust_num,'0') = ecom_hist.sold_to
 	   INNER JOIN time_dim ON copa.invoice_date = time_dim.cal_date 
 	   LEFT JOIN prod_dim ON prod_dim.sap_code = LTRIM(copa.matl_num, '0')    
 	   LEFT JOIN edw_company_dim cmp ON copa.co_cd = cmp.co_cd
@@ -540,8 +526,7 @@ FROM
           AND copa.dstr_chnl = cus_sales_extn.dstr_chnl::TEXT
           AND copa.div = cus_sales_extn.div
           AND copa.cust_num = cus_sales_extn.cust_num
-    WHERE copa.sub_channel = 'MTI'
-	AND (si_gts_val IS NOT NULL 
+    WHERE (si_gts_val IS NOT NULL 
   	   OR si_gts_excl_dm_val IS NOT NULL
   	   OR si_nts_val IS NOT NULL)
 ),
