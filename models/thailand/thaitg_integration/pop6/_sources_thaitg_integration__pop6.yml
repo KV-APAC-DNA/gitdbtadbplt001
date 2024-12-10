@@ -152,6 +152,8 @@ sources:
                 store_failures: true
                 schema: thawks_integration
       
+      - name: sdl_pop6_th_rir_data_test
+
       - name: sdl_pop6_th_rir_data
         tags: ["pop6_master_load","ingestion"]
         tests:
