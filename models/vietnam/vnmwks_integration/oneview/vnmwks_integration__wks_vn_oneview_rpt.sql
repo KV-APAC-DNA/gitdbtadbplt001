@@ -125,13 +125,13 @@ time_dim as
 
 ecom_hist as 
 (
-    select timedim.mnth_id, 
+    select timedim.mnth_id, sold_to,
            (sum(case when ship_to = '624097' then grs_trd_sls else 0 end)/sum(grs_trd_sls)) as ecom_hist_pct
     from edw_vw_vn_billing_fact 
     left join edw_vw_os_time_dim timedim ON bill_dt = timedim.cal_date
     where cntry_key = 'VN' AND sold_to = '133806'
       AND bill_type in ('ZF2V', 'S1') AND bill_qty_pc <> 0 
-    group by 1 
+    group by 1 , 2
     having sum(case when ship_to = '624097' then grs_trd_sls else 0 end)>0
 ),
  
@@ -229,25 +229,21 @@ from
 
 cte1_filtered as
 (
+--- Removing ecom and MTI data from cte1 for the historical months where the calculation will be done differently till 202209
 select * from cte1
---where upper(sub_channel) not in ( 'MTI' , 'ECOM') 
---and jj_mnth_id not in (select distinct CAST(caln_yr_mo AS varchar(23)) as jj_mnth_id from edw_copa_trans_fact where jj_mnth_id  between '202105' and '202209')
+where sap_sold_to_code not in (select distinct sold_to from ecom_hist)
+union all 
+select * from cte1
+where sap_sold_to_code in (select distinct sold_to from ecom_hist) and 
+jj_mnth_id in (select distinct CAST(caln_yr_mo AS varchar(23)) as jj_mnth_id from edw_copa_trans_fact where jj_mnth_id not between '202105' and '202209')
 ),
 
 cte2 as 
 (   
 ---------------------------------------------------------------OTC Sellin Actual--------------------------------------
 SELECT 'Sell-In Actual' AS data_type,
-      CASE
-        WHEN LTRIM(copa.cust_num,'0') = qry_param.parameter_name
-        THEN SUBSTRING(qry_param.country_code, 9)
-      	ELSE 'MT'
-      END AS channel,
-      CASE
-        WHEN LTRIM(copa.cust_num,'0') = qry_param.parameter_name
-        THEN qry_param.parameter_value
-      	ELSE 'MTD'
-      END AS sub_channel,
+       cust_segm.channel_code AS channel,
+       cust_segm.sub_channel as sub_channel,
       copa.fisc_yr AS jj_year,
       time_dim.qrtr AS jj_qrtr,
       CAST(copa.caln_yr_mo AS varchar(23)) AS jj_mnth_id,
@@ -292,7 +288,7 @@ SELECT 'Sell-In Actual' AS data_type,
       prod_dim.variant,
       prod_dim.product_group,
       prod_dim.group_jb,
-      qry_param.parameter_value,
+      null as parameter_value,
       copa.caln_yr_mo
 FROM 
 (
@@ -319,6 +315,7 @@ SELECT
 	   GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13
 ) copa
   INNER JOIN time_dim ON copa.invoice_date = time_dim.cal_date 
+  INNER JOIN cust_segm on ltrim(copa.cust_num,0) = cust_segm.cust_num and cust_segm.channel_code = 'OTC'
   LEFT JOIN (SELECT derived_table1."year" || derived_table1.mnth AS mnth_id,
                  derived_table1.ex_rt, derived_table1.from_ratio,derived_table1.to_ratio
             FROM (SELECT edw_crncy_exch_rates.fisc_yr_per,
@@ -333,8 +330,6 @@ SELECT
                    ) exch_rate
                     ON time_dim.mnth_id::NUMERIC::NUMERIC (18,0) = exch_rate.mnth_id::NUMERIC::NUMERIC (18,0)
   LEFT JOIN prod_dim ON prod_dim.sap_code = LTRIM(copa.matl_num, '0')    
-  FULL JOIN itg_query_parameters qry_param ON LTRIM(copa.cust_num,'0') = qry_param.parameter_name 
-  AND LEFT(qry_param.country_code,7) = 'VN_COPA' 
   LEFT JOIN edw_company_dim cmp ON copa.co_cd = cmp.co_cd
   LEFT JOIN v_edw_customer_sales_dim cus_sales_extn
          ON copa.sls_org = cus_sales_extn.sls_org
@@ -351,10 +346,10 @@ SELECT
 cte2_filtered as
 (
 select * from cte2
-where parameter_value = 'MTI' and jj_mnth_id in (select distinct CAST(caln_yr_mo AS varchar(23)) as jj_mnth_id from edw_copa_trans_fact where jj_mnth_id not between '202105' and '202209')
+/*where parameter_value = 'MTI' and jj_mnth_id in (select distinct CAST(caln_yr_mo AS varchar(23)) as jj_mnth_id from edw_copa_trans_fact where jj_mnth_id not between '202105' and '202209')
 union all 
 select * from cte2
-where (parameter_value != 'MTI' or parameter_value is null) and jj_mnth_id = CAST(caln_yr_mo AS varchar(23))
+where (parameter_value != 'MTI' or parameter_value is null) and jj_mnth_id = CAST(caln_yr_mo AS varchar(23))*/
 ),
 
 cte3 as
