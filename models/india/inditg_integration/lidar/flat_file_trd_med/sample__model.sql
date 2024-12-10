@@ -7,6 +7,6 @@
 
 select * 
 from {{ source(
-      "indsdl_raw",
-      "sdl_lidar_ff_tv_grp_spends"
+      'indsdl_raw',
+      'sdl_lidar_ff_tv_grp_spends'
     ) }}
