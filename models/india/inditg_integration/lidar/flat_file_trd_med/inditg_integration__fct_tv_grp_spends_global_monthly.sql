@@ -93,6 +93,6 @@ from {{ source(
       "indsdl_raw",
       "sdl_lidar_ff_tv_grp_spends"
     ) }}
--- {% if is_incremental() %}
---     where TO_DATE("Date", 'DD/MM/YYYY') > (select MAX(Date) from {{ this }})
--- {% endif %}
+{% if is_incremental() %}
+    where TO_DATE("Date", 'DD/MM/YYYY') > (select MAX(Date) from {{ this }})
+{% endif %}

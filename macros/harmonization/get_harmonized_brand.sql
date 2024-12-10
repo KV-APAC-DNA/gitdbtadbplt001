@@ -19,10 +19,10 @@
 {{ log("table to update unharmonized:" ~ source_table.TABLENAME) }}
 {# update condition for data when run GHM #}
 {% set UPDT_NULL_QRY_1 %}
-            UPDATE {% if target.target_name == 'DEV' %}
-			{{ target.database }}.{{ target.schema }}.{{ 'INDITG_INTEGRATION__' ~ source_table.TABLENAME }} 
+            UPDATE {% if target.target_name == 'PROD' %}
+			{{ target.database }}.INDITG_INTEGRATION.{{ source_table.TABLENAME }}
 			{% else %}
-{{ target.database }}.INDITG_INTEGRATION.{{ source_table.TABLENAME }} 
+            {{ target.database }}.{{ target.schema }}.{{ 'INDITG_INTEGRATION__' ~ source_table.TABLENAME }} 
 {% endif %}
             SET GCPH_BRAND = NULL, BRAND_HARMONIZED_BY = NULL
             WHERE lower(GCPH_BRAND) = 'unharmonized'
@@ -31,10 +31,10 @@
 
 {#update null if flage is Y#}
 {% set UPDT_NULL_QRY %}
-            UPDATE {% if target.target_name == 'DEV' %}
-			{{ target.database }}.{{ target.schema }}.{{ 'INDITG_INTEGRATION__' ~ source_table.TABLENAME }} 
+            UPDATE {% if target.target_name == 'PROD' %}
+			{{ target.database }}.INDITG_INTEGRATION.{{ source_table.TABLENAME }}
 			{% else %}
-{{ target.database }}.INDITG_INTEGRATION.{{ source_table.TABLENAME }} 
+            {{ target.database }}.{{ target.schema }}.{{ 'INDITG_INTEGRATION__' ~ source_table.TABLENAME }} 
 {% endif %} A
             SET GCPH_BRAND = NULL, BRAND_HARMONIZED_BY = NULL
             WHERE GCPH_BRAND IS NOT NULL
@@ -84,10 +84,10 @@
 {# update GHM columns null if filter is not blank GHM #}
 
 {% set UPDT_NULL_QRY %}
-            UPDATE {% if target.target_name == 'DEV' %}
-			{{ target.database }}.{{ target.schema }}.{{ 'INDITG_INTEGRATION__' ~ rule.TABLENAME }}
+            UPDATE {% if target.target_name == 'PROD' %}
+			{{ target.database }}.INDITG_INTEGRATION.{{ rule.TABLENAME }}
 			{% else %}
-{{ target.database }}.INDITG_INTEGRATION.{{ rule.TABLENAME }} 
+            {{ target.database }}.{{ target.schema }}.{{ 'INDITG_INTEGRATION__' ~ rule.TABLENAME }} 
 {% endif %} A
             SET GCPH_BRAND = NULL, BRAND_HARMONIZED_BY = NULL
             WHERE GCPH_BRAND IS NOT NULL
@@ -115,19 +115,19 @@
 
 {# Construct the update query #}
 {% set update_query %}
-            UPDATE {% if target.target_name == 'DEV' %}
-			{{ target.database }}.{{ target.schema }}.{{ 'INDITG_INTEGRATION__' ~ rule.TABLENAME }}
+            UPDATE {% if target.target_name == 'PROD' %}
+			{{ target.database }}.INDITG_INTEGRATION.{{ rule.TABLENAME }}
 			{% else %}
-{{ target.database }}.INDITG_INTEGRATION.{{ rule.TABLENAME }} 
+            {{ target.database }}.{{ target.schema }}.{{ 'INDITG_INTEGRATION__' ~ rule.TABLENAME }} 
 {% endif %} A SET
                 {% if rule.PATTERN_ID == 'P14' %} {#<underscore>{Name}#}
 {{ log("Generated SQL:P14") }}
                 GCPH_BRAND = B.GCPH_BRAND_NAME,
                 BRAND_HARMONIZED_BY  = '{{ rule.PATTERN_ID }} : {{ rule.COLUMN_NAME }}'
-                FROM {% if target.target_name == 'DEV' %}
-					{{ target.database }}.{{ target.schema }}.inditg_integration__vw_harmonization_brand_pattern_mapping
+                FROM {% if target.target_name == 'PROD' %}
+                   {{ target.database }}.inditg_integration.vw_harmonization_brand_pattern_mapping 
 					{% else %}
-					{{ target.database }}.inditg_integration.vw_harmonization_brand_pattern_mapping 
+					{{ target.database }}.{{ target.schema }}.inditg_integration__vw_harmonization_brand_pattern_mapping
 					{% endif %} B
                 WHERE A.{{ rule.COLUMN_NAME }} LIKE  '%_' || B.{{ rule.PATTERN_ID }} || '%'  ESCAPE '_'
 
@@ -135,10 +135,10 @@
 {{ log("Generated SQL:P65") }}
                 GCPH_BRAND = B.GCPH_BRAND_NAME,
                 BRAND_HARMONIZED_BY  = '{{ rule.PATTERN_ID }} : {{ rule.COLUMN_NAME }}'
-                FROM {% if target.target_name == 'DEV' %}
-					{{ target.database }}.{{ target.schema }}.inditg_integration__vw_harmonization_brand_pattern_mapping
+                FROM {% if target.target_name == 'PROD' %}
+                   {{ target.database }}.inditg_integration.vw_harmonization_brand_pattern_mapping 
 					{% else %}
-					{{ target.database }}.inditg_integration.vw_harmonization_brand_pattern_mapping 
+					{{ target.database }}.{{ target.schema }}.inditg_integration__vw_harmonization_brand_pattern_mapping
 					{% endif %} B
                 WHERE A.{{ rule.COLUMN_NAME }} LIKE  '%_' || B.{{ rule.PATTERN_ID }} || '_%'  ESCAPE '_'
 
@@ -146,10 +146,10 @@
 {{ log("Generated SQL:P73") }}
                 GCPH_BRAND = B.GCPH_BRAND_NAME,
                 BRAND_HARMONIZED_BY  = '{{ rule.PATTERN_ID }} : {{ rule.COLUMN_NAME }}'
-                FROM {% if target.target_name == 'DEV' %}
-					{{ target.database }}.{{ target.schema }}.inditg_integration__vw_harmonization_brand_pattern_mapping
+                FROM {% if target.target_name == 'PROD' %}
+                   {{ target.database }}.inditg_integration.vw_harmonization_brand_pattern_mapping 
 					{% else %}
-					{{ target.database }}.inditg_integration.vw_harmonization_brand_pattern_mapping 
+					{{ target.database }}.{{ target.schema }}.inditg_integration__vw_harmonization_brand_pattern_mapping
 					{% endif %} B
                 WHERE A.{{ rule.COLUMN_NAME }} LIKE  '%_' || B.{{ rule.PATTERN_ID }} || '_%' ESCAPE '_'
 
@@ -167,10 +167,10 @@
 {{ log("Generated SQL:else-Non") }}
                     GCPH_BRAND = B.GCPH_BRAND_NAME,
                     BRAND_HARMONIZED_BY = '{{ rule.PATTERN_ID }} : {{ rule.COLUMN_NAME }}'
-                    FROM {% if target.target_name == 'DEV' %}
-					{{ target.database }}.{{ target.schema }}.inditg_integration__vw_harmonization_brand_pattern_mapping
+                    FROM {% if target.target_name == 'PROD' %}
+                   {{ target.database }}.inditg_integration.vw_harmonization_brand_pattern_mapping 
 					{% else %}
-					{{ target.database }}.inditg_integration.vw_harmonization_brand_pattern_mapping 
+					{{ target.database }}.{{ target.schema }}.inditg_integration__vw_harmonization_brand_pattern_mapping
 					{% endif %} B
                     WHERE A.{{ rule.COLUMN_NAME }} LIKE '%' || B.{{ rule.PATTERN_ID }} || '%'
                 {% endif %}
@@ -208,10 +208,10 @@
 {{ log("table to update unharmonized:" ~ source_table_null.TABLENAME) }}
 {#update null records to unharmonized#}
 {% set UPDT_NULL_QRY_2 %}
-		UPDATE {% if target.target_name == 'DEV' %}
-			{{ target.database }}.{{ target.schema }}.{{ 'INDITG_INTEGRATION__' ~ source_table_null.TABLENAME }}
+		UPDATE {% if target.target_name == 'PROD' %}
+			{{ target.database }}.INDITG_INTEGRATION.{{ source_table_null.TABLENAME }}
 			{% else %}
-{{ target.database }}.INDITG_INTEGRATION.{{ rule.TABLENAME }} 
+            {{ target.database }}.{{ target.schema }}.{{ 'INDITG_INTEGRATION__' ~ source_table_null.TABLENAME }} 
 {% endif %} A
                SET GCPH_BRAND = 'Unharmonized',
                BRAND_HARMONIZED_BY = 'Unharmonized'
