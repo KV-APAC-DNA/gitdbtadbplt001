@@ -230,8 +230,8 @@ from
 cte1_filtered as
 (
 select * from cte1
-where upper(sub_channel) not in ( 'MTI' , 'ECOM') 
-and jj_mnth_id not in (select distinct CAST(caln_yr_mo AS varchar(23)) as jj_mnth_id from edw_copa_trans_fact where jj_mnth_id  between '202105' and '202209')
+--where upper(sub_channel) not in ( 'MTI' , 'ECOM') 
+--and jj_mnth_id not in (select distinct CAST(caln_yr_mo AS varchar(23)) as jj_mnth_id from edw_copa_trans_fact where jj_mnth_id  between '202105' and '202209')
 ),
 
 cte2 as 
