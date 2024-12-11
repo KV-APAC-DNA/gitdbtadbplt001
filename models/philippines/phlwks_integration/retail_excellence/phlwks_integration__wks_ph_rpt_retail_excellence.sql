@@ -345,7 +345,8 @@ ph_rpt_retail_excellence_non_mdp as
                             JOIN (SELECT DISTINCT SOLDTO_CODE,
                                         data_source AS data_src,
                                         MASTER_CODE as msl_product_code,
-                                        DISTRIBUTOR_CODE as so_dist_cd
+                                        DISTRIBUTOR_CODE as so_dist_cd,
+                                        store_code as str_cd
                                     FROM WKS_PHILIPPINES_BASE_RETAIL_EXCELLENCE
                                     WHERE DATA_SOURCE = 'SELL-OUT') REG_SO
                             ON LTRIM(A.CUSTOMER_L0,'0') = LTRIM(REG_SO.SOLDTO_CODE,'0')		
@@ -364,7 +365,8 @@ ph_rpt_retail_excellence_non_mdp as
                                         latitude::VARCHAR AS store_lat,
                                         longitude::VARCHAR AS store_long,
                                         ROW_NUMBER() OVER (PARTITION BY ltrim(dstrbtr_cust_id,'0') ORDER BY crtd_dttm DESC) AS rno
-                                    FROM ITG_MDS_PH_GT_CUSTOMER WHERE UPPER(active) = 'Y') c ON ltrim(a.distributor_code,'0') = ltrim(c.Sell_Out_Parent_Customer_L1,'0')		
+                                    FROM ITG_MDS_PH_GT_CUSTOMER WHERE UPPER(active) = 'Y') c ON ltrim(a.distributor_code,'0') = ltrim(c.Sell_Out_Parent_Customer_L1,'0')
+                                    AND ltrim(REG_SO.str_cd,'0') = ltrim(c.store_code,'0')		
                             JOIN (SELECT DISTINCT rpt_grp_1_desc AS trade_type,
                                         rpt_grp_12_desc AS sales_group,
                                         parent_cust_cd

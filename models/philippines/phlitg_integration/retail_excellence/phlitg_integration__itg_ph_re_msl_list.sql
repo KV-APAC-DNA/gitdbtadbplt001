@@ -143,6 +143,7 @@ FROM MSL
 JOIN (select * from LAV	
 	 JOIN (select * from REG_SO WHERE data_src = 'SELL-OUT') REG_SO_GT ON LTRIM(LAV.CUSTOMER_L0,'0') = LTRIM(REG_SO_GT.SOLDTO_CODE,'0') AND LTRIM(LAV.DISTRIBUTOR_CODE,'0') = LTRIM(REG_SO_GT.DIST_CD,'0')
 	 JOIN (select * from GT_CUST) GT_CUST ON ltrim(LAV.distributor_code,'0') = ltrim(GT_CUST.Sell_Out_Parent_Customer_L1,'0')
+     AND ltrim(REG_SO_GT.str_cd,'0') = ltrim(GT_CUST.store_code,'0')
 	 JOIN (select * from PRNT_CUST where trade_type = 'GENERAL TRADE') PRNT_CUST_GT ON upper(ltrim(LAV.parent_customer,'0')) = upper(ltrim(PRNT_CUST_GT.parent_cust_cd,'0'))) cust
      ON  LOWER (MSL.SUB_CHANNEL) = LOWER (CUST.SELL_OUT_CHANNEL)
 	 AND LTRIM(MSL.SKU_UNIQUE_IDENTIFIER,'0') = LTRIM(CUST.MSL_PRODUCT_CODE,'0')
