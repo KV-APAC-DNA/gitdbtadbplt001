@@ -1,0 +1,51 @@
+{{ config(
+  materialized='incremental',
+  incremental_strategy='append',
+  transient=false,
+) }}
+
+select
+    client::varchar(16777216) as client,
+    gcph_brand::varchar(16777216) as gcph_brand,
+    'India'::varchar(16777216) as gcgh_country,
+    campaign::varchar(16777216) as campaign,
+    objective::varchar(16777216) as objective,
+    year::number(38, 0) as year,
+    quarter::varchar(16777216) as quarter,
+    month::varchar(16777216) as month,
+    start_date::varchar(16777216) as start_date,
+    end_date::varchar(16777216) as end_date,
+    publisher::varchar(16777216) as publisher,
+    domain_site::varchar(16777216) as domain_site,
+    category_publisher_type::varchar(16777216) as category_publisher_type,
+    section::varchar(16777216) as section,
+    targeting::varchar(16777216) as targeting,
+    geography::varchar(16777216) as geography,
+    demo::varchar(16777216) as demo,
+    ad_unit::varchar(16777216) as ad_unit,
+    normalized_ad_unit::varchar(16777216) as normalized_ad_unit,
+    ad_unit_type::varchar(16777216) as ad_unit_type,
+    creative_size::varchar(16777216) as creative_size,
+    no_of_days::number(38, 0) as no_of_days,
+    programmatic::varchar(16777216) as programmatic,
+    dsp::varchar(16777216) as dsp,
+    media_property_type::varchar(16777216) as media_property_type,
+    medium::varchar(16777216) as medium,
+    deal_type::varchar(16777216) as deal_type,
+    reach::number(38, 5) as reach,
+    delivered_impressions::number(38, 5) as delivered_impressions,
+    delivered_total_views_video::number(38, 5) as delivered_total_views_video,
+    video_first_quartile_views::number(38, 5) as video_first_quartile_views,
+    video_second_quartile_views::number(38, 5) as video_second_quartile_views,
+    video_third_quartile_views::number(38, 5) as video_third_quartile_views,
+    video_total_views::number(38, 5) as video_total_views,
+    delivered_clicks::number(38, 5) as delivered_clicks,
+    delivered_link_clicks::number(38, 5) as delivered_link_clicks,
+    delivered_engagements::number(38, 5) as delivered_engagements,
+    delivered_net_rate::number(38, 5) as delivered_net_rate,
+    net_cost::number(38, 5) as net_cost,
+    load_date as load_ts
+from {{ source('indsdl_raw','sdl_lidar_ff_other_paid_media') }}
+{% if is_incremental() %}
+    where load_date > (select max(load_ts) from {{ this }})
+{% endif %}
