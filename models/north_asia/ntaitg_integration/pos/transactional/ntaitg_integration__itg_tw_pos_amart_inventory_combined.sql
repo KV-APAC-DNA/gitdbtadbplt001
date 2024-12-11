@@ -111,7 +111,7 @@ inventory AS (
            item_code,
            item_desc,
            customer_code,
-           SUM(inventory_qty) as inventory_qty
+           SUM(TOTAL_QTY) as inventory_qty
     FROM SDL_TW_POS_AMART_INVENTORY
     GROUP BY 1,2,3,4
 ),
