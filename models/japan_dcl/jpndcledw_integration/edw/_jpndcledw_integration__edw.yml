@@ -1138,3 +1138,36 @@ models:
     config:
       alias: tt01saleh_hen_mv_tbl
       tags: ["m_dcl_edw_job1", "transformation"]
+
+  - name: jpndcledw_integration__dm_d2c_mon_key_cohort_met
+    config:
+      alias: dm_d2c_mon_key_cohort_met
+      tags: ["m_dcl_edw_job3", "transformation"]  
+    columns:
+      - name: MONTH_ID
+        tests:
+          - not_null  
+      - name: KOKYANO
+        tests:
+          - not_null  
+  - name: jpndcledw_integration__dm_d2c_mon_purchase_fnl
+    config:
+      alias: dm_d2c_mon_purchase_fnl
+      tags: ["m_dcl_edw_job3", "transformation"]  
+    columns:
+      - name: MONTH_ID
+        tests:
+          - not_null  
+  - name: jpndcledw_integration__dm_d2c_cohort_perf_review
+    config:
+      alias: dm_d2c_cohort_perf_review
+      tags: ["m_dcl_edw_job3", "transformation"]  
+    columns:
+      - name: MONTH_ID
+        tests:
+          - not_null 
+          
+  - name: jpndcledw_integration__edw_mds_jp_dcl_sales_target
+    config:
+      alias: dcl_sales_target
+      tags: ["m_dcl_edw_job2", "transformation"]      
