@@ -27,6 +27,7 @@ LEFT JOIN (select dt, kokyano, status from customer_status where base = 'order')
 ON K.kokyano::varchar = U.kokyano::varchar AND  K.order_dt = to_date(U.dt) 
 where K.order_dt >= to_char(extract(year from dateadd(year, -3, current_date)))  || '-01-01'
 and K.channel in ('Web','通販', '直営・百貨店' )
+and K.gts > 0
 group by month_id, k.kokyano, u.status 
 ),
 final AS ( 
