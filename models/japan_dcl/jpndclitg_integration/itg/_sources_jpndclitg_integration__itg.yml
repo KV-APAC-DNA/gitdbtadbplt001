@@ -35,7 +35,8 @@ sources:
       - name: c_tbecpripromotion
       - name: c_tbecprimembtype
       - name: sdl_mds_jp_dcl_partner_master
-      - name: sdl_mds_jp_dcl_product_master         
+      - name: sdl_mds_jp_dcl_product_master    
+      - name: sdl_mds_jp_dcl_targets
       - name: sdl_mds_jp_dcl_mt_h_product   
       - name: c_tbecinquiremeisai
       - name: c_tbeckesai
