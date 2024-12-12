@@ -251,6 +251,21 @@ models:
       alias: wk_d23484_nohindata_final
       tags: ["japan_dcl_views","transformation"]
 
+  - name: jpndcledw_access__dm_d2c_mon_key_cohort_met
+    config:
+      alias: '"dm_d2c_mon_key_cohort_met"'
+      tags: ["japan_dcl_views","transformation"]    
+
+  - name: jpndcledw_access__dm_d2c_mon_purchase_fnl
+    config:
+      alias: '"dm_d2c_mon_purchase_fnl"'
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__dm_d2c_cohort_perf_review
+    config:
+      alias: '"dm_d2c_cohort_perf_review"'
+      tags: ["japan_dcl_views","transformation"]
+
   - name: jpndcledw_access__cewq028
     config:
       alias: '"cewq028破損商品"'
