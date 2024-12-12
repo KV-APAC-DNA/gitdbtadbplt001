@@ -26,7 +26,7 @@ SELECT
 FROM d2c_data K
 LEFT JOIN date_mapping Y ON K."order_dt" = Y."ymd_dt"
 WHERE 
-    K."order_dt"  >= '2024-01-01'
+    K."order_dt" >= to_char(extract(year FROM dateadd(year, -3, current_date)))  || '-01-01' 
     AND K."channel" IN ('Web', '通販', '直営・百貨店')
 GROUP BY month_id, channel
 ), 
