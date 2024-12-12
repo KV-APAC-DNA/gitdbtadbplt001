@@ -1138,3 +1138,21 @@ models:
     config:
       alias: tt01saleh_hen_mv_tbl
       tags: ["m_dcl_edw_job1", "transformation"]
+
+  - name: jpndcledw_integration__dm_dcl_sales_mon_w_target
+    config:
+      alias: '"dcl_sales_mon_w_target"'
+      # tags: ["m_dcl_edw_job3","transformation"]
+    columns:
+      - name: GTS_YOY
+        tests:
+          - not_null
+
+  - name: jpndcledw_integration__dm_dcl_mon_net_sales_comp
+    config:
+      alias: '"dcl_mon_net_sales_comp"'
+      # tags: ["japan_dm_dcl_edw_job3","transformation"]
+    columns:
+      - name: "updated_by"
+        tests:
+          - not_null
