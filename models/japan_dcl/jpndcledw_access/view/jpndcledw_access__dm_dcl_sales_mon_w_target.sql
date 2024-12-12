@@ -4,8 +4,13 @@
     )
 }}
 with d2c_data AS (
-    SELECT *
-    FROM {{ ref('jpndcledw_integration__dm_dcl_sales_mon_w_target') }}  -- Reference to the previous model
+    SELECT *,
+        CASE
+            WHEN channel = '通販' THEN 'E-Commerce'
+            WHEN channel = '直営・百貨店' THEN 'Direct Store & Department Store'
+            ELSE channel  -- Keep original value if no match
+        END AS channel_english
+    FROM {{ ref('jpndcledw_integration__dm_dcl_sales_mon_w_target') }}
 ),
 FINAL as (
 SELECT 
@@ -16,7 +21,7 @@ SELECT
     nts_base AS "nts_base",
     nts_mom AS "nts_mom",
     nts_yoy AS "nts_yoy",
-    "channel" AS "channel",
+    channel_english AS "channel",
     gts_target AS "gts_target",
     nts_target AS "nts_target",
     inserted_date AS "inserted_date" ,
@@ -26,10 +31,9 @@ SELECT
 FROM d2c_data
 )
 
-SELECT *,
+SELECT * ,
 current_timestamp()::timestamp_ntz(9) as inserted_date,
 null::varchar(100) as inserted_by ,
 current_timestamp()::timestamp_ntz(9) as updated_date,
 null::varchar(100) as updated_by
 FROM FINAL
-
