@@ -269,4 +269,10 @@ models:
   - name: jpndcledw_access__dm_dcl_sales_mon_w_target
     config:
       alias: '"dm_dcl_sales_mon_w_target"'
-      tags: ["japan_dcl_views","inactive"]      
+      tags: ["japan_dcl_views","inactive"]   
+
+
+  - name: jpndcledw_access__dm_dcl_mon_net_sales_comp
+    config:
+      alias: '"dm_dcl_mon_net_sales_comp"'
+      tags: ["japan_dcl_views","inactive"] 

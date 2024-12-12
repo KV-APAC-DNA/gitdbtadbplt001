@@ -1147,3 +1147,12 @@ models:
       - name: MONTH_ID
         tests:
           - not_null
+
+  - name: jpndcledw_integration__dm_dcl_mon_net_sales_comp
+    config:
+      alias: '"dcl_mon_net_sales_comp"'
+      # tags: ["japan_dm_dcl_edw_job3","transformation"]
+    columns:
+      - name: NTS_BASE
+        tests:
+          - not_null
