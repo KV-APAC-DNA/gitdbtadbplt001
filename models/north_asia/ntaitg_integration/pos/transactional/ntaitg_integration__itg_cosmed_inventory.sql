@@ -2,7 +2,9 @@ WITH sdl_tw_pos_cosmed_store_inventory AS
 (SELECT * FROM {{ ref('ntawks_integration__wks_itg_pos_cosmed_store_inventory') }}),
 
 sdl_tw_pos_cosmed_dc_inventory AS 
-(SELECT * FROM {{ ref('ntawks_integration__wks_itg_pos_cosmed_dc_inventory') }}),
+(SELECT * FROM {{ ref('ntawks_integration__wks_itg_pos_cosmed_dc_inventory') }}
+QUALIFY ROW_NUMBER() OVER (PARTITION BY TO_VARCHAR(TO_DATE(inventory_date, 'YYYY/MM/DD'), 'YYYYMM'), PRODUCT_CODE ORDER BY BARCODE) = 1
+),
 
 final as (
 SELECT 
