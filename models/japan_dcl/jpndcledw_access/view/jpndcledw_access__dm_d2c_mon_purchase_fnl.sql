@@ -5,7 +5,6 @@ with purchase_fnl AS (
 final AS (
 SELECT month_id as "month_id", 
 birthday_yearmonth as "birthday_yearmonth", 
-total_customer as "total_customer",
 f1 as "f1", 
 f2 as "f2", 
 f3 as "f3",
