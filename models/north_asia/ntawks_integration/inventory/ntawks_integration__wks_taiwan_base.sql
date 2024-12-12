@@ -521,29 +521,30 @@ t6cosmed as (
     txn.BARCODE,
     txn.mnth_id AS cal_month,
     SUM(txn.TOTAL_INVENTORY_QTY) as inv_qty,
-    SUM(txn.TOTAL_INVENTORY_QTY * COALESCE(price.prom_prc, 0)) as inv_value,
+     SUM(txn.TOTAL_INVENTORY_QTY * COALESCE(price.prom_prc, 0)
+     ) as inv_value,
     0 AS so_qty,
     0 AS sls_value,
     0 AS sI_qty,
     0 AS sI_value
 FROM itg_cosmed_inventory txn
+
 LEFT JOIN (
     SELECT DISTINCT
         CASE
             WHEN cust = 'Cosmed' THEN 'Cosmed 康是美'
-            WHEN cust = 'Poya' THEN 'Poya 寶雅'
-            WHEN cust = 'RT-Mart' THEN 'RT-Mart 大潤發'
-            WHEN cust = 'A-Mart' THEN 'A-Mart 愛買'
         END AS cust,
         barcd,
         cust_prod_cd,
         prom_prc,
         prom_strt_dt,
         prom_end_dt
-    FROM itg_pos_prom_prc_map
+    FROM itg_pos_prom_prc_map WHERE CUST = 'Cosmed'
 ) price ON txn.mnth_id BETWEEN TO_CHAR(price.prom_strt_dt, 'YYYYMM') AND TO_CHAR(price.prom_end_dt, 'YYYYMM')
-    AND rtrim(txn.BARCODE) = rtrim(price.barcd)
+    AND rtrim(txn.PRODUCT_CODE) = rtrim(price.cust_prod_cd)
+    AND rtrim(txn.barcode) = rtrim(price.barcd)
     AND txn.src_sys_cd = price.cust
+    
 LEFT JOIN (
     SELECT DISTINCT 
         parameter_name as src_sys_cd,
