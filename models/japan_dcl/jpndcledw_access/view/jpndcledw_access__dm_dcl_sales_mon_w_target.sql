@@ -26,5 +26,10 @@ SELECT
 FROM d2c_data
 )
 
-SELECT * FROM FINAL
+SELECT *,
+current_timestamp()::timestamp_ntz(9) as inserted_date,
+null::varchar(100) as inserted_by ,
+current_timestamp()::timestamp_ntz(9) as updated_date,
+null::varchar(100) as updated_by
+FROM FINAL
 
