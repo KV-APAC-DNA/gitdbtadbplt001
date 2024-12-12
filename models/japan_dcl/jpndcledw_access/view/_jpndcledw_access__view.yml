@@ -265,3 +265,8 @@ models:
     config:
       alias: '"wqwt74戦略商品別売上ｐ"'
       tags: ["japan_dcl_views","inactive"]
+
+  - name: jpndcledw_access__dm_dcl_sales_mon_w_target
+    config:
+      alias: '"dm_dcl_sales_mon_w_target"'
+      tags: ["japan_dcl_views","inactive"]      
