@@ -134,6 +134,8 @@ sources:
       identifier: false
     tables: 
       - name: apc_a902
+      - name: apc_a915
+      - name: apc_a930      
       - name: apc_mvke
       - name: apc_konp
       - name: apc_knvv
