@@ -144,7 +144,9 @@ final as
         udc_hsacounterq42023::varchar(150) as udc_hsacounterq42023,
         udc_hsacounterq12024::varchar(150) as udc_hsacounterq12024,
         udc_q124bssprogram::varchar(150) as udc_q124bssprogram,
-        udc_specialtyprofessional2024::varchar(150) as udc_specialtyprofessional2024
+        udc_specialtyprofessional2024::varchar(150) as udc_specialtyprofessional2024,
+        udc_hsacounterq22024::varchar(150) as udc_hsacounterq22024,
+		udc_dispensingdrs2024::varchar(150) as udc_dispensingdrs2024
     from source
 )
 select * from final
