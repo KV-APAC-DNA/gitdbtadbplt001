@@ -32,6 +32,9 @@ itg_kr_gt_sellout as (
 wks_edw_ims_sls as (
     select * from {{ ref('ntawks_integration__wks_edw_ims_sls') }}
 ),
+itg_tw_ims_dstr_customer_mapping as (
+    select * from {{ ref('ntaitg_integration__itg_tw_ims_dstr_customer_mapping') }}
+),
 itg_kr_ecommerce_sellout as (
     select * from {{ ref('ntaitg_integration__itg_kr_ecommerce_sellout') }}
 )
@@ -42,9 +45,9 @@ taiwan as
     SELECT 
         ims_txn_dt::date as ims_txn_dt,
         dstr_cd::varchar(10) as dstr_cd,
-        dstr_nm::varchar(100) as dstr_nm,
+        mds.distributor_name::varchar(255) as dstr_nm,
         cust_cd::varchar(50) as cust_cd,
-        cust_nm::varchar(100) as cust_nm,
+        mds.distributors_customer_name::varchar(255) as cust_nm,
         prod_cd::varchar(255) as prod_cd,
         prod_nm::varchar(255) as prod_nm,
         rpt_per_strt_dt::date as rpt_per_strt_dt,
@@ -92,7 +95,8 @@ taiwan as
         null::varchar(10) as sales_priority,
         null::number(21,5) as sales_stores,
         null::number(21,5) as sales_rate
-    FROM wks_edw_ims_sls_std
+    FROM wks_edw_ims_sls_std tw left join itg_tw_ims_dstr_customer_mapping sdl_mds_tw_ims_dstr_customer_mapping
+    on tw.dstr_cd=mds.distributor_code and tw.cust_cd=mds.distributors_customer_code 
 )
 select * from taiwan
 {% elif var('ims_job_to_execute') == 'kr_gt_sellout' %}
