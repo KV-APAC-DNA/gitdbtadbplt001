@@ -18,3 +18,11 @@ models:
     config:
       alias: itg_hcp360_in_iqvia_speciality
       # tags: ["in_iqvia_load","ingestion"]
+  - name: hcpitg_integration__itg_mds_in_hcp_selfcare
+    config:
+      alias: itg_mds_in_hcp_selfcare
+      tags: ["in_hcp360_mds_data_refresh","ingestion"]
+  - name: hcpitg_integration__itg_mds_in_hcp_specialtycare
+    config:
+      alias: itg_mds_in_hcp_specialtycare
+      tags: ["in_hcp360_mds_data_refresh","ingestion"]

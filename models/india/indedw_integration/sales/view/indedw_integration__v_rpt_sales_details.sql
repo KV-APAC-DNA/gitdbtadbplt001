@@ -201,7 +201,13 @@ final as
     v_rpt_sales_details_with_history.nielsen_popstrata,
     v_rpt_sales_details_with_history.latest_salesman_code,
     v_rpt_sales_details_with_history.latest_salesman_name,
-    v_rpt_sales_details_with_history.latest_uniquesalescode
+    v_rpt_sales_details_with_history.latest_uniquesalescode,
+    v_rpt_sales_details_with_history.prof_type,
+    v_rpt_sales_details_with_history.RBM_CODE,
+    v_rpt_sales_details_with_history.ZBM_CODE,
+    v_rpt_sales_details_with_history.FBM_CODE,
+    v_rpt_sales_details_with_history.HQ_CODE
+
 FROM v_rpt_sales_details_with_history v_rpt_sales_details_with_history
 WHERE (
         (v_rpt_sales_details_with_history.fisc_yr)::double precision >= (

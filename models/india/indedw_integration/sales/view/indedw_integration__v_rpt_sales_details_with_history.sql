@@ -80,6 +80,19 @@ itg_in_rretailergeoextension as
 (
 select * from {{ ref('inditg_integration__itg_in_rretailergeoextension') }}
 ),
+IN_HCP_SpecialtyCare as
+(
+select * from {{ ref('hcpitg_integration__itg_mds_in_hcp_specialtycare') }}
+),
+IN_HCP_Selfcare as 
+(
+select * from  {{ ref('hcpitg_integration__itg_mds_in_hcp_selfcare') }}
+),
+ITG_QUERY_PARAMETERS as
+(
+ select * from {{ source('inditg_integration', 'itg_query_parameters') }}
+),
+
 final as 
 (
 SELECT sf.customer_code
@@ -435,7 +448,14 @@ SELECT sf.customer_code
 	,lat_sm.smcode AS latest_salesman_code
 	,lat_sm.smname AS latest_salesman_name
 	,lat_sm.uniquesalescode AS latest_uniquesalescode
+    ,qp.prof_type as prof_type
+    ,COALESCE(self.RBM_CODE,spec.RBM_CODE) as RBM_CODE
+    ,COALESCE(self.ZBM_CODE,spec.ZBM_CODE) as ZBM_CODE
+    ,COALESCE(self.FBM_CODE,spec.FBM_CODE) as FBM_CODE
+    ,COALESCE(self.HQ_CODE,spec.HQ_CODE) as HQ_CODE
+
 FROM (
+( ( (
 	(
 		(
 			(
@@ -899,6 +919,17 @@ FROM (
 				AND (rgeo.urc_rnk = 1)
 				)
 			)
-	)
-WHERE (cd.fisc_yr >= 2014))
+	)LEFT JOIN (
+		       select parameter_value as prof_type 
+		        , parameter_name as brand_name 
+		from itg_query_parameters
+          where parameter_type = 'Add_prof_heir')as qp
+            on (lower(trim(pd.brand_name)) = lower(trim(qp.brand_name))
+		    )
+        ) LEFT JOIN IN_HCP_SpecialtyCare as spec
+            ON sf.customer_code = spec.code AND qp.prof_type = 'speciality'
+    ) LEFT JOIN IN_HCP_Selfcare as self
+            ON sf.customer_code = self.code AND qp.prof_type = 'self_care'	
+)
+WHERE (cd.fisc_yr >= 2014)) 
 select * from final
