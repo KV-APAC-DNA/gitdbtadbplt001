@@ -15,6 +15,6 @@ case channel_code
 end channel_code, kpi_code, target FROM (
 SELECT fiscal_year_code,kpi_code, channel_code, kpitype_code, month, target from source
 unpivot (target for month in ("01","02","03","04","05","06","07","08","09","10","11","12"))
-where fiscal_year_code = extract (year from current_date))
+)
 )
 select * from final
