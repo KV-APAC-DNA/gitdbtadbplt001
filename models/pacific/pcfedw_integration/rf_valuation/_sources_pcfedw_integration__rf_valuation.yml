@@ -21,6 +21,7 @@ sources:
       - name: sdl_mds_pacific_rf_valuation_exception_list_price_adftemp
       - name: sdl_mds_pacific_brandcon_mapping_adftemp
       - name: sdl_mds_pacific_planning_channel_mapping_adftemp
+      - name: pcfsdl_load__sdl_rf_valuation_report_history
   - name: pcfedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: pcfedw_integration
@@ -31,3 +32,30 @@ sources:
     tables:
       - name: edw_sales_reporting
       - name: vw_demand_forecast_analysis
+  - name: pcfwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: pcfwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: TRATBL_edw_rf_valuation_list_price_exp_report__test_lookup__ff
+      - name: wks_rf_valuation_list_price_exp_lookup_test
+models:
+ 
+  - name: pcfedw_integration__edw_rf_valuation_list_price_exp_report
+    config:
+      alias: edw_rf_valuation_list_price_exp_report
+      tags: ["pcf_rf_val_files","transformation"]
+    tests:
+      - test_lookup:
+          select_columns: ["country","jj_year","matl_desc","matl_no","master_code","update_date"]
+          column: "matl_no"
+          lookup_column: "material_no"
+          lookup_table: "{{source('pcfwks_integration','wks_rf_valuation_list_price_exp_lookup_test') }}"     
+          failure_reason: "'missing list price for product information data compared with master file: matl_no'"
+          name: TRATBL_rf_valuation_list_price_exp_report__test_lookup__ff
+          config:
+            store_failures: true
+            schema: pcfwks_integration   
