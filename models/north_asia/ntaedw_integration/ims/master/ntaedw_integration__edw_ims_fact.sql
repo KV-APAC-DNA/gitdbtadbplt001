@@ -38,7 +38,7 @@ itg_tw_ims_dstr_customer_mapping as (
 itg_kr_ecommerce_sellout as (
     select * from {{ ref('ntaitg_integration__itg_kr_ecommerce_sellout') }}
 )
---{% if var('ims_job_to_execute') == 'tw_ims_distributor_standard_sell_out' %}
+
 ,
 taiwan as
 (
