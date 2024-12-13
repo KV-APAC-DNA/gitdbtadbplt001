@@ -207,7 +207,12 @@ final as
 	nielsen_popstrata::varchar(100) as nielsen_popstrata,
 	latest_salesman_code::varchar(50) as latest_salesman_code,
 	latest_salesman_name::varchar(50) as latest_salesman_name,
-	latest_uniquesalescode::varchar(50) as latest_uniquesalescode
+	latest_uniquesalescode::varchar(50) as latest_uniquesalescode,
+    prof_type::varchar(100) as prof_type,
+    RBM_CODE::varchar(100) as RBM_CODE,
+    ZBM_CODE::varchar(100) as ZBM_CODE,
+    FBM_CODE::varchar(100) as FBM_CODE,
+    HQ_CODE::varchar(100) as HQ_CODE
     from source
 )
 select * from final
