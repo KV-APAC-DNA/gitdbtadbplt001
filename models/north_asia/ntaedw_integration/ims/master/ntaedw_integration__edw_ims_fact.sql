@@ -98,7 +98,7 @@ taiwan as
     FROM wks_edw_ims_sls_std 
 )
 select * from taiwan
-{% elif var('ims_job_to_execute') == 'kr_gt_sellout' %}
+{% if var('ims_job_to_execute') == 'kr_gt_sellout' %}
 ,
 korea as (
 select ims_txn_dt::date as ims_txn_dt,
