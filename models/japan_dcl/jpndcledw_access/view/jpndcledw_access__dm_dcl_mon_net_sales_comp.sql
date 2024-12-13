@@ -7,10 +7,10 @@ SELECT
     month_id AS "month_id",
     "channel" AS "channel",
     nts_base AS "nts_base",
-    "saleno" AS "saleno",
-    "kokyano" AS "kokyano",
-    subscription_count AS "subscription_count",
-    regular_count AS "regular_count"
+    teikikeiyaku AS "teikikeiyaku",
+    total_order AS "total_order",
+    no_orders AS "no_orders",
+    total_customer AS "total_customer"
 FROM d2c_data 
 )
 SELECT *,
