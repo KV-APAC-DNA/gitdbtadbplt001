@@ -1,6 +1,8 @@
 with source as
 (
-     select * from {{ source('jpdclsdl_raw', 'sdl_mds_jp_dcl_targets')  }}
+    --select * from {{ source('jpdclsdl_raw', 'sdl_mds_jp_dcl_targets')  }}
+    select * from {{ source('jpdclsdl_raw', 'SDL_MDS_JP_DCL_Targets_ADFTemp')  }}
+    
 ),
 final as (
     SELECT fiscal_year_code || month as month_id,  

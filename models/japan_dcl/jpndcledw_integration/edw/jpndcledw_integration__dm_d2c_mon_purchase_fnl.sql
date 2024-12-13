@@ -32,6 +32,8 @@ FROM  d2c_data K LEFT JOIN (SELECT dt, kokyano, status FROM customer_status wher
 ON K.kokyano = U.kokyano AND  K.order_dt = to_date(U.dt) 
 WHERE K.order_dt >= to_char(extract(year FROM dateadd(year, -3, current_date)))  || '-01-01' 
 and K.gts > 0 
+and K.meisaikbn = '商品'
+and K.juchkbn in (0,1,2)
 and u.status in ('New', 'Lapsed')
 and K.f_order is not null  
 ) K where row_no = 1 
