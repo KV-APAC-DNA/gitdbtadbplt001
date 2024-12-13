@@ -21,7 +21,6 @@ sources:
       - name: sdl_mds_pacific_rf_valuation_exception_list_price_adftemp
       - name: sdl_mds_pacific_brandcon_mapping_adftemp
       - name: sdl_mds_pacific_planning_channel_mapping_adftemp
-      - name: pcfsdl_load__sdl_rf_valuation_report_history
   - name: pcfedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: pcfedw_integration
