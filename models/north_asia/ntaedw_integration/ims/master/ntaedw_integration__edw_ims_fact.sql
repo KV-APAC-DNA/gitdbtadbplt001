@@ -2,11 +2,11 @@
     config(
         materialized="incremental",
         incremental_strategy='append',
-        pre_hook="{% if var('ims_job_to_execute') == 'tw_ims_distributor_standard_sell_out' %}
-            {% if is_incremental() %}
+        
+        pre_hook=" 
             delete from {{this}} where dstr_cd in ( select distinct dstr_cd from {{ ref('ntawks_integration__wks_edw_ims_sls_std') }});
-            {% endif %}
-            {% elif var('ims_job_to_execute') == 'kr_gt_sellout' %}
+            
+            {% if var('ims_job_to_execute') == 'kr_gt_sellout' %}
             {% if is_incremental() %}
             -- delete from {{this}} where upper(dstr_nm) in ('DAISO','HYUNDAI','LOTTE','AK','(JU) HJ LIFE','BO YOUNG JONG HAP LOGISTICS','DA IN SANG SA','DONGBU LSD','DU BAE RO YU TONG','IL DONG HU DI S DEOK SEONG SANG SA','JUNGSEOK','KOREA DAE DONG LTD','NU RI ZON','LOTTE LOGISTICS YANG JU','NACF') and upper(dstr_cd) in ('NH','OTC');
             delete from {{this}} where upper(dstr_cd) in ('NH','OTC','NA');
@@ -45,9 +45,9 @@ taiwan as
     SELECT 
         ims_txn_dt::date as ims_txn_dt,
         dstr_cd::varchar(10) as dstr_cd,
-        mds.distributor_name::varchar(255) as dstr_nm,
+        dstr_nm::varchar(255) as dstr_nm,
         cust_cd::varchar(50) as cust_cd,
-        mds.distributors_customer_name::varchar(255) as cust_nm,
+        cust_nm::varchar(255) as cust_nm,
         prod_cd::varchar(255) as prod_cd,
         prod_nm::varchar(255) as prod_nm,
         rpt_per_strt_dt::date as rpt_per_strt_dt,
@@ -95,8 +95,7 @@ taiwan as
         null::varchar(10) as sales_priority,
         null::number(21,5) as sales_stores,
         null::number(21,5) as sales_rate
-    FROM wks_edw_ims_sls_std tw left join itg_tw_ims_dstr_customer_mapping mds
-    on tw.dstr_cd=mds.distributor_code and tw.cust_cd=mds.distributors_customer_code 
+    FROM wks_edw_ims_sls_std 
 )
 select * from taiwan
 {% elif var('ims_job_to_execute') == 'kr_gt_sellout' %}

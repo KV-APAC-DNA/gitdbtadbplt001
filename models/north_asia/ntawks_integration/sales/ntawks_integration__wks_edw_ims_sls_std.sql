@@ -10,14 +10,17 @@ itg_tw_ims_dstr_prod_map as (
 edw_material_sales_dim as (
     select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
+itg_tw_ims_dstr_customer_mapping as (
+    select * from {{ ref('ntaitg_integration__itg_tw_ims_dstr_customer_mapping') }}
+),
 final as 
 (   
     SELECT 
         src.ims_txn_dt,
         src.dstr_cd,
-        src.dstr_nm,
+        mds.distributor_name::varchar(255) as dstr_nm,
         src.cust_cd,
-        src.cust_nm,
+        mds.distributors_customer_name::varchar(255) as cust_nm,
         src.prod_cd,
         src.prod_nm,
         src.rpt_per_strt_dt,
@@ -601,7 +604,8 @@ final as
                         )
                     GROUP BY matl_num
                 ) lkp2 ON LTRIM (x.prod_cd, 0) = lkp2.matl_num
-        ) src
+        ) src left join itg_tw_ims_dstr_customer_mapping mds
+    on src.dstr_cd=mds.distributor_code and src.cust_cd=mds.distributors_customer_code
         WHERE src.dstr_cd in ('107479', '107485', '107501', '107507', '107510', '116047', '120812', '122296', '123291', '131953', '132349', '132508', '135307', '135561', '107482', '107483', '132222', '136454', '134478')
 )
 select * from final
