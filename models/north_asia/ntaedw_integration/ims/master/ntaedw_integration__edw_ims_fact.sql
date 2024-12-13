@@ -95,7 +95,7 @@ taiwan as
         null::varchar(10) as sales_priority,
         null::number(21,5) as sales_stores,
         null::number(21,5) as sales_rate
-    FROM wks_edw_ims_sls_std tw left join itg_tw_ims_dstr_customer_mapping sdl_mds_tw_ims_dstr_customer_mapping
+    FROM wks_edw_ims_sls_std tw left join itg_tw_ims_dstr_customer_mapping mds
     on tw.dstr_cd=mds.distributor_code and tw.cust_cd=mds.distributors_customer_code 
 )
 select * from taiwan
