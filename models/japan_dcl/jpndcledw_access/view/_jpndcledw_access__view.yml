@@ -266,6 +266,11 @@ models:
       alias: '"dm_d2c_cohort_perf_review"'
       tags: ["japan_dcl_views","transformation"]
 
+  - name: jpndcledw_access__dm_d2c_mon_net_sales_comp
+    config:
+      alias: '"dm_d2c_mon_net_sales_comp"'
+      tags: ["japan_dcl_views","transformation"]
+      
   - name: jpndcledw_access__cewq028
     config:
       alias: '"cewq028破損商品"'
