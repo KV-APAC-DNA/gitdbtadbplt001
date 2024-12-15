@@ -270,6 +270,12 @@ models:
     config:
       alias: '"dm_d2c_mon_net_sales_comp"'
       tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__dm_dcl_sales_mon_w_target
+    config:
+      alias: '"dm_dcl_sales_mon_w_target"'
+      tags: ["japan_dcl_views","transformation"]
+      
       
   - name: jpndcledw_access__cewq028
     config:

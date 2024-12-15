@@ -1173,7 +1173,18 @@ models:
     columns:
       - name: MONTH_ID
         tests:
-          - not_null         
+          - not_null   
+
+  - name: jpndcledw_integration__dm_dcl_sales_mon_w_target
+    config:
+      alias: dm_dcl_sales_mon_w_target
+      tags: ["m_dcl_edw_job3", "transformation"]  
+    columns:
+      - name: MONTH_ID
+        tests:
+          - not_null 
+   
+             
           
   - name: jpndcledw_integration__edw_mds_jp_dcl_sales_target
     config:
