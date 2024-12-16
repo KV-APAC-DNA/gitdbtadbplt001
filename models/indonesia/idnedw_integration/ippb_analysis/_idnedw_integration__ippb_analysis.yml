@@ -5,3 +5,26 @@ models:
     config:
       alias: edw_indonesia_lppb_analysis
       tags: ["id_lppb_analysis","transformation"]
+    tests:
+      - test_lookup:
+          select_columns: ["jj_mnth","jj_sap_dstrbtr_id"]
+          column: "jj_sap_dstrbtr_id"
+          lookup_column: "jj_sap_dstrbtr_id"
+          lookup_table: "{{ref('idnedw_integration__edw_distributor_dim') }}"     
+          failure_reason: "'JJ_SAP_Distributor_id not present in edw_distributor_dim'"
+          name: TRATBL_edw_ID_lppb_jj_sap_dstr_id_lookup_test
+          config:
+            store_failures: true
+            schema: idnwks_integration
+  - name: idnedw_integration__edw_indonesia_lppb_analysis_bkp
+    config:
+      alias: edw_indonesia_lppb_analysis_bkp
+      tags: ["id_lppb_analysis","transformation"] 
+  - name: idnedw_integration__edw_indonesia_lppb_noo_analysis
+    config:
+      alias: edw_indonesia_lppb_noo_analysis
+      tags: ["id_lppb_analysis","transformation"]
+  - name: idnedw_integration__edw_indonesia_lppb_sellin_analysis
+    config:
+      alias: edw_indonesia_lppb_sellin_analysis
+      tags: ["id_lppb_analysis","transformation"]                       
