@@ -64,7 +64,7 @@ detailing_va_hcp_join as (
                     vapc.BRAND, 
                     vapc.va_name,
                     vapc.page_name ,row_number() over (partition by vapc.va_name,vapc.page_name order by va_name desc) as rnk from 
-      DEV_DNA_LOAD.HCPSDL_RAW.SDL_HCP360_IN_VENTASYS_VA_PAGE_RAW vapc) where rnk=1) vapc
+      sdl_va_page_class vapc) where rnk=1) vapc
         on edr.va_name = vapc.va_name and edr.page_name = vapc.page_name
     left join ventasys_hcp_master as hcp
         on concat('C', edr.cid) = hcp.v_custid
