@@ -55,15 +55,6 @@ transformed as (
     c.PROD_HIER_L7,
     c.PROD_HIER_L8,
     c.PROD_HIER_L9,
-    c.PROD_HIER_L1,
-    c.PROD_HIER_L2,
-    c.PROD_HIER_L3,
-    c.PROD_HIER_L4,
-    c.PROD_HIER_L5,
-    c.PROD_HIER_L6,
-    c.PROD_HIER_L7,
-    c.PROD_HIER_L8,
-    c.PROD_HIER_L9
 FROM ITG_KR_IQVIA_OFFTAKE a
 
 --- SDL_MDS_KR_IQVIA_PRODUCT_MASTER_ADFTEMP ---
