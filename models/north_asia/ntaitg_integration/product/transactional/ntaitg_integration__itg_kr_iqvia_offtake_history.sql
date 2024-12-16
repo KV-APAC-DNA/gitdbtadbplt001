@@ -1,4 +1,10 @@
-
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy="delete+insert",
+        unique_key=["audit_code","data_period","period_yyyymm","product_name","form_description","pack_size"]
+    )
+}}
 
 with SDL_KR_IQVIA_OFFTAKE as (
     select * from {{ source('ntasdl_raw', 'sdl_kr_iqvia_offtake_temp') }}

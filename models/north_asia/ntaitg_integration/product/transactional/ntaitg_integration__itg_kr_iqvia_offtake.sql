@@ -5,7 +5,7 @@ ITG_KR_IQVIA_OFFTAKE as (
 EDW_PRODUCT_ATTR_DIM AS (
     select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
-SDL_MDS_KR_IQVIA_PRODUCT_MASTER_ADFTEMP AS (
+ITG_MDS_KR_IQVIA_PRODUCT_MASTER AS (
     select * from {{ ref('ntaitg_integration__itg_mds_kr_iqvia_product_master') }}
 ),
 

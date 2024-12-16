@@ -1,4 +1,10 @@
-
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy="delete+insert",
+        unique_key=["productname","form_description","packsize","chc4_desc"]
+    )
+}}
 
 
 with source as (
