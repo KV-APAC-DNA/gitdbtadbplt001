@@ -9,7 +9,11 @@ models:
   - name: idnedw_access__edw_indonesia_lppb_analysis
     config: 
       alias: edw_indonesia_lppb_analysis
-      tags: ["indonesia_views","transformation"]   
+      tags: ["indonesia_views","transformation"] 
+  - name: idnedw_access__edw_indonesia_lppb_analysis_bkp
+    config: 
+      alias: edw_bkp_ID_lppb_analysis
+      tags: ["indonesia_views","transformation"]         
   - name: idnedw_access__edw_indonesia_noo_analysis
     config: 
       alias: edw_indonesia_noo_analysis
