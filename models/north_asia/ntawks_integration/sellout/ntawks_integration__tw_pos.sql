@@ -29,8 +29,9 @@ select * from {{ source('ntaitg_integration','itg_pos_cust_prod_to_sap_prod_map'
 itg_mds_hk_pos_product_mapping as (
 select * from {{ ref('ntaitg_integration__itg_mds_hk_pos_product_mapping') }}
 ),
+-- change back during deployment
 itg_query_parameters as (
-    select * from {{ source('ntaitg_integration','itg_query_parameters') }}
+    select * from {{ source('ntaitg_integration','itg_query_parameters_temp') }}
 ),
 tw_pos_1 as (
     SELECT src.pos_dt,
@@ -207,7 +208,7 @@ tw_pos_1 as (
                 AND rtrim(x.barcode) = rtrim(e.barcd)
                 AND x.src_sys_cd = e.cust
                 And rtrim(x.vend_prod_cd) = rtrim(e.cust_prod_cd)
-            WHERE x.ctry_cd = 'TW' and src_sys_cd in ('Carrefour 家樂福','Cosmed 康是美','EC','Poya 寶雅')
+            WHERE x.ctry_cd = 'TW' and src_sys_cd in ('Carrefour 家樂福','Cosmed 康是美','EC','Poya 寶雅','A-Mart 愛買')
         ) src
         LEFT JOIN (
             SELECT DISTINCT matl_num,

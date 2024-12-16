@@ -31,6 +31,7 @@ on-run-end:
 
 vars:
   source_freshness_run_project_hooks: False
+  # revert back to hk_pos
   pos_job_to_execute: hk_pos
   sfmc_job_to_execute: th_sfmc_files
   crm_job_to_execute: th_crm_files
