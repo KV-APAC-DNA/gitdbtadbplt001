@@ -47,11 +47,13 @@ final_edetailing_datamart as (
         v_custid,
         cust_spec,
         core_noncore,
+        calls_planned,
         is_active,
         dcr_month,
         dcr_year,
         v_terrid,
         null as distinct_hcp_count,
+        null as no_of_visits,
         'EDETAILING' as datasource
 
     from detailing_va_hcp_jn
@@ -89,11 +91,13 @@ final_edetailing_datamart as (
         null as v_custid,
         cust_spec,
         core_noncore,
+        calls_planned,
         null as is_active,
         dcr_month,
         dcr_year,
         v_terrid,
         distinct_hcp_count,
+        null as no_of_visits,
         'HCP_MASTER' as datasource
 
     from
@@ -130,11 +134,13 @@ final_edetailing_datamart as (
         null as v_custid,
         cust_spec,
         core_noncore,
+        calls_planned,
         null as is_active,
         dcr_month,
         dcr_year,
         v_terrid,
         distinct_hcp_count,
+        no_of_visits,
         'DCR_DATA' as datasource
 
     from dcr_hcp_region_join

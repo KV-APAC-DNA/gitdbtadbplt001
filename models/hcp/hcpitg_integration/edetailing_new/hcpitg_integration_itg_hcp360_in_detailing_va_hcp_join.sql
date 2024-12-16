@@ -19,7 +19,7 @@ detailing_va_hcp_join as (
     select
         edr.va_name,
         edr.page_name,
-        edr.team,
+        CASE WHEN edr.TEAM = 'EM' THEN 'DERMA' ELSE edr.TEAM END AS team,
         edr.month,
         edr.rbm,
         edr.zbm,
@@ -46,17 +46,22 @@ detailing_va_hcp_join as (
         hcp.v_custid,
         hcp.cust_spec,
         hcp.core_noncore,
+        CASE
+            WHEN hcp.core_noncore = 'Core' THEN 2
+            WHEN hcp.core_noncore = 'Non Core' THEN 1
+            ELSE NULL
+        END AS calls_planned,
         hcp.is_active,
         hcp.v_terrid,
-        'Edetailing' as datasource,
         to_char(to_date(edr.dcr_date), 'MM') as dcr_month,
-        to_char(to_date(edr.dcr_date), '20' || 'YY') as dcr_year
+        to_char(to_date(edr.dcr_date), '20'||'YY') as dcr_year
 
     from detailing_data as edr
     left join sdl_va_page_class as vapc
         on edr.va_name = vapc.va_name and edr.page_name = vapc.page_name
     left join ventasys_hcp_master as hcp
         on concat('C', edr.cid) = hcp.v_custid
+    where edr.CUSTOMER_TYPE ='Doctor'
 )
 
 select *  from detailing_va_hcp_join

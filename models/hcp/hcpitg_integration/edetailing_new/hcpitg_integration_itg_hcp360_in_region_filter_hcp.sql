@@ -8,12 +8,6 @@ territory_master as(
     from DEV_DNA_CORE.HCPITG_INTEGRATION.ITG_HCP360_IN_VENTASYS_TERRITORY_MASTER
     
 ),
-
-
-
-
-
-
 region_filter_hcp as (
 
 Select hcp.team_name,
@@ -24,16 +18,20 @@ vtm.lvl3 as FBM,
 vtm.hq,
 hcp.cust_spec,
 hcp.core_noncore,
-count(distinct(hcp.v_custid)) as distinct_hcp_count,
-'Hcp_master' as datasource,
-'4' as dcr_month,
-'2024' as dcr_year
+CASE
+        WHEN hcp.core_noncore = 'Core' THEN 2
+        WHEN hcp.core_noncore = 'Non Core' THEN 1
+    ELSE NULL
+END AS calls_planned,
+'04' as dcr_month,
+'2024' as dcr_year,
+count(distinct(hcp.v_custid)) as distinct_hcp_count
 
 from ventasys_hcp_master hcp
 left join territory_master vtm
 on hcp.v_terrid= vtm.v_terrid 
 where hcp.is_active='Y'
-group by 1,2,3,4,5,6,7,8
+group by 1,2,3,4,5,6,7,8,9,10,11
 
 union all 
 
@@ -45,16 +43,20 @@ vtm.lvl3 as FBM,
 vtm.hq,
 hcp.cust_spec,
 hcp.core_noncore,
-count(distinct(hcp.v_custid)) as distinct_hcp_count,
-'Hcp_master' as datasource,
-'5' as dcr_month,
-'2024' as dcr_year
+CASE
+        WHEN hcp.core_noncore = 'Core' THEN 2
+        WHEN hcp.core_noncore = 'Non Core' THEN 1
+    ELSE NULL
+END AS calls_planned,
+'05' as dcr_month,
+'2024' as dcr_year,
+count(distinct(hcp.v_custid)) as distinct_hcp_count
 
 from ventasys_hcp_master hcp
 left join territory_master vtm
 on hcp.v_terrid= vtm.v_terrid 
 where hcp.is_active='Y'
-group by 1,2,3,4,5,6,7,8
+group by 1,2,3,4,5,6,7,8,9,10,11
 
 )
 select * from region_filter_hcp 
