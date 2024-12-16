@@ -1,4 +1,6 @@
 
+
+
 with source as (
     select * from {{ source('ntasdl_raw', 'sdl_mds_kr_iqvia_product_master_adftemp') }}
 ),

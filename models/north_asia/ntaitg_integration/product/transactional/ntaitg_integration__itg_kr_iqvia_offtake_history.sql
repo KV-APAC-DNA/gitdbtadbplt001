@@ -43,6 +43,6 @@ FROM SDL_KR_IQVIA_OFFTAKE
 ),
 
 final as (
-    from transformed
+    select * from transformed
 )
 select * from final
