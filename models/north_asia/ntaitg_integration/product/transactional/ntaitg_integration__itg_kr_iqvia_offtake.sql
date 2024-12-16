@@ -54,7 +54,7 @@ transformed as (
     c.PROD_HIER_L6,
     c.PROD_HIER_L7,
     c.PROD_HIER_L8,
-    c.PROD_HIER_L9
+    c.PROD_HIER_L9,
     b.EAN,
     c.PROD_HIER_L1,
     c.PROD_HIER_L2,
