@@ -32,9 +32,9 @@ taiwan as
     SELECT 
         ims_txn_dt::date as ims_txn_dt,
         dstr_cd::varchar(10) as dstr_cd,
-        mds.distributor_name::varchar(255) as dstr_nm,
+        trim(mds.distributor_name)::varchar(255) as dstr_nm,
         cust_cd::varchar(50) as cust_cd,
-        mds.distributors_customer_name::varchar(255) as cust_nm,
+        COALESCE(trim(mds.distributors_customer_name),'#')::varchar(255) as cust_nm,
         prod_cd::varchar(255) as prod_cd,
         prod_nm::varchar(255) as prod_nm,
         rpt_per_strt_dt::date as rpt_per_strt_dt,
