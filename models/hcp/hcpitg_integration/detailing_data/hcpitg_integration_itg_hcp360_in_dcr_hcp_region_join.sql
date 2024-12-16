@@ -8,7 +8,7 @@ ventasys_hcp_master as (
 
 territory_master as(
     select *
-    from DEV_DNA_CORE.HCPITG_INTEGRATION.ITG_HCP360_IN_VENTASYS_TERRITORY_MASTER
+    from {{ ref('hcpitg_integration__itg_hcp360_in_ventasys_territory_master') }}
     
 ),
 

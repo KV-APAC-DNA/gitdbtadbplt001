@@ -1,12 +1,12 @@
 with detailing_data as (
     select *
-    from dev_dna_core.hcpitg_integration.sdl_hcp360_in_ventasys_edetailing_raw
+    from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_edetailing_raw') }}
 ),
 
 sdl_va_page_class as (
     select *
     from
-        dev_dna_core.hcpitg_integration.sdl_hcp360_in_ventasys_va_page_raw
+        {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_va_page_raw') }}
 ),
 
 ventasys_hcp_master as (
@@ -57,7 +57,14 @@ detailing_va_hcp_join as (
         to_char(to_date(edr.dcr_date), '20'||'YY') as dcr_year
 
     from detailing_data as edr
-    left join sdl_va_page_class as vapc
+    left join (select * from (
+            select vapc.FRANCHISE, 
+                vapc.SUB_GROUP, 
+                vapc.GROUP_NAME, 
+                    vapc.BRAND, 
+                    vapc.va_name,
+                    vapc.page_name ,row_number() over (partition by vapc.va_name,vapc.page_name order by va_name desc) as rnk from 
+      DEV_DNA_LOAD.HCPSDL_RAW.SDL_HCP360_IN_VENTASYS_VA_PAGE_RAW vapc) where rnk=1) vapc
         on edr.va_name = vapc.va_name and edr.page_name = vapc.page_name
     left join ventasys_hcp_master as hcp
         on concat('C', edr.cid) = hcp.v_custid
