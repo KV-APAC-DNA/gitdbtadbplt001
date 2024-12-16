@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: indedw_integration__vw_lidar_ff_other_paid_media_monthly_apac
+    config:
+      alias: vw_lidar_ff_other_paid_media_monthly_apac
+      tags: ["in_lidar_ff_refresh_vw","transformation"]
+  - name: indedw_integration__vw_lidar_ff_traditional_tv_spends_india_monthly
+    config:
+      alias: vw_lidar_ff_traditional_tv_spends_india_monthly
+      tags: ["in_lidar_ff_refresh_vw","transformation"]
+  - name: indedw_integration__vw_lidar_ff_tv_grp_spends_global_monthly
+    config:
+      alias: vw_lidar_ff_tv_grp_spends_global_monthly
+      tags: ["in_lidar_ff_refresh_vw","transformation"]
+  - name: indedw_integration__vw_lidar_ff_digital_micro_level_reach_india_monthly
+    config:
+      alias: vw_lidar_ff_digital_micro_level_reach_india_monthly
+      tags: ["in_lidar_ff_refresh_vw","transformation"]
+  - name: indedw_integration__vw_lidar_ff_digital_platform_level_reach_india_monthly
+    config:
+      alias: vw_lidar_ff_digital_platform_level_reach_india_monthly
+      tags: ["in_lidar_ff_refresh_vw","transformation"]
+  - name: indedw_integration__vw_lidar_ff_traditional_print_comp_spends_india_monthly
+    config:
+      alias: vw_lidar_ff_traditional_print_comp_spends_india_monthly
+      tags: ["in_lidar_ff_refresh_vw","transformation"]
