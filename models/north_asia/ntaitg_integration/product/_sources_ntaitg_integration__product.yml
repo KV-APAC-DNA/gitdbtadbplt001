@@ -243,3 +243,6 @@ sources:
               store_failures: true
               schema: ntawks_integration 
               severity: error
+
+    - name: sdl_kr_iqvia_offtake_temp
+    - name: sdl_mds_kr_iqvia_product_master_adftemp
