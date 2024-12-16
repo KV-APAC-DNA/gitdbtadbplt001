@@ -52,7 +52,7 @@ sdl_pcf_planning_channel_mapping as
 VW_ACTUAL AS
 (select DISTINCT
  sum(sales_qty) as actual_qty,
- sum(gts) as actual_gts,
+ sum(gts_less_rtrn) as actual_gts,
  sum(nts_val) as actual_nts,
  cust_no ,
  bar_cd ,
@@ -65,7 +65,7 @@ SUM( bp_qty ) as  bp_qty ,
  brnd_desc ,
  cmp_id ,
  country ,
- cust_curr_cd ,
+ to_ccy ,
  exch_rate ,
  fran_cd ,
  fran_desc ,
@@ -117,8 +117,8 @@ from EDW_SALES_REPORTING
 where  jj_year >=EXTRACT(YEAR FROM CURRENT_DATE)-1
 GROUP BY
 sales_qty,
- gts,
- nts_val,
+gts_less_rtrn,
+nts_val,
  cust_no ,
  bar_cd ,
  base_prod_cd ,
@@ -127,7 +127,7 @@ sales_qty,
  brnd_desc ,
  cmp_id ,
  country ,
- cust_curr_cd ,
+ to_ccy ,
  exch_rate ,
  fran_cd ,
  fran_desc ,
@@ -515,7 +515,7 @@ CASE WHEN  prod_mjr_desc  IS NOT NULL THEN  BRANDCON_MAPPING_SUMMARY  ELSE 'NOT 
  brnd_desc ,
  cmp_id ,
  country ,
- cust_curr_cd ,
+ to_ccy ,
  exch_rate ,
  fran_cd ,
  fran_desc ,
@@ -621,7 +621,7 @@ CASE WHEN  cust_no  <> '123801' or  cust_no  is null THEN  pln_cnnl_cd
 	when  cust_no  ='123801' then 'AU9' 
 	else null end as  pln_cnnl_cd ,
 CASE WHEN  cust_no  <> '123801' or  cust_no  is null THEN  HARMONIZED_PLANNING_CHANNEL_DESC 
-	when  cust_no  ='123801' then 'AU-SLOBS' 
+	when  cust_no  ='123801' then 'AU - SLOBS' 
 	else null end as  HARMONIZED_PLANNING_CHANNEL_DESC ,
  post_cd ,
  prod_fran_cd ,
