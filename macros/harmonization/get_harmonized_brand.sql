@@ -19,7 +19,7 @@
 {{ log("table to update unharmonized:" ~ source_table.TABLENAME) }}
 {# update condition for data when run GHM #}
 {% set UPDT_NULL_QRY_1 %}
-            UPDATE {% if target.target_name == 'PROD' %}
+            UPDATE {% if target.target_name == 'prod' %}
 			{{ target.database }}.INDITG_INTEGRATION.{{ source_table.TABLENAME }}
 			{% else %}
             {{ target.database }}.{{ target.schema }}.{{ 'INDITG_INTEGRATION__' ~ source_table.TABLENAME }} 
@@ -31,7 +31,7 @@
 
 {#update null if flage is Y#}
 {% set UPDT_NULL_QRY %}
-            UPDATE {% if target.target_name == 'PROD' %}
+            UPDATE {% if target.target_name == 'prod' %}
 			{{ target.database }}.INDITG_INTEGRATION.{{ source_table.TABLENAME }}
 			{% else %}
             {{ target.database }}.{{ target.schema }}.{{ 'INDITG_INTEGRATION__' ~ source_table.TABLENAME }} 
@@ -84,7 +84,7 @@
 {# update GHM columns null if filter is not blank GHM #}
 
 {% set UPDT_NULL_QRY %}
-            UPDATE {% if target.target_name == 'PROD' %}
+            UPDATE {% if target.target_name == 'prod' %}
 			{{ target.database }}.INDITG_INTEGRATION.{{ rule.TABLENAME }}
 			{% else %}
             {{ target.database }}.{{ target.schema }}.{{ 'INDITG_INTEGRATION__' ~ rule.TABLENAME }} 
@@ -115,7 +115,7 @@
 
 {# Construct the update query #}
 {% set update_query %}
-            UPDATE {% if target.target_name == 'PROD' %}
+            UPDATE {% if target.target_name == 'prod' %}
 			{{ target.database }}.INDITG_INTEGRATION.{{ rule.TABLENAME }}
 			{% else %}
             {{ target.database }}.{{ target.schema }}.{{ 'INDITG_INTEGRATION__' ~ rule.TABLENAME }} 
@@ -124,7 +124,7 @@
 {{ log("Generated SQL:P14") }}
                 GCPH_BRAND = B.GCPH_BRAND_NAME,
                 BRAND_HARMONIZED_BY  = '{{ rule.PATTERN_ID }} : {{ rule.COLUMN_NAME }}'
-                FROM {% if target.target_name == 'PROD' %}
+                FROM {% if target.target_name == 'prod' %}
                    {{ target.database }}.inditg_integration.vw_harmonization_brand_pattern_mapping 
 					{% else %}
 					{{ target.database }}.{{ target.schema }}.inditg_integration__vw_harmonization_brand_pattern_mapping
@@ -135,7 +135,7 @@
 {{ log("Generated SQL:P65") }}
                 GCPH_BRAND = B.GCPH_BRAND_NAME,
                 BRAND_HARMONIZED_BY  = '{{ rule.PATTERN_ID }} : {{ rule.COLUMN_NAME }}'
-                FROM {% if target.target_name == 'PROD' %}
+                FROM {% if target.target_name == 'prod' %}
                    {{ target.database }}.inditg_integration.vw_harmonization_brand_pattern_mapping 
 					{% else %}
 					{{ target.database }}.{{ target.schema }}.inditg_integration__vw_harmonization_brand_pattern_mapping
@@ -146,7 +146,7 @@
 {{ log("Generated SQL:P73") }}
                 GCPH_BRAND = B.GCPH_BRAND_NAME,
                 BRAND_HARMONIZED_BY  = '{{ rule.PATTERN_ID }} : {{ rule.COLUMN_NAME }}'
-                FROM {% if target.target_name == 'PROD' %}
+                FROM {% if target.target_name == 'prod' %}
                    {{ target.database }}.inditg_integration.vw_harmonization_brand_pattern_mapping 
 					{% else %}
 					{{ target.database }}.{{ target.schema }}.inditg_integration__vw_harmonization_brand_pattern_mapping
@@ -167,7 +167,7 @@
 {{ log("Generated SQL:else-Non") }}
                     GCPH_BRAND = B.GCPH_BRAND_NAME,
                     BRAND_HARMONIZED_BY = '{{ rule.PATTERN_ID }} : {{ rule.COLUMN_NAME }}'
-                    FROM {% if target.target_name == 'PROD' %}
+                    FROM {% if target.target_name == 'prod' %}
                    {{ target.database }}.inditg_integration.vw_harmonization_brand_pattern_mapping 
 					{% else %}
 					{{ target.database }}.{{ target.schema }}.inditg_integration__vw_harmonization_brand_pattern_mapping
@@ -208,7 +208,7 @@
 {{ log("table to update unharmonized:" ~ source_table_null.TABLENAME) }}
 {#update null records to unharmonized#}
 {% set UPDT_NULL_QRY_2 %}
-		UPDATE {% if target.target_name == 'PROD' %}
+		UPDATE {% if target.target_name == 'prod' %}
 			{{ target.database }}.INDITG_INTEGRATION.{{ source_table_null.TABLENAME }}
 			{% else %}
             {{ target.database }}.{{ target.schema }}.{{ 'INDITG_INTEGRATION__' ~ source_table_null.TABLENAME }} 
