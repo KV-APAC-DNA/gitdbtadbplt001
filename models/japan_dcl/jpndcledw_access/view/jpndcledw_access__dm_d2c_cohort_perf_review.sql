@@ -5,6 +5,7 @@ with cohort_perf_review AS (
 SELECT
 month_id as "month_id",  
 birthday_yearmonth as "birthday_yearmonth",
+total_costomer as "total_costomer",
 total_order as "total_order", 
 total_nts as "total_nts", 
 total_gts as "total_gts", 

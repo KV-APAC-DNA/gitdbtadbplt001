@@ -43,6 +43,7 @@ Non_d2c_monthly as (
     FROM Non_d2c_data K
     WHERE 
         K.fisc_day >= to_char(extract(year FROM dateadd(year, -3, current_date))) || '-01-01'
+        and k.brand = 'Dr. Ci: Labo' and K.ctry_nm = 'Japan DCL'
         AND K.channel IN ('E-Commerce', 'Wholesaler')
     GROUP BY month_id, K.channel
 ),
