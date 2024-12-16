@@ -8,4 +8,39 @@ sources:
       identifier: false
     tables:
     - name: edw_rpt_schemeutilize_cube_2020_2021
-      
+  
+  - name: mds_access
+    database: "{{ env_var('DBT_ENV_CDL_DB') }}"
+    schema: mds_access
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: mds_lkp_brand_hierarchy
+    - name: mds_lkp_country_hierarchy
+
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: indsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_lidar_ff_other_paid_media
+    - name: sdl_lidar_ff_tv_spends
+    - name: sdl_lidar_ff_tv_grp_spends
+    - name: sdl_lidar_ff_print_comp_spend
+    - name: sdl_lidar_ff_microlevel_reach
+    - name: sdl_lidar_ff_platformlevel_reach
+
+  - name: paidmedia_integration
+    database: "{{ env_var('DBT_ENV_CON360LIDAR_DB') }}"
+    schema: paidmedia_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: fct_currency_rate_global_daily

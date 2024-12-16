@@ -30,6 +30,7 @@ final as
     src.Ord_Qty,
     src.Ord_Amt,
     src.Invoice_No,
+    src.remarks,
     src.crt_dttm ,
     src.updt_dttm
     from 
@@ -42,6 +43,7 @@ final as
     OrderBooking.PrdCode as Product_Code,
     OrderBooking.OrderDate as Order_Date,
     OrderBooking.OrderNo as Order_No,
+    OrderBooking.remarks as remarks,
     Sum(OrderBooking.PrdQty) as Ord_Qty,
     Sum(OrderBooking.PrdGrossAmt) as Ord_Amt,
     SalesInvoiceOrders.SalInvNo as Invoice_No,
@@ -56,7 +58,7 @@ final as
     where si1.rn=1) SalesInvoiceOrders
     on OrderBooking.distcode=SalesInvoiceOrders.distcode
     and OrderBooking.orderno=SalesInvoiceOrders.orderno
-    and OrderBooking.orderdate=SalesInvoiceOrders.orderdate
+    and OrderBooking.orderdate=SalesInvoiceOrders.createddate
     left join 
     (Select * from
     (Select 
@@ -68,7 +70,7 @@ final as
     and trim(upper(OrderBooking.rtrname))=trim(upper(retailermaster.rtrname))
     group by 
     OrderBooking.DistCode,OrderBooking.SalesmanCode,OrderBooking.SalesRouteCode,retailermaster.RtrCode,
-    OrderBooking.RtrName,OrderBooking.PrdCode,OrderBooking.OrderDate,OrderBooking.OrderNo,SalesInvoiceOrders.SalInvNo
+    OrderBooking.RtrName,OrderBooking.PrdCode,OrderBooking.OrderDate,OrderBooking.OrderNo,SalesInvoiceOrders.SalInvNo,OrderBooking.remarks
     )src
 )
 select customer_code::varchar(50) as customer_code,
@@ -83,5 +85,6 @@ select customer_code::varchar(50) as customer_code,
     ord_amt::number(38,6) as ord_amt,
     invoice_no::varchar(50) as invoice_no,
     crt_dttm::timestamp_ntz(9) as crt_dttm,
-    updt_dttm::timestamp_ntz(9) as updt_dttm
+    updt_dttm::timestamp_ntz(9) as updt_dttm,
+    remarks::varchar(500) as remarks
  from final

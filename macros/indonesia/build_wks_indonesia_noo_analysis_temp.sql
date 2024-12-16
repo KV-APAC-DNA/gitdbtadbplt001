@@ -38,7 +38,7 @@
                 chnl varchar(100),
                 outlet_type varchar(100),
                 chnl_grp varchar(100),
-                jjid varchar(100),
+                jjid varchar(200),
                 chnl_grp2 varchar(100),
                 city varchar(229),
                 cust_status varchar(8),
@@ -102,15 +102,12 @@
                 latest_distributor_group varchar(200),
                 latest_dstrbtr_grp_cd varchar(200),
                 ADDITIONAL_INFORMATION_1_CODE varchar(100),
-                --ADDITIONAL_INFORMATION_1_NAME varchar(100),
                 ADDITIONAL_INFORMATION_2_CODE varchar(100),
-                --ADDITIONAL_INFORMATION_2_NAME varchar(100),
                 ADDITIONAL_INFORMATION_3_CODE varchar(100),
-                --ADDITIONAL_INFORMATION_3_NAME varchar(100),
                 ADDITIONAL_INFORMATION_4_CODE varchar(100),
-                --ADDITIONAL_INFORMATION_4_NAME varchar(100),
-                ADDITIONAL_INFORMATION_5_CODE varchar(100) 
-                --ADDITIONAL_INFORMATION_5_NAME varchar(100)
+                ADDITIONAL_INFORMATION_5_CODE varchar(100),
+                latest_distributor_name varchar(200)
+                
     );
         create or replace table {{tablename}} clone
         {% if target.name=='prod' %}
