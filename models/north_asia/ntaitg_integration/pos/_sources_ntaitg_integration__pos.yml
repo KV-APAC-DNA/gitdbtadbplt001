@@ -307,9 +307,45 @@ sources:
       - name: sdl_kr_fert_material_fact
         tags: ["j_kr_fert_material_wrapper","transformation"]
       - name: sdl_tw_pos_amart_inventory
+        tags: ["tw_pos","ingestion"]
+        tests:
+        - test_null:
+            select_columns: ["item_code"]
+            not_null_columns: ["item_code"]
+            name: TRATBL_sdl_tw_pos_amart_inventory__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
       - name: sdl_tw_pos_amart_purchase
+        tags: ["tw_pos","ingestion"]
+        tests:
+        - test_null:
+            select_columns: ["product_code"]
+            not_null_columns: ["product_code"]
+            name: TRATBL_sdl_tw_pos_amart_purchase__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
       - name: sdl_tw_pos_cosmed_store_inventory
+        tags: ["tw_pos","ingestion"]
+        tests:
+        - test_null:
+            select_columns: ["PRODUCT_CODE"]
+            not_null_columns: ["PRODUCT_CODE"]
+            name: TRATBL_sdl_tw_pos_cosmed_store_inventory__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
       - name: sdl_tw_pos_cosmed_dc_inventory
+        tags: ["tw_pos","ingestion"]
+        tests:
+        - test_null:
+            select_columns: ["PRODUCT_CODE"]
+            not_null_columns: ["PRODUCT_CODE"]
+            name: TRATBL_sdl_tw_pos_cosmed_dc_inventory__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
 
   - name: ntaitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
