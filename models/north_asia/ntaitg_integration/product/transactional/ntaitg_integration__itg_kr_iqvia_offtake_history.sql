@@ -2,7 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy="delete+insert",
-        unique_key=["audit_code","data_period","period_yyyymm","product_name","form_description","pack_size"]
+        unique_key=["audit_code","coalesce(data_period,'#')", "period_yyyymm","product_name","form_description","pack_size","units"]
     )
 }}
 
