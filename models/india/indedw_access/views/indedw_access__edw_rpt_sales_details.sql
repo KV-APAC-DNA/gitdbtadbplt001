@@ -199,5 +199,10 @@ select
 	nielsen_popstrata as "nielsen_popstrata",
 	latest_salesman_code as "latest_salesman_code",
 	latest_salesman_name as "latest_salesman_name",
-    latest_uniquesalescode as "latest_uniquesalescode"
+    latest_uniquesalescode as "latest_uniquesalescode",
+    prof_type as "prof_type",
+    RBM_CODE as "RBM_CODE",
+    ZBM_CODE as "ZBM_CODE",
+    FBM_CODE as "FBM_CODE",
+    HQ_CODE as "HQ_CODE"
 from source
