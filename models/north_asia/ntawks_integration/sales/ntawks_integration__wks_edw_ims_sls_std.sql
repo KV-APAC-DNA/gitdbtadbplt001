@@ -605,7 +605,7 @@ final as
                     GROUP BY matl_num
                 ) lkp2 ON LTRIM (x.prod_cd, 0) = lkp2.matl_num
         ) src left join itg_tw_ims_dstr_customer_mapping mds
-    on trim(src.dstr_cd)=trim(mds.distributor_code) and upper(rim(src.cust_cd))=upper(trim(mds.distributors_customer_code))
+    on trim(src.dstr_cd)=trim(mds.distributor_code) and upper(trim(src.cust_cd))=upper(trim(mds.distributors_customer_code))
         WHERE src.dstr_cd in ('107479', '107485', '107501', '107507', '107510', '116047', '120812', '122296', '123291', '131953', '132349', '132508', '135307', '135561', '107482', '107483', '132222', '136454', '134478')
 )
 select * from final
