@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: hcpedw_integration__edw_hcp360_in_final_edetailing_datamart
+    config:
+      alias: edw_hcp360_in_final_edetailing_datamart
+      tags: ["in_edetailing_load","transformation"]
+ 
