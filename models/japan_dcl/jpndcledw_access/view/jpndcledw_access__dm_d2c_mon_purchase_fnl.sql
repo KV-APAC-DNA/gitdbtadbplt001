@@ -3,8 +3,8 @@ with purchase_fnl AS (
     FROM {{ ref('jpndcledw_integration__dm_d2c_mon_purchase_fnl') }}
 ),
 final AS (
-SELECT month_id as "month_id", 
-birthday_yearmonth as "birthday_yearmonth", 
+SELECT month_id as "month id", 
+birthday_yearmonth as "birthday yearmonth", 
 f1 as "f1", 
 f2 as "f2", 
 f3 as "f3",

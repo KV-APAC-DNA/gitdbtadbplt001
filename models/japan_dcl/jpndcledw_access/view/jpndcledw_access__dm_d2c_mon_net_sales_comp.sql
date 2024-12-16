@@ -4,13 +4,13 @@ with d2c_data AS (
 ),
 net_sales_monthly AS (
 SELECT 
-    month_id AS "month_id",
+    month_id AS "month id",
     channel AS "channel",
-    nts_base AS "nts_base",
+    nts_base AS "nts base",
     teikikeiyaku AS "teikikeiyaku",
-    total_order AS "total_order",
-    total_items AS "total_items",
-    total_customer AS "total_customer"
+    total_order AS "total order",
+    total_items AS "total items",
+    total_customer AS "total customer"
 FROM d2c_data 
 )
 SELECT *,

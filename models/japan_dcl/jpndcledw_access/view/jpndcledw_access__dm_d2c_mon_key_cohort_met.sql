@@ -4,7 +4,7 @@ with key_cohort_met AS (
 ),
 final AS (
     SELECT kokyano as "kokyano",
-    month_id as "month_id",
+    month_id as "month id",
     sales as "sales",
     birthday as "birthday",
     inserted_date as "inserted_date",
