@@ -75,3 +75,7 @@ sources:
     #             config:
     #               store_failures: true
     #               schema: hcpwks_integration
+    - name: sdl_mds_in_hcp_specialtycare
+      tags: ["in_hcp360_mds_data_refresh","ingestion"]
+    - name: sdl_mds_in_hcp_selfcare
+      tags: ["in_hcp360_mds_data_refresh","ingestion"]
