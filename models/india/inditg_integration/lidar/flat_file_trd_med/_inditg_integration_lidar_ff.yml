@@ -2,34 +2,28 @@ version: 2
 
 models:
   - name: inditg_integration__fct_other_paid_media_lidar_monthly_apac
-    config: 
+    config:
       alias: fct_other_paid_media_lidar_monthly_apac
       tags: ["in_lidar_ff_refresh","transformation"]
-
   - name: inditg_integration__fct_traditional_tv_spends_india_monthly
-    config: 
+    config:
       alias: fct_traditional_tv_spends_india_monthly
       tags: ["in_lidar_ff_refresh","transformation"]
-    
   - name: inditg_integration__fct_tv_grp_spends_global_monthly
-    config: 
+    config:
       alias: fct_tv_grp_spends_global_monthly
       tags: ["in_lidar_ff_refresh","transformation"]
-
   - name: inditg_integration__fct_digital_micro_level_reach_india_monthly
-    config: 
+    config:
       alias: fct_digital_micro_level_reach_india_monthly
       tags: ["in_lidar_ff_refresh","transformation"]
-
   - name: inditg_integration__fct_digital_platform_level_reach_india_monthly
-    config: 
+    config:
       alias: fct_digital_platform_level_reach_india_monthly
       tags: ["in_lidar_ff_refresh","transformation"]
-
   - name: inditg_integration__fct_traditional_print_comp_spends_india_monthly
-    config: 
+    config:
       alias: fct_traditional_print_comp_spends_india_monthly
       tags: ["in_lidar_ff_refresh","transformation"]
-
   
       
